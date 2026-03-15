@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Admin\Filament\Resources\ProductVariantResource\Pages;
+use App\Filament\Resources\ProductVariantResource\Pages;
 use App\Store\Models\Contracts\ProductVariant as ProductVariantContract;
 use App\Store\Models\TaxClass;
 use App\Support\Forms\Components\Attributes;

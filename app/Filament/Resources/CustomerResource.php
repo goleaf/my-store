@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use App\Admin\Filament\Resources\Customer;
-use App\Admin\Filament\Resources\CustomerResource\Pages;
+use App\Filament\Resources\Customer;
+use App\Filament\Resources\CustomerResource\Pages;
 use App\Filament\Resources\CustomerResource\RelationManagers\AddressRelationManager;
 use App\Filament\Resources\CustomerResource\RelationManagers\OrdersRelationManager;
 use App\Filament\Resources\CustomerResource\RelationManagers\UserRelationManager;

@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use App\Admin\Filament\Resources\AttributeGroupResource\Pages;
-use App\Admin\Filament\Resources\AttributeGroupResource\RelationManagers;
+use App\Filament\Resources\AttributeGroupResource\Pages;
+use App\Filament\Resources\AttributeGroupResource\RelationManagers;
 use App\Store\Facades\AttributeManifest;
 use App\Store\Models\Contracts\AttributeGroup as AttributeGroupContract;
 use App\Store\Models\Language;

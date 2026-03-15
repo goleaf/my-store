@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\CollectionGroupResource\Pages;
 
-use App\Admin\Filament\Resources\CollectionGroupResource\Widgets;
+use App\Filament\Resources\CollectionGroupResource\Widgets;
 use App\Filament\Resources\CollectionGroupResource;
 use App\Support\Pages\BaseEditRecord;
 use Filament\Actions;

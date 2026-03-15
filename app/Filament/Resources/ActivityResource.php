@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Admin\Filament\Resources\ActivityResource\Pages;
+use App\Filament\Resources\ActivityResource\Pages;
 use App\Support\Resources\BaseResource;
 use Carbon\Carbon;
 use Filament\Forms;

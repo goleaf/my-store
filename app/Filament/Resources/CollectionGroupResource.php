@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Admin\Filament\Resources\CollectionGroupResource\Pages;
+use App\Filament\Resources\CollectionGroupResource\Pages;
 use App\Store\Models\Contracts\CollectionGroup as CollectionGroupContract;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;

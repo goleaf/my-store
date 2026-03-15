@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Admin\Filament\Resources\OrderResource\Pages;
+use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\Pages\ManageOrder;
 use App\Store\Models\Contracts\Order as OrderContract;
 use App\Store\Models\Order;

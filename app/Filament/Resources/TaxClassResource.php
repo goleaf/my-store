@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Admin\Filament\Resources\TaxClassResource\Pages;
+use App\Filament\Resources\TaxClassResource\Pages;
 use App\Filament\Clusters\Taxes;
 use App\Store\Models\Contracts\TaxClass as TaxClassContract;
 use App\Support\Resources\BaseResource;

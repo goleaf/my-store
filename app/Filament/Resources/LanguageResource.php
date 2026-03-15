@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Admin\Filament\Resources\LanguageResource\Pages;
+use App\Filament\Resources\LanguageResource\Pages;
 use App\Store\Models\Contracts\Language as LanguageContract;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;

@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use App\Admin\Filament\Resources\ProductOptionResource\Pages;
-use App\Admin\Filament\Resources\ProductOptionResource\RelationManagers;
+use App\Filament\Resources\ProductOptionResource\Pages;
+use App\Filament\Resources\ProductOptionResource\RelationManagers;
 use App\Store\Models\Contracts\ProductOption as ProductOptionContract;
 use App\Store\Models\Language;
 use App\Support\Forms\Components\TranslatedText;

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Admin\Filament\Resources\StaffResource\Pages;
+use App\Filament\Resources\StaffResource\Pages;
 use App\Models\Staff;
 use App\Support\Facades\AdminAccessControl;
 use App\Support\Forms\Components\PermissionSelector;

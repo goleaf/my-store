@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Admin\Filament\Resources\ProductTypeResource\Pages;
+use App\Filament\Resources\ProductTypeResource\Pages;
 use App\Store\Models\Contracts\ProductType as ProductTypeContract;
 use App\Store\Models\Product;
 use App\Store\Models\ProductVariant;

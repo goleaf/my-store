@@ -72,94 +72,21 @@ class StoreSetupSeeder extends Seeder
 
     private function seedAdminUser(): void
     {
-        if (! class_exists(Staff::class) || Staff::whereAdmin(true)->exists()) {
+        if (! class_exists(Staff::class)) {
             return;
         }
 
-        $credentials = $this->resolveAdminCredentials();
-
-        if (! $credentials) {
+        if (Staff::whereEmail('admin@example.com')->exists()) {
             return;
         }
 
-        $this->callCreateAdmin($credentials);
-    }
-
-    /**
-     * @return array<string, string>|null
-     */
-    private function resolveAdminCredentials(): ?array
-    {
-        $envPath = base_path('.env');
-
-        if (! File::exists($envPath)) {
-            return null;
-        }
-
-        $raw = File::get($envPath);
-        $lines = preg_split('/\r\n|\r|\n/', $raw) ?: [];
-        $values = [];
-
-        foreach ($lines as $line) {
-            $line = trim($line);
-
-            if ($line === '' || str_starts_with($line, '#')) {
-                continue;
-            }
-
-            [$key, $value] = array_pad(explode('=', $line, 2), 2, '');
-            $key = trim($key);
-            $value = trim($value);
-            $value = trim($value, "\"'");
-
-            if ($key !== '') {
-                $values[$key] = $value;
-            }
-        }
-
-        $firstName = $values['ADMIN_FIRSTNAME'] ?? null;
-        $lastName = $values['ADMIN_LASTNAME'] ?? null;
-        $email = $values['ADMIN_EMAIL'] ?? null;
-        $password = $values['ADMIN_PASSWORD'] ?? null;
-
-        if (! $firstName || ! $lastName || ! $email || ! $password) {
-            return null;
-        }
-
-        if (strlen($password) < 8) {
-            return null;
-        }
-
-        return [
-            'first_name' => $firstName,
-            'last_name' => $lastName,
-            'email' => $email,
-            'password' => $password,
-        ];
-    }
-
-    /**
-     * @param  array<string, string>  $credentials
-     */
-    private function callCreateAdmin(array $credentials): void
-    {
-        $payload = [
-            '--firstname' => $credentials['first_name'],
-            '--lastname' => $credentials['last_name'],
-            '--email' => $credentials['email'],
-            '--password' => $credentials['password'],
-            '--no-interaction' => true,
-        ];
-
-        foreach (['lunar:create-admin', 'admin:create-admin'] as $command) {
-            try {
-                Artisan::call($command, $payload);
-
-                return;
-            } catch (Throwable) {
-                continue;
-            }
-        }
+        Staff::create([
+            'first_name' => 'Admin',
+            'last_name' => 'User',
+            'email' => 'admin@example.com',
+            'password' => bcrypt('password123'),
+            'admin' => true,
+        ]);
     }
 
     private function callImportAddressData(): int

@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use App\Admin\Filament\Resources\ProductResource\Pages;
-use App\Admin\Filament\Resources\ProductResource\Widgets\ProductOptionsWidget;
+use App\Filament\Resources\ProductResource\Pages;
+use App\Filament\Resources\ProductResource\Widgets\ProductOptionsWidget;
 use App\Filament\Components\Shout;
 use App\Filament\Resources\ProductResource\RelationManagers\CustomerGroupPricingRelationManager;
 use App\Filament\Resources\ProductResource\RelationManagers\CustomerGroupRelationManager;

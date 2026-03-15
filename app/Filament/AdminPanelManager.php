@@ -2,8 +2,8 @@
 
 namespace App\Filament;
 
-use App\Admin\Filament\Pages;
-use App\Admin\Filament\Resources;
+use App\Filament\Pages;
+use App\Filament\Resources;
 use App\Filament\AvatarProviders\GravatarProvider;
 use App\Filament\Widgets\Dashboard\Orders\AverageOrderValueChart;
 use App\Filament\Widgets\Dashboard\Orders\LatestOrdersTable;
@@ -248,9 +248,6 @@ class AdminPanelManager
             ])
             ->font('Poppins')
             ->middleware($panelMiddleware)
-            ->assets([
-                Css::make('admin-panel', __DIR__.'/../resources/dist/admin-panel.css'),
-            ], 'lunarphp/panel')
             ->pages(
                 static::getPages()
             )
@@ -258,8 +255,8 @@ class AdminPanelManager
                 static::getResources()
             )
             ->discoverClusters(
-                in: realpath(__DIR__.'/Filament/Clusters'),
-                for: 'App\Admin\Filament\Clusters'
+                in: __DIR__.'/Clusters',
+                for: 'App\Filament\Clusters'
             )
             ->widgets(
                 static::getWidgets()
@@ -268,7 +265,7 @@ class AdminPanelManager
                 Authenticate::class,
             ])
             ->plugins($plugins)
-            ->discoverLivewireComponents(__DIR__.'/Livewire', 'App\\Admin\\Livewire')
+            ->discoverLivewireComponents(__DIR__.'/Livewire', 'App\\Filament\\Livewire')
             ->livewireComponents([
                 \App\Filament\Resources\OrderResource\Pages\Components\OrderItemsTable::class,
                 \App\Filament\Resources\CollectionGroupResource\Widgets\CollectionTreeView::class,

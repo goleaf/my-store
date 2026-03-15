@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\ProductResource\Widgets;
 
-use App\Admin\Filament\Resources\ProductResource\Widgets\ProductOptionsWidget as LunarProductOptionsWidget;
+use App\Filament\Resources\ProductResource\Widgets\ProductOptionsWidget as LunarProductOptionsWidget;
 use App\Events\ProductVariantOptionsUpdated;
 use App\Store\Facades\DB;
 use App\Store\Models\Contracts\ProductOption as ProductOptionContract;

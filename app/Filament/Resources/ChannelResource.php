@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Admin\Filament\Resources\ChannelResource\Pages;
+use App\Filament\Resources\ChannelResource\Pages;
 use App\Store\Models\Contracts\Channel as ChannelContract;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;

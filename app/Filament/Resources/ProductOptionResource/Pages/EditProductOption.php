@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\ProductOptionResource\Pages;
 
-use App\Admin\Filament\Resources\ProductOptionResource\RelationManagers;
+use App\Filament\Resources\ProductOptionResource\RelationManagers;
 use App\Filament\Resources\ProductOptionResource;
 use App\Support\Pages\BaseEditRecord;
 use Filament\Actions;

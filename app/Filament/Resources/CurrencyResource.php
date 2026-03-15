@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Admin\Filament\Resources\CurrencyResource\Pages;
+use App\Filament\Resources\CurrencyResource\Pages;
 use App\Store\Models\Contracts\Currency as CurrencyContract;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;

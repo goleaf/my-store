@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Admin\Filament\Resources\BrandResource\Pages;
+use App\Filament\Resources\BrandResource\Pages;
 use App\Store\Models\Contracts\Brand as BrandContract;
 use App\Support\Forms\Components\Attributes;
 use App\Support\Resources\BaseResource;

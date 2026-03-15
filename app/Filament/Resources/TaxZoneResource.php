@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use App\Admin\Filament\Resources\Collection;
-use App\Admin\Filament\Resources\TaxZoneResource\Pages;
+use App\Filament\Resources\Collection;
+use App\Filament\Resources\TaxZoneResource\Pages;
 use App\Filament\Clusters\Taxes;
 use App\Store\Models\Contracts\TaxZone as TaxZoneContract;
 use App\Store\Models\Country;

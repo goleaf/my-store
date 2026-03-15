@@ -10,7 +10,6 @@
     "skills": [
         "scout-development",
         "livewire-development",
-        "pest-testing",
-        "tailwindcss-development"
+        "pest-testing"
     ]
 }

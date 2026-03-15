@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Admin\Filament\Resources\DiscountResource\Pages;
+use App\Filament\Resources\DiscountResource\Pages;
 use App\Base\AdminPanelDiscountInterface;
 use App\Filament\Resources\DiscountResource\RelationManagers\BrandLimitationRelationManager;
 use App\Filament\Resources\DiscountResource\RelationManagers\CollectionConditionRelationManager;
