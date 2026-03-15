@@ -12,6 +12,7 @@ use App\Store\Base\ValueObjects\Cart\TaxBreakdownAmount;
 use App\Store\DataTypes\Price;
 use App\Store\Facades\Pricing;
 use App\Store\Models\Channel;
+use App\Store\Models\Country;
 use App\Store\Models\Currency;
 use App\Store\Models\Order;
 use App\Store\Models\OrderAddress;
@@ -31,6 +32,7 @@ class OrderSeeder extends Seeder
             $faker = Factory::create();
             $channel = Channel::getDefault();
             $currency = Currency::getDefault();
+            $ukCountryId = $this->resolveCountryId();
 
             $cardTypes = ['visa', 'mastercard'];
 
@@ -115,7 +117,7 @@ class OrderSeeder extends Seeder
                 $shipping = OrderAddress::factory()->create([
                     'order_id' => $orderModel->id,
                     'type' => 'shipping',
-                    'country_id' => 235, // UK
+                    'country_id' => $ukCountryId,
                 ]);
 
                 if ($faker->boolean()) {
@@ -127,12 +129,37 @@ class OrderSeeder extends Seeder
                     OrderAddress::factory()->create([
                         'order_id' => $orderModel->id,
                         'type' => 'billing',
-                        'country_id' => 235, // UK
+                        'country_id' => $ukCountryId,
                     ]);
                 }
 
                 $orderModel->lines()->createMany($lines->toArray());
             }
         });
+    }
+
+    private function resolveCountryId(): int
+    {
+        $countryId = Country::where('iso3', 'GBR')->value('id');
+
+        if ($countryId) {
+            return $countryId;
+        }
+
+        $country = Country::updateOrCreate(
+            ['iso3' => 'GBR'],
+            [
+                'name' => 'United Kingdom',
+                'iso2' => 'GB',
+                'phonecode' => '44',
+                'capital' => 'London',
+                'currency' => 'GBP',
+                'native' => 'United Kingdom',
+                'emoji' => 'GB',
+                'emoji_u' => 'U+GB',
+            ],
+        );
+
+        return $country->id;
     }
 }

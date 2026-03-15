@@ -6,6 +6,7 @@ use App\Models\User;
 use Faker\Factory;
 use Illuminate\Support\Facades\DB;
 use App\Store\Models\Address;
+use App\Store\Models\Country;
 use App\Store\Models\Customer;
 
 class CustomerSeeder extends AbstractSeeder
@@ -18,6 +19,7 @@ class CustomerSeeder extends AbstractSeeder
     {
         DB::transaction(function () {
             $faker = Factory::create();
+            $countryId = $this->resolveCountryId();
             $customers = Customer::factory(100)->create();
 
             foreach ($customers as $customer) {
@@ -29,30 +31,55 @@ class CustomerSeeder extends AbstractSeeder
 
                 Address::factory()->create([
                     'shipping_default' => true,
-                    'country_id' => 235,
+                    'country_id' => $countryId,
                     'customer_id' => $customer->id,
                 ]);
 
                 Address::factory()->create([
                     'shipping_default' => false,
-                    'country_id' => 235,
+                    'country_id' => $countryId,
                     'customer_id' => $customer->id,
                 ]);
 
                 Address::factory()->create([
                     'shipping_default' => false,
                     'billing_default' => true,
-                    'country_id' => 235,
+                    'country_id' => $countryId,
                     'customer_id' => $customer->id,
                 ]);
 
                 Address::factory()->create([
                     'shipping_default' => false,
                     'billing_default' => false,
-                    'country_id' => 235,
+                    'country_id' => $countryId,
                     'customer_id' => $customer->id,
                 ]);
             }
         });
+    }
+
+    private function resolveCountryId(): int
+    {
+        $countryId = Country::where('iso3', 'USA')->value('id');
+
+        if ($countryId) {
+            return $countryId;
+        }
+
+        $country = Country::updateOrCreate(
+            ['iso3' => 'USA'],
+            [
+                'name' => 'United States',
+                'iso2' => 'US',
+                'phonecode' => '1',
+                'capital' => 'Washington',
+                'currency' => 'USD',
+                'native' => 'United States',
+                'emoji' => 'US',
+                'emoji_u' => 'U+US',
+            ],
+        );
+
+        return $country->id;
     }
 }

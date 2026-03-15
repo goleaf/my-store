@@ -17,14 +17,19 @@ class TaxSeeder extends Seeder
      */
     public function run(): void
     {
-        $taxClass = TaxClass::first();
-
+        $taxClass = TaxClass::getDefault() ?? TaxClass::first();
         $ukCountry = Country::firstWhere('iso3', 'GBR');
+
+        if (! $taxClass || ! $ukCountry) {
+            return;
+        }
+
+        $hasDefaultZone = TaxZone::whereDefault(true)->exists();
 
         $ukTaxZone = TaxZone::factory()->create([
             'name' => 'UK',
             'active' => true,
-            'default' => true,
+            'default' => ! $hasDefaultZone,
             'zone_type' => 'country',
         ]);
 
