@@ -2,9 +2,9 @@
 
 namespace App\Traits;
 
-use Lunar\Models\Currency;
-use Lunar\Models\Price;
-use Lunar\Models\ProductVariant;
+use App\Store\Models\Currency;
+use App\Store\Models\Price;
+use App\Store\Models\ProductVariant;
 
 trait HasVariantFormSkuAndPrice
 {

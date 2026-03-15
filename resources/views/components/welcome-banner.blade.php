@@ -5,7 +5,7 @@
                 Welcome to the
 
                 <span class="text-indigo-600">
-                    Lunar
+                    Store
                 </span>
 
                 Demo Store
@@ -17,7 +17,7 @@
             </h1>
 
             <p class="mt-4 font-medium sm:leading-relaxed sm:text-xl">
-                This is an example of a classic e-commerce store built with Lunar.
+                This is an example of a classic e-commerce store built with Store.
                 We are currently making a screencast series to show you how we did it!
             </p>
 
@@ -26,7 +26,7 @@
                    href="https://lunarphp.io/"
                    target="_blank"
                    rel="noopener noreferrer">
-                    Lunar Website
+                    Store Website
                 </a>
 
                 <a class="block w-full px-12 py-3 font-medium text-indigo-600 rounded shadow sm:w-auto hover:text-indigo-700 active:text-indigo-500 focus:outline-none focus:ring"

@@ -1,11 +1,11 @@
 <?php
 
 use App\View\Components\ProductPrice;
-use Lunar\Models\Product;
-use Lunar\Models\ProductVariant;
-use Lunar\Models\Currency;
-use Lunar\Models\Price;
-use Lunar\Models\Language;
+use App\Store\Models\Product;
+use App\Store\Models\ProductVariant;
+use App\Store\Models\Currency;
+use App\Store\Models\Price;
+use App\Store\Models\Language;
 
 test('component renders with null product and variant', function () {
     $component = new ProductPrice(null, null, false);

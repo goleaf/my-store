@@ -1,9 +1,9 @@
 <?php
 
 use App\Traits\FetchesUrls;
-use Lunar\Models\Url;
-use Lunar\Models\Product;
-use Lunar\Models\Language;
+use App\Store\Models\Url;
+use App\Store\Models\Product;
+use App\Store\Models\Language;
 
 test('fetchUrl returns null when no url exists', function () {
     $trait = new class {

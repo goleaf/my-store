@@ -4,14 +4,14 @@ namespace App\Filament\Resources\ProductResource\Widgets;
 
 use App\Traits\HasVariantFormSkuAndPrice;
 use Filament\Actions\Action;
-use Lunar\Admin\Actions\Products\MapVariantsToProductOptions;
-use Lunar\Admin\Events\ProductVariantOptionsUpdated;
-use Lunar\Admin\Filament\Resources\ProductResource\Widgets\ProductOptionsWidget as LunarProductOptionsWidget;
-use Lunar\Facades\DB;
-use Lunar\Models\Contracts\ProductOption as ProductOptionContract;
-use Lunar\Models\Contracts\ProductVariant as ProductVariantContract;
-use Lunar\Models\ProductOption;
-use Lunar\Models\ProductVariant;
+use App\Admin\Actions\Products\MapVariantsToProductOptions;
+use App\Admin\Events\ProductVariantOptionsUpdated;
+use App\Admin\Filament\Resources\ProductResource\Widgets\ProductOptionsWidget as LunarProductOptionsWidget;
+use App\Store\Facades\DB;
+use App\Store\Models\Contracts\ProductOption as ProductOptionContract;
+use App\Store\Models\Contracts\ProductVariant as ProductVariantContract;
+use App\Store\Models\ProductOption;
+use App\Store\Models\ProductVariant;
 use Filament\Notifications\Notification;
 
 class ProductOptionsWidget extends LunarProductOptionsWidget
@@ -44,7 +44,7 @@ class ProductOptionsWidget extends LunarProductOptionsWidget
                         );
                     DB::commit();
                     Notification::make()
-                        ->title(__('lunarpanel::productoption.widgets.product-options.notifications.save-variants.success.title'))
+                        ->title(__('admin::productoption.widgets.product-options.notifications.save-variants.success.title'))
                         ->success()
                         ->send();
                     return;
@@ -97,7 +97,7 @@ class ProductOptionsWidget extends LunarProductOptionsWidget
 
                 DB::commit();
                 Notification::make()
-                    ->title(__('lunarpanel::productoption.widgets.product-options.notifications.save-variants.success.title'))
+                    ->title(__('admin::productoption.widgets.product-options.notifications.save-variants.success.title'))
                     ->success()
                     ->send();
             })

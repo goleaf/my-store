@@ -1,10 +1,10 @@
 <?php
 
 use App\Models\CustomProduct;
-use Lunar\Models\Product as LunarProduct;
+use App\Store\Models\Product as StoreProduct;
 
-test('custom product extends Lunar product', function () {
-    expect(CustomProduct::class)->toExtend(LunarProduct::class);
+test('custom product extends store product', function () {
+    expect(CustomProduct::class)->toExtend(StoreProduct::class);
 });
 
 test('custom product table name contains products', function () {

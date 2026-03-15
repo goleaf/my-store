@@ -4,8 +4,8 @@ namespace App\Livewire;
 
 use Illuminate\View\View;
 use Livewire\Component;
-use Lunar\Models\Collection;
-use Lunar\Models\Url;
+use App\Store\Models\Collection;
+use App\Store\Models\Url;
 
 class Home extends Component
 {

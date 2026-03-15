@@ -2,13 +2,13 @@
 
 use App\Livewire\Components\ShippingOptions;
 use Livewire\Livewire;
-use Lunar\Facades\CartSession;
-use Lunar\Facades\ShippingManifest;
-use Lunar\Models\Cart;
-use Lunar\DataTypes\ShippingOption;
-use Lunar\DataTypes\Price;
-use Lunar\Models\Currency;
-use Lunar\Models\TaxClass;
+use App\Store\Facades\CartSession;
+use App\Store\Facades\ShippingManifest;
+use App\Store\Models\Cart;
+use App\Store\DataTypes\ShippingOption;
+use App\Store\DataTypes\Price;
+use App\Store\Models\Currency;
+use App\Store\Models\TaxClass;
 
 test('component can mount', function () {
     $cart = Cart::factory()->create();

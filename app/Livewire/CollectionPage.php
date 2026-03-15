@@ -6,7 +6,7 @@ use App\Traits\FetchesUrls;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
-use Lunar\Models\Collection as CollectionModel;
+use App\Store\Models\Collection as CollectionModel;
 
 class CollectionPage extends Component
 {

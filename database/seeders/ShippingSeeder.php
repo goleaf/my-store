@@ -4,13 +4,13 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Lunar\Models\Country;
-use Lunar\Models\Currency;
-use Lunar\Models\Price;
-use Lunar\Shipping\Models\ShippingMethod;
-use Lunar\Shipping\Models\ShippingRate;
-use Lunar\Shipping\Models\ShippingZone;
-use Lunar\Shipping\Models\ShippingZonePostcode;
+use App\Store\Models\Country;
+use App\Store\Models\Currency;
+use App\Store\Models\Price;
+use App\Shipping\Models\ShippingMethod;
+use App\Shipping\Models\ShippingRate;
+use App\Shipping\Models\ShippingZone;
+use App\Shipping\Models\ShippingZonePostcode;
 
 class ShippingSeeder extends Seeder
 {

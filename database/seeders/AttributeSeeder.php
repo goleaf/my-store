@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Support\Facades\DB;
-use Lunar\Models\Attribute;
-use Lunar\Models\AttributeGroup;
+use App\Store\Models\Attribute;
+use App\Store\Models\AttributeGroup;
 
 class AttributeSeeder extends AbstractSeeder
 {

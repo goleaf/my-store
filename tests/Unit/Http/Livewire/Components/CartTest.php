@@ -2,9 +2,9 @@
 
 use App\Livewire\Components\Cart;
 use Livewire\Livewire;
-use Lunar\Facades\CartSession;
-use Lunar\Models\Cart as LunarCart;
-use Lunar\Models\Language;
+use App\Store\Facades\CartSession;
+use App\Store\Models\Cart as LunarCart;
+use App\Store\Models\Language;
 
 test('component can mount', function () {
     Language::factory()->create(['default' => true]);

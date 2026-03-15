@@ -3,12 +3,12 @@
 use App\Livewire\CheckoutPage;
 use Illuminate\Support\Facades\Config;
 use Livewire\Livewire;
-use Lunar\Facades\CartSession;
-use Lunar\Models\Cart;
-use Lunar\Models\CartAddress;
-use Lunar\Models\Country;
-use Lunar\Models\TaxClass;
-use Lunar\Models\TaxZone;
+use App\Store\Facades\CartSession;
+use App\Store\Models\Cart;
+use App\Store\Models\CartAddress;
+use App\Store\Models\Country;
+use App\Store\Models\TaxClass;
+use App\Store\Models\TaxZone;
 
 test('component can mount', function () {
     CartSession::shouldReceive('current')->andReturn(

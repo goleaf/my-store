@@ -1,9 +1,8 @@
 {
-    "name": "lunarphp/livewire-starter-kit",
+    "name": "my-store/app",
     "type": "project",
-    "description": "Livewire starter kit for Lunar e-commerce.",
+    "description": "Laravel e-commerce store.",
     "keywords": [
-        "lunar",
         "ecommerce",
         "e-commerce",
         "livewire",
@@ -12,17 +11,29 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "barryvdh/laravel-dompdf": "^3.0",
+        "cartalyst/converter": "^9.0|^10",
+        "doctrine/dbal": "^3.6",
+        "filament/filament": "^5.0",
         "guzzlehttp/guzzle": "^7.2",
         "http-interop/http-factory-guzzle": "^1.2",
+        "kalnoy/nestedset": "^v6.0.5",
         "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
+        "laravel/scout": "^10.13.1",
         "laravel/tinker": "^2.9",
         "league/flysystem-aws-s3-v3": "^3.0",
-        "lunarphp/lunar": "^1.0@beta",
-        "lunarphp/stripe": "^1.0@beta",
-        "lunarphp/table-rate-shipping": "^1.0@beta",
+        "livewire/livewire": "^4.0",
+        "lukascivil/treewalker": "0.9.1",
         "meilisearch/meilisearch-php": "^1.6",
-        "predis/predis": "^2.2"
+        "predis/predis": "^2.2",
+        "spatie/laravel-activitylog": "^4.10.1",
+        "spatie/laravel-blink": "^1.7.1",
+        "spatie/laravel-medialibrary": "^11.12.7",
+        "spatie/laravel-permission": "^6.12",
+        "spatie/php-structure-discoverer": "^2.3.1",
+        "stripe/stripe-php": "^16.0",
+        "technikermathe/blade-lucide-icons": "^v3.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",
@@ -38,8 +49,19 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
-        }
+            "Database\\Seeders\\": "database/seeders/",
+            "App\\Store\\Database\\Factories\\": "database/factories/",
+            "App\\Store\\Database\\Seeders\\": "database/seeders/",
+            "App\\Store\\Database\\State\\": "database/state/",
+            "App\\Admin\\Database\\Factories\\": "database/factories/",
+            "App\\Admin\\Database\\State\\": "database/state/",
+            "App\\Shipping\\Database\\Factories\\": "database/factories/",
+            "App\\Shipping\\Factories\\": "database/factories/"
+        },
+        "files": [
+            "app/Store/helpers.php",
+            "app/Admin/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

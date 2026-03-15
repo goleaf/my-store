@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Support\Facades\DB;
-use Lunar\FieldTypes\Text;
-use Lunar\FieldTypes\TranslatedText;
-use Lunar\Models\Collection;
-use Lunar\Models\CollectionGroup;
+use App\Store\FieldTypes\Text;
+use App\Store\FieldTypes\TranslatedText;
+use App\Store\Models\Collection;
+use App\Store\Models\CollectionGroup;
 
 class CollectionSeeder extends AbstractSeeder
 {

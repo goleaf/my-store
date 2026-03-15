@@ -3,11 +3,11 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Lunar\Models\Country;
-use Lunar\Models\TaxClass;
-use Lunar\Models\TaxRate;
-use Lunar\Models\TaxZone;
-use Lunar\Models\TaxZoneCountry;
+use App\Store\Models\Country;
+use App\Store\Models\TaxClass;
+use App\Store\Models\TaxRate;
+use App\Store\Models\TaxZone;
+use App\Store\Models\TaxZoneCountry;
 
 class TaxSeeder extends Seeder
 {

@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Shipping\Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Store\Models\Product;
+use App\Shipping\Models\ShippingExclusion;
+
+class ShippingExclusionFactory extends Factory
+{
+    protected $model = ShippingExclusion::class;
+
+    public function definition(): array
+    {
+        return [
+            'purchasable_id' => 1,
+            'purchasable_type' => Product::morphName(),
+        ];
+    }
+}

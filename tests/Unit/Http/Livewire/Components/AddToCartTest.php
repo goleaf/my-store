@@ -2,12 +2,12 @@
 
 use App\Livewire\Components\AddToCart;
 use Livewire\Livewire;
-use Lunar\Facades\CartSession;
-use Lunar\Models\ProductVariant;
-use Lunar\Models\Product;
-use Lunar\Models\Currency;
-use Lunar\Models\Price;
-use Lunar\Models\Language;
+use App\Store\Facades\CartSession;
+use App\Store\Models\ProductVariant;
+use App\Store\Models\Product;
+use App\Store\Models\Currency;
+use App\Store\Models\Price;
+use App\Store\Models\Language;
 
 test('component can mount', function () {
     Livewire::test(AddToCart::class, ['purchasable' => null])
@@ -41,7 +41,7 @@ test('addToCart dispatches event when valid', function () {
         Price::factory()->make(['currency_id' => $currency->id])->getAttributes()
     );
 
-    $cart = \Lunar\Models\Cart::factory()->create();
+    $cart = \App\Store\Models\Cart::factory()->create();
     CartSession::shouldReceive('manager')->andReturn($cart);
 
     Livewire::test(AddToCart::class, ['purchasable' => $variant])

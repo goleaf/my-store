@@ -6,16 +6,16 @@ use App\Models\User;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Lunar\Base\OrderReferenceGenerator;
-use Lunar\Base\ValueObjects\Cart\TaxBreakdown;
-use Lunar\Base\ValueObjects\Cart\TaxBreakdownAmount;
-use Lunar\DataTypes\Price;
-use Lunar\Facades\Pricing;
-use Lunar\Models\Channel;
-use Lunar\Models\Currency;
-use Lunar\Models\Order;
-use Lunar\Models\OrderAddress;
-use Lunar\Models\ProductVariant;
+use App\Store\Base\OrderReferenceGenerator;
+use App\Store\Base\ValueObjects\Cart\TaxBreakdown;
+use App\Store\Base\ValueObjects\Cart\TaxBreakdownAmount;
+use App\Store\DataTypes\Price;
+use App\Store\Facades\Pricing;
+use App\Store\Models\Channel;
+use App\Store\Models\Currency;
+use App\Store\Models\Order;
+use App\Store\Models\OrderAddress;
+use App\Store\Models\ProductVariant;
 
 class OrderSeeder extends Seeder
 {

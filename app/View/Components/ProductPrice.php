@@ -4,9 +4,9 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 use Illuminate\View\View;
-use Lunar\Facades\Pricing;
-use Lunar\Models\Price;
-use Lunar\Models\ProductVariant;
+use App\Store\Facades\Pricing;
+use App\Store\Models\Price;
+use App\Store\Models\ProductVariant;
 
 class ProductPrice extends Component
 {

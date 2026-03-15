@@ -4,22 +4,22 @@ namespace Database\Seeders;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Lunar\Admin\Actions\Products\MapVariantsToProductOptions;
-use Lunar\FieldTypes\ListField;
-use Lunar\FieldTypes\Text;
-use Lunar\FieldTypes\TranslatedText;
-use Lunar\Models\Attribute;
-use Lunar\Models\Brand;
-use Lunar\Models\Collection;
-use Lunar\Models\Currency;
-use Lunar\Models\Language;
-use Lunar\Models\Price;
-use Lunar\Models\Product;
-use Lunar\Models\ProductOption;
-use Lunar\Models\ProductOptionValue;
-use Lunar\Models\ProductType;
-use Lunar\Models\ProductVariant;
-use Lunar\Models\TaxClass;
+use App\Admin\Actions\Products\MapVariantsToProductOptions;
+use App\Store\FieldTypes\ListField;
+use App\Store\FieldTypes\Text;
+use App\Store\FieldTypes\TranslatedText;
+use App\Store\Models\Attribute;
+use App\Store\Models\Brand;
+use App\Store\Models\Collection;
+use App\Store\Models\Currency;
+use App\Store\Models\Language;
+use App\Store\Models\Price;
+use App\Store\Models\Product;
+use App\Store\Models\ProductOption;
+use App\Store\Models\ProductOptionValue;
+use App\Store\Models\ProductType;
+use App\Store\Models\ProductVariant;
+use App\Store\Models\TaxClass;
 use App\Jobs\GenerateVariants;
 
 class ProductSeeder extends AbstractSeeder

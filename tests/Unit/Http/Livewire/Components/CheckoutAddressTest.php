@@ -2,10 +2,10 @@
 
 use App\Livewire\Components\CheckoutAddress;
 use Livewire\Livewire;
-use Lunar\Facades\CartSession;
-use Lunar\Models\Cart;
-use Lunar\Models\CartAddress;
-use Lunar\Models\Country;
+use App\Store\Facades\CartSession;
+use App\Store\Models\Cart;
+use App\Store\Models\CartAddress;
+use App\Store\Models\Country;
 
 test('component can mount with billing type', function () {
     $cart = Cart::factory()->create();

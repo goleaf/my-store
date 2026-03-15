@@ -2,8 +2,8 @@
 
 use App\Livewire\Components\Navigation;
 use Livewire\Livewire;
-use Lunar\Models\Collection;
-use Lunar\Models\Language;
+use App\Store\Models\Collection;
+use App\Store\Models\Language;
 
 test('component can mount', function () {
     Livewire::test(Navigation::class)

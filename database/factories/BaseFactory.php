@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Store\Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+abstract class BaseFactory extends Factory
+{
+    public function modelName()
+    {
+        return (new $this->model)::modelClass();
+    }
+}

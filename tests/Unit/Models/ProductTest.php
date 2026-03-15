@@ -1,15 +1,15 @@
 <?php
 
 use App\Models\Product;
-use Lunar\Models\Product as LunarProduct;
+use App\Store\Models\Product as StoreProduct;
 
-test('product extends Lunar product', function () {
-    expect(Product::class)->toExtend(LunarProduct::class);
+test('product extends store product', function () {
+    expect(Product::class)->toExtend(StoreProduct::class);
 });
 
 test('product can be instantiated', function () {
     $product = new Product;
 
     expect($product)->toBeInstanceOf(Product::class)
-        ->toBeInstanceOf(LunarProduct::class);
+        ->toBeInstanceOf(StoreProduct::class);
 });

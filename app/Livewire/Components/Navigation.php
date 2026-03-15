@@ -4,7 +4,7 @@ namespace App\Livewire\Components;
 
 use Illuminate\View\View;
 use Livewire\Component;
-use Lunar\Models\Collection;
+use App\Store\Models\Collection;
 
 class Navigation extends Component
 {

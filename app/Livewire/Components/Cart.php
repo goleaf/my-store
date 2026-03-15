@@ -5,7 +5,7 @@ namespace App\Livewire\Components;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
-use Lunar\Facades\CartSession;
+use App\Store\Facades\CartSession;
 
 class Cart extends Component
 {

@@ -2,7 +2,7 @@
 
 namespace App\Modifiers;
 
-use Lunar\Models\Cart;
+use App\Store\Models\Cart;
 
 class ShippingModifier
 {
@@ -16,13 +16,13 @@ class ShippingModifier
          */
 
         if(config('shipping-tables.enabled') == false){
-            \Lunar\Facades\ShippingManifest::addOption(
-                new \Lunar\DataTypes\ShippingOption(
+            \App\Store\Facades\ShippingManifest::addOption(
+                new \App\Store\DataTypes\ShippingOption(
                     name: 'Basic Delivery',
                     description: 'Basic Delivery',
                     identifier: 'BASDEL',
-                    price: new \Lunar\DataTypes\Price(500, $cart->currency, 1),
-                    taxClass: \Lunar\Models\TaxClass::getDefault()
+                    price: new \App\Store\DataTypes\Price(500, $cart->currency, 1),
+                    taxClass: \App\Store\Models\TaxClass::getDefault()
                 )
             );
         }

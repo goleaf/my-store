@@ -6,9 +6,9 @@ use App\Traits\FetchesUrls;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
-use Lunar\Models\Product;
-use Lunar\Models\ProductVariant;
-use Lunar\Models\Price;
+use App\Store\Models\Product;
+use App\Store\Models\ProductVariant;
+use App\Store\Models\Price;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ProductPage extends Component

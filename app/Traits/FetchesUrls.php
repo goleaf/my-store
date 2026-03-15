@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use Lunar\Models\Url;
+use App\Store\Models\Url;
 
 trait FetchesUrls
 {
