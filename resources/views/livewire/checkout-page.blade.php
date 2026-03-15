@@ -1,7 +1,8 @@
 <div>
     <div class="max-w-screen-xl px-4 py-12 mx-auto sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:items-start">
-            <div class="px-6 py-8 space-y-4 bg-white border border-gray-100 lg:sticky lg:top-8 rounded-xl lg:order-last">
+            <div
+                class="px-6 py-8 space-y-4 bg-white border border-gray-100 lg:sticky lg:top-8 rounded-xl lg:order-last">
                 <h3 class="font-medium">
                     Order Summary
                 </h3>
@@ -78,21 +79,21 @@
             </div>
 
             <div class="space-y-6 lg:col-span-2">
-                @include('vendor.store.partials.checkout.address', [
+                @include('store.partials.checkout.address', [
                     'type' => 'shipping',
                     'step' => $steps['shipping_address'],
                 ])
 
-                @include('vendor.store.partials.checkout.shipping_option', [
+                @include('store.partials.checkout.shipping_option', [
                     'step' => $steps['shipping_option'],
                 ])
 
-                @include('vendor.store.partials.checkout.address', [
+                @include('store.partials.checkout.address', [
                     'type' => 'billing',
                     'step' => $steps['billing_address'],
                 ])
 
-                @include('vendor.store.partials.checkout.payment', [
+                @include('store.partials.checkout.payment', [
                     'step' => $steps['payment'],
                 ])
             </div>

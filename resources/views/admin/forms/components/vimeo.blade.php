@@ -1,5 +1,5 @@
 <div class="space-y-4">
-    @include('filament-forms::vendor.store.components.text-input')
+    @include('filament-forms::store.components.text-input')
     @if($getState() != '')
 
         <iframe src="https://player.vimeo.com/video/{{ $getState() }}?h=17777482e5" width="640" height="360"

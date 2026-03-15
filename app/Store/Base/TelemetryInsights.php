@@ -2,7 +2,6 @@
 
 namespace App\Store\Base;
 
-use Composer\InstalledVersions;
 use Illuminate\Support\Collection;
 use App\Store\Models\Currency;
 use App\Store\Models\Language;
@@ -27,11 +26,6 @@ class TelemetryInsights implements ProvidesTelemetryInsights
     public function laravelVersion(): string
     {
         return app()->version();
-    }
-
-    public function lunarVersion(): string
-    {
-        return InstalledVersions::getPrettyVersion('lunarphp/core') ?? 'dev';
     }
 
     public function dbDriver(): string

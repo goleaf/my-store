@@ -12,8 +12,6 @@ interface ProvidesTelemetryInsights
 
     public function laravelVersion(): string;
 
-    public function lunarVersion(): string;
-
     public function dbDriver(): string;
 
     public function phpVersion(): string;

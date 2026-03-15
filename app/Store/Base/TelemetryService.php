@@ -49,7 +49,6 @@ class TelemetryService implements TelemetryServiceInterface
             'domain_hash' => $this->insights->domainHash(),
             'environment' => $this->insights->environment(),
             'laravel_version' => $this->insights->laravelVersion(),
-            'lunar_version' => $this->insights->lunarVersion(),
             'db_driver' => $this->insights->dbDriver(),
             'php_version' => $this->insights->phpVersion(),
             'product_count' => $this->insights->productCount(),
