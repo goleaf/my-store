@@ -20,7 +20,9 @@ test('collections are visible', function () {
             'default' => true,
         ])->create();
 
-    $component = expect($collections->count())->toHaveCount('collections')
+    expect($collections)->toHaveCount(5);
+
+    $component = Livewire::test(Navigation::class)
         ->assertViewIs('livewire.components.navigation');
 
     foreach ($collections as $collection) {
