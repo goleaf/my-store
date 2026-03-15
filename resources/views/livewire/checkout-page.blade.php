@@ -12,7 +12,7 @@
                             <div class="flex items-center py-4"
                                  wire:key="cart_line_{{ $line->id }}">
                                 <img class="object-cover w-16 h-16 rounded"
-                                     src="{{ $line->purchasable->getThumbnail()->getUrl() }}" />
+                                     src="{{ $line->purchasable->getThumbnail()->getUrl() }}"/>
 
                                 <div class="flex-1 ml-4">
                                     <p class="text-sm font-medium max-w-[35ch]">
@@ -78,21 +78,21 @@
             </div>
 
             <div class="space-y-6 lg:col-span-2">
-                @include('partials.checkout.address', [
+                @include('vendor.store.partials.checkout.address', [
                     'type' => 'shipping',
                     'step' => $steps['shipping_address'],
                 ])
 
-                @include('partials.checkout.shipping_option', [
+                @include('vendor.store.partials.checkout.shipping_option', [
                     'step' => $steps['shipping_option'],
                 ])
 
-                @include('partials.checkout.address', [
+                @include('vendor.store.partials.checkout.address', [
                     'type' => 'billing',
                     'step' => $steps['billing_address'],
                 ])
 
-                @include('partials.checkout.payment', [
+                @include('vendor.store.partials.checkout.payment', [
                     'step' => $steps['payment'],
                 ])
             </div>

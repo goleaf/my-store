@@ -2,7 +2,6 @@
 
 namespace App\Filament;
 
-use;
 use App\Admin\Filament\Pages;
 use App\Admin\Filament\Resources;
 use App\Filament\AvatarProviders\GravatarProvider;
