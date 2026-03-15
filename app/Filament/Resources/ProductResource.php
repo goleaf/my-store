@@ -36,6 +36,8 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Actions;
+use Filament\Schemas\Components as SchemaComponents;
 
 class ProductResource extends BaseResource
 {
@@ -118,7 +120,7 @@ class ProductResource extends BaseResource
                     )->type('warning')->hidden(function (Model $record) {
                         return $record->channels()->where('enabled', true)->count();
                     }),
-                Forms\Components\Section::make()
+                SchemaComponents\Section::make()
                     ->schema(
                         static::getMainFormComponents(),
                     ),
@@ -247,11 +249,11 @@ class ProductResource extends BaseResource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ])
             ->selectCurrentPageOnly()

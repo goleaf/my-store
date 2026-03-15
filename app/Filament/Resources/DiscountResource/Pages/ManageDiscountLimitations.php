@@ -4,7 +4,7 @@ namespace App\Filament\Resources\DiscountResource\Pages;
 
 use App\Filament\Resources\DiscountResource;
 use App\Support\Pages\BaseEditRecord;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Contracts\Support\Htmlable;

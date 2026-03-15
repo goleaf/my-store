@@ -8,6 +8,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Filament\Schemas\Components as SchemaComponents;
 
 trait UpdatesOrderStatus
 {
@@ -98,9 +99,9 @@ trait UpdatesOrderStatus
     {
         return [
             static::getStatusSelectInput(),
-            Forms\Components\Group::make([
+            SchemaComponents\Group::make([
                 static::getMailersCheckboxInput(),
-                Forms\Components\Group::make([
+                SchemaComponents\Group::make([
                     static::getAdditionalContentInput(),
                     static::getEmailAddressesInput(),
                     static::getAdditionalEmailInput(),

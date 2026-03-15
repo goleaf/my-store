@@ -5,11 +5,13 @@ namespace App\Filament\Resources\ProductResource\RelationManagers;
 use App\Events\ProductCustomerGroupsUpdated;
 use App\Support\RelationManagers\BaseRelationManager;
 use Filament;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Filament\Actions;
+use Filament\Schemas\Components as SchemaComponents;
 
 class CustomerGroupRelationManager extends BaseRelationManager
 {
@@ -57,14 +59,14 @@ class CustomerGroupRelationManager extends BaseRelationManager
         $grid = [];
 
         if (! $columns->isEmpty()) {
-            $grid[] = Filament\Forms\Components\Grid::make($columns->count())->schema(
+            $grid[] = SchemaComponents\Grid::make($columns->count())->schema(
                 $columns->toArray()
             );
         }
 
         return [
             ...$grid,
-            ...[Filament\Forms\Components\Grid::make(2)->schema([
+            ...[SchemaComponents\Grid::make(2)->schema([
                 Filament\Forms\Components\DateTimePicker::make('starts_at')->label(
                     __('admin::relationmanagers.customer_groups.form.starts_at.label')
                 ),
@@ -93,7 +95,7 @@ class CustomerGroupRelationManager extends BaseRelationManager
             )
             ->paginated(false)
             ->headerActions([
-                Tables\Actions\AttachAction::make()->form(fn (Tables\Actions\AttachAction $action): array => [
+                Actions\AttachAction::make()->form(fn (Actions\AttachAction $action): array => [
                     $action->getRecordSelect(),
                     ...static::getFormInputs(),
                 ])->recordTitle(function ($record) {
@@ -120,7 +122,7 @@ class CustomerGroupRelationManager extends BaseRelationManager
                     )->dateTime(),
                 ],
             ])->actions([
-                Tables\Actions\EditAction::make()->after(
+                Actions\EditAction::make()->after(
                     fn () => ProductCustomerGroupsUpdated::dispatch(
                         $this->getOwnerRecord()
                     )

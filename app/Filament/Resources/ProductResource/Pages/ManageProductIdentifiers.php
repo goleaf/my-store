@@ -6,11 +6,11 @@ use App\Filament\Resources\ProductResource;
 use App\Filament\Resources\ProductVariantResource;
 use App\Store\Models\Contracts\ProductVariant as ProductVariantContract;
 use App\Support\Pages\BaseEditRecord;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Schemas\Components as SchemaComponents;
 
 class ManageProductIdentifiers extends BaseEditRecord
 {
@@ -93,7 +93,7 @@ class ManageProductIdentifiers extends BaseEditRecord
         $variant = $this->getVariant();
 
         return $schema->components([
-            Section::make()->schema([
+            SchemaComponents\Section::make()->schema([
                 ProductVariantResource::getSkuFormComponent()
                     ->live()->unique(
                         table: fn () => $variant->getTable(),

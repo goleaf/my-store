@@ -19,6 +19,7 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Actions;
 
 class OrderResource extends BaseResource
 {
@@ -65,12 +66,12 @@ class OrderResource extends BaseResource
             )
             ->persistFiltersInSession()
             ->actions([
-                Tables\Actions\EditAction::make()
+                Actions\EditAction::make()
                     ->url(fn ($record) => ManageOrder::getUrl(['record' => $record])),
             ])
             ->recordUrl(fn ($record) => ManageOrder::getUrl(['record' => $record]))
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+                Actions\BulkActionGroup::make([
                     UpdateStatusBulkAction::make('update_status')
                         ->deselectRecordsAfterCompletion(),
                 ]),

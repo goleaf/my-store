@@ -16,6 +16,8 @@ use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Actions;
+use Filament\Schemas\Components as SchemaComponents;
 
 class BrandResource extends BaseResource
 {
@@ -64,7 +66,7 @@ class BrandResource extends BaseResource
     {
         return $schema
             ->components([
-                Forms\Components\Section::make()
+                SchemaComponents\Section::make()
                     ->schema(
                         static::getMainFormComponents(),
                     ),
@@ -102,11 +104,11 @@ class BrandResource extends BaseResource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ])->searchable();
     }

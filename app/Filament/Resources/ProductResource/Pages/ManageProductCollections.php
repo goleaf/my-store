@@ -11,6 +11,7 @@ use Filament\Forms;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Actions;
 
 class ManageProductCollections extends BaseManageRelatedRecords
 {
@@ -50,7 +51,7 @@ class ManageProductCollections extends BaseManageRelatedRecords
                 //
             ])
             ->headerActions([
-                Tables\Actions\AttachAction::make()
+                Actions\AttachAction::make()
                     ->recordSelect(
                         function (Forms\Components\Select $select) {
                             return $select->placeholder(__('admin::product.pages.collections.select_collection'))
@@ -70,15 +71,15 @@ class ManageProductCollections extends BaseManageRelatedRecords
                     ),
             ])
             ->actions([
-                Tables\Actions\DetachAction::make()->after(
+                Actions\DetachAction::make()->after(
                     fn () => ProductCollectionsUpdated::dispatch(
                         $this->getOwnerRecord()
                     )
                 ),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DetachBulkAction::make()->after(
+                Actions\BulkActionGroup::make([
+                    Actions\DetachBulkAction::make()->after(
                         fn () => ProductCollectionsUpdated::dispatch(
                             $this->getOwnerRecord()
                         )

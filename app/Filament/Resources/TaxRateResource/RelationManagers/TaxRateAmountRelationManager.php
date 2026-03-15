@@ -5,11 +5,12 @@ namespace App\Filament\Resources\TaxRateResource\RelationManagers;
 use App\Store\Models\TaxRateAmount;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Validation\Rules\Unique;
+use Filament\Actions;
 
 class TaxRateAmountRelationManager extends RelationManager
 {
@@ -49,7 +50,7 @@ class TaxRateAmountRelationManager extends RelationManager
             )
             ->paginated(false)
             ->headerActions([
-                Tables\Actions\CreateAction::make('create'),
+                Actions\CreateAction::make('create'),
             ])->columns([
                 Tables\Columns\TextColumn::make('taxClass.name')->label(
                     __('admin::relationmanagers.tax_rate_amounts.table.tax_class.label')
@@ -58,8 +59,8 @@ class TaxRateAmountRelationManager extends RelationManager
                     __('admin::relationmanagers.tax_rate_amounts.table.percentage.label')
                 ),
             ])->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Actions\EditAction::make(),
+                Actions\DeleteAction::make(),
             ]);
     }
 }

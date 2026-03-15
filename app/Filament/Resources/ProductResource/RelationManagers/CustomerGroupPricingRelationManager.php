@@ -9,12 +9,14 @@ use App\Store\Models\CustomerGroup;
 use App\Store\Models\Price;
 use App\Support\RelationManagers\BaseRelationManager;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rules\Unique;
+use Filament\Actions;
+use Filament\Schemas\Components as SchemaComponents;
 
 class CustomerGroupPricingRelationManager extends BaseRelationManager
 {
@@ -36,7 +38,7 @@ class CustomerGroupPricingRelationManager extends BaseRelationManager
     {
         return $schema
             ->components([
-                Forms\Components\Group::make([
+                SchemaComponents\Group::make([
                     Forms\Components\Select::make('currency_id')
                         ->label(
                             __('admin::relationmanagers.pricing.form.currency_id.label')
@@ -68,7 +70,7 @@ class CustomerGroupPricingRelationManager extends BaseRelationManager
                         }),
                 ])->columns(2),
 
-                Forms\Components\Group::make([
+                SchemaComponents\Group::make([
                     Forms\Components\TextInput::make('price')->formatStateUsing(
                         fn ($state) => $state?->decimal(rounding: false)
                     )->numeric()->helperText(
@@ -129,7 +131,7 @@ class CustomerGroupPricingRelationManager extends BaseRelationManager
                     ),
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()->mutateFormDataUsing(function (array $data) {
+                Actions\CreateAction::make()->mutateFormDataUsing(function (array $data) {
                     $currencyModel = Currency::find($data['currency_id'] ?? null);
 
                     $data['min_quantity'] = 1;
@@ -147,7 +149,7 @@ class CustomerGroupPricingRelationManager extends BaseRelationManager
                     ),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->mutateFormDataUsing(function (array $data): array {
+                Actions\EditAction::make()->mutateFormDataUsing(function (array $data): array {
                     $currencyModel = Currency::find($data['currency_id'] ?? null);
 
                     $data['min_quantity'] = 1;
@@ -160,7 +162,7 @@ class CustomerGroupPricingRelationManager extends BaseRelationManager
                 })->after(
                     fn () => ProductPricingUpdated::dispatch($this->getOwnerRecord())
                 ),
-                Tables\Actions\DeleteAction::make(),
+                Actions\DeleteAction::make(),
             ]);
     }
 }

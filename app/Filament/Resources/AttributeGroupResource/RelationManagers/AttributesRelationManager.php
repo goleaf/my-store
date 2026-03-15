@@ -8,13 +8,15 @@ use App\Support\Forms\Components\TranslatedText;
 use App\Support\RelationManagers\BaseRelationManager;
 use App\Support\Tables\Columns\TranslatedTextColumn;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Unique;
+use Filament\Actions;
+use Filament\Schemas\Components as SchemaComponents;
 
 class AttributesRelationManager extends BaseRelationManager
 {
@@ -63,7 +65,7 @@ class AttributesRelationManager extends BaseRelationManager
                         fn (?Model $record) => (bool) $record
                     )
                     ->required(),
-                Forms\Components\Grid::make(3)->schema([
+                SchemaComponents\Grid::make(3)->schema([
                     Forms\Components\Toggle::make('searchable')
                         ->label(
                             __('admin::attribute.form.searchable.label')
@@ -105,7 +107,7 @@ class AttributesRelationManager extends BaseRelationManager
                     ->helperText(
                         __('admin::attribute.form.validation_rules.helper')
                     ),
-                Forms\Components\Grid::make(1)
+                SchemaComponents\Grid::make(1)
                     ->schema(function (Forms\Get $get) {
                         return AttributeData::getConfigurationFields($get('type'));
                     })->key('configuration')->statePath('configuration'),
@@ -134,7 +136,7 @@ class AttributesRelationManager extends BaseRelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()->mutateFormDataUsing(function (array $data, RelationManager $livewire) {
+                Actions\CreateAction::make()->mutateFormDataUsing(function (array $data, RelationManager $livewire) {
                     $data['configuration'] = $data['configuration'] ?? [];
                     $data['system'] = false;
                     $data['attribute_type'] = $livewire->ownerRecord->attributable_type;
@@ -144,12 +146,12 @@ class AttributesRelationManager extends BaseRelationManager
                 }),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Actions\EditAction::make(),
+                Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('position', 'asc')

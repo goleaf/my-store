@@ -11,6 +11,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Schemas\Components as SchemaComponents;
 
 class CurrencyResource extends BaseResource
 {
@@ -43,7 +44,7 @@ class CurrencyResource extends BaseResource
     public static function getDefaultForm(Schema $schema): Schema
     {
         return $schema->components([
-            Forms\Components\Section::make('details')->schema(
+            SchemaComponents\Section::make('details')->schema(
                 static::getMainFormComponents()
             )->heading()->columns(),
         ]);

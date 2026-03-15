@@ -15,6 +15,8 @@ use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Actions;
+use Filament\Schemas\Components as SchemaComponents;
 
 class TaxZoneResource extends BaseResource
 {
@@ -44,10 +46,10 @@ class TaxZoneResource extends BaseResource
     protected static function getMainFormComponents(): array
     {
         return [
-            Forms\Components\Section::make()->schema([
+            SchemaComponents\Section::make()->schema([
                 static::getNameFormComponent(),
                 static::getPriceDisplayFormComponent(),
-                Forms\Components\Group::make([
+                SchemaComponents\Group::make([
                     static::getActiveFormComponent(),
                     static::getDefaultFormComponent(),
                 ])->columns(2),
@@ -306,11 +308,11 @@ class TaxZoneResource extends BaseResource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

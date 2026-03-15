@@ -8,12 +8,14 @@ use App\Shipping\Models\Contracts\ShippingMethod;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
 use Filament\Forms\Components\Component;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Actions;
+use Filament\Schemas\Components as SchemaComponents;
 
 class ShippingMethodResource extends BaseResource
 {
@@ -60,7 +62,7 @@ class ShippingMethodResource extends BaseResource
                 )->type('warning')->hidden(function (Model $record) {
                     return $record->customerGroups()->where('enabled', true)->count();
                 }),
-            Forms\Components\Section::make()->schema(
+            SchemaComponents\Section::make()->schema(
                 static::getMainFormComponents(),
             ),
         ])->columns(1);
@@ -70,11 +72,11 @@ class ShippingMethodResource extends BaseResource
     {
         return [
             static::getNameFormComponent(),
-            Forms\Components\Group::make([
+            SchemaComponents\Group::make([
                 static::getCodeFormComponent(),
                 static::getDriverFormComponent(),
             ])->columns(2),
-            Forms\Components\Group::make([
+            SchemaComponents\Group::make([
                 static::getCutoffFormComponent(),
                 static::getChargeByFormComponent(),
             ])->columns(2),
@@ -120,7 +122,7 @@ class ShippingMethodResource extends BaseResource
 
     public static function getChargeByFormComponent(): Component
     {
-        return Forms\Components\Group::make([
+        return SchemaComponents\Group::make([
             Forms\Components\Select::make('charge_by')
                 ->label(
                     __('admin.shipping::shippingmethod.form.charge_by.label')
@@ -152,11 +154,11 @@ class ShippingMethodResource extends BaseResource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

@@ -10,7 +10,7 @@ use Filament\Facades\Filament;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Notifications\Notification;
 use Filament\Support\Enums\ActionSize;
 use Illuminate\Database\Eloquent\Model;
@@ -39,7 +39,7 @@ class ActivityLogFeed extends Component implements HasActions, HasForms
 
     public ?string $comment = null;
 
-    public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function form(Schema $schema): Schema
     {
         return $schema
             ->components([

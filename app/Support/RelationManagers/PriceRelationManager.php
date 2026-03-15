@@ -9,11 +9,13 @@ use App\Store\Models\CustomerGroup;
 use App\Store\Models\Price;
 use Closure;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Actions;
+use Filament\Schemas\Components as SchemaComponents;
 
 class PriceRelationManager extends BaseRelationManager
 {
@@ -33,7 +35,7 @@ class PriceRelationManager extends BaseRelationManager
     {
         return $schema
             ->components([
-                Forms\Components\Group::make([
+                SchemaComponents\Group::make([
                     Forms\Components\Select::make('currency_id')
                         ->label(
                             __('admin::relationmanagers.pricing.form.currency_id.label')
@@ -62,12 +64,10 @@ class PriceRelationManager extends BaseRelationManager
                         ->minValue(2)
                         ->required()
                         ->rules([
-                            fn (Forms\Get $get, $record) => function (string $attribute, $value, Closure $fail) use ($get, $form, $record) {
+                            fn (Forms\Get $get, $record) => function (string $attribute, $value, Closure $fail) use ($get, $record) {
                                 $owner = $this->getOwnerRecord();
 
-                                $price = $form->getModel();
-
-                                $exist = $price::query()
+                                $exist = Price::query()
                                     ->when(filled($record), fn ($query) => $query->where('id', '!=', $record->id))
                                     ->when(blank($get('customer_group_id')),
                                         fn ($query) => $query->whereNull('customer_group_id'),
@@ -85,7 +85,7 @@ class PriceRelationManager extends BaseRelationManager
                         ]),
                 ])->columns(3),
 
-                Forms\Components\Group::make([
+                SchemaComponents\Group::make([
                     Forms\Components\TextInput::make('price')->formatStateUsing(
                         fn ($state) => $state?->decimal(rounding: false)
                     )->numeric()->helperText(
@@ -157,7 +157,7 @@ class PriceRelationManager extends BaseRelationManager
                 ),
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()->mutateFormDataUsing(function (array $data) {
+                Actions\CreateAction::make()->mutateFormDataUsing(function (array $data) {
                     $currencyModel = Currency::find($data['currency_id'] ?? null);
 
                     if ($currencyModel) {
@@ -174,7 +174,7 @@ class PriceRelationManager extends BaseRelationManager
                 ),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->mutateFormDataUsing(function (array $data): array {
+                Actions\EditAction::make()->mutateFormDataUsing(function (array $data): array {
                     $currencyModel = Currency::find($data['currency_id'] ?? null);
 
                     if ($currencyModel) {
@@ -187,7 +187,7 @@ class PriceRelationManager extends BaseRelationManager
                         $this->getOwnerRecord()
                     )
                 ),
-                Tables\Actions\DeleteAction::make()->after(
+                Actions\DeleteAction::make()->after(
                     fn () => ModelPricesUpdated::dispatch(
                         $this->getOwnerRecord()
                     )

@@ -7,6 +7,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use function Filament\Support\generate_search_column_expression;
+use Filament\Actions;
 
 class CustomerLimitationRelationManager extends BaseRelationManager
 {
@@ -33,7 +34,7 @@ class CustomerLimitationRelationManager extends BaseRelationManager
             )
             ->paginated(false)
             ->headerActions([
-                Tables\Actions\AttachAction::make()->form(fn (Tables\Actions\AttachAction $action): array => [
+                Actions\AttachAction::make()->form(fn (Actions\AttachAction $action): array => [
                     $action->getRecordSelect(),
                 ])->recordTitle(function ($record) {
                     return $record->full_name;
@@ -60,7 +61,7 @@ class CustomerLimitationRelationManager extends BaseRelationManager
                         __('admin::discount.relationmanagers.customers.table.name.label')
                     ),
             ])->actions([
-                Tables\Actions\DetachAction::make(),
+                Actions\DetachAction::make(),
             ]);
     }
 }

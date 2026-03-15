@@ -6,10 +6,10 @@ use App\Filament\Resources\ProductVariantResource;
 use App\Store\Models\Currency;
 use App\Store\Models\Price;
 use Filament\Forms;
-use Filament\Forms\Components\Section;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Schemas\Components as SchemaComponents;
 
 trait ManagesProductPricing
 {
@@ -81,12 +81,12 @@ trait ManagesProductPricing
     {
         //        dd($this->basePrices);
 
-        return Forms\Components\Section::make(
+        return SchemaComponents\SchemaComponents\Section::make(
             __('admin::relationmanagers.pricing.form.basePrices.title')
         )
             ->schema(
-                collect($this->basePrices)->map(callback: function ($price, $index): Forms\Components\Fieldset {
-                    return Forms\Components\Fieldset::make($price['label'])->schema([
+                collect($this->basePrices)->map(callback: function ($price, $index): SchemaComponents\Fieldset {
+                    return SchemaComponents\Fieldset::make($price['label'])->schema([
                         Forms\Components\TextInput::make('value')
                             ->label('')
                             ->statePath($index.'.value')
@@ -165,8 +165,8 @@ trait ManagesProductPricing
         }
 
         $schema->components([
-            Forms\Components\Section::make()->schema([
-                Forms\Components\Group::make([
+            SchemaComponents\SchemaComponents\Section::make()->schema([
+                SchemaComponents\Group::make([
                     ProductVariantResource::getTaxClassIdFormComponent(),
                     ProductVariantResource::getTaxRefFormComponent(),
                 ])->columns(2),

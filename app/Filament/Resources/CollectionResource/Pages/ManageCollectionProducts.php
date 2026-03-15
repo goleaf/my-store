@@ -10,12 +10,13 @@ use App\Store\Models\Contracts\Product as ProductContract;
 use App\Store\Models\Product;
 use App\Support\Pages\BaseManageRelatedRecords;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Filament\Actions;
 
 class ManageCollectionProducts extends BaseManageRelatedRecords
 {
@@ -79,16 +80,16 @@ class ManageCollectionProducts extends BaseManageRelatedRecords
                 ->formatStateUsing(fn (Model $record): string => $record->translateAttribute('name'))
                 ->label(__('admin::product.table.name.label')),
         ])->actions([
-            Tables\Actions\DetachAction::make()->after(
+            Actions\DetachAction::make()->after(
                 fn () => CollectionProductDetached::dispatch($this->getOwnerRecord())
             ),
-            Tables\Actions\EditAction::make()->url(
+            Actions\EditAction::make()->url(
                 fn (Model $record) => ProductResource::getUrl('edit', [
                     'record' => $record,
                 ])
             ),
         ])->headerActions([
-            Tables\Actions\AttachAction::make()
+            Actions\AttachAction::make()
                 ->label(
                     __('admin::collection.pages.products.actions.attach.label')
                 )->form([

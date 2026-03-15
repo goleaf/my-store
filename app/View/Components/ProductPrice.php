@@ -44,6 +44,6 @@ class ProductPrice extends Component
 
     public function render(): View
     {
-        return view('components.product-price');
+        return view('store.components.product-price');
     }
 }

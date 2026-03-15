@@ -12,7 +12,7 @@ use Cartalyst\Converter\Laravel\Facades\Converter;
 use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Components\Component;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;

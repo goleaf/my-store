@@ -3,13 +3,14 @@
 namespace App\Shipping\Filament\Resources\ShippingExclusionListResource\RelationManagers;
 
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use App\Store\Models\Contracts\Product as ProductContract;
 use App\Store\Models\Product;
+use Filament\Actions;
 
 class ShippingExclusionRelationManager extends RelationManager
 {
@@ -88,17 +89,17 @@ class ShippingExclusionRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()->mutateFormDataUsing(function (array $data, RelationManager $livewire) {
+                Actions\CreateAction::make()->mutateFormDataUsing(function (array $data, RelationManager $livewire) {
                     return $data;
                 }),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Actions\EditAction::make(),
+                Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

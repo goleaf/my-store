@@ -10,10 +10,11 @@ use App\Store\Models\Product;
 use App\Store\Models\ProductAssociation;
 use App\Support\Pages\BaseManageRelatedRecords;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Actions;
 
 class ManageProductAssociations extends BaseManageRelatedRecords
 {
@@ -88,22 +89,22 @@ class ManageProductAssociations extends BaseManageRelatedRecords
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()->after(
+                Actions\CreateAction::make()->after(
                     fn () => ProductAssociationsUpdated::dispatch(
                         $this->getOwnerRecord()
                     )
                 ),
             ])
             ->actions([
-                Tables\Actions\DeleteAction::make()->after(
+                Actions\DeleteAction::make()->after(
                     fn () => ProductAssociationsUpdated::dispatch(
                         $this->getOwnerRecord()
                     )
                 ),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make()->after(
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make()->after(
                         fn () => ProductAssociationsUpdated::dispatch(
                             $this->getOwnerRecord()
                         )

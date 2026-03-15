@@ -5,8 +5,9 @@ namespace App\Support\Actions\Orders;
 use App\Store\Facades\DB;
 use App\Support\Actions\Traits\UpdatesOrderStatus;
 use Filament\Support\Enums\Width;
-use Filament\Tables\Actions\BulkAction;
+use Filament\Actions\BulkAction;
 use Illuminate\Database\Eloquent\Collection;
+use Filament\Actions;
 
 class UpdateStatusBulkAction extends BulkAction
 {

@@ -15,6 +15,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
+use Filament\Actions;
+use Filament\Schemas\Components as SchemaComponents;
 
 class StaffResource extends BaseResource
 {
@@ -148,7 +150,7 @@ class StaffResource extends BaseResource
 
     protected static function getRolePermissionContainerFormComponent(): Component
     {
-        return Forms\Components\Grid::make()
+        return SchemaComponents\Grid::make()
             ->hidden(fn ($record) => $record ? $record->admin : false)
             ->schema([
                 static::getRoleFormComponent(),
@@ -186,11 +188,11 @@ class StaffResource extends BaseResource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

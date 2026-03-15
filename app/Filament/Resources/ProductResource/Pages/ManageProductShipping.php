@@ -8,13 +8,13 @@ use App\Store\Models\Contracts\ProductVariant as ProductVariantContract;
 use App\Support\Forms\Components\TextInputSelectAffix;
 use App\Support\Pages\BaseEditRecord;
 use Cartalyst\Converter\Laravel\Facades\Converter;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Schemas\Components as SchemaComponents;
 
 class ManageProductShipping extends BaseEditRecord
 {
@@ -134,7 +134,7 @@ class ManageProductShipping extends BaseEditRecord
         );
 
         return $schema->components([
-            Section::make()->schema([
+            SchemaComponents\Section::make()->schema([
                 Toggle::make('shippable')->label(
                     __('admin::productvariant.form.shippable.label')
                 )->columnSpan(2),

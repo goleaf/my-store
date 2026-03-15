@@ -12,6 +12,8 @@ use Filament\Forms;
 use Filament\Forms\Components\Component;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Actions;
+use Filament\Schemas\Components as SchemaComponents;
 
 class ProductTypeResource extends BaseResource
 {
@@ -47,11 +49,11 @@ class ProductTypeResource extends BaseResource
     {
         return $schema
             ->components([
-                Forms\Components\Section::make()->schema(
+                SchemaComponents\Section::make()->schema(
                     static::getMainFormComponents()
                 ),
-                Forms\Components\Tabs::make('Attributes')->tabs([
-                    Forms\Components\Tabs\Tab::make(__('admin::producttype.tabs.product_attributes.label'))
+                SchemaComponents\Tabs::make('Attributes')->tabs([
+                    SchemaComponents\Tabs\Tab::make(__('admin::producttype.tabs.product_attributes.label'))
                         ->schema([
                             AttributeSelector::make('mappedAttributes')
                                 ->withType(Product::morphName())
@@ -59,7 +61,7 @@ class ProductTypeResource extends BaseResource
                                 ->label('')
                                 ->columnSpan(2),
                         ]),
-                    Forms\Components\Tabs\Tab::make(__('admin::producttype.tabs.variant_attributes.label'))
+                    SchemaComponents\Tabs\Tab::make(__('admin::producttype.tabs.variant_attributes.label'))
                         ->schema([
                             AttributeSelector::make('mappedAttributes')
                                 ->withType(ProductVariant::morphName())
@@ -98,11 +100,11 @@ class ProductTypeResource extends BaseResource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

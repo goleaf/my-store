@@ -10,8 +10,9 @@ use App\Support\Tables\Columns\TranslatedTextColumn;
 use Filament\Forms;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
-use Filament\Tables\Actions\DetachAction;
+use Filament\Actions\DetachAction;
 use Filament\Tables\Table;
+use Filament\Actions;
 
 class ManageBrandCollections extends BaseManageRelatedRecords
 {
@@ -47,7 +48,7 @@ class ManageBrandCollections extends BaseManageRelatedRecords
         ])->actions([
             DetachAction::make(),
         ])->headerActions([
-            Tables\Actions\AttachAction::make()
+            Actions\AttachAction::make()
                 ->recordSelect(
                     function (Forms\Components\Select $select) {
                         return $select->placeholder(

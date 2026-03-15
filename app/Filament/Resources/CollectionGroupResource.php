@@ -7,11 +7,13 @@ use App\Store\Models\Contracts\CollectionGroup as CollectionGroupContract;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
 use Filament\Forms\Components\Component;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use Filament\Actions;
+use Filament\Schemas\Components as SchemaComponents;
 
 class CollectionGroupResource extends BaseResource
 {
@@ -45,7 +47,7 @@ class CollectionGroupResource extends BaseResource
     {
         return $schema
             ->components([
-                Forms\Components\Section::make()->schema(
+                SchemaComponents\Section::make()->schema(
                     static::getMainFormComponents()
                 )->columns(2),
             ]);
@@ -93,11 +95,11 @@ class CollectionGroupResource extends BaseResource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

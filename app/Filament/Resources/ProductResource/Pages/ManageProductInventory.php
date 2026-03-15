@@ -6,7 +6,7 @@ use App\Filament\Resources\ProductResource;
 use App\Filament\Resources\ProductVariantResource\Pages\ManageVariantInventory;
 use App\Store\Models\Contracts\ProductVariant as ProductVariantContract;
 use App\Support\Pages\BaseEditRecord;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;

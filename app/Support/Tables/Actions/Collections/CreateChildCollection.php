@@ -4,9 +4,8 @@ namespace App\Support\Tables\Actions\Collections;
 
 use App\Support\Actions\Traits\CreatesChildCollections;
 use App\Support\Forms\Components\TranslatedText;
-use Filament\Tables\Actions\CreateAction;
+use Filament\Actions\CreateAction;
 use Filament\Tables\Table;
-
 class CreateChildCollection extends CreateAction
 {
     use CreatesChildCollections;

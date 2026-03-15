@@ -11,11 +11,13 @@ use App\Support\Concerns\Products\ManagesProductPricing;
 use App\Support\Pages\BaseEditRecord;
 use App\Support\RelationManagers\PriceRelationManager;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Actions;
+use Filament\Schemas\Components as SchemaComponents;
 
 class ManageProductPricing extends BaseEditRecord
 {
@@ -45,9 +47,9 @@ class ManageProductPricing extends BaseEditRecord
         }
 
         $schema->components([
-            Forms\Components\Section::make()
+            SchemaComponents\Section::make()
                 ->schema([
-                    Forms\Components\Group::make([
+                    SchemaComponents\Group::make([
                         ProductVariantResource::getTaxClassIdFormComponent(),
                         ProductVariantResource::getTaxRefFormComponent(),
                     ])->columns(2),
@@ -113,7 +115,7 @@ class ManageProductPricing extends BaseEditRecord
                 ),
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()->mutateFormDataUsing(function (array $data) {
+                Actions\CreateAction::make()->mutateFormDataUsing(function (array $data) {
                     $currencyModel = Currency::find($data['currency_id'] ?? null);
 
                     if ($currencyModel) {
@@ -124,7 +126,7 @@ class ManageProductPricing extends BaseEditRecord
                 }),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->mutateFormDataUsing(function (array $data): array {
+                Actions\EditAction::make()->mutateFormDataUsing(function (array $data): array {
                     $currencyModel = Currency::find($data['currency_id'] ?? null);
 
                     if ($currencyModel) {
@@ -133,7 +135,7 @@ class ManageProductPricing extends BaseEditRecord
 
                     return $data;
                 }),
-                Tables\Actions\DeleteAction::make(),
+                Actions\DeleteAction::make(),
             ]);
     }
 }

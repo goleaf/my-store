@@ -10,10 +10,11 @@ use App\Support\Pages\BaseManageRelatedRecords;
 use Filament\Forms;
 use Filament\Notifications\Notification;
 use Filament\Support\Facades\FilamentIcon;
-use Filament\Tables\Actions\AttachAction;
-use Filament\Tables\Actions\DetachAction;
+use Filament\Actions\AttachAction;
+use Filament\Actions\DetachAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Actions;
 
 class ManageBrandProducts extends BaseManageRelatedRecords
 {

@@ -8,11 +8,13 @@ use App\Shipping\Models\Contracts\ShippingExclusionList;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
 use Filament\Forms\Components\Component;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Actions;
+use Filament\Schemas\Components as SchemaComponents;
 
 class ShippingExclusionListResource extends BaseResource
 {
@@ -45,7 +47,7 @@ class ShippingExclusionListResource extends BaseResource
     public static function getDefaultForm(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
     {
         return $schema->components([
-            Forms\Components\Section::make()->schema(
+            SchemaComponents\Section::make()->schema(
                 static::getMainFormComponents(),
             ),
         ]);
@@ -82,11 +84,11 @@ class ShippingExclusionListResource extends BaseResource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

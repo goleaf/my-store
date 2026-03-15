@@ -5,10 +5,11 @@ namespace App\Filament\Resources\ProductOptionResource\RelationManagers;
 use App\Support\Forms\Components\TranslatedText;
 use App\Support\RelationManagers\BaseRelationManager;
 use App\Support\Tables\Columns\TranslatedTextColumn;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Actions;
 
 class ValuesRelationManager extends BaseRelationManager
 {
@@ -49,15 +50,15 @@ class ValuesRelationManager extends BaseRelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Actions\EditAction::make(),
+                Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('position', 'asc')

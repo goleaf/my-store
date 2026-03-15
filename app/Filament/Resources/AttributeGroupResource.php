@@ -16,6 +16,8 @@ use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use Filament\Actions;
+use Filament\Schemas\Components as SchemaComponents;
 
 class AttributeGroupResource extends BaseResource
 {
@@ -49,7 +51,7 @@ class AttributeGroupResource extends BaseResource
     {
         return $schema
             ->components([
-                Forms\Components\Section::make()->schema(
+                SchemaComponents\Section::make()->schema(
                     static::getMainFormComponents()
                 ),
             ]);
@@ -132,11 +134,11 @@ class AttributeGroupResource extends BaseResource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('position', 'asc')

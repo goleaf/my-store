@@ -4,12 +4,13 @@ namespace App\Filament\Resources\CustomerResource\RelationManagers;
 
 use App\Events\CustomerUserEdited;
 use App\Support\RelationManagers\BaseRelationManager;
-use Filament\Forms\Components\Group;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
+use Filament\Actions;
+use Filament\Schemas\Components as SchemaComponents;
 
 class UserRelationManager extends BaseRelationManager
 {
@@ -33,12 +34,12 @@ class UserRelationManager extends BaseRelationManager
             Tables\Columns\TextColumn::make('email')
                 ->label(__('admin::user.table.email.label')),
         ])->actions([
-            Tables\Actions\EditAction::make('edit')
+            Actions\EditAction::make('edit')
                 ->after(
                     fn (Model $record) => CustomerUserEdited::dispatch($record)
                 )
                 ->form([
-                    Group::make([
+                    SchemaComponents\Group::make([
                         TextInput::make('email')
                             ->label(
                                 __('admin::user.form.email.label')

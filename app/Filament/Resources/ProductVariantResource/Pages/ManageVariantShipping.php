@@ -7,11 +7,11 @@ use App\Filament\Resources\ProductVariantResource;
 use App\Support\Pages\BaseEditRecord;
 use Cartalyst\Converter\Laravel\Facades\Converter;
 use Filament\Actions\Action;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Schemas\Components as SchemaComponents;
 
 class ManageVariantShipping extends BaseEditRecord
 {
@@ -115,7 +115,7 @@ class ManageVariantShipping extends BaseEditRecord
     public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
     {
         return $schema->components([
-            Section::make()->schema([
+            SchemaComponents\Section::make()->schema([
                 ProductVariantResource::getShippableFormComponent(),
                 ProductVariantResource::getLengthFormComponent(),
                 ProductVariantResource::getWidthFormComponent(),

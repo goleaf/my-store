@@ -10,6 +10,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Actions;
 
 class OrdersRelationManager extends BaseRelationManager
 {
@@ -27,7 +28,7 @@ class OrdersRelationManager extends BaseRelationManager
         )->modifyQueryUsing(
             fn (Builder $query): Builder => $query->with(['currency'])
         )->actions([
-            Tables\Actions\Action::make('viewOrder')
+            Actions\Action::make('viewOrder')
                 ->url(fn (OrderContract $record): string => ManageOrder::getUrl(['record' => $record])),
         ]);
     }

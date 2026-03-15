@@ -12,6 +12,8 @@ use Filament\Forms\Components\Component;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Actions;
+use Filament\Schemas\Components as SchemaComponents;
 
 class TaxRateResource extends BaseResource
 {
@@ -41,7 +43,7 @@ class TaxRateResource extends BaseResource
     protected static function getMainFormComponents(): array
     {
         return [
-            Forms\Components\Section::make()->schema([
+            SchemaComponents\Section::make()->schema([
                 static::getNameFormComponent(),
                 static::getPriorityFormComponent(),
                 static::getTaxZoneFormComponent(),
@@ -86,11 +88,11 @@ class TaxRateResource extends BaseResource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

@@ -9,14 +9,15 @@ use Filament\Forms;
 use Filament\Forms\Get;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\CreateAction;
+use Filament\Actions\Action;
+use Filament\Actions\CreateAction;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Filament\Actions;
 
 class ManageVariantMedia extends BaseManageRelatedRecords
 {

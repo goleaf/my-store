@@ -11,7 +11,7 @@ use App\Store\Models\Currency;
 use App\Store\Models\CustomerGroup;
 use App\Store\Models\Price;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Forms\Get;
 use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Support\Facades\FilamentIcon;
@@ -20,6 +20,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Actions;
 
 class ManageShippingRates extends ManageRelatedRecords
 {
@@ -160,7 +161,7 @@ class ManageShippingRates extends ManageRelatedRecords
                     __('lunarpanel.shipping::relationmanagers.shipping_rates.table.price_breaks_count.label')
                 )->counts('priceBreaks'),
         ])->headerActions([
-            Tables\Actions\CreateAction::make()->label(
+            Actions\CreateAction::make()->label(
                 __('lunarpanel.shipping::relationmanagers.shipping_rates.actions.create.label')
             )->action(function (Table $table, ?ShippingRate $shippingRate = null, array $data = []) {
                 $relationship = $table->getRelationship();
@@ -173,18 +174,18 @@ class ManageShippingRates extends ManageRelatedRecords
             })->slideOver(),
         ])->actions([
 
-            Tables\Actions\EditAction::make()->slideOver()->action(function (ShippingRate $shippingRate, array $data) {
+            Actions\EditAction::make()->slideOver()->action(function (ShippingRate $shippingRate, array $data) {
                 static::saveShippingRate($shippingRate, $data);
             }),
-            Tables\Actions\DeleteAction::make()->requiresConfirmation(),
-            Tables\Actions\Action::make('disable')->color('warning')->action(function (ShippingRate $shippingRate) {
+            Actions\DeleteAction::make()->requiresConfirmation(),
+            Actions\Action::make('disable')->color('warning')->action(function (ShippingRate $shippingRate) {
                 $shippingRate->updateQuietly([
                     'enabled' => false,
                 ]);
             })->hidden(
                 fn (ShippingRate $shippingRate) => ! $shippingRate->enabled
             ),
-            Tables\Actions\Action::make('enable')->color('success')->action(function (ShippingRate $shippingRate) {
+            Actions\Action::make('enable')->color('success')->action(function (ShippingRate $shippingRate) {
                 $shippingRate->updateQuietly([
                     'enabled' => true,
                 ]);

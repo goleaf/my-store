@@ -10,6 +10,7 @@ use Filament\Forms;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Actions;
 
 class ProductVariantLimitationRelationManager extends BaseRelationManager
 {
@@ -39,7 +40,7 @@ class ProductVariantLimitationRelationManager extends BaseRelationManager
                     ->whereHas('discountable')
             )
             ->headerActions([
-                Tables\Actions\CreateAction::make()->form([
+                Actions\CreateAction::make()->form([
                     Forms\Components\MorphToSelect::make('discountable')
                         ->searchable(true)
                         ->types([
@@ -85,9 +86,9 @@ class ProductVariantLimitationRelationManager extends BaseRelationManager
                         __('admin::discount.relationmanagers.productvariants.table.values.label')
                     ),
             ])->actions([
-                Tables\Actions\DeleteAction::make(),
+                Actions\DeleteAction::make(),
             ])->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Actions\DeleteBulkAction::make(),
             ]);
     }
 }

@@ -8,7 +8,7 @@ use App\Store\Models\Collection;
 use App\Support\Forms\Components\TranslatedText;
 use Filament\Actions\CreateAction;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 
 class CreateRootCollection extends CreateAction
 {
@@ -16,7 +16,7 @@ class CreateRootCollection extends CreateAction
     {
         parent::setUp();
 
-        $this->action(function (array $arguments, Form $form): void {
+        $this->action(function (array $arguments, Schema $schema): void {
             $model = $this->getModel();
 
             DB::beginTransaction();
@@ -37,7 +37,7 @@ class CreateRootCollection extends CreateAction
             DB::commit();
 
             $this->record($record);
-            $form->model($record);
+            $schema->model($record);
 
             if ($arguments['another'] ?? false) {
                 $this->callAfter();
@@ -46,9 +46,9 @@ class CreateRootCollection extends CreateAction
                 $this->record(null);
 
                 // Ensure that the form record is anonymized so that relationships aren't loaded.
-                $form->model($model);
+                $schema->model($model);
 
-                $form->fill();
+                $schema->fill();
 
                 $this->halt();
 

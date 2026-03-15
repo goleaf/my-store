@@ -10,11 +10,11 @@ use App\Store\Models\Product;
 use App\Store\Models\TaxClass;
 use App\Support\Pages\BaseListRecords;
 use Filament\Actions;
-use Filament\Forms\Components\Grid;
 use Filament\Resources\Components\Tab;
 use Filament\Support\Enums\Width;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Schemas\Components as SchemaComponents;
 
 class ListProducts extends BaseListRecords
 {
@@ -36,11 +36,11 @@ class ListProducts extends BaseListRecords
     public static function createActionFormInputs(): array
     {
         return [
-            Grid::make(2)->schema([
+            SchemaComponents\Grid::make(2)->schema([
                 ProductResource::getBaseNameFormComponent(),
                 ProductResource::getProductTypeFormComponent()->required(),
             ]),
-            Grid::make(2)->schema([
+            SchemaComponents\Grid::make(2)->schema([
                 ProductResource::getSkuFormComponent(),
                 ProductResource::getBasePriceFormComponent(),
             ]),

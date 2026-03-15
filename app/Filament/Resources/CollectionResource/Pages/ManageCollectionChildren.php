@@ -6,12 +6,13 @@ use App\Events\ChildCollectionCreated;
 use App\Filament\Resources\CollectionResource;
 use App\Support\Pages\BaseManageRelatedRecords;
 use App\Support\Tables\Actions\Collections\CreateChildCollection;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Actions;
 
 class ManageCollectionChildren extends BaseManageRelatedRecords
 {
@@ -70,7 +71,7 @@ class ManageCollectionChildren extends BaseManageRelatedRecords
                     __('admin::collection.pages.children.table.children_count.label')
                 ),
         ])->actions([
-            Tables\Actions\ViewAction::make()->url(function (Model $record) {
+            Actions\ViewAction::make()->url(function (Model $record) {
                 return CollectionResource::getUrl('edit', ['record' => $record]);
             }),
         ])->headerActions([

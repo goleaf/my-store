@@ -5,8 +5,8 @@ namespace App\Support\FieldTypes;
 use App\Store\Models\Attribute;
 use App\Support\Synthesizers\NumberSynth;
 use Filament\Forms\Components\Component;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components as SchemaComponents;
 
 class Number extends BaseFieldType
 {
@@ -37,7 +37,7 @@ class Number extends BaseFieldType
     public static function getConfigurationFields(): array
     {
         return [
-            Grid::make(2)->schema([
+            SchemaComponents\Grid::make(2)->schema([
                 \Filament\Forms\Components\TextInput::make('min')
                     ->label(
                         __('admin::fieldtypes.number.form.min.label')

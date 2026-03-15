@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Unique;
+use Filament\Actions;
+use Filament\Schemas\Components as SchemaComponents;
 
 class ManageUrlsRelatedRecords extends BaseManageRelatedRecords
 {
@@ -43,7 +45,7 @@ class ManageUrlsRelatedRecords extends BaseManageRelatedRecords
                 Forms\Components\Toggle::make('default')->label(
                     __('admin::relationmanagers.urls.form.default.label')
                 )->columnSpan(2),
-                Forms\Components\Group::make([
+                SchemaComponents\Group::make([
                     Forms\Components\TextInput::make('slug')
                         ->label(
                             __('admin::relationmanagers.urls.table.slug.label')
@@ -94,7 +96,7 @@ class ManageUrlsRelatedRecords extends BaseManageRelatedRecords
                     ->relationship('language', 'name'),
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()->label(
+                Actions\CreateAction::make()->label(
                     __('admin::relationmanagers.urls.actions.create.label')
                 )->after(
                     fn () => ModelUrlsUpdated::dispatch(
@@ -103,20 +105,20 @@ class ManageUrlsRelatedRecords extends BaseManageRelatedRecords
                 ),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->after(
+                Actions\EditAction::make()->after(
                     fn () => ModelUrlsUpdated::dispatch(
                         $this->getOwnerRecord()
                     )
                 ),
-                Tables\Actions\DeleteAction::make()->after(
+                Actions\DeleteAction::make()->after(
                     fn () => ModelUrlsUpdated::dispatch(
                         $this->getOwnerRecord()
                     )
                 ),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make()->after(
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make()->after(
                         fn () => ModelUrlsUpdated::dispatch(
                             $this->getOwnerRecord()
                         )

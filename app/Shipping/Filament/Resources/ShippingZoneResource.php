@@ -10,7 +10,7 @@ use App\Store\Models\State;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
 use Filament\Forms\Components\Component;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Pages\Page;
 use Filament\Support\Facades\FilamentIcon;
@@ -18,6 +18,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Filament\Actions;
+use Filament\Schemas\Components as SchemaComponents;
 
 class ShippingZoneResource extends BaseResource
 {
@@ -59,7 +61,7 @@ class ShippingZoneResource extends BaseResource
     public static function getDefaultForm(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
     {
         return $schema->components([
-            Forms\Components\Section::make()->schema(
+            SchemaComponents\Section::make()->schema(
                 static::getMainFormComponents(),
             ),
         ]);
@@ -258,11 +260,11 @@ class ShippingZoneResource extends BaseResource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

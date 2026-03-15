@@ -12,8 +12,9 @@ use Closure;
 use Filament\Forms;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component as Livewire;
+use Filament\Schemas\Components as SchemaComponents;
 
-class Attributes extends Forms\Components\Group
+class Attributes extends SchemaComponents\Group
 {
     public ?string $modelClassOverride = null;
 
@@ -110,7 +111,7 @@ class Attributes extends Forms\Components\Group
                     foreach ($group['fields'] as $field) {
                         $sectionFields[] = AttributeData::getFilamentComponent($field);
                     }
-                    $groupComponents[] = Forms\Components\Section::make($group['model']
+                    $groupComponents[] = SchemaComponents\Section::make($group['model']
                         ->translate('name'))
                         ->schema($sectionFields);
                 }

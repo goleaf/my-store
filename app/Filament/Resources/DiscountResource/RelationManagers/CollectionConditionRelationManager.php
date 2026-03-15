@@ -7,6 +7,7 @@ use Filament\Forms;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Actions;
 
 class CollectionConditionRelationManager extends BaseRelationManager
 {
@@ -40,7 +41,7 @@ class CollectionConditionRelationManager extends BaseRelationManager
                 fn ($query) => $query->whereIn($prefix.'collection_discount.type', ['condition'])
             )
             ->headerActions([
-                Tables\Actions\AttachAction::make()->form(fn (Tables\Actions\AttachAction $action): array => [
+                Actions\AttachAction::make()->form(fn (Actions\AttachAction $action): array => [
                     $action->getRecordSelect(),
                     Forms\Components\Hidden::make('type')->default('condition'),
                 ])->recordTitle(function ($record) {
@@ -59,9 +60,9 @@ class CollectionConditionRelationManager extends BaseRelationManager
                         fn (Model $record) => $record->attr('name')
                     ),
             ])->actions([
-                Tables\Actions\DeleteAction::make(),
+                Actions\DeleteAction::make(),
             ])->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Actions\DeleteBulkAction::make(),
             ]);
     }
 }

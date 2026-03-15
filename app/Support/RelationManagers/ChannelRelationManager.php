@@ -4,10 +4,12 @@ namespace App\Support\RelationManagers;
 
 use App\Events\ModelChannelsUpdated;
 use Filament;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Actions;
+use Filament\Schemas\Components as SchemaComponents;
 
 class ChannelRelationManager extends BaseRelationManager
 {
@@ -41,7 +43,7 @@ class ChannelRelationManager extends BaseRelationManager
                 false => __('admin::relationmanagers.channels.form.enabled.helper_text_false'),
                 true => '',
             })->hintColor('danger')->live()->columnSpan(2),
-            Filament\Forms\Components\Grid::make(2)->schema([
+            SchemaComponents\Grid::make(2)->schema([
                 Filament\Forms\Components\DateTimePicker::make('starts_at')->label(
                     __('admin::relationmanagers.channels.form.starts_at.label')
                 )->helperText(
@@ -63,7 +65,7 @@ class ChannelRelationManager extends BaseRelationManager
                 __('admin::relationmanagers.channels.table.description')
             )->paginated(false)
             ->headerActions([
-                Tables\Actions\AttachAction::make()->form(fn (Tables\Actions\AttachAction $action): array => [
+                Actions\AttachAction::make()->form(fn (Actions\AttachAction $action): array => [
                     $action->getRecordSelect(),
                     ...static::getFormInputs(),
                 ])->recordTitle(function ($record) {
@@ -98,7 +100,7 @@ class ChannelRelationManager extends BaseRelationManager
                     __('admin::relationmanagers.channels.table.ends_at.label')
                 )->dateTime(),
             ])->actions([
-                Tables\Actions\EditAction::make()->after(
+                Actions\EditAction::make()->after(
                     fn () => ModelChannelsUpdated::dispatch(
                         $this->getOwnerRecord()
                     )

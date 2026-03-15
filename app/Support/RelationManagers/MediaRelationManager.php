@@ -6,12 +6,13 @@ use App\Events\ModelMediaUpdated;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Tables;
-use Filament\Tables\Actions\Action;
+use Filament\Actions\Action;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Filament\Actions;
 
 class MediaRelationManager extends BaseRelationManager
 {
@@ -82,7 +83,7 @@ class MediaRelationManager extends BaseRelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()
+                Actions\CreateAction::make()
                     ->label(__('admin::relationmanagers.medias.actions.create.label'))
                     ->using(function (array $data, string $model): Model {
 
@@ -103,12 +104,12 @@ class MediaRelationManager extends BaseRelationManager
                     ),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->after(
+                Actions\EditAction::make()->after(
                     fn () => ModelMediaUpdated::dispatch(
                         $this->getOwnerRecord()
                     )
                 ),
-                Tables\Actions\DeleteAction::make(),
+                Actions\DeleteAction::make(),
                 Action::make('view_open')
                     ->label(__('admin::relationmanagers.medias.actions.view.label'))
                     ->icon('lucide-eye')
@@ -116,8 +117,8 @@ class MediaRelationManager extends BaseRelationManager
                     ->openUrlInNewTab(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make()->after(
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make()->after(
                         fn () => ModelMediaUpdated::dispatch(
                             $this->getOwnerRecord()
                         )

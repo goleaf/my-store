@@ -7,6 +7,7 @@ use Filament\Forms\Components\Select;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Actions;
 
 class BrandLimitationRelationManager extends BaseRelationManager
 {
@@ -33,7 +34,7 @@ class BrandLimitationRelationManager extends BaseRelationManager
             )
             ->paginated(false)
             ->headerActions([
-                Tables\Actions\AttachAction::make()->form(fn (Tables\Actions\AttachAction $action): array => [
+                Actions\AttachAction::make()->form(fn (Actions\AttachAction $action): array => [
                     $action->getRecordSelect(),
                     Select::make('type')
                         ->options(
@@ -61,9 +62,9 @@ class BrandLimitationRelationManager extends BaseRelationManager
                         fn (string $state) => __("admin::discount.relationmanagers.brands.table.type.{$state}.label")
                     ),
             ])->actions([
-                Tables\Actions\DetachAction::make(),
+                Actions\DetachAction::make(),
             ])->bulkActions([
-                Tables\Actions\DetachBulkAction::make(),
+                Actions\DetachBulkAction::make(),
             ]);
     }
 }

@@ -6,7 +6,7 @@ use App\Filament\Resources\CollectionResource;
 use App\Store\Facades\DB;
 use App\Store\Models\Collection;
 use App\Store\Models\Contracts\Collection as CollectionContract;
-use App\Support\Actions\Collections\CreateChildCollection;
+use App\Support\Tables\Actions\Collections\CreateChildCollection;
 use App\Support\Actions\Collections\CreateRootCollection;
 use App\Support\Actions\Collections\DeleteCollection;
 use App\Support\Actions\Collections\MoveCollection;

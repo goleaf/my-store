@@ -13,6 +13,7 @@ use Filament\Infolists\Components\Actions\Action;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\FontWeight;
 use Illuminate\Support\Arr;
+use Filament\Schemas\Components as SchemaComponents;
 
 trait DisplaysOrderAddresses
 {
@@ -39,7 +40,7 @@ trait DisplaysOrderAddresses
     public static function getAddressEditSchema(): array
     {
         return self::callStaticStoreHook('extendAddressEditSchema', [
-            Forms\Components\Grid::make()
+            SchemaComponents\Grid::make()
                 ->schema([
                     Forms\Components\TextInput::make('first_name')
                         ->label(__('admin::order.form.address.first_name.label'))
@@ -59,7 +60,7 @@ trait DisplaysOrderAddresses
                 ->label(__('admin::order.form.address.tax_identifier.label'))
                 ->autocomplete(false)
                 ->maxLength(255),
-            Forms\Components\Grid::make()
+            SchemaComponents\Grid::make()
                 ->schema([
                     Forms\Components\TextInput::make('contact_phone')
                         ->label(__('admin::order.form.address.contact_phone.label'))
@@ -75,7 +76,7 @@ trait DisplaysOrderAddresses
                 ->autocomplete(false)
                 ->maxLength(255)
                 ->required(),
-            Forms\Components\Grid::make()
+            SchemaComponents\Grid::make()
                 ->schema([
                     Forms\Components\TextInput::make('line_two')
                         ->label(__('admin::order.form.address.line_two.label'))
@@ -86,7 +87,7 @@ trait DisplaysOrderAddresses
                         ->autocomplete(false)
                         ->maxLength(255),
                 ]),
-            Forms\Components\Grid::make(3)
+            SchemaComponents\Grid::make(3)
                 ->schema([
                     Forms\Components\TextInput::make('city')
                         ->label(__('admin::order.form.address.city.label'))

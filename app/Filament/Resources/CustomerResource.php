@@ -18,6 +18,8 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Actions;
+use Filament\Schemas\Components as SchemaComponents;
 
 class CustomerResource extends BaseResource
 {
@@ -40,15 +42,15 @@ class CustomerResource extends BaseResource
     {
         return $schema
             ->components([
-                Forms\Components\Group::make([
-                    Forms\Components\Section::make()
+                SchemaComponents\Group::make([
+                    SchemaComponents\Section::make()
                         ->id('details')
                         ->schema(
                             static::getMainFormComponents()
                         ),
                     static::getAttributeDataFormComponent(),
                 ])->columnSpan(4),
-                Forms\Components\Section::make()
+                SchemaComponents\Section::make()
                     ->id('details')
                     ->schema(
                         static::getSideFormComponents()
@@ -79,13 +81,13 @@ class CustomerResource extends BaseResource
     protected static function getMainFormComponents(): array
     {
         return [
-            Forms\Components\Group::make()->schema([
+            SchemaComponents\Group::make()->schema([
                 static::getTitleFormComponent()->columnSpan(1),
                 static::getFirstNameFormComponent()->columnSpan(2),
                 static::getLastNameFormComponent()->columnSpan(2),
             ])->columns(5),
             static::getCompanyNameFormComponent(),
-            Forms\Components\Group::make()->schema([
+            SchemaComponents\Group::make()->schema([
                 static::getAccountRefFormComponent(),
                 static::getTaxIdFormComponent(),
             ])->columns(2),
@@ -220,11 +222,11 @@ class CustomerResource extends BaseResource
                     ->preload(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                Actions\ViewAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ])
             ->selectCurrentPageOnly();

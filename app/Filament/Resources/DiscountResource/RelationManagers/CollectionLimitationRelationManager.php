@@ -8,6 +8,7 @@ use Filament\Forms\Components\Select;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Actions;
 
 class CollectionLimitationRelationManager extends BaseRelationManager
 {
@@ -38,7 +39,7 @@ class CollectionLimitationRelationManager extends BaseRelationManager
             )
             ->paginated(false)
             ->headerActions([
-                Tables\Actions\AttachAction::make()->form(fn (Tables\Actions\AttachAction $action): array => [
+                Actions\AttachAction::make()->form(fn (Actions\AttachAction $action): array => [
                     $action->getRecordSelect(),
                     Select::make('type')
                         ->options(
@@ -70,9 +71,9 @@ class CollectionLimitationRelationManager extends BaseRelationManager
                         fn (string $state) => __("admin::discount.relationmanagers.collections.table.type.{$state}.label")
                     ),
             ])->actions([
-                Tables\Actions\DetachAction::make(),
+                Actions\DetachAction::make(),
             ])->bulkActions([
-                Tables\Actions\DetachBulkAction::make(),
+                Actions\DetachBulkAction::make(),
             ]);
     }
 }
