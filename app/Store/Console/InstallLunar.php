@@ -2,9 +2,7 @@
 
 namespace App\Store\Console;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
-use App\Admin\Models\Staff;
+use App\Models\Staff;
 use App\Store\Facades\DB;
 use App\Store\FieldTypes\TranslatedText;
 use App\Store\Models\Attribute;
@@ -20,7 +18,8 @@ use App\Store\Models\Product;
 use App\Store\Models\ProductType;
 use App\Store\Models\TaxClass;
 use App\Store\Models\TaxZone;
-
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use function Laravel\Prompts\confirm;
 
 class InstallLunar extends Command

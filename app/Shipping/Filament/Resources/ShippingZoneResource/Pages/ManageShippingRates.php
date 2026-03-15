@@ -2,7 +2,14 @@
 
 namespace App\Shipping\Filament\Resources\ShippingZoneResource\Pages;
 
-use App\Admin\Filament\Components\Shout;
+use App\Filament\Components\Shout;
+use App\Shipping\Filament\Resources\ShippingZoneResource;
+use App\Shipping\Models\Contracts\ShippingMethod as ShippingMethodContract;
+use App\Shipping\Models\ShippingMethod;
+use App\Shipping\Models\ShippingRate;
+use App\Store\Models\Currency;
+use App\Store\Models\CustomerGroup;
+use App\Store\Models\Price;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -13,13 +20,6 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
-use App\Store\Models\Currency;
-use App\Store\Models\CustomerGroup;
-use App\Store\Models\Price;
-use App\Shipping\Filament\Resources\ShippingZoneResource;
-use App\Shipping\Models\Contracts\ShippingMethod as ShippingMethodContract;
-use App\Shipping\Models\ShippingMethod;
-use App\Shipping\Models\ShippingRate;
 
 class ManageShippingRates extends ManageRelatedRecords
 {

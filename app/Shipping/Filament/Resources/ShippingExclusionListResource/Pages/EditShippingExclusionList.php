@@ -2,9 +2,9 @@
 
 namespace App\Shipping\Filament\Resources\ShippingExclusionListResource\Pages;
 
-use Filament\Actions;
-use App\Admin\Support\Pages\BaseEditRecord;
 use App\Shipping\Filament\Resources\ShippingExclusionListResource;
+use App\Support\Pages\BaseEditRecord;
+use Filament\Actions;
 
 class EditShippingExclusionList extends BaseEditRecord
 {

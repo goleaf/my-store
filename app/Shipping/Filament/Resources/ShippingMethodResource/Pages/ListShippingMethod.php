@@ -2,12 +2,12 @@
 
 namespace App\Shipping\Filament\Resources\ShippingMethodResource\Pages;
 
-use Filament\Actions;
-use Filament\Forms\Components\Group;
-use App\Admin\Support\Pages\BaseListRecords;
-use App\Store\Models\CustomerGroup;
 use App\Shipping\Filament\Resources\ShippingMethodResource;
 use App\Shipping\Models\ShippingMethod;
+use App\Store\Models\CustomerGroup;
+use App\Support\Pages\BaseListRecords;
+use Filament\Actions;
+use Filament\Forms\Components\Group;
 
 class ListShippingMethod extends BaseListRecords
 {

@@ -1,6 +1,6 @@
 <?php
 
-use App\Admin\AdminPanelProvider;
+use App\Filament\AdminPanelProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);

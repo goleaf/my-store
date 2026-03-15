@@ -2,16 +2,14 @@
 
 namespace App\Filament\Resources\ProductResource\Widgets;
 
-use App\Traits\HasVariantFormSkuAndPrice;
-use Filament\Actions\Action;
-use App\Admin\Actions\Products\MapVariantsToProductOptions;
-use App\Admin\Events\ProductVariantOptionsUpdated;
 use App\Admin\Filament\Resources\ProductResource\Widgets\ProductOptionsWidget as LunarProductOptionsWidget;
+use App\Events\ProductVariantOptionsUpdated;
 use App\Store\Facades\DB;
 use App\Store\Models\Contracts\ProductOption as ProductOptionContract;
 use App\Store\Models\Contracts\ProductVariant as ProductVariantContract;
-use App\Store\Models\ProductOption;
 use App\Store\Models\ProductVariant;
+use App\Traits\HasVariantFormSkuAndPrice;
+use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 
 class ProductOptionsWidget extends LunarProductOptionsWidget

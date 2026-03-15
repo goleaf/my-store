@@ -1,0 +1,166 @@
+<?php
+
+namespace App\Filament\Resources;
+
+use App\Admin\Filament\Resources\ActivityResource\Pages;
+use App\Support\Resources\BaseResource;
+use Carbon\Carbon;
+use Filament\Forms;
+use Filament\Schemas\Schema;
+use Filament\Support\Facades\FilamentIcon;
+use Filament\Tables;
+use Illuminate\Database\Eloquent\Builder;
+use Spatie\Activitylog\Models\Activity;
+
+class ActivityResource extends BaseResource
+{
+    protected static ?string $permission = 'settings';
+
+    protected static ?string $model = Activity::class;
+
+    protected static ?int $navigationSort = 1;
+
+    public static function getLabel(): string
+    {
+        return __('admin::activity.label');
+    }
+
+    public static function getPluralLabel(): string
+    {
+        return __('admin::activity.plural_label');
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return FilamentIcon::resolve('store::activity');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('admin::global.sections.settings');
+    }
+
+    public static function getDefaultForm(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                Forms\Components\TextInput::make('causer_type')
+                    ->label(__('admin::activity.form.causer_type'))
+                    ->columnSpan([
+                        'default' => 2,
+                        'md' => 1,
+                    ]),
+                Forms\Components\TextInput::make('causer_id')
+                    ->label(__('admin::activity.form.causer_id'))
+                    ->columnSpan([
+                        'default' => 2,
+                        'md' => 1,
+                    ]),
+                Forms\Components\TextInput::make('subject_type')
+                    ->label(__('admin::activity.form.subject_type'))
+                    ->columnSpan([
+                        'default' => 2,
+                        'md' => 1,
+                    ]),
+                Forms\Components\TextInput::make('subject_id')
+                    ->label(__('admin::activity.form.subject_id'))
+                    ->columnSpan([
+                        'default' => 2,
+                        'md' => 1,
+                    ]),
+                Forms\Components\TextInput::make('description')
+                    ->label(__('admin::activity.form.description'))->columnSpan(2),
+                Forms\Components\KeyValue::make('properties.attributes')
+                    ->label(__('admin::activity.form.attributes'))
+                    ->columnSpan([
+                        'default' => 2,
+                        'md' => 1,
+                    ]),
+                Forms\Components\KeyValue::make('properties.old')
+                    ->label(__('admin::activity.form.old'))
+                    ->columnSpan([
+                        'default' => 2,
+                        'md' => 1,
+                    ]),
+            ]);
+    }
+
+    public static function getDefaultTable(Tables\Table $table): Tables\Table
+    {
+        return $table
+            ->columns([
+                Tables\Columns\TextColumn::make('id')
+                    ->label('ID')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('subject_type')
+                    ->label(__('admin::activity.table.subject'))
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('description')
+                    ->label(__('admin::activity.table.description'))
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('log_name')
+                    ->label(__('admin::activity.table.log')),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('admin::activity.table.logged_at'))
+                    ->dateTime(),
+            ])
+            ->filters([
+                Tables\Filters\SelectFilter::make('event')
+                    ->label(__('admin::activity.table.event'))
+                    ->multiple()
+                    ->options([
+                        'created' => 'Created',
+                        'updated' => 'Updated',
+                        'deleted' => 'Deleted',
+                    ]),
+                Tables\Filters\Filter::make('created_at')
+                    ->form([
+                        Forms\Components\DatePicker::make('logged_from')
+                            ->label(__('admin::activity.table.logged_from')),
+                        Forms\Components\DatePicker::make('logged_until')
+                            ->label(__('admin::activity.table.logged_until')),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['logged_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['logged_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            );
+                    })
+                    ->indicateUsing(function (array $data): array {
+                        $indicators = [];
+
+                        if ($data['logged_from'] ?? null) {
+                            $indicators['logged_from'] = 'Created from '.Carbon::parse($data['logged_from'])->toFormattedDateString();
+                        }
+
+                        if ($data['logged_until'] ?? null) {
+                            $indicators['logged_until'] = 'Created until '.Carbon::parse($data['logged_until'])->toFormattedDateString();
+                        }
+
+                        return $indicators;
+                    }),
+            ])
+            ->bulkActions([])
+            ->defaultSort('id', 'DESC');
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getDefaultPages(): array
+    {
+        return [
+            'index' => ActivityResource\Pages\ListActivities::route('/'),
+            'view' => ActivityResource\Pages\ViewActivity::route('/{record}'),
+        ];
+    }
+}

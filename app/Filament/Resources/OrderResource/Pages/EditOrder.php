@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Filament\Resources\OrderResource\Pages;
+
+use App\Filament\Resources\OrderResource;
+use App\Support\Pages\BaseEditRecord;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Filament\Actions;
+use Filament\Forms;
+use Filament\Notifications\Notification;
+
+class EditOrder extends BaseEditRecord
+{
+    protected static string $resource = OrderResource::class;
+
+    protected function getDefaultHeaderActions(): array
+    {
+        return [
+            Actions\Action::make('payment related actions')
+                ->color('gray')
+                ->url('#'),
+            Actions\Action::make('update_status')
+                ->label(__('admin::order.action.update_status.label'))
+                ->form([
+                    Forms\Components\Select::make('status')
+                        ->label(__('admin::order.form.status.label'))
+                        ->default($this->record->status)
+                        ->options(fn () => collect(config('store.orders.statuses', []))
+                            ->mapWithKeys(fn ($data, $status) => [$status => $data['label']]))
+                        ->required(),
+                    Forms\Components\Placeholder::make('additional content and mailer'),
+                ])
+                ->modalWidth('md')
+                ->slideOver()
+                ->action(fn ($record, $data) => $record
+                    ->update([
+                        'status' => $data['status'],
+                    ]))
+                ->after(fn () => Notification::make()->title(__('admin::order.action.update_status.notification'))->success()->send()),
+            Actions\Action::make('download_pdf')
+                ->label(__('admin::order.action.download_order_pdf.label'))
+                ->action(function () {
+                    Notification::make()->title(__('admin::order.action.download_order_pdf.notification'))->success()->send();
+
+                    return response()->streamDownload(function () {
+                        echo Pdf::loadView('admin::pdf.order', [
+                            'record' => $this->record,
+                        ])->stream();
+                    }, name: "Order-{$this->record->reference}.pdf");
+                }),
+        ];
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+}

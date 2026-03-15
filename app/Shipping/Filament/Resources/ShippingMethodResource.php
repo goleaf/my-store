@@ -2,7 +2,10 @@
 
 namespace App\Shipping\Filament\Resources;
 
-use App\Admin\Filament\Components\Shout;
+use App\Filament\Components\Shout;
+use App\Shipping\Filament\Resources\ShippingMethodResource\Pages;
+use App\Shipping\Models\Contracts\ShippingMethod;
+use App\Support\Resources\BaseResource;
 use Filament\Forms;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Form;
@@ -11,9 +14,6 @@ use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
-use App\Admin\Support\Resources\BaseResource;
-use App\Shipping\Filament\Resources\ShippingMethodResource\Pages;
-use App\Shipping\Models\Contracts\ShippingMethod;
 
 class ShippingMethodResource extends BaseResource
 {

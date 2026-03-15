@@ -3,7 +3,7 @@
 namespace App\Filament\Extensions;
 
 use App\Filament\Resources\ProductResource\Widgets\ProductOptionsWidget;
-use App\Admin\Support\Extending\BaseExtension;
+use App\Support\Extending\BaseExtension;
 
 class ProductVariantsHeaderWidgetsExtension extends BaseExtension
 {

@@ -2,9 +2,9 @@
 
 namespace App\Admin\Database\State;
 
+use App\Support\Facades\AdminAccessControl;
+use App\Support\Facades\AdminPanel;
 use Illuminate\Support\Facades\Schema;
-use App\Admin\Support\Facades\AdminAccessControl;
-use App\Admin\Support\Facades\AdminPanel;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 

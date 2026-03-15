@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use App\Admin\Actions\Products\MapVariantsToProductOptions;
+use App\Actions\Products\MapVariantsToProductOptions;
+use App\Jobs\GenerateVariants;
 use App\Store\FieldTypes\ListField;
 use App\Store\FieldTypes\Text;
 use App\Store\FieldTypes\TranslatedText;
@@ -20,7 +19,8 @@ use App\Store\Models\ProductOptionValue;
 use App\Store\Models\ProductType;
 use App\Store\Models\ProductVariant;
 use App\Store\Models\TaxClass;
-use App\Jobs\GenerateVariants;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ProductSeeder extends AbstractSeeder
 {

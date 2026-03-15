@@ -2,11 +2,11 @@
 
 namespace App\Shipping\Filament\Resources\ShippingMethodResource\Pages;
 
+use App\Filament\Resources\ProductResource\RelationManagers\CustomerGroupRelationManager;
+use App\Shipping\Filament\Resources\ShippingMethodResource;
+use App\Support\Pages\BaseManageRelatedRecords;
 use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Support\Facades\FilamentIcon;
-use App\Admin\Filament\Resources\ProductResource\RelationManagers\CustomerGroupRelationManager;
-use App\Admin\Support\Pages\BaseManageRelatedRecords;
-use App\Shipping\Filament\Resources\ShippingMethodResource;
 
 class ManageShippingMethodAvailability extends BaseManageRelatedRecords
 {

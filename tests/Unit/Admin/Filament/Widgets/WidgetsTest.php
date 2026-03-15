@@ -1,17 +1,17 @@
 <?php
 
-use App\Admin\Filament\Resources\CollectionGroupResource\Widgets\CollectionTreeView;
-use App\Admin\Filament\Resources\CustomerResource\Widgets\CustomerStatsOverviewWidget;
 use App\Admin\Filament\Resources\ProductResource\Widgets\ProductOptionsWidget as AdminProductOptionsWidget;
-use App\Admin\Filament\Widgets\Dashboard\Orders\AverageOrderValueChart;
-use App\Admin\Filament\Widgets\Dashboard\Orders\LatestOrdersTable;
-use App\Admin\Filament\Widgets\Dashboard\Orders\NewVsReturningCustomersChart;
-use App\Admin\Filament\Widgets\Dashboard\Orders\OrderStatsOverview;
-use App\Admin\Filament\Widgets\Dashboard\Orders\OrderTotalsChart;
-use App\Admin\Filament\Widgets\Dashboard\Orders\OrdersSalesChart;
-use App\Admin\Filament\Widgets\Dashboard\Orders\PopularProductsTable;
-use App\Admin\Filament\Widgets\Products\VariantSwitcherTable;
+use App\Filament\Resources\CollectionGroupResource\Widgets\CollectionTreeView;
+use App\Filament\Resources\CustomerResource\Widgets\CustomerStatsOverviewWidget;
 use App\Filament\Resources\ProductResource\Widgets\ProductOptionsWidget as FrontendProductOptionsWidget;
+use App\Filament\Widgets\Dashboard\Orders\AverageOrderValueChart;
+use App\Filament\Widgets\Dashboard\Orders\LatestOrdersTable;
+use App\Filament\Widgets\Dashboard\Orders\NewVsReturningCustomersChart;
+use App\Filament\Widgets\Dashboard\Orders\OrdersSalesChart;
+use App\Filament\Widgets\Dashboard\Orders\OrderStatsOverview;
+use App\Filament\Widgets\Dashboard\Orders\OrderTotalsChart;
+use App\Filament\Widgets\Dashboard\Orders\PopularProductsTable;
+use App\Filament\Widgets\Products\VariantSwitcherTable;
 
 it('can instantiate all dashboard order widgets', function () {
     expect(new OrderStatsOverview())->toBeInstanceOf(OrderStatsOverview::class);

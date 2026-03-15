@@ -2,10 +2,10 @@
 
 namespace App\Admin\Database\Factories;
 
+use App\Models\Staff;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use App\Admin\Models\Staff;
 
 class StaffFactory extends Factory
 {

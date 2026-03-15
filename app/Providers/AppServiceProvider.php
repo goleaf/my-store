@@ -3,12 +3,12 @@
 namespace App\Providers;
 
 use App\Filament\Extensions\ProductVariantsHeaderWidgetsExtension;
+use App\Filament\Resources\ProductResource\Pages\ManageProductVariants;
 use App\Modifiers\ShippingModifier;
-use Illuminate\Support\ServiceProvider;
-use App\Admin\Filament\Resources\ProductResource\Pages\ManageProductVariants;
-use App\Admin\Support\Facades\AdminPanel;
-use App\Store\Base\ShippingModifiers;
 use App\Shipping\ShippingPlugin;
+use App\Store\Base\ShippingModifiers;
+use App\Support\Facades\AdminPanel;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {

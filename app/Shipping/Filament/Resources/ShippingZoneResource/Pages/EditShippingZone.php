@@ -2,9 +2,9 @@
 
 namespace App\Shipping\Filament\Resources\ShippingZoneResource\Pages;
 
-use Filament\Actions;
-use App\Admin\Support\Pages\BaseEditRecord;
 use App\Shipping\Filament\Resources\ShippingZoneResource;
+use App\Support\Pages\BaseEditRecord;
+use Filament\Actions;
 
 class EditShippingZone extends BaseEditRecord
 {

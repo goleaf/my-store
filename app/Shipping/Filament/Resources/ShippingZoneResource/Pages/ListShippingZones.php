@@ -2,9 +2,9 @@
 
 namespace App\Shipping\Filament\Resources\ShippingZoneResource\Pages;
 
-use Filament\Actions;
-use App\Admin\Support\Pages\BaseListRecords;
 use App\Shipping\Filament\Resources\ShippingZoneResource;
+use App\Support\Pages\BaseListRecords;
+use Filament\Actions;
 
 class ListShippingZones extends BaseListRecords
 {

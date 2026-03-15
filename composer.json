@@ -60,7 +60,7 @@
         },
         "files": [
             "app/Store/helpers.php",
-            "app/Admin/helpers.php"
+          "app/Filament/helpers.php"
         ]
     },
     "autoload-dev": {

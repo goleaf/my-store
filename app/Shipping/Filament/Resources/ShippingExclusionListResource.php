@@ -2,6 +2,10 @@
 
 namespace App\Shipping\Filament\Resources;
 
+use App\Shipping\Filament\Resources\ShippingExclusionListResource\Pages;
+use App\Shipping\Filament\Resources\ShippingExclusionListResource\RelationManagers\ShippingExclusionRelationManager;
+use App\Shipping\Models\Contracts\ShippingExclusionList;
+use App\Support\Resources\BaseResource;
 use Filament\Forms;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Form;
@@ -9,10 +13,6 @@ use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
-use App\Admin\Support\Resources\BaseResource;
-use App\Shipping\Filament\Resources\ShippingExclusionListResource\Pages;
-use App\Shipping\Filament\Resources\ShippingExclusionListResource\RelationManagers\ShippingExclusionRelationManager;
-use App\Shipping\Models\Contracts\ShippingExclusionList;
 
 class ShippingExclusionListResource extends BaseResource
 {
