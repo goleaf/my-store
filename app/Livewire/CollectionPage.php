@@ -19,8 +19,12 @@ class CollectionPage extends Component
             (new CollectionModel)->getMorphClass(),
             [
                 'element.thumbnail',
-                'element.products.variants.basePrices',
+                'element.products.variants.basePrices.currency',
                 'element.products.defaultUrl',
+                'element.products.brand',
+                'element.products.tags',
+                'element.children.defaultUrl',
+                'element.group',
             ]
         );
 

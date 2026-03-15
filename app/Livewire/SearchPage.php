@@ -25,11 +25,18 @@ class SearchPage extends Component
     public ?string $term = null;
 
     /**
-     * Return the search results.
+     * Return the search results (eager load all relations used by product card / Filament-backed fields).
      */
     public function getResultsProperty(): LengthAwarePaginator
     {
-        return Product::search($this->term)->paginate(50);
+        return Product::search($this->term)
+            ->query(fn ($builder) => $builder->with([
+                'defaultUrl',
+                'variants.basePrices.currency',
+                'brand',
+                'tags',
+            ]))
+            ->paginate(50);
     }
 
     public function render(): View

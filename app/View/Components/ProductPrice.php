@@ -2,7 +2,6 @@
 
 namespace App\View\Components;
 
-use Exception;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 use Lunar\Facades\Pricing;
@@ -15,21 +14,34 @@ class ProductPrice extends Component
 
     public ?ProductVariant $variant = null;
 
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
-    public function __construct($product = null, $variant = null)
-    {
-            $this->price = Pricing::for(
-                $variant ?: $product->variants->first()
-            )->get()->matched;
-    }
+    public bool $showCompare = false;
 
     /**
-     * Get the view / contents that represent the component.
+     * Create a new component instance.
      */
+    public function __construct($product = null, $variant = null, bool $showCompare = false)
+    {
+        $purchasable = $variant ?: $product?->variants?->first();
+        if ($purchasable) {
+            $this->variant = $purchasable instanceof ProductVariant ? $purchasable : null;
+            $pricing = Pricing::for($purchasable)->get();
+            $this->price = $pricing->matched;
+        }
+        $this->showCompare = $showCompare;
+    }
+
+    public function comparePrice(): ?Price
+    {
+        if (! $this->variant || ! $this->showCompare) {
+            return null;
+        }
+        $base = $this->variant->basePrices->first();
+        if (! $base || ! $base->compare_price) {
+            return null;
+        }
+        return $base;
+    }
+
     public function render(): View
     {
         return view('components.product-price');

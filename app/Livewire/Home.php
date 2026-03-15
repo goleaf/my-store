@@ -10,11 +10,17 @@ use Lunar\Models\Url;
 class Home extends Component
 {
     /**
-     * Return the sale collection.
+     * Return the sale collection (with defaultUrl and description for Filament-backed fields).
      */
     public function getSaleCollectionProperty(): Collection | null
     {
-        return Url::whereElementType((new Collection)->getMorphClass())->whereSlug('sale')->first()?->element ?? null;
+        $collection = Url::whereElementType((new Collection)->getMorphClass())
+            ->whereSlug('sale')
+            ->first()?->element ?? null;
+        if ($collection) {
+            $collection->load(['defaultUrl']);
+        }
+        return $collection;
     }
 
     /**
@@ -37,7 +43,7 @@ class Home extends Component
     }
 
     /**
-     * Return a random collection.
+     * Return a random collection (with products loaded for cards – all Filament-backed fields).
      */
     public function getRandomCollectionProperty(): ?Collection
     {
@@ -47,7 +53,16 @@ class Home extends Component
             $collections = $collections->where('element_id', '!=', $this->getSaleCollectionProperty()?->id);
         }
 
-        return $collections->inRandomOrder()->first()?->element;
+        $collection = $collections->inRandomOrder()->first()?->element;
+        if ($collection) {
+            $collection->load([
+                'products.variants.basePrices.currency',
+                'products.defaultUrl',
+                'products.brand',
+                'products.tags',
+            ]);
+        }
+        return $collection;
     }
 
     public function render(): View
