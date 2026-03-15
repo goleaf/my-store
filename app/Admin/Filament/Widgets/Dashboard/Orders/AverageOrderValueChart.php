@@ -8,6 +8,7 @@ use Filament\Widgets\ChartWidget;
 use App\Store\Facades\DB;
 use App\Store\Models\CustomerGroup;
 use App\Store\Models\Order;
+use Illuminate\Contracts\Support\Htmlable;
 
 class AverageOrderValueChart extends ChartWidget
 {
@@ -15,7 +16,7 @@ class AverageOrderValueChart extends ChartWidget
 
     protected ?string $heading = null;
 
-    protected function getHeading(): ?string
+    public function getHeading(): Htmlable|string|null
     {
         return $this->heading ?? __('admin::widgets.dashboard.orders.average_order_value.heading');
     }

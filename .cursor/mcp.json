@@ -1,0 +1,62 @@
+{
+  "mcpServers": {
+    "context7": {
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {}
+    },
+    "everything": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-everything"
+      ]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest"
+      ]
+    },
+    "snyk": {
+      "command": "npx -y snyk@latest mcp -t stdio",
+      "env": {},
+      "args": []
+    },
+    "Browser Use": {
+      "url": "https://docs.browser-use.com/mcp",
+      "headers": {}
+    },
+    "Render": {
+      "url": "https://mcp.render.com/mcp",
+      "headers": {
+        "Authorization": "Bearer <YOUR_API_KEY>"
+      }
+    },
+    "Select Star": {
+      "command": "npx -y mcp-remote@latest https://mcp.production.selectstar.com/mcp --header Authorization:${SELECT_STAR_TOKEN}",
+      "env": {
+        "SELECT_STAR_TOKEN": ""
+      },
+      "args": []
+    },
+    "Chrome DevTools": {
+      "command": "npx chrome-devtools-mcp@latest",
+      "env": {},
+      "args": []
+    },
+    "Socket": {
+      "url": "https://mcp.socket.dev/",
+      "headers": {}
+    },
+    "MS Learn Docs": {
+      "url": "https://learn.microsoft.com/api/mcp",
+      "headers": {}
+    },
+    "opencontext": {
+      "command": "oc",
+      "args": [
+        "mcp"
+      ]
+    }
+  }
+}

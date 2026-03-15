@@ -7,6 +7,7 @@ use Carbon\CarbonPeriod;
 use Filament\Widgets\ChartWidget;
 use App\Store\Facades\DB;
 use App\Store\Models\Order;
+use Illuminate\Contracts\Support\Htmlable;
 
 class NewVsReturningCustomersChart extends ChartWidget
 {
@@ -14,7 +15,7 @@ class NewVsReturningCustomersChart extends ChartWidget
 
     protected ?string $heading = null;
 
-    protected function getHeading(): ?string
+    public function getHeading(): Htmlable|string|null
     {
         return $this->heading ?? __('admin::widgets.dashboard.orders.new_returning_customers.heading');
     }

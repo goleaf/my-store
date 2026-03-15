@@ -35,7 +35,7 @@ class CollectionTreeView extends Widget implements HasActions, HasForms
 
     protected static bool $isLazy = false;
 
-    protected static string $view = 'admin::resources.collectiongroup-resource.widgets.collection-treeview';
+    protected string $view = 'admin::resources.collectiongroup-resource.widgets.collection-treeview';
 
     public function mount()
     {

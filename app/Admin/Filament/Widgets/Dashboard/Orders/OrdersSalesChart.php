@@ -5,6 +5,7 @@ namespace App\Admin\Filament\Widgets\Dashboard\Orders;
 use Carbon\CarbonInterface;
 use Filament\Widgets\ChartWidget;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
+use Illuminate\Contracts\Support\Htmlable;
 use App\Store\Facades\DB;
 use App\Store\Models\Currency;
 use App\Store\Models\Order;
@@ -17,7 +18,7 @@ class OrdersSalesChart extends ChartWidget
 
     protected ?string $heading = null;
 
-    protected function getHeading(): ?string
+    public function getHeading(): Htmlable|string|null
     {
         return $this->heading ?? __('admin::widgets.dashboard.orders.order_sales_chart.heading');
     }
