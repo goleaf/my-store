@@ -74,6 +74,8 @@ class AdminPanelManager
         \App\Filament\Resources\FeaturedCategoryResource::class,
         \App\Filament\Resources\HomeSectionResource::class,
         \App\Filament\Resources\HomeBannerResource::class,
+        \App\Filament\Resources\AnnouncementResource::class,
+        \App\Filament\Resources\DeliveryZoneResource::class,
     ];
 
     protected static $pages = [

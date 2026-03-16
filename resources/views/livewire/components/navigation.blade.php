@@ -1,168 +1,195 @@
-<header class="relative border-b border-gray-100">
-    <div class="flex items-center justify-between h-16 px-4 mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
-        <div class="flex items-center">
-            <a class="flex items-center flex-shrink-0"
-               href="{{ url('/') }}"
-               wire:navigate
-            >
-                <span class="sr-only">Home</span>
-
-                <x-brand.logo class="w-auto h-6 text-green-600" />
+<header class="relative bg-white border-b border-gray-100 shadow-sm sticky top-0 z-[60]">
+    <!-- Row 1: Main Header -->
+    <div class="h-20 flex items-center px-4 mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
+        <!-- Logo -->
+        <div class="flex-shrink-0">
+            <a href="{{ url('/') }}" wire:navigate class="flex items-center group">
+                <x-brand.logo class="w-auto h-8 text-primary-600 group-hover:scale-105 transition-transform" />
             </a>
-
-            <nav class="hidden lg:gap-8 lg:flex lg:ml-8">
-                @foreach ($this->collections as $collection)
-                    @if($collection->children->count())
-                        <div x-data="{ open: false }" class="relative group">
-                            <button @mouseover="open = true" @mouseleave="open = false" class="flex items-center text-sm font-medium transition hover:opacity-75">
-                                <a href="{{ route('collection.view', $collection->defaultUrl->slug) }}" wire:navigate>
-                                    {{ $collection->translateAttribute('name') }}
-                                </a>
-                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </button>
-                            <div x-show="open" @mouseover="open = true" @mouseleave="open = false" x-cloak class="absolute left-0 z-50 w-48 py-2 mt-0 bg-white border border-gray-100 shadow-xl rounded-xl">
-                                @foreach($collection->children as $child)
-                                    <a href="{{ route('collection.view', $child->defaultUrl->slug) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" wire:navigate>
-                                        {{ $child->translateAttribute('name') }}
-                                    </a>
-                                @endforeach
-                            </div>
-                        </div>
-                    @else
-                        <a class="text-sm font-medium transition hover:opacity-75"
-                           href="{{ route('collection.view', $collection->defaultUrl->slug) }}"
-                           wire:navigate
-                        >
-                            {{ $collection->translateAttribute('name') }}
-                        </a>
-                    @endif
-                @endforeach
-
-                @foreach ($this->brands as $brand)
-                    @if($brand->defaultUrl)
-                        <a class="text-sm font-medium transition hover:opacity-75"
-                           href="{{ route('brand.view', $brand->defaultUrl->slug) }}"
-                           wire:navigate
-                        >
-                            {{ $brand->translateAttribute('name') }}
-                        </a>
-                    @endif
-                @endforeach
-            </nav>
         </div>
 
-        <div class="flex items-center justify-between flex-1 ml-4 lg:justify-end gap-4">
-            <x-header.search class="max-w-sm mr-4" />
-            @livewire('components.currency-switcher')
-            <div class="flex items-center -mr-4 sm:-mr-6 lg:mr-0">
+        <!-- Search Bar (Full Width) -->
+        <div class="flex-1 mx-8 hidden sm:block">
+            @livewire('components.global-search')
+        </div>
+
+        <!-- Action Icons -->
+        <div class="flex items-center space-x-6">
+            <!-- Location Picker -->
+            <div class="hidden sm:block">
+                @livewire('components.location-picker')
+            </div>
+
+            <!-- Wishlist Placeholder -->
+            <a href="#" class="relative p-2 text-gray-400 hover:text-primary-600 transition-colors">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+                <span class="absolute top-1 right-1 bg-red-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">0</span>
+            </a>
+
+            <!-- Cart -->
+            <div class="relative">
+                @livewire('components.cart')
+            </div>
+            
+            <!-- Account -->
+            <div class="hidden md:block">
                 @auth
-                    <div class="hidden lg:flex lg:items-center lg:ml-6 lg:gap-4">
-                        <div x-data="{ open: false }" class="relative">
-                            <button @click="open = !open" class="text-sm font-medium text-gray-700 hover:text-green-600 transition">
-                                My Account ({{ auth()->user()->name }})
-                            </button>
-                            <div x-show="open" @click.away="open = false" x-cloak class="absolute right-0 z-50 mt-2 w-48 origin-top-right rounded-md bg-white p-1 shadow-lg ring-1 ring-black ring-opacity-5">
-                                <a href="{{ route('account.orders') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md" wire:navigate>Orders</a>
-                                <a href="{{ route('account.settings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md" wire:navigate>Settings</a>
-                                <a href="{{ route('account.addresses') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md" wire:navigate>Addresses</a>
-                                <form action="{{ route('logout') }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 rounded-md">Logout</button>
-                                </form>
+                    <div x-data="{ open: false }" class="relative">
+                        <button @click="open = !open" class="flex items-center space-x-2 p-2 rounded-full hover:bg-gray-100 transition-colors">
+                            <div class="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 font-bold">
+                                {{ substr(auth()->user()->name, 0, 1) }}
                             </div>
+                        </button>
+                        <div x-show="open" @click.away="open = false" x-cloak class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 py-1 overflow-hidden">
+                            <div class="px-4 py-3 border-b border-gray-100">
+                                <p class="text-xs text-gray-500">Signed in as</p>
+                                <p class="text-sm font-bold text-gray-900 truncate">{{ auth()->user()->name }}</p>
+                            </div>
+                            <a href="{{ route('account.orders') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-700" wire:navigate>Orders</a>
+                            <a href="{{ route('account.settings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-700" wire:navigate>Settings</a>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-md">Logout</button>
+                            </form>
                         </div>
                     </div>
                 @else
-                    <div class="hidden lg:flex lg:items-center lg:ml-6 gap-4">
-                        <a href="{{ route('login') }}" class="text-sm font-medium text-gray-700 hover:text-green-600 transition" wire:navigate>
-                            Sign In
-                        </a>
-                        <a href="{{ route('register') }}" class="text-sm font-medium text-gray-700 hover:text-green-600 transition" wire:navigate>
-                            Register
-                        </a>
-                    </div>
+                    <a href="{{ route('login') }}" class="text-sm font-bold text-gray-700 hover:text-primary-600 transition-colors" wire:navigate>
+                        Sign In / Register
+                    </a>
                 @endauth
+            </div>
+        </div>
+    </div>
 
-                @livewire('components.cart')
+    <!-- Row 2: Secondary Navigation -->
+    <div class="bg-gray-50 border-t border-gray-100 hidden lg:block">
+        <div class="px-4 mx-auto max-w-screen-2xl sm:px-6 lg:px-8 flex items-center">
+            <!-- All Departments Dropdown -->
+            <div class="relative flex-shrink-0" x-data="{ open: false }">
+                <button @click="open = !open" 
+                        class="bg-primary-600 text-white px-6 py-4 flex items-center space-x-3 font-bold hover:bg-primary-700 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <span>All Departments</span>
+                    <svg :class="{'rotate-180': open}" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
 
-                <div x-data="{ mobileMenu: false }">
-                    <button x-on:click="mobileMenu = !mobileMenu"
-                            class="grid flex-shrink-0 w-16 h-16 border-l border-gray-100 lg:hidden">
-                        <span class="sr-only">Toggle Menu</span>
+                <div x-show="open" 
+                     @click.away="open = false" 
+                     x-cloak
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0 translate-y-1"
+                     x-transition:enter-end="opacity-100 translate-y-0"
+                     class="absolute top-full left-0 w-64 bg-white shadow-2xl border-x border-b border-gray-100 z-50 py-2">
+                    @foreach ($this->collections as $collection)
+                        <a href="{{ route('collection.view', $collection->defaultUrl->slug) }}" 
+                           class="flex items-center justify-between px-6 py-3 text-sm font-medium text-gray-700 hover:bg-primary-50 hover:text-primary-700 transition-colors"
+                           wire:navigate>
+                            <span>{{ $collection->translateAttribute('name') }}</span>
+                            @if($collection->children->count())
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            @endif
+                        </a>
+                    @endforeach
+                </div>
+            </div>
 
-                        <span class="place-self-center">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 class="w-5 h-5"
-                                 fill="none"
-                                 viewBox="0 0 24 24"
-                                 stroke="currentColor">
-                                <path stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      stroke-width="2"
-                                      d="M4 6h16M4 12h16M4 18h16" />
-                            </svg>
-                        </span>
+            <!-- Main Navigation -->
+            <nav class="flex items-center space-x-8 ml-8">
+                <a href="{{ url('/') }}" class="text-sm font-bold text-gray-700 hover:text-primary-600 uppercase tracking-wide py-4 {{ request()->is('/') ? 'text-primary-600 border-b-2 border-primary-600' : '' }}" wire:navigate>Home</a>
+                <a href="#" class="text-sm font-bold text-gray-700 hover:text-primary-600 uppercase tracking-wide py-4" wire:navigate>Shop</a>
+                <a href="#" class="text-sm font-bold text-gray-700 hover:text-primary-600 uppercase tracking-wide py-4" wire:navigate>Stores</a>
+                <a href="#" class="text-sm font-bold text-gray-700 hover:text-primary-600 uppercase tracking-wide py-4" wire:navigate>Mega Menu</a>
+                <a href="#" class="text-sm font-bold text-gray-700 hover:text-primary-600 uppercase tracking-wide py-4" wire:navigate>Pages</a>
+                <a href="#" class="text-sm font-bold text-gray-700 hover:text-primary-600 uppercase tracking-wide py-4" wire:navigate>Dashboard</a>
+            </nav>
+
+            <!-- Promo/Help -->
+            <div class="ml-auto flex items-center space-x-6">
+                @livewire('components.currency-switcher')
+                <div class="text-sm font-medium text-gray-500">
+                    Need Help? <span class="text-primary-600 font-bold ml-1">+123 456 789</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation (Row 3 simplified for now) -->
+    <div class="lg:hidden flex items-center justify-between px-4 py-2 bg-gray-50 border-t border-gray-100" x-data="{ mobileMenu: false }">
+        <button @click="mobileMenu = !mobileMenu" class="p-2 text-gray-700">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+        
+        <div class="flex-1 px-4">
+            @livewire('components.global-search')
+        </div>
+
+        <!-- Mobile Drawer -->
+        <div x-show="mobileMenu" 
+             x-cloak
+             class="fixed inset-0 z-[1000]"
+             @keydown.escape.window="mobileMenu = false">
+            <div x-show="mobileMenu" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 bg-gray-900 bg-opacity-50 transition-opacity"></div>
+            
+            <div x-show="mobileMenu" 
+                 x-transition:enter="transition ease-out duration-300 transform"
+                 x-transition:enter-start="-translate-x-full"
+                 x-transition:enter-end="translate-x-0"
+                 x-transition:leave="transition ease-in duration-200 transform"
+                 x-transition:leave-start="translate-x-0"
+                 x-transition:leave-end="-translate-x-full"
+                 class="fixed inset-y-0 left-0 w-80 bg-white shadow-2xl z-[1001] flex flex-col">
+                
+                <div class="p-4 border-b border-gray-100 flex items-center justify-between">
+                    <x-brand.logo class="h-6 w-auto text-primary-600" />
+                    <button @click="mobileMenu = false" class="text-gray-400">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
                     </button>
+                </div>
 
-                    <div x-cloak
-                         x-transition
-                         x-show="mobileMenu"
-                         class="absolute right-0 top-auto z-50 w-screen p-4 sm:max-w-xs">
-                        <ul x-on:click.away="mobileMenu = false"
-                            class="p-6 space-y-4 bg-white border border-gray-100 shadow-xl rounded-xl">
-                            @auth
-                                <li>
-                                    <span class="text-sm font-medium text-gray-700 block mb-2">Hi, {{ auth()->user()->name }}</span>
-                                    <form action="{{ route('logout') }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="text-sm font-medium text-red-600">Logout</button>
-                                    </form>
-                                </li>
-                                <hr class="border-gray-100">
-                            @else
-                                <li>
-                                    <a href="{{ route('login') }}" class="text-sm font-medium text-gray-700 block" wire:navigate>
-                                        Sign In
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('register') }}" class="text-sm font-medium text-gray-700 block" wire:navigate>
-                                        Create Account
-                                    </a>
-                                </li>
-                                <hr class="border-gray-100">
-                            @endauth
-
-                            @foreach ($this->collections as $collection)
-                                <li x-data="{ open: false }">
-                                    <div class="flex items-center justify-between">
-                                        <a class="text-sm font-medium"
-                                           href="{{ route('collection.view', $collection->defaultUrl->slug) }}"
-                                           wire:navigate
-                                        >
-                                            {{ $collection->translateAttribute('name') }}
-                                        </a>
-                                        @if($collection->children->count())
-                                            <button @click="open = !open" class="p-1">
-                                                <svg :class="{'rotate-180': open}" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                                            </button>
-                                        @endif
-                                    </div>
-                                    @if($collection->children->count())
-                                        <ul x-show="open" x-cloak class="mt-2 ml-4 space-y-2 border-l border-gray-100 pl-4">
-                                            @foreach($collection->children as $child)
-                                                <li>
-                                                    <a href="{{ route('collection.view', $child->defaultUrl->slug) }}" class="text-sm text-gray-600 hover:text-green-600" wire:navigate>
-                                                        {{ $child->translateAttribute('name') }}
-                                                    </a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    @endif
-                                </li>
-                            @endforeach
-                        </ul>
+                <div class="flex-1 overflow-y-auto py-4">
+                    <div class="px-6 mb-6">
+                        @livewire('components.location-picker')
                     </div>
+                    
+                    <nav class="space-y-1">
+                        @foreach ($this->collections as $collection)
+                            <a href="{{ route('collection.view', $collection->defaultUrl->slug) }}" class="block px-6 py-3 text-lg font-bold text-gray-900 border-b border-gray-50" wire:navigate>
+                                {{ $collection->translateAttribute('name') }}
+                            </a>
+                        @endforeach
+                    </nav>
+                </div>
+
+                <div class="p-6 bg-gray-50 border-t border-gray-100">
+                    @auth
+                        <div class="flex items-center space-x-3 mb-4">
+                            <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 font-bold">
+                                {{ substr(auth()->user()->name, 0, 1) }}
+                            </div>
+                            <div class="text-sm font-bold text-gray-900">{{ auth()->user()->name }}</div>
+                        </div>
+                        <a href="{{ route('account.orders') }}" class="block w-full text-center bg-white border border-gray-200 py-3 rounded-xl font-bold mb-2">My Orders</a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="w-full text-center text-red-600 font-bold py-3">Logout</button>
+                        </form>
+                    @else
+                        <a href="{{ route('login') }}" class="block w-full text-center bg-primary-600 text-white py-4 rounded-xl font-extrabold shadow-lg shadow-primary-200 mb-4 transition-transform active:scale-95">Sign In</a>
+                        <a href="{{ route('register') }}" class="block w-full text-center border-2 border-gray-200 py-3 rounded-xl font-bold">Create Account</a>
+                    @endauth
                 </div>
             </div>
         </div>

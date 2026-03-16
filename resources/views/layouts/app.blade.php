@@ -25,6 +25,7 @@
 </head>
 
 <body class="antialiased text-gray-900">
+    @livewire('components.announcement-bar')
     @livewire('components.navigation')
 
     <main>
