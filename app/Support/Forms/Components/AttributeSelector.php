@@ -8,6 +8,7 @@ use App\Models\AttributeGroup;
 use App\Models\Product;
 use App\Models\ProductType;
 use Filament\Forms\Components\CheckboxList;
+use Closure;
 
 class AttributeSelector extends CheckboxList
 {
@@ -29,7 +30,7 @@ class AttributeSelector extends CheckboxList
         $this->loadStateFromRelationships();
     }
 
-    public function relationship(string|\Closure|null $name = null, string|\Closure|null $titleAttribute = null, ?\Closure $modifyQueryUsing = null): static
+    public function relationship(string|Closure|null $name = null, string|Closure|null $titleAttribute = null, ?Closure $modifyQueryUsing = null): static
     {
         parent::relationship($name, $titleAttribute, $modifyQueryUsing);
 

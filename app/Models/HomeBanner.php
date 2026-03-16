@@ -2,10 +2,15 @@
 
 namespace App\Models;
 
+use App\Base\Enums\HomeBannerType;
+use Database\Factories\HomeBannerFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class HomeBanner extends Model
 {
+    use HasFactory;
+
     protected $table = 'store_home_banners';
 
     protected $fillable = [
@@ -21,5 +26,11 @@ class HomeBanner extends Model
     protected $casts = [
         'is_active' => 'boolean',
         'sort_order' => 'integer',
+        'type' => HomeBannerType::class,
     ];
+
+    protected static function newFactory(): HomeBannerFactory
+    {
+        return HomeBannerFactory::new();
+    }
 }

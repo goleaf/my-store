@@ -5,11 +5,11 @@ namespace App\Support\Actions\Traits;
 use App\Facades\DB;
 use App\Models\Attribute;
 use App\Models\Collection;
-use App\Models\Contracts\Collection as CollectionContract;
+use App\Models\Contracts;
 
 trait CreatesChildCollections
 {
-    public function createChildCollection(CollectionContract $parent, array|string $name)
+    public function createChildCollection(Contracts\Collection $parent, array|string $name)
     {
         DB::beginTransaction();
 

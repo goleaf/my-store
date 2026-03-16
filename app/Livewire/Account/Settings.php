@@ -2,6 +2,9 @@
 
 namespace App\Livewire\Account;
 
+use App\Http\Requests\Account\UpdatePasswordRequest;
+use App\Http\Requests\Account\UpdateProfileRequest;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Layout;
@@ -25,46 +28,38 @@ class Settings extends Component
         $user = Auth::user();
         $this->name = $user->name;
         $this->email = $user->email;
-        // Phone might not exist on User model, check Customer
-        $customer = $user->latestCustomer();
-        if ($customer) {
-            $this->phone = $customer->meta['phone'] ?? '';
-        }
+        $this->phone = $user->phone ?? '';
     }
 
     public function updateProfile(): void
     {
-        $this->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . Auth::id(),
-            'phone' => 'nullable|string|max:20',
+        $request = (new UpdateProfileRequest)->forUser(Auth::id());
+        $validated = $request->validatePayload([
+            'name' => $this->name,
+            'email' => $this->email,
+            'phone' => $this->phone,
         ]);
 
         $user = Auth::user();
-        $user->update([
-            'name' => $this->name,
-            'email' => $this->email,
-        ]);
-
-        $customer = $user->latestCustomer();
-        if ($customer) {
-            $customer->update([
-                'meta' => array_merge($customer->meta?->toArray() ?? [], ['phone' => $this->phone]),
-            ]);
-        }
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->phone = $validated['phone'];
+        $user->save();
 
         session()->flash('status', 'Profile updated successfully.');
     }
 
     public function updatePassword(): void
     {
-        $this->validate([
-            'current_password' => 'required|current_password',
-            'new_password' => 'required|min:8|confirmed',
+        $request = new UpdatePasswordRequest;
+        $validated = $request->validatePayload([
+            'current_password' => $this->current_password,
+            'new_password' => $this->new_password,
+            'new_password_confirmation' => $this->new_password_confirmation,
         ]);
 
         Auth::user()->update([
-            'password' => Hash::make($this->new_password),
+            'password' => Hash::make($validated['new_password']),
         ]);
 
         $this->reset(['current_password', 'new_password', 'new_password_confirmation']);
@@ -72,7 +67,7 @@ class Settings extends Component
         session()->flash('status', 'Password updated successfully.');
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.account.settings');
     }

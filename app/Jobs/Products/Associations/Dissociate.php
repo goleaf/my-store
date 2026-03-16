@@ -11,8 +11,7 @@ use Illuminate\Support\Collection;
 use App\Base\BaseModel;
 use App\Base\Enums\Concerns\ProvidesProductAssociationType;
 use App\Facades\DB;
-use App\Models\Contracts\Product as ProductContract;
-use App\Models\Product;
+use App\Models\Contracts\Product;
 
 class Dissociate implements ShouldQueue
 {
@@ -33,7 +32,7 @@ class Dissociate implements ShouldQueue
     /**
      * The parent product instance.
      */
-    protected ProductContract $product;
+    protected Product $product;
 
     /**
      * The SKU for the generated variant.
@@ -45,7 +44,7 @@ class Dissociate implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(ProductContract $product, Collection|BaseModel|array $targets, ProvidesProductAssociationType|string|null $type = null)
+    public function __construct(Product $product, Collection|BaseModel|array $targets, ProvidesProductAssociationType|string|null $type = null)
     {
         if (is_array($targets)) {
             $targets = collect($targets);

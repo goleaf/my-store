@@ -10,6 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Arr;
 use App\Models\Contracts\Price;
 use App\Models\Currency;
+use App\Models;
 
 class SyncPriceCurrencies implements ShouldQueue
 {
@@ -34,7 +35,7 @@ class SyncPriceCurrencies implements ShouldQueue
             ->get();
 
         foreach ($currencies as $currency) {
-            $priceCounterpart = \App\Models\Price::where('priceable_id', $this->price->priceable_id)
+            $priceCounterpart = Models\Price::where('priceable_id', $this->price->priceable_id)
                 ->where('priceable_type', $this->price->priceable_type)
                 ->where('currency_id', $currency->id)
                 ->where('id', '!=', $this->price->id)
@@ -43,7 +44,7 @@ class SyncPriceCurrencies implements ShouldQueue
                 ->first();
 
             if (! $priceCounterpart) {
-                $priceCounterpart = (new \App\Models\Price)->forceFill([
+                $priceCounterpart = (new Models\Price)->forceFill([
                     ...Arr::except($this->price->getAttributes(), ['id']),
                     'currency_id' => $currency->id,
                     'price' => $this->price->price->value * $currency->exchange_rate,

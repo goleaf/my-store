@@ -20,8 +20,7 @@ class Notifications extends Component
 
     public function mount(): void
     {
-        $user = Auth::user();
-        $customer = $user->latestCustomer();
+        $customer = Auth::user();
         if ($customer && isset($customer->meta['notification_preferences'])) {
             $this->preferences = array_merge($this->preferences, $customer->meta['notification_preferences']);
         }
@@ -29,7 +28,7 @@ class Notifications extends Component
 
     public function updatePreferences(): void
     {
-        $customer = Auth::user()->latestCustomer();
+        $customer = Auth::user();
         $meta = $customer->meta ?? [];
         $meta['notification_preferences'] = $this->preferences;
         $customer->update(['meta' => $meta]);

@@ -3,10 +3,9 @@
 namespace App\Actions\Collections;
 
 use Illuminate\Support\Collection;
-use App\Models\Contracts\Currency as CurrencyContract;
-use App\Models\Contracts\Product as ProductContract;
 use App\Models\Currency;
-use App\Models\Product;
+use App\Models\Contracts;
+use App\Models\Contracts\Product;
 
 class SortProductsByPrice
 {
@@ -27,9 +26,9 @@ class SortProductsByPrice
         });
     }
 
-    protected function getMinPrice(ProductContract $product, CurrencyContract $currency)
+    protected function getMinPrice(Product $product, Contracts\Currency $currency)
     {
-        /** @var Product $product */
+        /** @var \App\Models\Product $product */
         /** @var Currency $currency */
         return $product->variants->map(function ($variant) use ($currency) {
             // Get the prices for the currency

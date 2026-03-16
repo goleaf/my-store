@@ -2,20 +2,22 @@
 
 namespace App\Filament\Resources;
 
+use App\Base\Enums\HomeSectionType;
+use App\Filament\Resources\HomeSectionResource\Pages;
 use App\Models\HomeSection;
 use App\Support\Resources\BaseResource;
-use App\Filament\Resources\HomeSectionResource\Pages;
 use Filament\Forms;
+use Filament\Actions;
+use Filament\Schemas\Components;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use BackedEnum;
 
 class HomeSectionResource extends BaseResource
 {
     protected static ?string $model = HomeSection::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'lucide-layout-list';
+    protected static string|BackedEnum|null $navigationIcon = 'lucide-layout-list';
 
     public static function getLabel(): string
     {
@@ -35,20 +37,16 @@ class HomeSectionResource extends BaseResource
     protected static function getMainFormComponents(): array
     {
         return [
-            SchemaComponents\Section::make()->schema([
+            Components\Section::make()->schema([
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('subtitle')
                     ->maxLength(255),
                 Forms\Components\Select::make('type')
-                    ->options([
-                        'product_grid' => 'Product Grid',
-                        'sidebar_grid' => 'Sidebar Grid (Daily Best Sells)',
-                        'featured_items' => 'Featured Items (4 boxes)',
-                    ])
+                    ->options(HomeSectionType::options())
                     ->required()
-                    ->default('product_grid'),
+                    ->default(HomeSectionType::ProductGrid->value),
                 Forms\Components\Select::make('collection_id')
                     ->relationship('collection', 'id')
                     ->getOptionLabelFromRecordUsing(fn ($record) => $record->attribute_data['name']['value'] ?? $record->id)
@@ -87,7 +85,8 @@ class HomeSectionResource extends BaseResource
         return [
             Tables\Columns\TextColumn::make('title')
                 ->searchable(),
-            Tables\Columns\TextColumn::make('type'),
+            Tables\Columns\TextColumn::make('type')
+                ->formatStateUsing(fn ($state) => HomeSectionType::labelFor($state)),
             Tables\Columns\TextColumn::make('collection.id')
                 ->label('Collection')
                 ->formatStateUsing(fn ($record) => $record->collection?->attribute_data['name']['value'] ?? $record->collection_id),

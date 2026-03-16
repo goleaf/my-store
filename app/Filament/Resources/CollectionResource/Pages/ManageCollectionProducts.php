@@ -6,7 +6,6 @@ use App\Events\CollectionProductAttached;
 use App\Events\CollectionProductDetached;
 use App\Filament\Resources\CollectionResource;
 use App\Filament\Resources\ProductResource;
-use App\Models\Contracts\Product as ProductContract;
 use App\Models\Product;
 use App\Support\Pages\BaseManageRelatedRecords;
 use Filament\Forms;
@@ -17,6 +16,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Filament\Actions;
+use App\Models\Contracts;
 
 class ManageCollectionProducts extends BaseManageRelatedRecords
 {
@@ -50,7 +50,7 @@ class ManageCollectionProducts extends BaseManageRelatedRecords
         return __('admin::collection.pages.products.label');
     }
 
-    public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function form(Schema $schema): Schema
     {
         return $schema->components([
             Tables\Columns\TextColumn::make('foo'),
@@ -68,12 +68,11 @@ class ManageCollectionProducts extends BaseManageRelatedRecords
 
     public function table(Table $table): Table
     {
-        return $table->columns([
-
-            Tables\Columns\SpatieMediaLibraryImageColumn::make('thumbnail')
-                ->collection(config('store.media.collection'))
-                ->conversion('small')
-                ->limit(1)
+        return $table
+            ->modifyQueryUsing(fn ($query) => $query->with('thumbnail'))
+            ->columns([
+            Tables\Columns\ImageColumn::make('thumbnail_image')
+                ->state(fn (Contracts\Product $record): string => $record->getThumbnailImage())
                 ->square()
                 ->label(''),
             Tables\Columns\TextColumn::make('attribute_data.name')
@@ -103,9 +102,9 @@ class ManageCollectionProducts extends BaseManageRelatedRecords
                             return get_search_builder($relationModel, $search)
                                 ->get()
                                 ->reject(
-                                    fn (ProductContract $record) => $livewire->getRelationship()->get()->contains($record->getKey())
+                                    fn (Contracts\Product $record) => $livewire->getRelationship()->get()->contains($record->getKey())
                                 )
-                                ->mapWithKeys(fn (ProductContract $record): array => [$record->getKey() => $record->translateAttribute('name')])
+                                ->mapWithKeys(fn (Contracts\Product $record): array => [$record->getKey() => $record->translateAttribute('name')])
                                 ->all();
                         }),
                 ])->action(function (array $arguments, array $data, Form $form, Table $table) {

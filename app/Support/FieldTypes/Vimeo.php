@@ -2,10 +2,11 @@
 
 namespace App\Support\FieldTypes;
 
+use App\Http\Requests\Support\Fields\ConfiguredFieldRequest;
 use App\Models\Attribute;
-use App\Support\Forms\Components\Vimeo as VimeoInput;
 use App\Support\Synthesizers\VimeoSynth;
-use Filament\Forms\Components\Component;
+use Filament\Schemas\Components\Component;
+use App\Support\Forms\Components;
 
 class Vimeo extends BaseFieldType
 {
@@ -13,10 +14,15 @@ class Vimeo extends BaseFieldType
 
     public static function getFilamentComponent(Attribute $attribute): Component
     {
-        return VimeoInput::make($attribute->handle)
-            ->live(debounce: 200)
-            ->when(filled($attribute->validation_rules), fn (VimeoInput $component) => $component->rules($attribute->validation_rules))
+        $request = (new ConfiguredFieldRequest)
+            ->forField($attribute->handle)
             ->required((bool) $attribute->required)
+            ->withRules($attribute->validation_rules);
+
+        return Components\Vimeo::make($attribute->handle)
+            ->live(debounce: 200)
+            ->rules($request->fieldRules($attribute->handle))
+            ->required($request->fieldHasRule($attribute->handle, 'required'))
             ->helperText(
                 $attribute->translate('description') ?? __('admin::components.forms.youtube.helperText')
             );

@@ -3,9 +3,9 @@
 namespace App\Actions\Carts;
 
 use App\Actions\AbstractAction;
-use App\Base\StoreUser;
 use App\Models\Cart;
-use App\Models\Contracts\Cart as CartContract;
+use App\Models\Customer;
+use App\Models\Contracts;
 
 class AssociateUser extends AbstractAction
 {
@@ -14,28 +14,39 @@ class AssociateUser extends AbstractAction
      *
      * @param  string  $policy
      */
-    public function execute(CartContract $cart, StoreUser $user, $policy = 'merge'): self
+    public function execute(Contracts\Cart $cart, Customer $customer, $policy = 'merge'): self
     {
-        /** @var Cart $userCart */
+        /** @var Cart $customerCart */
         if ($policy == 'merge') {
-            $userCart = Cart::whereUserId($user->getKey())->active()->unMerged()->latest()->first();
-            if ($userCart) {
-                app(MergeCart::class)->execute($cart, $userCart);
+            $customerCart = Cart::query()
+                ->where('customer_id', $customer->getKey())
+                ->active()
+                ->unMerged()
+                ->latest()
+                ->first();
+
+            if ($customerCart) {
+                app(MergeCart::class)->execute($cart, $customerCart);
             }
         }
 
         if ($policy == 'override') {
-            $userCart = Cart::whereUserId($user->getKey())->active()->unMerged()->latest()->first();
-            if ($userCart && $userCart->id != $cart->id) {
-                $userCart->update([
-                    'merged_id' => $userCart->id,
+            $customerCart = Cart::query()
+                ->where('customer_id', $customer->getKey())
+                ->active()
+                ->unMerged()
+                ->latest()
+                ->first();
+
+            if ($customerCart && $customerCart->id != $cart->id) {
+                $customerCart->update([
+                    'merged_id' => $customerCart->id,
                 ]);
             }
         }
 
         $cart->update([
-            'user_id' => $user->getKey(),
-            'customer_id' => $user->latestCustomer()?->getKey(),
+            'customer_id' => $customer->getKey(),
         ]);
 
         return $this;

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('saved_payment_methods', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained('store_customers')->onDelete('cascade');
             $table->enum('type', ['card', 'paypal', 'payoneer']);
             
             // Card fields (from Stripe)
@@ -33,7 +33,7 @@ return new class extends Migration
             $table->boolean('is_default')->default(false);
             $table->timestamps();
 
-            $table->index('user_id');
+            $table->index('customer_id');
         });
     }
 

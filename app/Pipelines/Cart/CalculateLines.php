@@ -5,19 +5,18 @@ namespace App\Pipelines\Cart;
 use Closure;
 use Illuminate\Pipeline\Pipeline;
 use App\DataTypes\Price;
-use App\Models\Cart;
-use App\Models\Contracts\Cart as CartContract;
+use App\Models\Contracts\Cart;
 
 class CalculateLines
 {
     /**
      * Called just before cart totals are calculated.
      *
-     * @param  Closure(CartContract): mixed  $next
+     * @param  Closure(\App\Models\Contracts\Cart): mixed  $next
      */
-    public function handle(CartContract $cart, Closure $next): mixed
+    public function handle(Cart $cart, Closure $next): mixed
     {
-        /** @var Cart $cart */
+        /** @var \App\Models\Cart $cart */
         foreach ($cart->lines as $line) {
             $cartLine = app(Pipeline::class)
                 ->send($line)

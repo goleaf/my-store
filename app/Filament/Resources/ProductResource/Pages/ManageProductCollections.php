@@ -4,7 +4,7 @@ namespace App\Filament\Resources\ProductResource\Pages;
 
 use App\Events\ProductCollectionsUpdated;
 use App\Filament\Resources\ProductResource;
-use App\Models\Contracts\Collection as CollectionContract;
+use App\Models\Contracts\Collection;
 use App\Support\Pages\BaseManageRelatedRecords;
 use App\Support\Tables\Columns\TranslatedTextColumn;
 use Filament\Forms;
@@ -41,7 +41,7 @@ class ManageProductCollections extends BaseManageRelatedRecords
             ->reorderable('position')
             ->columns([
                 TranslatedTextColumn::make('attribute_data.name')
-                    ->description(fn (CollectionContract $record): string => $record->breadcrumb->implode(' > '))
+                    ->description(fn (Collection $record): string => $record->breadcrumb->implode(' > '))
                     ->attributeData()
                     ->limitedTooltip()
                     ->limit(50)
@@ -60,7 +60,7 @@ class ManageProductCollections extends BaseManageRelatedRecords
 
                                     return get_search_builder($relationModel, $search)
                                         ->get()
-                                        ->mapWithKeys(fn (CollectionContract $record): array => [$record->getKey() => $record->breadcrumb->push($record->translateAttribute('name'))->join(' > ')])
+                                        ->mapWithKeys(fn (Collection $record): array => [$record->getKey() => $record->breadcrumb->push($record->translateAttribute('name'))->join(' > ')])
                                         ->all();
                                 });
                         }

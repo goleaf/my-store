@@ -4,19 +4,18 @@ namespace App\Pipelines\Cart;
 
 use Closure;
 use App\DataTypes\Price;
-use App\Models\Cart;
-use App\Models\Contracts\Cart as CartContract;
+use App\Models\Contracts\Cart;
 
 class Calculate
 {
     /**
      * Called just before cart totals are calculated.
      *
-     * @param  Closure(CartContract): mixed  $next
+     * @param  Closure(\App\Models\Contracts\Cart): mixed  $next
      */
-    public function handle(CartContract $cart, Closure $next): mixed
+    public function handle(Cart $cart, Closure $next): mixed
     {
-        /** @var Cart $cart */
+        /** @var \App\Models\Cart $cart */
         $discountTotal = $cart->lines->sum('discountTotal.value');
 
         $subTotal = $cart->lines->sum('subTotal.value');

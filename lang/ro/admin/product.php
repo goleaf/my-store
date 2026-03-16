@@ -1,15 +1,13 @@
 <?php
 
 return [
-
     'label' => 'Produs',
-
     'plural_label' => 'Produse',
-
     'tabs' => [
         'all' => 'Toate',
+        'published' => 'Publicat',
+        'draft' => 'Ciornă',
     ],
-
     'status' => [
         'unpublished' => [
             'content' => 'În prezent în stadiu de ciornă, acest produs este ascuns în toate canalele și grupurile de clienți.',
@@ -19,7 +17,6 @@ return [
             'channels' => 'Acest produs nu este disponibil momentan în niciun canal.',
         ],
     ],
-
     'table' => [
         'status' => [
             'label' => 'Stare',
@@ -45,14 +42,12 @@ return [
             'label' => 'Tip produs',
         ],
     ],
-
     'actions' => [
         'edit_status' => [
             'label' => 'Actualizează starea',
             'heading' => 'Actualizează starea',
         ],
     ],
-
     'form' => [
         'name' => [
             'label' => 'Nume',
@@ -88,7 +83,6 @@ return [
             'select_collection' => 'Selectează o colecție',
         ],
     ],
-
     'pages' => [
         'availability' => [
             'label' => 'Disponibilitate',
@@ -127,5 +121,4 @@ return [
             'label' => 'Asocieri produs',
         ],
     ],
-
 ];

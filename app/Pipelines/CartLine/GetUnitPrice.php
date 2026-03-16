@@ -5,31 +5,30 @@ namespace App\Pipelines\CartLine;
 use Closure;
 use App\DataTypes\Price;
 use App\Facades\Pricing;
-use App\Models\CartLine;
-use App\Models\Contracts\CartLine as CartLineContract;
-use Spatie\LaravelBlink\BlinkFacade as Blink;
+use Spatie\LaravelBlink\BlinkFacade;
+use App\Models\Contracts\CartLine;
 
 class GetUnitPrice
 {
     /**
      * Called just before cart totals are calculated.
      *
-     * @param  Closure(CartLineContract): mixed  $next
+     * @param  Closure(\App\Models\Contracts\CartLine): mixed  $next
      * @return Closure
      */
-    public function handle(CartLineContract $cartLine, Closure $next)
+    public function handle(CartLine $cartLine, Closure $next)
     {
-        /** @var CartLine $cart */
+        /** @var \App\Models\CartLine $cart */
         $purchasable = $cartLine->purchasable;
         $cart = $cartLine->cart;
 
         if ($customer = $cart->customer) {
             $customerGroups = $customer->customerGroups;
         } else {
-            $customerGroups = $cart->user?->customers->pluck('customerGroups')->flatten();
+            $customerGroups = collect();
         }
 
-        $currency = Blink::once('currency_'.$cart->currency_id, function () use ($cart) {
+        $currency = BlinkFacade::once('currency_'.$cart->currency_id, function () use ($cart) {
             return $cart->currency;
         });
 

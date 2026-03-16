@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('post_id')->constrained('posts')->onDelete('cascade');
             $table->foreignId('parent_id')->nullable()->constrained('post_comments')->onDelete('cascade');
-            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('customer_id')->nullable()->constrained('store_customers')->onDelete('set null');
             $table->string('guest_name', 100)->nullable();
             $table->string('guest_email', 255)->nullable();
             $table->text('body');

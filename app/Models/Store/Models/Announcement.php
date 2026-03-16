@@ -2,10 +2,14 @@
 
 namespace App\Models\Store\Models;
 
+use Database\Factories\AnnouncementFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Announcement extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'message',
         'is_active',
@@ -22,5 +26,10 @@ class Announcement extends Model
             'starts_at' => 'datetime',
             'ends_at' => 'datetime',
         ];
+    }
+
+    protected static function newFactory(): AnnouncementFactory
+    {
+        return AnnouncementFactory::new();
     }
 }

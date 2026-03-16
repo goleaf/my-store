@@ -8,6 +8,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Contracts\Currency;
+use App\Actions\Currencies;
+use App\Models;
 
 class CreateCurrencyPrices implements ShouldQueue
 {
@@ -27,13 +29,13 @@ class CreateCurrencyPrices implements ShouldQueue
      */
     public function handle()
     {
-        $default = \App\Models\Currency::where('default', true)->first();
+        $default = Models\Currency::where('default', true)->first();
 
         // Check whether this new currency has been made default
         // if that is the case we will need to find which
         // currency has just been made non default.
         if ($default->id == $this->currency->id) {
-            $default = \App\Models\Currency::whereBetween(
+            $default = Models\Currency::whereBetween(
                 'updated_at',
                 [now()->subSeconds(15), now()]
             )->whereDefault(false)->first();
@@ -43,6 +45,6 @@ class CreateCurrencyPrices implements ShouldQueue
             return;
         }
 
-        (new \App\Actions\Currencies\CreateCurrencyPrices)->handle($this->currency, $default);
+        (new Currencies\CreateCurrencyPrices)->handle($this->currency, $default);
     }
 }

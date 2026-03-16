@@ -3,8 +3,8 @@
 namespace App\Observers;
 
 use App\Facades\DB;
-use App\Models\Contracts\Language as LanguageContract;
 use App\Models\Language;
+use App\Models\Contracts;
 
 class LanguageObserver
 {
@@ -13,7 +13,7 @@ class LanguageObserver
      *
      * @return void
      */
-    public function created(LanguageContract $language)
+    public function created(Contracts\Language $language)
     {
         $this->ensureOnlyOneDefault($language);
     }
@@ -23,7 +23,7 @@ class LanguageObserver
      *
      * @return void
      */
-    public function updated(LanguageContract $language)
+    public function updated(Contracts\Language $language)
     {
         $this->ensureOnlyOneDefault($language);
     }
@@ -33,7 +33,7 @@ class LanguageObserver
      *
      * @return void
      */
-    public function deleting(LanguageContract $language)
+    public function deleting(Contracts\Language $language)
     {
         DB::transaction(function () use ($language) {
             $language->urls()->delete();
@@ -45,7 +45,7 @@ class LanguageObserver
      *
      * @return void
      */
-    public function forceDeleted(LanguageContract $language)
+    public function forceDeleted(Contracts\Language $language)
     {
         //
     }
@@ -53,9 +53,9 @@ class LanguageObserver
     /**
      * Ensures that only one default language exists.
      *
-     * @param  LanguageContract  $savedLanguage  The language that was just saved.
+     * @param  \App\Models\Contracts\Language  $savedLanguage  The language that was just saved.
      */
-    protected function ensureOnlyOneDefault(LanguageContract $savedLanguage): void
+    protected function ensureOnlyOneDefault(Contracts\Language $savedLanguage): void
     {
         // Wrap here so we avoid a query if it's not been set to default.
         if ($savedLanguage->default) {

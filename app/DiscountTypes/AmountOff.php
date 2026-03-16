@@ -5,9 +5,9 @@ namespace App\DiscountTypes;
 use App\Base\ValueObjects\Cart\DiscountBreakdown;
 use App\Base\ValueObjects\Cart\DiscountBreakdownLine;
 use App\DataTypes\Price;
-use App\Models\Cart;
 use App\Models\Collection;
-use App\Models\Contracts\Cart as CartContract;
+use App\Models\Contracts\Cart;
+use Illuminate\Support;
 
 class AmountOff extends AbstractDiscountType
 {
@@ -22,7 +22,7 @@ class AmountOff extends AbstractDiscountType
     /**
      * Called just before cart totals are calculated.
      */
-    public function apply(CartContract $cart): CartContract
+    public function apply(Cart $cart): Cart
     {
         $data = $this->discount->data;
 
@@ -46,7 +46,7 @@ class AmountOff extends AbstractDiscountType
     /**
      * Apply fixed value discount
      */
-    private function applyFixedValue(array $values, CartContract $cart): CartContract
+    private function applyFixedValue(array $values, Cart $cart): Cart
     {
         $currency = $cart->currency;
 
@@ -162,7 +162,7 @@ class AmountOff extends AbstractDiscountType
     /**
      * Return the eligible lines for the discount.
      */
-    protected function getEligibleLines(CartContract $cart): \Illuminate\Support\Collection
+    protected function getEligibleLines(Cart $cart): Support\Collection
     {
         $collectionIds = $this->discount->collections->where('pivot.type', 'limitation')->pluck('id');
         $collectionExclusionIds = $this->discount->collections->where('pivot.type', 'exclusion')->pluck('id');
@@ -226,7 +226,7 @@ class AmountOff extends AbstractDiscountType
     /**
      * Apply the percentage to the cart line.
      */
-    private function applyPercentage(float $value, CartContract $cart): CartContract
+    private function applyPercentage(float $value, Cart $cart): Cart
     {
         $lines = $this->getEligibleLines($cart);
 

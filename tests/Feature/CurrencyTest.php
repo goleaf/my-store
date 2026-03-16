@@ -4,12 +4,12 @@ namespace Tests\Feature;
 
 use App\Models\Currency;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\LaravelBlink\BlinkFacade as Blink;
+use Spatie\LaravelBlink\BlinkFacade;
 
 uses(RefreshDatabase::class);
 
 test('can get default currency', function () {
-    Blink::flush();
+    BlinkFacade::flush();
     $currency = Currency::factory()->create(['default' => true, 'code' => 'USD']);
 
     $default = Currency::getDefault();

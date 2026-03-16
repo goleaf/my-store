@@ -8,7 +8,6 @@ use App\Console\Commands\MakeAdminCommand;
 use App\Events\ChildCollectionCreated;
 use App\Events\CollectionProductDetached;
 use App\Events\CustomerAddressEdited;
-use App\Events\CustomerUserEdited;
 use App\Events\ModelChannelsUpdated;
 use App\Events\ModelPricesUpdated;
 use App\Events\ModelUrlsUpdated;
@@ -18,7 +17,6 @@ use App\Events\ProductCustomerGroupsUpdated;
 use App\Events\ProductPricingUpdated;
 use App\Events\ProductVariantOptionsUpdated;
 use App\Models\Staff;
-use App\Support\ActivityLog\Manifest as ActivityLogManifest;
 use App\Support\Forms\AttributeData;
 use App\Support\Synthesizers\PriceSynth;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -29,6 +27,8 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
+use App\Support\ActivityLog;
+use App\Support\Facades;
 
 class AdminPanelProvider extends ServiceProvider
 {
@@ -46,8 +46,8 @@ class AdminPanelProvider extends ServiceProvider
             return new Manifest;
         });
 
-        $this->app->scoped('admin-activity-log', function (): ActivityLogManifest {
-            return new ActivityLogManifest;
+        $this->app->scoped('admin-activity-log', function (): ActivityLog\Manifest {
+            return new ActivityLog\Manifest;
         });
 
         $this->app->scoped('admin-attribute-data', function (): AttributeData {
@@ -98,7 +98,6 @@ class AdminPanelProvider extends ServiceProvider
             ChildCollectionCreated::class,
             CollectionProductDetached::class,
             CustomerAddressEdited::class,
-            CustomerUserEdited::class,
             ProductAssociationsUpdated::class,
             ProductCollectionsUpdated::class,
             ProductPricingUpdated::class,
@@ -168,7 +167,7 @@ class AdminPanelProvider extends ServiceProvider
 
     protected function registerPanelSynthesizer(): void
     {
-        \App\Support\Facades\AttributeData::synthesizeLivewireProperties();
+        Facades\AttributeData::synthesizeLivewireProperties();
         Livewire::propertySynthesizer(PriceSynth::class);
     }
 }

@@ -3,18 +3,17 @@
 namespace App\Pipelines\Order\Creation;
 
 use Closure;
-use App\Models\Contracts\Order as OrderContract;
-use App\Models\Order;
 use App\Utils\Arr;
+use App\Models\Contracts\Order;
 
 class MapDiscountBreakdown
 {
     /**
-     * @param  Closure(OrderContract): mixed  $next
+     * @param  Closure(\App\Models\Contracts\Order): mixed  $next
      */
-    public function handle(OrderContract $order, Closure $next): mixed
+    public function handle(Order $order, Closure $next): mixed
     {
-        /** @var Order $order */
+        /** @var \App\Models\Order $order */
         $cart = $order->cart;
 
         $cartLinesMappedToOrderLines = [];

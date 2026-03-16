@@ -6,11 +6,11 @@ use App\Filament\Components\Shout;
 use App\Filament\Resources\ProductVariantResource;
 use App\Support\Pages\BaseManageRelatedRecords;
 use Filament\Forms;
-use Filament\Forms\Get;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Filament\Actions;
+use Filament\Support\Enums\Width;
 
 class ManageVariantMedia extends BaseManageRelatedRecords
 {
@@ -97,7 +98,7 @@ class ManageVariantMedia extends BaseManageRelatedRecords
                 CreateAction::make('attach')
                     ->label(__('admin::relationmanagers.medias.actions.attach.label'))
                     ->modalHeading(__('admin::relationmanagers.medias.actions.attach.label'))
-                    ->modalWidth(\Filament\Support\Enums\Width::Medium)
+                    ->modalWidth(Width::Medium)
                     ->form([
                         Shout::make('no_media_available')->content(
                             __('admin::relationmanagers.medias.all_media_attached')

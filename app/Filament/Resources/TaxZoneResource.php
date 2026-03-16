@@ -5,18 +5,18 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\Collection;
 use App\Filament\Resources\TaxZoneResource\Pages;
 use App\Filament\Clusters\Taxes;
-use App\Models\Contracts\TaxZone as TaxZoneContract;
+use App\Models\Contracts\TaxZone;
 use App\Models\Country;
 use App\Models\State;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
-use Filament\Forms\Components\Component;
+use Filament\Schemas\Components\Component;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class TaxZoneResource extends BaseResource
 {
@@ -24,7 +24,7 @@ class TaxZoneResource extends BaseResource
 
     protected static ?string $permission = 'settings:core';
 
-    protected static ?string $model = TaxZoneContract::class;
+    protected static ?string $model = TaxZone::class;
 
     protected static ?int $navigationSort = 1;
 
@@ -46,10 +46,10 @@ class TaxZoneResource extends BaseResource
     protected static function getMainFormComponents(): array
     {
         return [
-            SchemaComponents\Section::make()->schema([
+            Components\Section::make()->schema([
                 static::getNameFormComponent(),
                 static::getPriceDisplayFormComponent(),
-                SchemaComponents\Group::make([
+                Components\Group::make([
                     static::getActiveFormComponent(),
                     static::getDefaultFormComponent(),
                 ])->columns(2),
@@ -216,7 +216,7 @@ class TaxZoneResource extends BaseResource
             });
     }
 
-    private static function syncCountries(TaxZoneContract $taxZone, $selectedCountries)
+    private static function syncCountries(TaxZone $taxZone, $selectedCountries)
     {
         $existingCountries = $taxZone->countries()->pluck('country_id');
 
@@ -236,7 +236,7 @@ class TaxZoneResource extends BaseResource
             ->delete();
     }
 
-    private static function syncStates(TaxZoneContract $taxZone, $selectedStates)
+    private static function syncStates(TaxZone $taxZone, $selectedStates)
     {
         $existingStates = $taxZone->states()->pluck('state_id');
 
@@ -256,7 +256,7 @@ class TaxZoneResource extends BaseResource
             ->delete();
     }
 
-    private static function syncPostcodes(TaxZoneContract $taxZone, $countryId, $postcodes)
+    private static function syncPostcodes(TaxZone $taxZone, $countryId, $postcodes)
     {
         $postcodes = collect(
             explode(

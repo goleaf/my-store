@@ -18,7 +18,7 @@ class OrderFactory extends BaseFactory
         return [
             'channel_id' => Channel::factory(),
             'new_customer' => $this->faker->boolean,
-            'user_id' => null,
+            'customer_id' => null,
             'status' => 'awaiting-payment',
             'reference' => $this->faker->unique()->regexify('[A-Z]{8}'),
             'sub_total' => $total - $taxTotal,
@@ -31,6 +31,8 @@ class OrderFactory extends BaseFactory
             'currency_code' => 'GBP',
             'compare_currency_code' => 'GBP',
             'exchange_rate' => 1,
+            'payment_status' => 'pending',
+            'payment_method' => 'cod',
             'meta' => ['foo' => 'bar'],
         ];
     }

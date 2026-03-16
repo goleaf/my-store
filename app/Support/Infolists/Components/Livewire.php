@@ -4,7 +4,6 @@ namespace App\Support\Infolists\Components;
 
 use Closure;
 use Filament\Infolists\Components\Entry;
-use Livewire\Mechanisms\ComponentRegistry;
 
 class Livewire extends Entry
 {
@@ -21,13 +20,15 @@ class Livewire extends Entry
         return $this;
     }
 
-    public function getContent()
+    public function getContent(): string
     {
-        return $this->getContentName();
+        return $this->livewireComponent;
     }
 
     public function getContentName(): string
     {
-        return app(ComponentRegistry::class)->getName($this->livewireComponent);
+        return str($this->livewireComponent)
+            ->replace('\\', '.')
+            ->toString();
     }
 }

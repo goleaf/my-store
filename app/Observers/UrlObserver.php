@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
-use App\Models\Contracts\Url as UrlContract;
 use App\Models\Url;
+use App\Models\Contracts;
 
 class UrlObserver
 {
@@ -12,7 +12,7 @@ class UrlObserver
      *
      * @return void
      */
-    public function created(UrlContract $url)
+    public function created(Contracts\Url $url)
     {
         $this->ensureOnlyOneDefault($url);
     }
@@ -22,7 +22,7 @@ class UrlObserver
      *
      * @return void
      */
-    public function updated(UrlContract $url)
+    public function updated(Contracts\Url $url)
     {
         $this->ensureOnlyOneDefault($url);
     }
@@ -32,7 +32,7 @@ class UrlObserver
      *
      * @return void
      */
-    public function deleted(UrlContract $url)
+    public function deleted(Contracts\Url $url)
     {
         /** @var Url $url */
         if ($url->default) {
@@ -55,7 +55,7 @@ class UrlObserver
      *
      * @param  Url  $savedUrl  The url that was just saved.
      */
-    protected function ensureOnlyOneDefault(UrlContract $savedUrl): void
+    protected function ensureOnlyOneDefault(Contracts\Url $savedUrl): void
     {
         // Wrap here so we avoid a query if it's not been set to default.
         if ($savedUrl->default) {

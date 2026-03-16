@@ -2,20 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Base\BaseModel;
 use App\Base\Casts\AsAttributeData;
 use App\Base\Enums\Concerns\ProvidesProductAssociationType;
+use App\Base\Enums\ProductStatus;
 use App\Base\HasThumbnailImage;
 use App\Base\Traits\HasChannels;
 use App\Base\Traits\HasCustomerGroups;
@@ -29,7 +19,19 @@ use App\Base\Traits\Searchable;
 use App\Database\Factories\ProductFactory;
 use App\Jobs\Products\Associations\Associate;
 use App\Jobs\Products\Associations\Dissociate;
-use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models;
+use Spatie\MediaLibrary;
 
 /**
  * @property int $id
@@ -41,7 +43,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property ?\Illuminate\Support\Carbon $updated_at
  * @property ?\Illuminate\Support\Carbon $deleted_at
  */
-class Product extends BaseModel implements Contracts\Product, HasThumbnailImage, SpatieHasMedia
+class Product extends BaseModel implements Contracts\Product, HasThumbnailImage, MediaLibrary\HasMedia
 {
     use HasChannels;
     use HasCustomerGroups;
@@ -113,6 +115,7 @@ class Product extends BaseModel implements Contracts\Product, HasThumbnailImage,
      */
     protected $casts = [
         'attribute_data' => AsAttributeData::class,
+        'status' => ProductStatus::class,
     ];
 
     /**
@@ -160,7 +163,7 @@ class Product extends BaseModel implements Contracts\Product, HasThumbnailImage,
     public function collections(): BelongsToMany
     {
         return $this->belongsToMany(
-            \App\Models\Collection::modelClass(),
+            Models\Collection::modelClass(),
             config('store.database.table_prefix').'collection_product'
         )->withPivot(['position'])->orderByPivot('position')->withTimestamps();
     }
@@ -219,9 +222,9 @@ class Product extends BaseModel implements Contracts\Product, HasThumbnailImage,
         return $this->belongsTo(Brand::modelClass());
     }
 
-    public function scopeStatus(Builder $query, string $status): Builder
+    public function scopeStatus(Builder $query, ProductStatus|string $status): Builder
     {
-        return $query->whereStatus($status);
+        return $query->where('status', $status instanceof ProductStatus ? $status->value : $status);
     }
 
     public function prices(): HasManyThrough

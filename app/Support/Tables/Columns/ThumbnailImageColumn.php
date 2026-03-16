@@ -3,10 +3,11 @@
 namespace App\Support\Tables\Columns;
 
 use Filament\Tables\Columns\ImageColumn;
+use Closure;
 
 class ThumbnailImageColumn extends ImageColumn
 {
-    protected \Closure $resolveThumbnailUrlUsing;
+    protected Closure $resolveThumbnailUrlUsing;
 
     public function getImageUrl(?string $state = null): ?string
     {
@@ -17,7 +18,7 @@ class ThumbnailImageColumn extends ImageColumn
         return $this->getRecord()?->getThumbnailImage();
     }
 
-    public function resolveThumbnailUrlUsing(\Closure $callback): self
+    public function resolveThumbnailUrlUsing(Closure $callback): self
     {
         $this->resolveThumbnailUrlUsing = $callback;
 

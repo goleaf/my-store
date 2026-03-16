@@ -3,8 +3,8 @@
 namespace App\Observers;
 
 use App\Jobs\Currencies\CreateCurrencyPrices;
-use App\Models\Contracts\Currency as CurrencyContract;
 use App\Models\Currency;
+use App\Models\Contracts;
 
 class CurrencyObserver
 {
@@ -13,7 +13,7 @@ class CurrencyObserver
      *
      * @return void
      */
-    public function created(CurrencyContract $currency)
+    public function created(Contracts\Currency $currency)
     {
         $this->ensureOnlyOneDefault($currency);
         CreateCurrencyPrices::dispatch($currency);
@@ -24,7 +24,7 @@ class CurrencyObserver
      *
      * @return void
      */
-    public function updated(CurrencyContract $currency)
+    public function updated(Contracts\Currency $currency)
     {
         $this->ensureOnlyOneDefault($currency);
         if ($currency->default && $currency->sync_prices) {
@@ -39,7 +39,7 @@ class CurrencyObserver
      *
      * @return void
      */
-    public function deleted(CurrencyContract $currency)
+    public function deleted(Contracts\Currency $currency)
     {
         //
     }
@@ -49,7 +49,7 @@ class CurrencyObserver
      *
      * @return void
      */
-    public function deleting(CurrencyContract $currency)
+    public function deleting(Contracts\Currency $currency)
     {
         $currency->prices()->delete();
     }
@@ -59,7 +59,7 @@ class CurrencyObserver
      *
      * @return void
      */
-    public function forceDeleted(CurrencyContract $currency)
+    public function forceDeleted(Contracts\Currency $currency)
     {
         //
     }
@@ -67,9 +67,9 @@ class CurrencyObserver
     /**
      * Ensures that only one default currency exists.
      *
-     * @param  CurrencyContract  $savedCurrency  The currency that was just saved.
+     * @param  \App\Models\Contracts\Currency  $savedCurrency  The currency that was just saved.
      */
-    protected function ensureOnlyOneDefault(CurrencyContract $savedCurrency): void
+    protected function ensureOnlyOneDefault(Contracts\Currency $savedCurrency): void
     {
         // Wrap here so we avoid a query if it's not been set to default.
         if ($savedCurrency->default) {

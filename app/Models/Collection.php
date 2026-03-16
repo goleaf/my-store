@@ -19,7 +19,8 @@ use App\Base\Traits\HasTranslations;
 use App\Base\Traits\HasUrls;
 use App\Base\Traits\Searchable;
 use App\Database\Factories\CollectionFactory;
-use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
+use Illuminate\Support;
+use Spatie\MediaLibrary;
 
 /**
  * @property int $id
@@ -34,7 +35,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property ?\Illuminate\Support\Carbon $updated_at
  * @property ?\Illuminate\Support\Carbon $deleted_at
  */
-class Collection extends BaseModel implements Contracts\Collection, HasThumbnailImage, SpatieHasMedia
+class Collection extends BaseModel implements Contracts\Collection, HasThumbnailImage, MediaLibrary\HasMedia
 {
     use HasChannels,
         HasCustomerGroups,
@@ -103,7 +104,7 @@ class Collection extends BaseModel implements Contracts\Collection, HasThumbnail
     /**
      * Get the translated name of ancestor collections.
      */
-    public function getBreadcrumbAttribute(): \Illuminate\Support\Collection
+    public function getBreadcrumbAttribute(): Support\Collection
     {
         return $this->ancestors->map(function ($ancestor) {
             return $ancestor->translateAttribute('name');

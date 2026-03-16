@@ -4,12 +4,12 @@ namespace App\Base\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Laravel\Scout\EngineManager;
-use Laravel\Scout\Searchable as ScoutSearchable;
 use App\Search\ScoutIndexer;
+use Laravel\Scout;
 
 trait Searchable
 {
-    use ScoutSearchable;
+    use Scout\Searchable;
 
     /**
      * Return our base attributes we want filterable.

@@ -3,27 +3,25 @@
 namespace App\Managers;
 
 use Illuminate\Auth\AuthManager;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Collection;
 use App\Base\CartSessionInterface;
 use App\Facades\ShippingManifest;
 use App\Models\Cart;
 use App\Models\Channel;
-use App\Models\Contracts\Cart as CartContract;
-use App\Models\Contracts\Channel as ChannelContract;
-use App\Models\Contracts\Currency as CurrencyContract;
+use App\Models\Customer;
 use App\Models\Currency;
 use App\Models\Order;
+use App\Models\Contracts;
 
 class CartSessionManager implements CartSessionInterface
 {
     public function __construct(
         protected SessionManager $sessionManager,
         protected AuthManager $authManager,
-        protected ChannelContract $channel,
-        protected CurrencyContract $currency,
-        public ?CartContract $cart = null,
+        protected Contracts\Channel $channel,
+        protected Contracts\Currency $currency,
+        public ?Contracts\Cart $cart = null,
     ) {
         //
     }
@@ -104,18 +102,18 @@ class CartSessionManager implements CartSessionInterface
     /**
      * {@inheritDoc}
      */
-    public function associate(CartContract $cart, Authenticatable $user, $policy): void
+    public function associate(Contracts\Cart $cart, Customer $customer, $policy): void
     {
         /** @var Cart $cart */
         $this->use(
-            $cart->associate($user, $policy)
+            $cart->associate($customer, $policy)
         );
     }
 
     /**
      * Set the cart to be used for the session.
      */
-    public function use(CartContract $cart): CartContract
+    public function use(Contracts\Cart $cart): Contracts\Cart
     {
         /** @var Cart $cart */
         $this->sessionManager->put(
@@ -147,7 +145,7 @@ class CartSessionManager implements CartSessionInterface
             config('store.cart.eager_load', [])
         )->find($cartId);
 
-        if (app()->environment('testing') && $cart instanceof \Illuminate\Support\Collection) {
+        if (app()->environment('testing') && $cart instanceof Collection) {
             dd('CartSessionManager::fetchOrCreate - cart is a collection: ' . $cart->count());
         }
 
@@ -161,7 +159,7 @@ class CartSessionManager implements CartSessionInterface
 
         $this->cart = $cart;
 
-        if (app()->environment('testing') && !($this->cart instanceof \App\Models\Cart) && !is_null($this->cart)) {
+        if (app()->environment('testing') && !($this->cart instanceof Cart) && !is_null($this->cart)) {
             logger('CartSessionManager::fetchOrCreate - cart is not an instance of Cart: ' . get_class($this->cart));
         }
 
@@ -204,7 +202,7 @@ class CartSessionManager implements CartSessionInterface
     /**
      * Set the current channel.
      */
-    public function setChannel(ChannelContract $channel): void
+    public function setChannel(Contracts\Channel $channel): void
     {
         /** @var Channel $channel */
         $this->channel = $channel;
@@ -219,7 +217,7 @@ class CartSessionManager implements CartSessionInterface
     /**
      * Set the current currency.
      */
-    public function setCurrency(CurrencyContract $currency): void
+    public function setCurrency(Contracts\Currency $currency): void
     {
         /** @var Currency $currency */
         $this->currency = $currency;
@@ -234,12 +232,12 @@ class CartSessionManager implements CartSessionInterface
     /**
      * Return the current currency.
      */
-    public function getCurrency(): CurrencyContract
+    public function getCurrency(): Contracts\Currency
     {
         $currency = $this->currency?->exists ? $this->currency : Currency::modelClass()::getDefault();
 
         if (!$currency) {
-            $currency = new \App\Models\Currency([
+            $currency = new Currency([
                 'code' => 'USD',
                 'name' => 'Default',
                 'decimal_places' => 2,
@@ -253,12 +251,12 @@ class CartSessionManager implements CartSessionInterface
     /**
      * Return the current channel.
      */
-    public function getChannel(): ChannelContract
+    public function getChannel(): Contracts\Channel
     {
         $channel = $this->channel?->exists ? $this->channel : Channel::modelClass()::getDefault();
 
         if (!$channel) {
-            $channel = new \App\Models\Channel([
+            $channel = new Channel([
                 'handle' => 'webstore',
                 'name' => 'Web Store',
             ]);
@@ -296,15 +294,14 @@ class CartSessionManager implements CartSessionInterface
     /**
      * Create a new cart instance.
      */
-    protected function createNewCart(): CartContract
+    protected function createNewCart(): Contracts\Cart
     {
-        $user = $this->authManager->user();
+        $customer = is_store_user($this->authManager->user()) ? $this->authManager->user() : null;
 
         $cart = Cart::create([
             'currency_id' => $this->getCurrency()->id,
             'channel_id' => $this->getChannel()->id,
-            'user_id' => optional($user)->id,
-            'customer_id' => optional($user)->latestCustomer()?->id,
+            'customer_id' => optional($customer)->id,
         ]);
 
         return $this->use($cart);

@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use App\Base\BaseModel;
-use App\Base\Traits\HasMedia as TraitsHasMedia;
 use Spatie\MediaLibrary\HasMedia;
+use App\Base\Traits;
 
 /**
  * @property int $id
@@ -14,7 +14,7 @@ use Spatie\MediaLibrary\HasMedia;
  */
 class Asset extends BaseModel implements Contracts\Asset, HasMedia
 {
-    use TraitsHasMedia;
+    use Traits\HasMedia;
 
     /**
      * Define which attributes should be

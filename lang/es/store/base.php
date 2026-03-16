@@ -11,4 +11,9 @@ return [
         'up-sell' => 'Venta adicional',
         'alternate' => 'Alternativa',
     ],
+    'saved-payment-method-types' => [
+        'card' => 'Tarjeta',
+        'paypal' => 'PayPal',
+        'payoneer' => 'Payoneer',
+    ],
 ];

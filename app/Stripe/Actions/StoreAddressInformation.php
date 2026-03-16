@@ -2,18 +2,17 @@
 
 namespace App\Stripe\Actions;
 
-use App\Models\Contracts\Order as OrderContract;
 use App\Models\Country;
-use App\Models\Order;
 use App\Models\OrderAddress;
 use App\Stripe\Facades\Stripe;
 use Stripe\PaymentIntent;
+use App\Models\Contracts\Order;
 
 class StoreAddressInformation
 {
-    public function store(OrderContract $order, PaymentIntent $paymentIntent)
+    public function store(Order $order, PaymentIntent $paymentIntent)
     {
-        /** @var Order $order */
+        /** @var \App\Models\Order $order */
         $billingAddress = $order->billingAddress ?: new OrderAddress([
             'order_id' => $order->id,
             'type' => 'billing',

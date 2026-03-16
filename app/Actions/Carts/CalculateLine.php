@@ -6,8 +6,7 @@ use Illuminate\Support\Collection;
 use App\Base\Addressable;
 use App\DataTypes\Price;
 use App\Facades\Taxes;
-use App\Models\CartLine;
-use App\Models\Contracts\CartLine as CartLineContract;
+use App\Models\Contracts\CartLine;
 
 class CalculateLine
 {
@@ -18,12 +17,12 @@ class CalculateLine
      * @return \App\Models\CartLine
      */
     public function execute(
-        CartLineContract $cartLine,
+        CartLine $cartLine,
         Collection $customerGroups,
         ?Addressable $shippingAddress = null,
         ?Addressable $billingAddress = null
     ) {
-        /** @var CartLine $cartLine */
+        /** @var \App\Models\CartLine $cartLine */
         $purchasable = $cartLine->purchasable;
         $cart = $cartLine->cart;
         $unitQuantity = $purchasable->getUnitQuantity();

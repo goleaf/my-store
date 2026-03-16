@@ -15,7 +15,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Unique;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
+use Filament\Schemas\Schema;
 
 class ManageUrlsRelatedRecords extends BaseManageRelatedRecords
 {
@@ -38,14 +39,14 @@ class ManageUrlsRelatedRecords extends BaseManageRelatedRecords
         return __('admin::relationmanagers.urls.title_plural');
     }
 
-    public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 Forms\Components\Toggle::make('default')->label(
                     __('admin::relationmanagers.urls.form.default.label')
                 )->columnSpan(2),
-                SchemaComponents\Group::make([
+                Components\Group::make([
                     Forms\Components\TextInput::make('slug')
                         ->label(
                             __('admin::relationmanagers.urls.table.slug.label')

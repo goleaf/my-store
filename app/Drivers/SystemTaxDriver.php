@@ -12,7 +12,7 @@ use App\DataTypes\Price;
 use App\Models\Contracts\CartLine;
 use App\Models\Contracts\Currency;
 use App\Models\TaxZone;
-use Spatie\LaravelBlink\BlinkFacade as Blink;
+use Spatie\LaravelBlink\BlinkFacade;
 
 class SystemTaxDriver implements TaxDriver
 {
@@ -99,7 +99,7 @@ class SystemTaxDriver implements TaxDriver
         $taxZone = app(GetTaxZone::class)->execute($this->shippingAddress);
         $taxClass = $this->purchasable->getTaxClass();
 
-        $taxAmounts = Blink::once('tax_zone_rates_'.$taxZone->id.'_'.$taxClass->id, function () use ($taxClass, $taxZone) {
+        $taxAmounts = BlinkFacade::once('tax_zone_rates_'.$taxZone->id.'_'.$taxClass->id, function () use ($taxClass, $taxZone) {
             return $taxZone->taxAmounts()->whereTaxClassId($taxClass->id)->get();
         });
 

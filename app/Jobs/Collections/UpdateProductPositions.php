@@ -9,8 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Actions\Collections\SortProducts;
 use App\Facades\DB;
-use App\Models\Collection;
-use App\Models\Contracts\Collection as CollectionContract;
+use App\Models\Contracts\Collection;
 
 class UpdateProductPositions implements ShouldQueue
 {
@@ -24,12 +23,12 @@ class UpdateProductPositions implements ShouldQueue
     /**
      * The target collection.
      */
-    public CollectionContract $collection;
+    public Collection $collection;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(CollectionContract $collection)
+    public function __construct(Collection $collection)
     {
         $this->collection = $collection;
     }

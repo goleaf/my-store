@@ -11,4 +11,9 @@ return [
         'up-sell' => 'Bán nâng cấp',
         'alternate' => 'Thay thế',
     ],
+    'saved-payment-method-types' => [
+        'card' => 'Thẻ',
+        'paypal' => 'PayPal',
+        'payoneer' => 'Payoneer',
+    ],
 ];

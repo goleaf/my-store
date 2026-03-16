@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\OrderResource\Pages\Components;
 
+use App\Base\Enums\TransactionType;
+use App\Http\Requests\Filament\Order\ConfirmActionRequest;
 use App\Filament\Resources\ProductResource\Pages\EditProduct;
 use App\Livewire\Components\TableComponent;
 use App\Models\OrderLine;
@@ -9,7 +11,6 @@ use App\Models\ProductVariant;
 use App\Models\Transaction;
 use App\Support\Concerns\CallsHooks;
 use App\Support\Tables\Components\KeyValue;
-use Closure;
 use Filament\Forms;
 use Filament\Notifications\Notification;
 use Filament\Support\Colors\Color;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Computed;
 use Filament\Actions;
+use Illuminate\Support\Collection;
 
 /**
  * @property \Illuminate\Support\Collection $charges
@@ -167,15 +169,7 @@ class OrderItemsTable extends TableComponent
                 Forms\Components\Toggle::make('confirm')
                     ->label(__('admin::order.form.confirm.label'))
                     ->helperText(__('admin::order.form.confirm.hint.refund'))
-                    ->rules([
-                        function () {
-                            return function (string $attribute, $value, Closure $fail) {
-                                if ($value !== true) {
-                                    $fail(__('admin::order.form.confirm.alert'));
-                                }
-                            };
-                        },
-                    ]),
+                    ->rules((new ConfirmActionRequest)->fieldRules('confirm')),
             ])
             ->action(function ($data, BulkAction $action) {
                 $transaction = Transaction::findOrFail($data['transaction']);
@@ -204,15 +198,15 @@ class OrderItemsTable extends TableComponent
     }
 
     #[Computed]
-    public function charges(): \Illuminate\Support\Collection
+    public function charges(): Collection
     {
-        return $this->record->transactions()->whereType('capture')->whereSuccess(true)->get();
+        return $this->record->transactions()->where('type', TransactionType::Capture->value)->whereSuccess(true)->get();
     }
 
     #[Computed]
-    public function refunds(): \Illuminate\Support\Collection
+    public function refunds(): Collection
     {
-        return $this->record->transactions()->whereType('refund')->whereSuccess(true)->get();
+        return $this->record->transactions()->where('type', TransactionType::Refund->value)->whereSuccess(true)->get();
     }
 
     #[Computed]

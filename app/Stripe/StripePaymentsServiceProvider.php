@@ -7,7 +7,6 @@ use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use App\Facades\Payments;
 use App\Models\Cart;
-use App\Models\Contracts\Cart as CartContract;
 use App\Stripe\Actions\ConstructWebhookEvent;
 use App\Stripe\Actions\ProcessEventParameters;
 use App\Stripe\Components\PaymentForm;
@@ -15,6 +14,7 @@ use App\Stripe\Concerns\ConstructsWebhookEvent;
 use App\Stripe\Concerns\ProcessesEventParameters;
 use App\Stripe\Managers\StripeManager;
 use App\Stripe\Models\StripePaymentIntent;
+use App\Models\Contracts;
 
 class StripePaymentsServiceProvider extends ServiceProvider
 {
@@ -30,7 +30,7 @@ class StripePaymentsServiceProvider extends ServiceProvider
             return $app->make(StripePaymentType::class);
         });
 
-        Cart::resolveRelationUsing('paymentIntents', function (CartContract $cart) {
+        Cart::resolveRelationUsing('paymentIntents', function (Contracts\Cart $cart) {
             return $cart->hasMany(StripePaymentIntent::class);
         });
 

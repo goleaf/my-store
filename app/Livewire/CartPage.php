@@ -1,9 +1,14 @@
 <?php
+
 namespace App\Livewire;
+
+use App\Facades\CartSession;
+use App\Http\Requests\Cart\ApplyCouponRequest;
+use App\Http\Requests\Cart\UpdateCartLinesRequest;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
-use App\Facades\CartSession;
+
 class CartPage extends Component
 {
     /**
@@ -16,19 +21,12 @@ class CartPage extends Component
      */
     public ?string $couponCode = null;
 
-    public function rules(): array
-    {
-        return [
-            'lines.*.quantity' => 'required|numeric|min:1|max:10000',
-            'couponCode' => 'nullable|string|max:255',
-        ];
-    }
-
     public function mount(): void
     {
         $this->couponCode = $this->cart->coupon_code;
         $this->mapLines();
     }
+
     /**
      * Get the current cart instance.
      */
@@ -36,6 +34,7 @@ class CartPage extends Component
     {
         return CartSession::current();
     }
+
     /**
      * Return the cart lines from the cart.
      */
@@ -43,18 +42,24 @@ class CartPage extends Component
     {
         return $this->cart->lines ?? collect();
     }
+
     /**
      * Update the cart lines.
      */
     public function updateLines(): void
     {
-        $this->validate();
+        $request = new UpdateCartLinesRequest;
+        $request->validatePayload([
+            'lines' => $this->lines,
+        ]);
+
         CartSession::updateLines(
             collect($this->lines)
         );
         $this->mapLines();
         $this->dispatch('cartUpdated');
     }
+
     public function removeLine($id): void
     {
         CartSession::remove($id);
@@ -67,7 +72,10 @@ class CartPage extends Component
      */
     public function applyCoupon(): void
     {
-        $this->validateOnly('couponCode');
+        $request = new ApplyCouponRequest;
+        $request->validatePayload([
+            'couponCode' => $this->couponCode,
+        ]);
 
         if (! $this->couponCode) {
             return;
@@ -108,6 +116,7 @@ class CartPage extends Component
             ];
         })->toArray();
     }
+
     public function render(): View
     {
         return view('livewire.cart-page')

@@ -2,12 +2,13 @@
 
 namespace App\Livewire;
 
+use App\Base\Enums\ProductStatus;
 use App\Models\Brand;
-use App\Models\Collection as CollectionModel;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Facades\CartSession;
 use App\Traits\CanAddToCart;
+use App\Traits\CanManageWishlist;
 use Filament\Notifications\Notification;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -15,10 +16,13 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Models;
 
 class ShopGrid extends Component
 {
-    use WithPagination, CanAddToCart;
+    use WithPagination;
+    use CanAddToCart;
+    use CanManageWishlist;
 
     #[Url]
     public array $categories = [];
@@ -52,11 +56,11 @@ class ShopGrid extends Component
                 'collections',
                 'images',
             ])
-            ->whereStatus('published');
+            ->whereStatus(ProductStatus::Published);
 
         if (! empty($this->categories)) {
             $query->whereHas('collections', function ($q) {
-                $q->whereIn((new CollectionModel)->getTable().'.id', $this->categories);
+                $q->whereIn((new Models\Collection)->getTable().'.id', $this->categories);
             });
         }
 
@@ -87,14 +91,14 @@ class ShopGrid extends Component
             case 'price_asc':
                 $query->join('store_product_variants', 'store_products.id', '=', 'store_product_variants.product_id')
                     ->join('store_prices', 'store_product_variants.id', '=', 'store_prices.priceable_id')
-                    ->where('store_prices.priceable_type', (new \App\Models\ProductVariant)->getMorphClass())
+                    ->where('store_prices.priceable_type', (new ProductVariant)->getMorphClass())
                     ->orderBy('store_prices.price', 'asc')
                     ->select('store_products.*');
                 break;
             case 'price_desc':
                 $query->join('store_product_variants', 'store_products.id', '=', 'store_product_variants.product_id')
                     ->join('store_prices', 'store_product_variants.id', '=', 'store_prices.priceable_id')
-                    ->where('store_prices.priceable_type', (new \App\Models\ProductVariant)->getMorphClass())
+                    ->where('store_prices.priceable_type', (new ProductVariant)->getMorphClass())
                     ->orderBy('store_prices.price', 'desc')
                     ->select('store_products.*');
                 break;
@@ -116,7 +120,7 @@ class ShopGrid extends Component
 
     public function getAllCategoriesProperty(): Collection
     {
-        return CollectionModel::all();
+        return Models\Collection::all();
     }
 
     public function getAllBrandsProperty(): Collection

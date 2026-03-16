@@ -2,30 +2,32 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\Customer;
 use App\Filament\Resources\CustomerResource\Pages;
 use App\Filament\Resources\CustomerResource\RelationManagers\AddressRelationManager;
 use App\Filament\Resources\CustomerResource\RelationManagers\OrdersRelationManager;
-use App\Filament\Resources\CustomerResource\RelationManagers\UserRelationManager;
+use App\Filament\Resources\CustomerResource\RelationManagers\PaymentMethodsRelationManager;
 use App\Filament\Resources\CustomerResource\Widgets\CustomerStatsOverviewWidget;
-use App\Models\Contracts\Customer as CustomerContract;
+use App\Http\Requests\Filament\Sales\CustomerRequest;
+use App\Models\Customer;
+use App\Support\Forms\Components\Attributes;
 use App\Support\Resources\BaseResource;
+use Filament\Actions;
 use Filament\Forms;
-use Filament\Forms\Components\Component;
+use Filament\Schemas\Components;
+use Filament\Schemas\Components\Component;
+use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
 
 class CustomerResource extends BaseResource
 {
     protected static ?string $permission = 'sales:manage-customers';
 
-    protected static ?string $model = CustomerContract::class;
+    protected static ?string $model = Customer::class;
 
     protected static ?int $navigationSort = 2;
 
@@ -38,19 +40,19 @@ class CustomerResource extends BaseResource
         ];
     }
 
-    public static function getDefaultForm(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public static function getDefaultForm(Schema $schema): Schema
     {
         return $schema
             ->components([
-                SchemaComponents\Group::make([
-                    SchemaComponents\Section::make()
+                Components\Group::make([
+                    Components\Section::make()
                         ->id('details')
                         ->schema(
                             static::getMainFormComponents()
                         ),
                     static::getAttributeDataFormComponent(),
                 ])->columnSpan(4),
-                SchemaComponents\Section::make()
+                Components\Section::make()
                     ->id('details')
                     ->schema(
                         static::getSideFormComponents()
@@ -81,15 +83,21 @@ class CustomerResource extends BaseResource
     protected static function getMainFormComponents(): array
     {
         return [
-            SchemaComponents\Group::make()->schema([
+            Components\Group::make()->schema([
                 static::getTitleFormComponent()->columnSpan(1),
                 static::getFirstNameFormComponent()->columnSpan(2),
                 static::getLastNameFormComponent()->columnSpan(2),
             ])->columns(5),
             static::getCompanyNameFormComponent(),
-            SchemaComponents\Group::make()->schema([
+            Components\Group::make()->schema([
+                static::getEmailFormComponent(),
+                static::getPhoneFormComponent(),
+            ])->columns(2),
+            Components\Group::make()->schema([
                 static::getAccountRefFormComponent(),
                 static::getTaxIdFormComponent(),
+                static::getStatusFormComponent(),
+                static::getLocaleFormComponent(),
             ])->columns(2),
         ];
     }
@@ -103,65 +111,128 @@ class CustomerResource extends BaseResource
 
     protected static function getTitleFormComponent(): Component
     {
+        $request = static::request();
+
         return Forms\Components\TextInput::make('title')
             ->label(__('admin::customer.form.title.label'))
-            ->required()
-            ->maxLength(255)
+            ->rules($request->fieldRules('title'))
+            ->required($request->fieldHasRule('title', 'required'))
             ->autofocus();
     }
 
     protected static function getAttributeDataFormComponent(): Component
     {
-        return \App\Support\Forms\Components\Attributes::make();
+        return Attributes::make();
     }
 
     protected static function getFirstNameFormComponent(): Component
     {
+        $request = static::request();
+
         return Forms\Components\TextInput::make('first_name')
             ->label(__('admin::customer.form.first_name.label'))
-            ->required()
-            ->maxLength(255)
+            ->rules($request->fieldRules('first_name'))
+            ->required($request->fieldHasRule('first_name', 'required'))
             ->autofocus();
     }
 
     protected static function getLastNameFormComponent(): Component
     {
+        $request = static::request();
+
         return Forms\Components\TextInput::make('last_name')
             ->label(__('admin::customer.form.last_name.label'))
-            ->required()
-            ->maxLength(255)
+            ->rules($request->fieldRules('last_name'))
+            ->required($request->fieldHasRule('last_name', 'required'))
             ->autofocus();
     }
 
     protected static function getCompanyNameFormComponent(): Component
     {
+        $request = static::request();
+
         return Forms\Components\TextInput::make('company_name')
             ->label(__('admin::customer.form.company_name.label'))
-            ->nullable()
-            ->maxLength(255)
+            ->rules($request->fieldRules('company_name'))
+            ->required($request->fieldHasRule('company_name', 'required'))
             ->autofocus();
+    }
+
+    protected static function getEmailFormComponent(): Component
+    {
+        return Forms\Components\TextInput::make('email')
+            ->label('Email')
+            ->type('email')
+            ->rules(fn (?Model $record): array => static::request($record)->fieldRules('email'))
+            ->required(fn (?Model $record): bool => static::request($record)->fieldHasRule('email', 'required'));
+    }
+
+    protected static function getPhoneFormComponent(): Component
+    {
+        $request = static::request();
+
+        return Forms\Components\TextInput::make('phone')
+            ->label('Phone')
+            ->type('tel')
+            ->rules($request->fieldRules('phone'))
+            ->required($request->fieldHasRule('phone', 'required'));
     }
 
     protected static function getAccountRefFormComponent(): Component
     {
+        $request = static::request();
+
         return Forms\Components\TextInput::make('account_ref')
             ->label(__('admin::customer.form.account_ref.label'))
-            ->nullable()
-            ->maxLength(255);
+            ->rules($request->fieldRules('account_ref'))
+            ->required($request->fieldHasRule('account_ref', 'required'));
     }
 
     protected static function getTaxIdFormComponent(): Component
     {
+        $request = static::request();
+
         return Forms\Components\TextInput::make('tax_identifier')
             ->label(__('admin::customer.form.tax_identifier.label'))
-            ->nullable()
-            ->maxLength(255);
+            ->rules($request->fieldRules('tax_identifier'))
+            ->required($request->fieldHasRule('tax_identifier', 'required'));
+    }
+
+    protected static function getStatusFormComponent(): Component
+    {
+        $request = static::request();
+
+        return Forms\Components\Select::make('status')
+            ->label('Status')
+            ->options([
+                'active' => 'Active',
+                'banned' => 'Banned',
+                'unverified' => 'Unverified',
+            ])
+            ->default('active')
+            ->rules($request->fieldRules('status'))
+            ->required($request->fieldHasRule('status', 'required'));
+    }
+
+    protected static function getLocaleFormComponent(): Component
+    {
+        $request = static::request();
+
+        return Forms\Components\TextInput::make('locale')
+            ->label('Locale')
+            ->default(config('app.locale'))
+            ->rules($request->fieldRules('locale'))
+            ->required($request->fieldHasRule('locale', 'required'));
     }
 
     protected static function getCustomerGroupsFormComponent(): Component
     {
+        $request = static::request();
+
         return Forms\Components\CheckboxList::make('customerGroups')
             ->label(__('admin::customer.form.customer_groups.label'))
+            ->rules($request->fieldRules('customerGroups'))
+            ->required($request->fieldHasRule('customerGroups', 'required'))
             ->relationship(
                 name: 'customerGroups',
                 titleAttribute: 'name',
@@ -187,9 +258,22 @@ class CustomerResource extends BaseResource
                     ->label(__('admin::customer.table.company_name.label'))
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->label('Email')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('phone')
+                    ->label('Phone')
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('tax_identifier')
                     ->label(__('admin::customer.table.tax_identifier.label'))
                     ->sortable(),
+                Tables\Columns\BadgeColumn::make('status')
+                    ->colors([
+                        'success' => 'active',
+                        'danger' => 'banned',
+                        'warning' => 'unverified',
+                    ]),
                 Tables\Columns\TextColumn::make('account_ref')
                     ->label(__('admin::customer.table.account_reference.label'))
                     ->sortable(),
@@ -237,7 +321,7 @@ class CustomerResource extends BaseResource
         return [
             OrdersRelationManager::class,
             AddressRelationManager::class,
-            UserRelationManager::class,
+            PaymentMethodsRelationManager::class,
         ];
     }
 
@@ -262,23 +346,21 @@ class CustomerResource extends BaseResource
             'first_name',
             'last_name',
             'company_name',
+            'email',
+            'phone',
             'account_ref',
             'tax_identifier',
-            'users.name',
-            'users.email',
         ];
     }
 
     public static function getGlobalSearchEloquentQuery(): Builder
     {
-        return parent::getGlobalSearchEloquentQuery()->with([
-            'users',
-        ]);
+        return parent::getGlobalSearchEloquentQuery();
     }
 
     public static function getGlobalSearchResultDetails(Model $record): array
     {
-        /** @var Customer $record */
+        /** @var \App\Filament\Resources\Customer $record */
         $details = [
             __('admin::customer.table.full_name.label') => $record->fullName,
             __('admin::customer.table.title.label') => $record->title,
@@ -288,10 +370,19 @@ class CustomerResource extends BaseResource
             $details[__('admin::customer.table.account_reference.label')] = $record->account_ref;
         }
 
-        if ($record->users() && $record->users()->count() >= 1) {
-            $details[__('admin::user.table.email.label')] = $record->users()->first()->email;
+        if ($record->email) {
+            $details['Email'] = $record->email;
+        }
+
+        if ($record->phone) {
+            $details['Phone'] = $record->phone;
         }
 
         return $details;
+    }
+
+    protected static function request(?Model $record = null): CustomerRequest
+    {
+        return (new CustomerRequest)->forRecord($record);
     }
 }

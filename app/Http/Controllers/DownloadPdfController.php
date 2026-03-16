@@ -2,27 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\System\DownloadPdfRequest;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class DownloadPdfController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(DownloadPdfRequest $request)
     {
         if (! $request->hasValidSignature()) {
             abort(401);
         }
-        $request->validate([
-            'record' => 'required',
-            'record_type' => 'required',
-            'view' => 'required',
-        ]);
 
-        $recordType = Relation::getMorphedModel($request->get('record_type'));
-        $view = $request->get('view');
-        $record = $request->get('record');
+        $validated = $request->validated();
+
+        $recordType = Relation::getMorphedModel($validated['record_type']);
+        $view = $validated['view'];
+        $record = $validated['record'];
 
         $model = $recordType::find($record);
 

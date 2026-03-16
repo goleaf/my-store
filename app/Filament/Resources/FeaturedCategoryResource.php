@@ -2,20 +2,22 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\FeaturedCategoryResource\Pages;
 use App\Models\FeaturedCategory;
 use App\Support\Resources\BaseResource;
-use App\Filament\Resources\FeaturedCategoryResource\Pages;
+use BackedEnum;
+use Filament\Actions;
 use Filament\Forms;
+use Filament\Schemas\Components;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Illuminate\Database\Eloquent\Builder;
 
 class FeaturedCategoryResource extends BaseResource
 {
     protected static ?string $model = FeaturedCategory::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'lucide-layout-grid';
+    protected static string|BackedEnum|null $navigationIcon = 'lucide-layout-grid';
 
     public static function getLabel(): string
     {
@@ -32,13 +34,33 @@ class FeaturedCategoryResource extends BaseResource
         return 'Home Page';
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->select([
+                'id',
+                'collection_id',
+                'title',
+                'image',
+                'sort_order',
+                'is_active',
+            ])
+            ->with([
+                'collection' => fn ($query) => $query->select([
+                    'id',
+                    'attribute_data',
+                ]),
+            ])
+            ->ordered();
+    }
+
     protected static function getMainFormComponents(): array
     {
         return [
-            SchemaComponents\Section::make()->schema([
+            Components\Section::make()->schema([
                 Forms\Components\Select::make('collection_id')
                     ->relationship('collection', 'id') // We will customize the title in the select
-                    ->getOptionLabelFromRecordUsing(fn ($record) => $record->attribute_data['name']['value'] ?? $record->id)
+                    ->getOptionLabelFromRecordUsing(fn ($record) => $record->translateAttribute('name') ?? $record->id)
                     ->required()
                     ->searchable(),
                 Forms\Components\TextInput::make('title')
@@ -82,7 +104,7 @@ class FeaturedCategoryResource extends BaseResource
                 ->searchable(),
             Tables\Columns\TextColumn::make('collection.id')
                 ->label('Collection')
-                ->formatStateUsing(fn ($record) => $record->collection?->attribute_data['name']['value'] ?? $record->collection_id),
+                ->formatStateUsing(fn ($record) => $record->collection?->translateAttribute('name') ?? $record->collection_id),
             Tables\Columns\IconColumn::make('is_active')
                 ->boolean(),
             Tables\Columns\TextColumn::make('sort_order')

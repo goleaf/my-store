@@ -1,11 +1,8 @@
 <?php
 
 return [
-
     'label' => 'Produkt',
-
     'plural_label' => 'Produkte',
-
     'status' => [
         'unpublished' => [
             'content' => 'Derzeit im Entwurfsstatus, dieses Produkt ist in allen Kanälen und Kundengruppen verborgen.',
@@ -15,7 +12,6 @@ return [
             'channels' => 'Dieses Produkt ist derzeit für alle Kanäle nicht verfügbar.',
         ],
     ],
-
     'table' => [
         'status' => [
             'label' => 'Status',
@@ -41,14 +37,12 @@ return [
             'label' => 'Produkttyp',
         ],
     ],
-
     'actions' => [
         'edit_status' => [
             'label' => 'Status aktualisieren',
             'heading' => 'Status aktualisieren',
         ],
     ],
-
     'form' => [
         'name' => [
             'label' => 'Name',
@@ -77,12 +71,13 @@ return [
         ],
         'tags' => [
             'label' => 'Tags',
+            'helper_text' => 'Trennen Sie Tags mit Enter, Tab oder Komma (,).',
         ],
         'collections' => [
             'label' => 'Sammlungen',
+            'select_collection' => 'Sammlung auswählen',
         ],
     ],
-
     'pages' => [
         'availability' => [
             'label' => 'Verfügbarkeit',
@@ -115,10 +110,18 @@ return [
         ],
         'collections' => [
             'label' => 'Sammlungen',
+            'select_collection' => 'Sammlung auswählen',
         ],
         'associations' => [
             'label' => 'Produktverknüpfungen',
         ],
+        'edit' => [
+            'title' => 'Grundinformationen',
+        ],
     ],
-
+    'tabs' => [
+        'all' => 'Alle',
+        'published' => 'Veröffentlicht',
+        'draft' => 'Entwurf',
+    ],
 ];

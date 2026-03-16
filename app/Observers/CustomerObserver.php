@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Models\Contracts\Customer as CustomerContract;
+use App\Models\Contracts\Customer;
 
 class CustomerObserver
 {
@@ -11,10 +11,9 @@ class CustomerObserver
      *
      * @return void
      */
-    public function deleting(CustomerContract $customer)
+    public function deleting(Customer $customer)
     {
         $customer->customerGroups()->detach();
         $customer->discounts()->detach();
-        $customer->users()->detach();
     }
 }

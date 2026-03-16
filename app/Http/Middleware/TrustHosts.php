@@ -2,9 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Http\Middleware\TrustHosts as Middleware;
-
-class TrustHosts extends Middleware
+use Illuminate\Http\Middleware;
+class TrustHosts extends Middleware\TrustHosts
 {
     /**
      * Get the host patterns that should be trusted.

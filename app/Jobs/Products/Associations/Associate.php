@@ -10,8 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use App\Base\Enums\Concerns\ProvidesProductAssociationType;
 use App\Facades\DB;
-use App\Models\Contracts\Product as ProductContract;
-use App\Models\Product;
+use App\Models\Contracts\Product;
 
 class Associate implements ShouldQueue
 {
@@ -32,7 +31,7 @@ class Associate implements ShouldQueue
     /**
      * The parent product instance.
      */
-    protected ProductContract $product;
+    protected Product $product;
 
     /**
      * The product association type.
@@ -42,7 +41,7 @@ class Associate implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(ProductContract $product, mixed $targets, ProvidesProductAssociationType|string $type)
+    public function __construct(Product $product, mixed $targets, ProvidesProductAssociationType|string $type)
     {
         if (is_array($targets)) {
             $targets = collect($targets);

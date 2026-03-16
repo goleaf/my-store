@@ -4,7 +4,6 @@ namespace App\Filament\Resources\BrandResource\Pages;
 
 use App\Filament\Resources\BrandResource;
 use App\Models\Collection;
-use App\Models\Contracts\Collection as CollectionContract;
 use App\Support\Pages\BaseManageRelatedRecords;
 use App\Support\Tables\Columns\TranslatedTextColumn;
 use Filament\Forms;
@@ -13,6 +12,7 @@ use Filament\Tables;
 use Filament\Actions\DetachAction;
 use Filament\Tables\Table;
 use Filament\Actions;
+use App\Models\Contracts;
 
 class ManageBrandCollections extends BaseManageRelatedRecords
 {
@@ -57,7 +57,7 @@ class ManageBrandCollections extends BaseManageRelatedRecords
                             ->getSearchResultsUsing(static function (Forms\Components\Select $component, string $search): array {
                                 return Collection::search($search)
                                     ->get()
-                                    ->mapWithKeys(fn (CollectionContract $record): array => [$record->getKey() => $record->breadcrumb->push($record->translateAttribute('name'))->join(' > ')])
+                                    ->mapWithKeys(fn (Contracts\Collection $record): array => [$record->getKey() => $record->breadcrumb->push($record->translateAttribute('name'))->join(' > ')])
                                     ->all();
                             });
                     }

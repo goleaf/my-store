@@ -9,6 +9,7 @@ use App\Support\Forms\Components\TranslatedText;
 use Filament\Actions\CreateAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
+use App\FieldTypes;
 
 class CreateRootCollection extends CreateAction
 {
@@ -63,7 +64,7 @@ class CreateRootCollection extends CreateAction
 
         $formInput = TextInput::class;
 
-        if ($attribute?->type == \App\FieldTypes\TranslatedText::class) {
+        if ($attribute?->type == FieldTypes\TranslatedText::class) {
             $formInput = TranslatedText::class;
         }
 

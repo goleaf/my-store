@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\DeliverySlotResource\Tables;
 
+use App\Base\Enums\DeliverySlotDayType;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -19,6 +20,7 @@ class DeliverySlotsTable
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('day_type')
+                    ->formatStateUsing(fn ($state) => DeliverySlotDayType::labelFor($state))
                     ->searchable(),
                 TextColumn::make('specific_date')
                     ->date()

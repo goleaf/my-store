@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use App\Base\BaseModel;
-use App\Base\Casts\Price as CastsPrice;
 use App\Base\Traits\HasMacros;
 use App\Database\Factories\PriceFactory;
-use Spatie\LaravelBlink\BlinkFacade as Blink;
+use Spatie\LaravelBlink\BlinkFacade;
+use App\Base\Casts;
+use App\DataTypes;
 
 /**
  * @property int $id
@@ -45,8 +46,8 @@ class Price extends BaseModel implements Contracts\Price
     protected $guarded = [];
 
     protected $casts = [
-        'price' => CastsPrice::class,
-        'compare_price' => CastsPrice::class,
+        'price' => Casts\Price::class,
+        'compare_price' => Casts\Price::class,
     ];
 
     /**
@@ -76,7 +77,7 @@ class Price extends BaseModel implements Contracts\Price
     /**
      * Return the price exclusive of tax.
      */
-    public function priceExTax(): \App\DataTypes\Price
+    public function priceExTax(): DataTypes\Price
     {
         if (! prices_inc_tax()) {
             return $this->price;
@@ -92,7 +93,7 @@ class Price extends BaseModel implements Contracts\Price
     /**
      * Return the price inclusive of tax.
      */
-    public function priceIncTax(): int|\App\DataTypes\Price
+    public function priceIncTax(): int|DataTypes\Price
     {
         if (prices_inc_tax()) {
             return $this->price;
@@ -107,7 +108,7 @@ class Price extends BaseModel implements Contracts\Price
     /**
      * Return the compare price inclusive of tax.
      */
-    public function comparePriceIncTax(): int|\App\DataTypes\Price
+    public function comparePriceIncTax(): int|DataTypes\Price
     {
         if (prices_inc_tax()) {
             return $this->compare_price;
@@ -128,7 +129,7 @@ class Price extends BaseModel implements Contracts\Price
             return 0;
         }
 
-        return Blink::once('price_tax_rate_'.$this->priceable->getTaxClass()?->id, function () {
+        return BlinkFacade::once('price_tax_rate_'.$this->priceable->getTaxClass()?->id, function () {
             $taxZone = TaxZone::where('default', '=', 1)->first();
 
             if ($taxZone && ! is_null($taxClass = $this->priceable->getTaxClass())) {

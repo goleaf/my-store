@@ -17,7 +17,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class ManageProductPricing extends BaseEditRecord
 {
@@ -40,16 +40,16 @@ class ManageProductPricing extends BaseEditRecord
         return $this->getRecord()->variants()->withTrashed()->first();
     }
 
-    public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function form(Schema $schema): Schema
     {
         if (! count($this->basePrices)) {
             $this->basePrices = $this->getBasePrices();
         }
 
         $schema->components([
-            SchemaComponents\Section::make()
+            Components\Section::make()
                 ->schema([
-                    SchemaComponents\Group::make([
+                    Components\Group::make([
                         ProductVariantResource::getTaxClassIdFormComponent(),
                         ProductVariantResource::getTaxRefFormComponent(),
                     ])->columns(2),

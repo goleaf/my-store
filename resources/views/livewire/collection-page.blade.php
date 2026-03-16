@@ -54,7 +54,7 @@
         <h2 class="mt-8 text-xl font-semibold text-gray-900 dark:text-white">Products</h2>
         <div class="grid grid-cols-1 gap-8 mt-6 sm:grid-cols-2 lg:grid-cols-3">
             @forelse($this->collection->products as $product)
-                <x-product-card :product="$product" />
+                <x-product-card :product="$product" :is-wishlisted="in_array($product->id, $this->wishlistProductIds, true)" />
             @empty
                 <p class="col-span-full text-gray-500 dark:text-gray-400">No products in this collection.</p>
             @endforelse

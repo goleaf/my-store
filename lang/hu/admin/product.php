@@ -1,15 +1,13 @@
 <?php
 
 return [
-
     'label' => 'Termék',
-
     'plural_label' => 'Termékek',
-
     'tabs' => [
         'all' => 'Mind',
+        'published' => 'Közzétéve',
+        'draft' => 'Piszkozat',
     ],
-
     'status' => [
         'unpublished' => [
             'content' => 'Jelenleg vázlat státuszban van, ez a termék minden csatornán és vásárlói csoportban rejtve van.',
@@ -19,7 +17,6 @@ return [
             'channels' => 'Ez a termék jelenleg nem elérhető egyik csatornán sem.',
         ],
     ],
-
     'table' => [
         'status' => [
             'label' => 'Státusz',
@@ -45,14 +42,12 @@ return [
             'label' => 'Terméktípus',
         ],
     ],
-
     'actions' => [
         'edit_status' => [
             'label' => 'Státusz frissítése',
             'heading' => 'Státusz frissítése',
         ],
     ],
-
     'form' => [
         'name' => [
             'label' => 'Név',
@@ -88,7 +83,6 @@ return [
             'select_collection' => 'Válassz gyűjteményt',
         ],
     ],
-
     'pages' => [
         'availability' => [
             'label' => 'Elérhetőség',
@@ -127,5 +121,4 @@ return [
             'label' => 'Termékasszociációk',
         ],
     ],
-
 ];

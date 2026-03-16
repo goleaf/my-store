@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Base\Enums\ProductStatus;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\Widgets\ProductOptionsWidget;
 use App\Filament\Components\Shout;
@@ -10,40 +11,42 @@ use App\Filament\Resources\ProductResource\RelationManagers\CustomerGroupRelatio
 use App\Filament\Widgets\Products\VariantSwitcherTable;
 use App\FieldTypes\Text;
 use App\FieldTypes\TranslatedText;
+use App\Http\Requests\Filament\Product\BasePriceRequest;
 use App\Models\Attribute;
-use App\Models\Contracts\Product as ProductContract;
+use App\Models\Contracts\Product;
 use App\Models\Currency;
 use App\Models\ProductVariant;
 use App\Models\Tag;
 use App\Support\Forms\Components\Attributes;
-use App\Support\Forms\Components\Tags as TagsComponent;
-use App\Support\Forms\Components\TranslatedText as TranslatedTextInput;
+use App\Support\Forms\Components\Tags;
 use App\Support\RelationManagers\ChannelRelationManager;
 use App\Support\RelationManagers\MediaRelationManager;
 use App\Support\RelationManagers\PriceRelationManager;
 use App\Support\Resources\BaseResource;
 use App\Support\Tables\Columns\TranslatedTextColumn;
 use Filament\Forms;
-use Filament\Forms\Components\Component;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Resources\RelationManagers\RelationGroup;
+use Filament\Schemas\Components\Component;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
-use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
+use App\Support;
+use Illuminate\Support\Str;
 
 class ProductResource extends BaseResource
 {
     protected static ?string $permission = 'catalog:manage-products';
 
-    protected static ?string $model = ProductContract::class;
+    protected static ?string $model = Product::class;
 
     protected static ?string $recordTitleAttribute = 'recordTitle';
 
@@ -106,21 +109,21 @@ class ProductResource extends BaseResource
                     ->content(
                         __('admin::product.status.unpublished.content')
                     )->type('info')->hidden(
-                        fn (Model $record) => $record?->status == 'published'
+                        fn (Model $record) => $record?->status === ProductStatus::Published
                     ),
                 Shout::make('product-customer-groups')
                     ->content(
                         __('admin::product.status.availability.customer_groups')
                     )->type('warning')->hidden(function (Model $record) {
-                        return $record->customerGroups()->where('enabled', true)->count();
+                        return $record->customerGroups()->where('enabled', true)->exists();
                     }),
                 Shout::make('product-channels')
                     ->content(
                         __('admin::product.status.availability.channels')
                     )->type('warning')->hidden(function (Model $record) {
-                        return $record->channels()->where('enabled', true)->count();
+                        return $record->channels()->where('enabled', true)->exists();
                     }),
-                SchemaComponents\Section::make()
+                Components\Section::make()
                     ->schema(
                         static::getMainFormComponents(),
                     ),
@@ -134,7 +137,7 @@ class ProductResource extends BaseResource
     protected static function getMainFormComponents(): array
     {
         return [
-            Forms\Components\Grid::make(3)->schema([
+            Components\Grid::make(3)->schema([
                 Forms\Components\Select::make('store_id')
                     ->relationship('store', 'name')
                     ->searchable()
@@ -142,14 +145,14 @@ class ProductResource extends BaseResource
                     ->required(),
                 Forms\Components\Select::make('category_id')
                     ->label('Category')
-                    ->relationship('category', 'id') // Will show ID, better to show name
+                    ->relationship('category', 'id')
                     ->getOptionLabelFromRecordUsing(fn ($record) => $record->translateAttribute('name'))
                     ->searchable()
                     ->preload(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn (Forms\Set $set, ?string $state) => $set('slug', \Illuminate\Support\Str::slug($state))),
+                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
                 Forms\Components\TextInput::make('slug')
                     ->unique(ignoreRecord: true)
                     ->required(),
@@ -174,23 +177,23 @@ class ProductResource extends BaseResource
             Forms\Components\Textarea::make('short_description')
                 ->rows(2),
             Forms\Components\RichEditor::make('description'),
-            Forms\Components\Grid::make(4)->schema([
+            Components\Grid::make(4)->schema([
                 Forms\Components\Toggle::make('is_active')->default(true),
                 Forms\Components\Toggle::make('is_popular'),
                 Forms\Components\Toggle::make('is_featured'),
                 Forms\Components\Toggle::make('is_daily_best'),
             ]),
-            Forms\Components\Section::make('SEO')->schema([
+            Components\Section::make('SEO')->schema([
                 Forms\Components\TextInput::make('meta_title'),
                 Forms\Components\Textarea::make('meta_description'),
                 Forms\Components\FileUpload::make('og_image')->image(),
             ])->collapsed(),
-            Forms\Components\Grid::make(2)->schema([
+            Components\Grid::make(2)->schema([
                 static::getBrandFormComponent(),
                 static::getProductTypeFormComponent(),
             ]),
             static::getTagsFormComponent(),
-            Forms\Components\Grid::make(2)->schema([
+            Components\Grid::make(2)->schema([
                 Forms\Components\TextInput::make('rating')
                     ->numeric()
                     ->minValue(0)
@@ -231,13 +234,11 @@ class ProductResource extends BaseResource
     public static function getBasePriceFormComponent(): Component
     {
         $currency = Currency::getDefault();
+        $request = (new BasePriceRequest)->forCurrency($currency);
 
         return Forms\Components\TextInput::make('base_price')->numeric()->prefix(
             $currency->code
-        )->rules([
-            'min:'.(1 / $currency->factor),
-            "decimal:0,{$currency->decimal_places}",
-        ])->required();
+        )->rules($request->fieldRules('base_price'))->required();
     }
 
     public static function getBaseNameFormComponent(): Component
@@ -248,7 +249,7 @@ class ProductResource extends BaseResource
             )
             ->first()?->type ?: TranslatedText::class;
 
-        $component = TranslatedTextInput::make('name');
+        $component = Support\Forms\Components\TranslatedText::make('name');
 
         if ($nameType == Text::class) {
             $component = Forms\Components\TextInput::make('name');
@@ -283,8 +284,14 @@ class ProductResource extends BaseResource
 
     protected static function getTagsFormComponent(): Component
     {
-        return TagsComponent::make('tags')
-            ->suggestions(Tag::all()->pluck('value')->all())
+        return Tags::make('tags')
+            ->suggestions(
+                Tag::query()
+                    ->select('value')
+                    ->orderBy('value')
+                    ->pluck('value')
+                    ->all()
+            )
             ->splitKeys(['Tab', ','])
             ->label(__('admin::product.form.tags.label'))
             ->helperText(__('admin::product.form.tags.helper_text'));
@@ -300,7 +307,7 @@ class ProductResource extends BaseResource
         return Attributes::make()
             ->using(ProductVariant::class)
             ->relationship('variant')
-            ->hidden(fn (ProductContract $record) => $record->hasVariants);
+            ->hidden(fn (Product $record) => $record->hasVariants);
     }
 
     public static function getDefaultTable(Table $table): Table
@@ -334,18 +341,14 @@ class ProductResource extends BaseResource
                 ->getStateUsing(
                     fn (Model $record) => $record->deleted_at ? 'deleted' : $record->status
                 )
-                ->formatStateUsing(fn ($state) => __('admin::product.table.status.states.'.$state))
-                ->color(fn (string $state): string => match ($state) {
-                    'draft' => 'warning',
-                    'published' => 'success',
-                    'deleted' => 'danger',
-                    default => 'primary',
-                }),
-            SpatieMediaLibraryImageColumn::make('thumbnail')
-                ->collection(config('store.media.collection'))
-                ->conversion('small')
-                ->filterMediaUsing(fn ($media) => $media->where('custom_properties.primary', true)->count() ? $media->where('custom_properties.primary', true) : $media)
-                ->limit(1)
+                ->formatStateUsing(
+                    fn ($state) => ProductStatus::labelFor($state) ?? __('admin::product.table.status.states.deleted')
+                )
+                ->color(
+                    fn ($state): string => ProductStatus::resolve($state)?->color() ?? 'danger'
+                ),
+            Tables\Columns\ImageColumn::make('thumbnail_image')
+                ->state(fn (Product $record): string => $record->getThumbnailImage())
                 ->square()
                 ->label(''),
             Tables\Columns\TextColumn::make('name')
@@ -460,6 +463,10 @@ class ProductResource extends BaseResource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
+            ->with([
+                'store',
+                'thumbnail',
+            ])
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);

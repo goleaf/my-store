@@ -2,30 +2,28 @@
 
 namespace App\DiscountTypes;
 
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
 use App\Base\DiscountTypeInterface;
 use App\Base\ValueObjects\Cart\DiscountBreakdown;
-use App\Models\Cart;
-use App\Models\Contracts\Cart as CartContract;
-use App\Models\Contracts\Discount as DiscountContract;
-use App\Models\Discount;
+use App\Models\Customer;
+use App\Models\Contracts\Cart;
+use App\Models\Contracts\Discount;
 
 abstract class AbstractDiscountType implements DiscountTypeInterface
 {
     /**
      * The instance of the discount.
      */
-    public DiscountContract $discount;
+    public Discount $discount;
 
     /**
      * Set the data for the discount to user.
      *
      * @param  array  $data
      */
-    public function with(DiscountContract $discount): self
+    public function with(Discount $discount): self
     {
-        /** @var Discount $discount */
+        /** @var \App\Models\Discount $discount */
         $this->discount = $discount;
 
         return $this;
@@ -34,13 +32,13 @@ abstract class AbstractDiscountType implements DiscountTypeInterface
     /**
      * Mark a discount as used
      */
-    public function markAsUsed(CartContract $cart): self
+    public function markAsUsed(Cart $cart): self
     {
-        /** @var Cart $cart */
+        /** @var \App\Models\Cart $cart */
         $this->discount->uses = $this->discount->uses + 1;
 
-        if ($user = $cart->user) {
-            $this->discount->users()->attach($user);
+        if ($customer = $cart->customer) {
+            $this->discount->customers()->syncWithoutDetaching([$customer->getKey()]);
         }
 
         return $this;
@@ -51,18 +49,18 @@ abstract class AbstractDiscountType implements DiscountTypeInterface
      *
      * @return Illuminate\Support\Collection
      */
-    protected function getEligibleLines(CartContract $cart): Collection
+    protected function getEligibleLines(Cart $cart): Collection
     {
-        /** @var Cart $cart */
+        /** @var \App\Models\Cart $cart */
         return $cart->lines;
     }
 
     /**
      * Check if discount's conditions met.
      */
-    protected function checkDiscountConditions(CartContract $cart): bool
+    protected function checkDiscountConditions(Cart $cart): bool
     {
-        /** @var Cart $cart */
+        /** @var \App\Models\Cart $cart */
         $data = $this->discount->data;
 
         $customerIds = $this->discount->customers->pluck('id');
@@ -85,7 +83,7 @@ abstract class AbstractDiscountType implements DiscountTypeInterface
         $validMaxUses = $this->discount->max_uses ? $this->discount->uses < $this->discount->max_uses : true;
 
         if ($validMaxUses && $this->discount->max_uses_per_user) {
-            $validMaxUses = $cart->user && ($this->usesByUser($cart->user) < $this->discount->max_uses_per_user);
+            $validMaxUses = $cart->customer && ($this->usesByCustomer($cart->customer) < $this->discount->max_uses_per_user);
         }
 
         return $validCoupon && $validMinSpend && $validMaxUses;
@@ -97,9 +95,9 @@ abstract class AbstractDiscountType implements DiscountTypeInterface
      * @param  Store\Base\ValueObjects\Cart\DiscountBreakdown  $breakdown
      * @return self
      */
-    protected function addDiscountBreakdown(CartContract $cart, DiscountBreakdown $breakdown)
+    protected function addDiscountBreakdown(Cart $cart, DiscountBreakdown $breakdown)
     {
-        /** @var Cart $cart */
+        /** @var \App\Models\Cart $cart */
         if (! $cart->discountBreakdown) {
             $cart->discountBreakdown = collect();
         }
@@ -109,15 +107,11 @@ abstract class AbstractDiscountType implements DiscountTypeInterface
     }
 
     /**
-     * Check how many times this discount has been used by the logged in user's customers
-     *
-     * @param  Illuminate\Contracts\Auth\Authenticatable  $user
-     * @return int
      */
-    protected function usesByUser(Authenticatable $user)
+    protected function usesByCustomer(Customer $customer): int
     {
-        return $this->discount->users()
-            ->whereUserId($user->getKey())
+        return $this->discount->customers()
+            ->where('customer_id', $customer->getKey())
             ->count();
     }
 }

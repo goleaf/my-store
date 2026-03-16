@@ -2,10 +2,11 @@
 
 namespace App\Support\FieldTypes;
 
+use App\Http\Requests\Support\BooleanFieldRequest;
 use App\Models\Attribute;
 use App\Support\Synthesizers\ToggleSynth;
-use Filament\Forms\Components\Component;
-use Filament\Forms\Components\Toggle as ToggleInput;
+use Filament\Forms;
+use Filament\Schemas\Components\Component;
 
 class Toggle extends BaseFieldType
 {
@@ -13,13 +14,17 @@ class Toggle extends BaseFieldType
 
     public static function getFilamentComponent(Attribute $attribute): Component
     {
-        return ToggleInput::make($attribute->handle)
+        $request = (new BooleanFieldRequest)
+            ->forField($attribute->handle)
+            ->required((bool) $attribute->required)
+            ->withRules($attribute->validation_rules);
+
+        return Forms\Components\Toggle::make($attribute->handle)
             ->helperText(
                 $attribute->translate('description')
             )
             ->default(false)
-            ->when(filled($attribute->validation_rules), fn (Toggle $component) => $component->rules($attribute->validation_rules))
-            ->rule('boolean')
-            ->required((bool) $attribute->required);
+            ->rules($request->fieldRules($attribute->handle))
+            ->required($request->fieldHasRule($attribute->handle, 'required'));
     }
 }

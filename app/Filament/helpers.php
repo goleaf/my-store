@@ -9,6 +9,8 @@ use App\Models\Attribute;
 
 use function Filament\Support\generate_search_column_expression;
 use function Filament\Support\generate_search_term_expression;
+use App\Models\Address;
+use App\Models\ProductVariant;
 
 if (! function_exists('price')) {
     function price($value, $currency, $unitQty = 1)
@@ -32,11 +34,11 @@ if (! function_exists('sync_with_search')) {
             return;
         }
 
-        if ($model instanceof \App\Models\ProductVariant) {
+        if ($model instanceof ProductVariant) {
             $model->product()->first()->searchable();
         }
 
-        if ($model instanceof \App\Models\Address) {
+        if ($model instanceof Address) {
             $model->customer()->first()->searchable();
         }
 

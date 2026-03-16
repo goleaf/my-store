@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
-use App\Models\Contracts\CustomerGroup as CustomerGroupContract;
 use App\Models\CustomerGroup;
+use App\Models\Contracts;
 
 class CustomerGroupObserver
 {
@@ -12,7 +12,7 @@ class CustomerGroupObserver
      *
      * @return void
      */
-    public function created(CustomerGroupContract $customerGroup)
+    public function created(Contracts\CustomerGroup $customerGroup)
     {
         $this->ensureOnlyOneDefault($customerGroup);
     }
@@ -22,7 +22,7 @@ class CustomerGroupObserver
      *
      * @return void
      */
-    public function updated(CustomerGroupContract $customerGroup)
+    public function updated(Contracts\CustomerGroup $customerGroup)
     {
         $this->ensureOnlyOneDefault($customerGroup);
     }
@@ -32,7 +32,7 @@ class CustomerGroupObserver
      *
      * @return void
      */
-    public function deleted(CustomerGroupContract $customerGroup)
+    public function deleted(Contracts\CustomerGroup $customerGroup)
     {
         //
     }
@@ -42,7 +42,7 @@ class CustomerGroupObserver
      *
      * @return void
      */
-    public function forceDeleted(CustomerGroupContract $customerGroup)
+    public function forceDeleted(Contracts\CustomerGroup $customerGroup)
     {
         //
     }
@@ -50,9 +50,9 @@ class CustomerGroupObserver
     /**
      * Ensures that only one default CustomerGroup exists.
      *
-     * @param  CustomerGroupContract  $savedCustomerGroup  The customer group that was just saved.
+     * @param  \App\Models\Contracts\CustomerGroup  $savedCustomerGroup  The customer group that was just saved.
      */
-    protected function ensureOnlyOneDefault(CustomerGroupContract $savedCustomerGroup): void
+    protected function ensureOnlyOneDefault(Contracts\CustomerGroup $savedCustomerGroup): void
     {
         // Wrap here so we avoid a query if it's not been set to default.
         if ($savedCustomerGroup->default) {

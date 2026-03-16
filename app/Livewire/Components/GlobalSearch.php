@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Components;
 
+use App\Base\Enums\ProductStatus;
 use App\Models\Product;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
@@ -14,11 +15,24 @@ class GlobalSearch extends Component
 
     public function updatedTerm(): void
     {
+        $this->term = trim($this->term);
+
         if (strlen($this->term) >= 2) {
             $this->showDropdown = true;
         } else {
             $this->showDropdown = false;
         }
+    }
+
+    public function search(): void
+    {
+        if (strlen($this->term) < 2) {
+            return;
+        }
+
+        $this->showDropdown = false;
+
+        $this->redirect(route('search.view', ['term' => $this->term]), navigate: true);
     }
 
     public function getResultsProperty(): Collection
@@ -29,6 +43,7 @@ class GlobalSearch extends Component
 
         // Search logic - using basic Eloquent for now, can be upgraded to Scout
         return Product::query()
+            ->whereStatus(ProductStatus::Published)
             ->where(function ($query) {
                 $query->where('attribute_data->name->value', 'like', '%' . $this->term . '%')
                     ->orWhere('attribute_data->description->value', 'like', '%' . $this->term . '%')
@@ -36,7 +51,7 @@ class GlobalSearch extends Component
                         $q->where('sku', 'like', '%' . $this->term . '%');
                     });
             })
-            ->with(['variants.prices', 'thumbnail'])
+            ->with(['defaultUrl', 'variants.prices', 'thumbnail'])
             ->limit(8)
             ->get();
     }

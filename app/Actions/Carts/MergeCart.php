@@ -4,16 +4,16 @@ namespace App\Actions\Carts;
 
 use App\Facades\DB;
 use App\Models\Cart;
-use App\Models\Contracts\Cart as CartContract;
+use App\Models\Contracts;
 
 class MergeCart
 {
     /**
      * Execute the action.
      *
-     * @return CartContract
+     * @return \App\Models\Contracts\Cart
      */
-    public function execute(CartContract $target, Cart $source)
+    public function execute(Contracts\Cart $target, Cart $source)
     {
         /** @var Cart $target */
         if ($target->id == $source->id) {
@@ -52,9 +52,9 @@ class MergeCart
                 ]);
             });
 
-            if ($source->user_id) {
+            if ($source->customer_id) {
                 $target->update([
-                    'user_id' => $source->user_id,
+                    'customer_id' => $source->customer_id,
                 ]);
             }
 

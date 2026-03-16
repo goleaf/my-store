@@ -5,7 +5,7 @@ namespace App\Shipping\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Base\BaseModel;
-use App\Shipping\Factories\ShippingZonePostcodeFactory;
+use App\Shipping\Database\Factories\ShippingZonePostcodeFactory;
 
 class ShippingZonePostcode extends BaseModel implements Contracts\ShippingZonePostcode
 {

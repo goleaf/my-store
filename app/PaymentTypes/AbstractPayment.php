@@ -4,23 +4,21 @@ namespace App\PaymentTypes;
 
 use App\Base\DataTransferObjects\PaymentChecks;
 use App\Base\PaymentTypeInterface;
-use App\Models\Cart;
-use App\Models\Contracts\Cart as CartContract;
-use App\Models\Contracts\Order as OrderContract;
-use App\Models\Contracts\Transaction as TransactionContract;
-use App\Models\Order;
+use App\Models\Contracts\Transaction;
+use App\Models\Contracts\Cart;
+use App\Models\Contracts\Order;
 
 abstract class AbstractPayment implements PaymentTypeInterface
 {
     /**
      * The instance of the cart.
      */
-    protected ?CartContract $cart = null;
+    protected ?Cart $cart = null;
 
     /**
      * The instance of the order.
      */
-    protected ?OrderContract $order = null;
+    protected ?Order $order = null;
 
     /**
      * Any config for this payment provider.
@@ -35,9 +33,9 @@ abstract class AbstractPayment implements PaymentTypeInterface
     /**
      * {@inheritDoc}
      */
-    public function cart(CartContract $cart): self
+    public function cart(Cart $cart): self
     {
-        /** @var Cart $cart */
+        /** @var \App\Models\Cart $cart */
         $this->cart = $cart;
         $this->order = null;
 
@@ -47,9 +45,9 @@ abstract class AbstractPayment implements PaymentTypeInterface
     /**
      * {@inheritDoc}
      */
-    public function order(OrderContract $order): self
+    public function order(Order $order): self
     {
-        /** @var Order $order */
+        /** @var \App\Models\Order $order */
         $this->order = $order;
         $this->cart = null;
 
@@ -76,7 +74,7 @@ abstract class AbstractPayment implements PaymentTypeInterface
         return $this;
     }
 
-    public function getPaymentChecks(TransactionContract $transaction): PaymentChecks
+    public function getPaymentChecks(Transaction $transaction): PaymentChecks
     {
         return new PaymentChecks;
     }

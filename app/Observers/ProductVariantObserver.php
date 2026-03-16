@@ -2,20 +2,19 @@
 
 namespace App\Observers;
 
-use App\Models\Contracts\ProductVariant as ProductVariantContract;
-use App\Models\ProductVariant;
+use App\Models\Contracts\ProductVariant;
 
 class ProductVariantObserver
 {
     /**
-     * Handle the ProductVariant "deleted" event.
+     * Handle the \App\Models\ProductVariant "deleted" event.
      *
      * @return void
      */
-    public function deleting(ProductVariantContract $productVariant)
+    public function deleting(ProductVariant $productVariant)
     {
         if ($productVariant->isForceDeleting()) {
-            /** @var ProductVariant $productVariant */
+            /** @var \App\Models\ProductVariant $productVariant */
             $productVariant->prices()->delete();
             $productVariant->values()->detach();
             $productVariant->images()->detach();

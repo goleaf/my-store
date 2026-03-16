@@ -1,17 +1,13 @@
 <?php
 
 return [
-
     'label' => 'Product',
-
     'plural_label' => 'Products',
-
     'tabs' => [
         'all' => 'All',
         'published' => 'Published',
         'draft' => 'Draft',
     ],
-
     'status' => [
         'unpublished' => [
             'content' => 'Currently in draft status, this product is hidden across all channels and customer groups.',
@@ -21,7 +17,6 @@ return [
             'channels' => 'This product is currently unavailable for all channels.',
         ],
     ],
-
     'table' => [
         'status' => [
             'label' => 'Status',
@@ -47,14 +42,12 @@ return [
             'label' => 'Product Type',
         ],
     ],
-
     'actions' => [
         'edit_status' => [
             'label' => 'Update Status',
             'heading' => 'Update Status',
         ],
     ],
-
     'form' => [
         'name' => [
             'label' => 'Name',
@@ -90,7 +83,6 @@ return [
             'select_collection' => 'Select a collection',
         ],
     ],
-
     'pages' => [
         'availability' => [
             'label' => 'Availability',
@@ -129,5 +121,4 @@ return [
             'label' => 'Product Associations',
         ],
     ],
-
 ];

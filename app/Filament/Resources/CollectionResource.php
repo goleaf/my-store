@@ -3,20 +3,21 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CollectionResource\Pages;
-use App\Models\Contracts\Collection as CollectionContract;
+use App\Models\Contracts\Collection;
 use App\Support\Forms\Components\Attributes;
 use App\Support\Resources\BaseResource;
-use Filament\Forms\Components\Component;
+use Filament\Schemas\Components\Component;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Schemas\Schema;
 
 class CollectionResource extends BaseResource
 {
     protected static ?string $permission = 'catalog:manage-collections';
 
-    protected static ?string $model = CollectionContract::class;
+    protected static ?string $model = Collection::class;
 
     protected static int $globalSearchResultsLimit = 5;
 
@@ -37,7 +38,7 @@ class CollectionResource extends BaseResource
         return [];
     }
 
-    public static function getCollectionBreadcrumbs(CollectionContract $collection): array
+    public static function getCollectionBreadcrumbs(Collection $collection): array
     {
         $crumbs = [
             CollectionGroupResource::getUrl('index') => CollectionGroupResource::getPluralLabel(),
@@ -62,7 +63,7 @@ class CollectionResource extends BaseResource
         return $crumbs;
     }
 
-    public static function getDefaultForm(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public static function getDefaultForm(Schema $schema): Schema
     {
         return $schema
             ->components([

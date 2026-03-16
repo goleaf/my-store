@@ -6,14 +6,15 @@ use App\Facades\DB;
 use App\Models\Order;
 use Carbon\CarbonInterface;
 use Filament\Support\Facades\FilamentIcon;
-use Filament\Widgets\StatsOverviewWidget as BaseWidget;
+use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use DateTime;
 
-class OrderStatsOverview extends BaseWidget
+class OrderStatsOverview extends StatsOverviewWidget
 {
     protected ?string $pollingInterval = '60s';
 
-    protected function getOrderQuery(\DateTime|CarbonInterface|null $from = null, \DateTime|CarbonInterface|null $to = null)
+    protected function getOrderQuery(DateTime|CarbonInterface|null $from = null, DateTime|CarbonInterface|null $to = null)
     {
         return Order::whereNotNull('placed_at')
             ->whereBetween('placed_at', [

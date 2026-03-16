@@ -2,6 +2,7 @@
 
 use App\Livewire\SearchPage;
 use Livewire\Livewire;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 test('component can mount', function () {
     Livewire::test(SearchPage::class)
@@ -21,5 +22,5 @@ test('results property returns paginator', function () {
     $component = Livewire::test(SearchPage::class, ['term' => 'test']);
     $results = $component->get('results');
 
-    expect($results)->toBeInstanceOf(\Illuminate\Pagination\LengthAwarePaginator::class);
+    expect($results)->toBeInstanceOf(LengthAwarePaginator::class);
 });

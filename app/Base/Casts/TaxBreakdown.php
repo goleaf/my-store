@@ -8,6 +8,8 @@ use App\Base\ValueObjects\Cart\TaxBreakdownAmount;
 use App\DataTypes\Price;
 use App\Models\Currency;
 use Spatie\LaravelBlink\BlinkFacade;
+use App\Base\ValueObjects\Cart;
+use Exception;
 
 class TaxBreakdown implements CastsAttributes, SerializesCastableAttributes
 {
@@ -22,7 +24,7 @@ class TaxBreakdown implements CastsAttributes, SerializesCastableAttributes
      */
     public function get($model, $key, $value, $attributes)
     {
-        $breakdown = new \App\Base\ValueObjects\Cart\TaxBreakdown;
+        $breakdown = new Cart\TaxBreakdown;
 
         $breakdown->amounts = collect(
             json_decode($value, false)
@@ -57,8 +59,8 @@ class TaxBreakdown implements CastsAttributes, SerializesCastableAttributes
      */
     public function set($model, $key, $value, $attributes)
     {
-        if ($value && ! is_a($value, \App\Base\ValueObjects\Cart\TaxBreakdown::class)) {
-            throw new \Exception('Tax breakdown must be instance of App\Base\ValueObjects\Cart\TaxBreakdown');
+        if ($value && ! is_a($value, Cart\TaxBreakdown::class)) {
+            throw new Exception('Tax breakdown must be instance of App\Base\ValueObjects\Cart\TaxBreakdown');
         }
 
         if (! $value) {

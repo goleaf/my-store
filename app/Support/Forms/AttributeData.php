@@ -2,15 +2,7 @@
 
 namespace App\Support\Forms;
 
-use App\FieldTypes\Dropdown as DrodownFieldType;
-use App\FieldTypes\File as FileFieldType;
-use App\FieldTypes\ListField as ListFieldFieldType;
-use App\FieldTypes\Number as NumberFieldType;
-use App\FieldTypes\Text as TextFieldType;
-use App\FieldTypes\Toggle as ToggleFieldType;
-use App\FieldTypes\TranslatedText as TranslatedTextFieldType;
-use App\FieldTypes\Vimeo as VimeoFieldType;
-use App\FieldTypes\YouTube as YouTubeFieldType;
+use App\FieldTypes\Text;
 use App\Models\Attribute;
 use App\Support\FieldTypes\Dropdown;
 use App\Support\FieldTypes\File;
@@ -21,21 +13,23 @@ use App\Support\FieldTypes\Toggle;
 use App\Support\FieldTypes\TranslatedText;
 use App\Support\FieldTypes\Vimeo;
 use App\Support\FieldTypes\YouTube;
-use Filament\Forms\Components\Component;
+use Filament\Schemas\Components\Component;
 use Illuminate\Support\Collection;
+use App\Base\FieldType;
+use App\FieldTypes;
 
 class AttributeData
 {
     protected array $fieldTypes = [
-        DrodownFieldType::class => Dropdown::class,
-        ListFieldFieldType::class => ListField::class,
-        TextFieldType::class => TextField::class,
-        TranslatedTextFieldType::class => TranslatedText::class,
-        ToggleFieldType::class => Toggle::class,
-        YouTubeFieldType::class => YouTube::class,
-        VimeoFieldType::class => Vimeo::class,
-        NumberFieldType::class => Number::class,
-        FileFieldType::class => File::class,
+        FieldTypes\Dropdown::class => Dropdown::class,
+        FieldTypes\ListField::class => ListField::class,
+        Text::class => TextField::class,
+        FieldTypes\TranslatedText::class => TranslatedText::class,
+        FieldTypes\Toggle::class => Toggle::class,
+        FieldTypes\YouTube::class => YouTube::class,
+        FieldTypes\Vimeo::class => Vimeo::class,
+        FieldTypes\Number::class => Number::class,
+        FieldTypes\File::class => File::class,
     ];
 
     public function getFilamentComponent(Attribute $attribute): Component
@@ -62,14 +56,14 @@ class AttributeData
                 return $state;
             })
             ->mutateStateForValidationUsing(function ($state) {
-                if ($state instanceof \App\Base\FieldType) {
+                if ($state instanceof FieldType) {
                     return $state->getValue();
                 }
 
                 return $state;
             })
             ->mutateDehydratedStateUsing(function ($state) use ($attribute) {
-                if ($attribute->type == FileFieldType::class) {
+                if ($attribute->type == FieldTypes\File::class) {
                     $instance = new $attribute->type;
                     $instance->setValue($state);
 

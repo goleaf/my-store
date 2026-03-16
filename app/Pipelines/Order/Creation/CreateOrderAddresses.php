@@ -4,27 +4,25 @@ namespace App\Pipelines\Order\Creation;
 
 use Closure;
 use Illuminate\Support\Facades\App;
-use App\Models\Contracts\Order as OrderContract;
-use App\Models\Contracts\OrderAddress as OrderAddressContract;
-use App\Models\Order;
-use App\Models\OrderAddress;
+use App\Models\Contracts\Order;
+use App\Models\Contracts\OrderAddress;
 
 class CreateOrderAddresses
 {
     /**
-     * @param  Closure(OrderContract): mixed  $next
+     * @param  Closure(\App\Models\Contracts\Order): mixed  $next
      */
-    public function handle(OrderContract $order, Closure $next): mixed
+    public function handle(Order $order, Closure $next): mixed
     {
-        /** @var Order $order */
+        /** @var \App\Models\Order $order */
         $orderAddresses = $order->addresses;
 
         foreach ($order->cart->addresses as $address) {
-            /** @var OrderAddress $addressModel */
+            /** @var \App\Models\OrderAddress $addressModel */
             $addressModel = $orderAddresses->first(function ($orderAddress) use ($address) {
                 return $orderAddress->type == $address->type &&
                     $orderAddress->postcode == $address->postcode;
-            }) ?: App::make(OrderAddressContract::class);
+            }) ?: App::make(OrderAddress::class);
 
             $addressModel->fill(
                 collect(

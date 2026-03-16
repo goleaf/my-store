@@ -7,17 +7,17 @@ use App\Base\DataTransferObjects\PaymentCapture;
 use App\Base\DataTransferObjects\PaymentCheck;
 use App\Base\DataTransferObjects\PaymentChecks;
 use App\Base\DataTransferObjects\PaymentRefund;
+use App\Base\Enums\TransactionType;
 use App\Events\PaymentAttemptEvent;
 use App\Exceptions\Carts\CartException;
 use App\Exceptions\DisallowMultipleCartOrdersException;
-use App\Models\Contracts\Transaction as TransactionContract;
-use App\Models\Transaction;
 use App\PaymentTypes\AbstractPayment;
 use App\Stripe\Actions\UpdateOrderFromIntent;
 use App\Stripe\Facades\Stripe;
 use App\Stripe\Models\StripePaymentIntent;
 use Stripe\Exception\InvalidRequestException;
 use Stripe\PaymentIntent;
+use App\Models\Contracts\Transaction;
 
 class StripePaymentType extends AbstractPayment
 {
@@ -164,9 +164,9 @@ class StripePaymentType extends AbstractPayment
      *
      * @param  int  $amount
      */
-    public function capture(TransactionContract $transaction, $amount = 0): PaymentCapture
+    public function capture(Transaction $transaction, $amount = 0): PaymentCapture
     {
-        /** @var Transaction $transaction */
+        /** @var \App\Models\Transaction $transaction */
         $payload = [];
 
         if ($amount > 0) {
@@ -199,9 +199,9 @@ class StripePaymentType extends AbstractPayment
      *
      * @param  string|null  $notes
      */
-    public function refund(TransactionContract $transaction, int $amount = 0, $notes = null): PaymentRefund
+    public function refund(Transaction $transaction, int $amount = 0, $notes = null): PaymentRefund
     {
-        /** @var Transaction $transaction */
+        /** @var \App\Models\Transaction $transaction */
         $charge = Stripe::getCharge($transaction->reference);
 
         try {
@@ -217,7 +217,7 @@ class StripePaymentType extends AbstractPayment
 
         $transaction->order->transactions()->create([
             'success' => $refund->status != 'failed',
-            'type' => 'refund',
+            'type' => TransactionType::Refund->value,
             'driver' => 'stripe',
             'amount' => $refund->amount,
             'reference' => $refund->payment_intent,
@@ -232,9 +232,9 @@ class StripePaymentType extends AbstractPayment
         );
     }
 
-    public function getPaymentChecks(TransactionContract $transaction): PaymentChecks
+    public function getPaymentChecks(Transaction $transaction): PaymentChecks
     {
-        /** @var Transaction $transaction */
+        /** @var \App\Models\Transaction $transaction */
         $meta = $transaction->meta;
 
         $checks = new PaymentChecks;

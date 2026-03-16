@@ -2,13 +2,13 @@
 
 namespace App\Stripe\DataTransferObjects;
 
-use App\Models\Contracts\Order as OrderContract;
+use App\Models\Contracts\Order;
 use Stripe\PaymentIntent;
 
 class OrderIntent
 {
     public function __construct(
-        public OrderContract $order,
+        public Order $order,
         public PaymentIntent $paymentIntent
     ) {}
 }

@@ -6,9 +6,14 @@ use Illuminate\View\View;
 use Livewire\Component;
 use App\Models\Collection;
 use App\Models\Brand;
+use App\Models\Wishlist;
 
 class Navigation extends Component
 {
+    protected $listeners = [
+        'wishlistUpdated' => '$refresh',
+    ];
+
     /**
      * The search term for the search input.
      *
@@ -37,6 +42,22 @@ class Navigation extends Component
     public function getBrandsProperty()
     {
         return Brand::with(['defaultUrl'])->get();
+    }
+
+    public function getWishlistCountProperty(): int
+    {
+        if (! auth()->check()) {
+            return 0;
+        }
+
+        return Wishlist::query()
+            ->where('customer_id', auth()->id())
+            ->count();
+    }
+
+    public function getCanAccessAdminProperty(): bool
+    {
+        return auth('staff')->check();
     }
 
     public function render(): View

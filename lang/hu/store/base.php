@@ -11,4 +11,9 @@ return [
         'up-sell' => 'Felülértékesítés',
         'alternate' => 'Alternatíva',
     ],
+    'saved-payment-method-types' => [
+        'card' => 'Kártya',
+        'paypal' => 'PayPal',
+        'payoneer' => 'Payoneer',
+    ],
 ];

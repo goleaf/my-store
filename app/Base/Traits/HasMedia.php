@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use App\Base\StandardMediaDefinitions;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Illuminate\Support\Str;
 
 trait HasMedia
 {
@@ -63,7 +64,7 @@ trait HasMedia
     {
         $conversionClasses = config('store.media.definitions', []);
 
-        $alias = \Illuminate\Support\Str::snake(class_basename(static::class));
+        $alias = Str::snake(class_basename(static::class));
 
         return $conversionClasses[$alias]
             ?? $conversionClasses[static::class] // fallback for published config

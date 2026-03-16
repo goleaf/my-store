@@ -3,9 +3,9 @@
 namespace App\Support\Pages;
 
 use Filament\Facades\Filament;
-use Filament\Pages\Dashboard as Page;
+use Filament\Pages\Dashboard;
 
-class BaseDashboard extends Page
+class BaseDashboard extends Dashboard
 {
     protected static ?string $permission = null;
 

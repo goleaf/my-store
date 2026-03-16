@@ -5,13 +5,13 @@ namespace App\Support\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \Filament\Forms\Components\Component getFilamentComponent(\App\Models\Attribute $attribute)
- * @method static \App\Admin\Support\Forms\AttributeData registerFieldType(string $coreFieldType, string $panelFieldType)
+ * @method static \Filament\Schemas\Components\Component getFilamentComponent(\App\Models\Attribute $attribute)
+ * @method static \App\Support\Forms\AttributeData registerFieldType(string $coreFieldType, string $panelFieldType)
  * @method static \Illuminate\Support\Collection getFieldTypes()
  * @method static array getConfigurationFields(string|null $type = null)
  * @method static void synthesizeLivewireProperties()
  *
- * @see \App\Admin\Support\Forms\AttributeData
+ * @see \App\Support\Forms\AttributeData
  */
 class AttributeData extends Facade
 {
@@ -20,7 +20,7 @@ class AttributeData extends Facade
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return 'admin-attribute-data';
     }

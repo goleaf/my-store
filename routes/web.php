@@ -19,6 +19,7 @@ use App\Livewire\Home;
 use App\Livewire\ProductPage;
 use App\Livewire\SearchPage;
 use App\Livewire\ShopGrid;
+use App\Livewire\WishlistPage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -59,6 +60,7 @@ Route::middleware('auth')->group(function () {
     Route::get('account/addresses', Addresses::class)->name('account.addresses');
     Route::get('account/payment-methods', PaymentMethods::class)->name('account.payment-methods');
     Route::get('account/notifications', Notifications::class)->name('account.notifications');
+    Route::get('wishlist', WishlistPage::class)->name('wishlist.view');
 });
 
 Route::get('/collections/{slug}', CollectionPage::class)->name('collection.view');

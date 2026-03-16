@@ -32,7 +32,7 @@ class CartSessionAuthListener
 
         $currentCart = CartSession::current();
 
-        if ($currentCart && ! $currentCart->user_id) {
+        if ($currentCart && ! $currentCart->customer_id) {
             CartSession::associate(
                 $currentCart,
                 $event->user,
@@ -41,11 +41,13 @@ class CartSessionAuthListener
         }
 
         if (! $currentCart) {
-            // Does this user have a cart?
-            $userCart = Cart::whereUserId($event->user->getKey())->active()->first();
+            $customerCart = Cart::query()
+                ->where('customer_id', $event->user->getKey())
+                ->active()
+                ->first();
 
-            if ($userCart) {
-                CartSession::use($userCart);
+            if ($customerCart) {
+                CartSession::use($customerCart);
             }
         }
     }

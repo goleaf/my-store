@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Base\Enums\PostStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -31,6 +32,7 @@ class Post extends Model
     {
         return [
             'tags' => 'json',
+            'status' => PostStatus::class,
             'published_at' => 'datetime',
             'views_count' => 'integer',
             'read_time_minutes' => 'integer',
@@ -39,7 +41,7 @@ class Post extends Model
 
     public function author()
     {
-        return $this->belongsTo(User::class, 'author_id');
+        return $this->belongsTo(Staff::class, 'author_id');
     }
 
     public function category()

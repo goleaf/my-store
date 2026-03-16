@@ -11,7 +11,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class ManageVariantShipping extends BaseEditRecord
 {
@@ -112,10 +112,10 @@ class ManageVariantShipping extends BaseEditRecord
         return Converter::from('volume.ml')->to('volume.l')->value($length * $width * $height)->convert()->getValue();
     }
 
-    public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function form(Schema $schema): Schema
     {
         return $schema->components([
-            SchemaComponents\Section::make()->schema([
+            Components\Section::make()->schema([
                 ProductVariantResource::getShippableFormComponent(),
                 ProductVariantResource::getLengthFormComponent(),
                 ProductVariantResource::getWidthFormComponent(),

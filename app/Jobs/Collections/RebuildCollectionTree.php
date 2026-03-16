@@ -9,7 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Facades\DB;
 use App\Models\Collection;
-use App\Models\Contracts\Collection as CollectionContract;
+use App\Models\Contracts;
 
 class RebuildCollectionTree implements ShouldQueue
 {
@@ -44,7 +44,7 @@ class RebuildCollectionTree implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(array $newTree, array $currentTree, ?CollectionContract $parent = null)
+    public function __construct(array $newTree, array $currentTree, ?Contracts\Collection $parent = null)
     {
         $this->newTree = $newTree;
         $this->currentTree = $currentTree;

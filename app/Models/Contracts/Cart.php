@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
 use App\Base\Addressable;
-use App\Base\StoreUser;
 use App\Base\Purchasable;
 use App\DataTypes\ShippingOption;
 use App\Exceptions\FingerprintMismatchException;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models;
 
 interface Cart
 {
@@ -26,11 +26,6 @@ interface Cart
      * Return the currency relationship.
      */
     public function currency(): BelongsTo;
-
-    /**
-     * Return the user relationship.
-     */
-    public function user(): BelongsTo;
 
     /**
      * Return the customer relationship.
@@ -90,67 +85,64 @@ interface Cart
     /**
      * Calculate the cart totals and cache the result.
      */
-    public function calculate(): \App\Models\Cart;
+    public function calculate(): Models\Cart;
 
     /**
      * Add or update a purchasable item to the cart
      */
-    public function add(Purchasable $purchasable, int $quantity = 1, array $meta = [], bool $refresh = true): \App\Models\Cart;
+    public function add(Purchasable $purchasable, int $quantity = 1, array $meta = [], bool $refresh = true): Models\Cart;
 
     /**
      * Add cart lines.
      */
-    public function addLines(iterable $lines): \App\Models\Cart;
+    public function addLines(iterable $lines): Models\Cart;
 
     /**
      * Remove a cart line
      */
-    public function remove(int $cartLineId, bool $refresh = true): \App\Models\Cart;
+    public function remove(int $cartLineId, bool $refresh = true): Models\Cart;
 
     /**
      * Update cart line
      */
-    public function updateLine(int $cartLineId, int $quantity, ?array $meta = null, bool $refresh = true): \App\Models\Cart;
+    public function updateLine(int $cartLineId, int $quantity, ?array $meta = null, bool $refresh = true): Models\Cart;
 
     /**
      * Update cart lines.
      */
-    public function updateLines(Collection $lines): \App\Models\Cart;
+    public function updateLines(Collection $lines): Models\Cart;
 
     /**
      * Deletes all cart lines.
      */
-    public function clear(): \App\Models\Cart;
+    public function clear(): Models\Cart;
 
-    /**
-     * Associate a user to the cart
-     */
-    public function associate(StoreUser $user, string $policy = 'merge', bool $refresh = true): \App\Models\Cart;
+    public function associate(Customer $customer, string $policy = 'merge', bool $refresh = true): Models\Cart;
 
     /**
      * Associate a customer to the cart
      */
-    public function setCustomer(Customer $customer): \App\Models\Cart;
+    public function setCustomer(Customer $customer): Models\Cart;
 
     /**
      * Add an address to the Cart.
      */
-    public function addAddress(array|Addressable $address, string $type, bool $refresh = true): \App\Models\Cart;
+    public function addAddress(array|Addressable $address, string $type, bool $refresh = true): Models\Cart;
 
     /**
      * Set the shipping address.
      */
-    public function setShippingAddress(array|Addressable $address): \App\Models\Cart;
+    public function setShippingAddress(array|Addressable $address): Models\Cart;
 
     /**
      * Set the billing address.
      */
-    public function setBillingAddress(array|Addressable $address): \App\Models\Cart;
+    public function setBillingAddress(array|Addressable $address): Models\Cart;
 
     /**
      * Set the shipping option to the shipping address.
      */
-    public function setShippingOption(ShippingOption $option, bool $refresh = true): \App\Models\Cart;
+    public function setShippingOption(ShippingOption $option, bool $refresh = true): Models\Cart;
 
     /**
      * Get the shipping option for the cart

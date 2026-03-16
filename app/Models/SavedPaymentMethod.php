@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
+use App\Base\Enums\SavedPaymentMethodType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SavedPaymentMethod extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'customer_id',
         'type',
         'stripe_customer_id',
         'stripe_payment_method_id',
@@ -30,11 +31,16 @@ class SavedPaymentMethod extends Model
             'is_default' => 'boolean',
             'expiry_month' => 'integer',
             'expiry_year' => 'integer',
+            'type' => SavedPaymentMethodType::class,
+            'stripe_customer_id' => 'encrypted',
+            'stripe_payment_method_id' => 'encrypted',
+            'paypal_email' => 'encrypted',
+            'payoneer_account_id' => 'encrypted',
         ];
     }
 
-    public function user()
+    public function customer(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Customer::class);
     }
 }

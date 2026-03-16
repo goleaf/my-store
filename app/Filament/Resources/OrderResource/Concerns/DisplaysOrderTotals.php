@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources\OrderResource\Concerns;
 
+use App\Base\Enums\TransactionType;
 use App\DataTypes\Price;
 use Filament\Infolists;
+use Filament\Schemas\Components;
 use Filament\Support\Enums\FontWeight;
 use Illuminate\Support\HtmlString;
 
@@ -69,9 +71,9 @@ trait DisplaysOrderTotals
         return self::callStaticStoreHook('extendDiscountTotalEntry', static::getDefaultDiscountTotalEntry());
     }
 
-    public static function getDefaultShippingBreakdownGroup(): Infolists\Components\Group
+    public static function getDefaultShippingBreakdownGroup(): Components\Group
     {
-        return Infolists\Components\Group::make()
+        return Components\Group::make()
             ->statePath('shipping_breakdown')
             ->schema(function ($state) {
                 $shipping = [];
@@ -87,14 +89,14 @@ trait DisplaysOrderTotals
             });
     }
 
-    public static function getShippingBreakdownGroup(): Infolists\Components\Group
+    public static function getShippingBreakdownGroup(): Components\Group
     {
         return self::callStaticStoreHook('extendShippingBreakdownGroup', static::getDefaultShippingBreakdownGroup());
     }
 
-    public static function getDefaultTaxBreakdownGroup(): Infolists\Components\Group
+    public static function getDefaultTaxBreakdownGroup(): Components\Group
     {
-        return Infolists\Components\Group::make()
+        return Components\Group::make()
             ->statePath('tax_breakdown')
             ->schema(function ($state) {
                 $taxes = [];
@@ -110,7 +112,7 @@ trait DisplaysOrderTotals
             });
     }
 
-    public static function getTaxBreakdownGroup(): Infolists\Components\Group
+    public static function getTaxBreakdownGroup(): Components\Group
     {
         return self::callStaticStoreHook('extendTaxBreakdownGroup', static::getDefaultTaxBreakdownGroup());
     }
@@ -139,7 +141,7 @@ trait DisplaysOrderTotals
             ->weight(FontWeight::SemiBold)
             ->getStateUsing(function ($record) {
                 $paid = $record->transactions()
-                    ->whereType('capture')
+                    ->where('type', TransactionType::Capture->value)
                     ->whereSuccess(true)
                     ->get()
                     ->sum('amount.value');
@@ -163,7 +165,7 @@ trait DisplaysOrderTotals
             ->weight(FontWeight::SemiBold)
             ->getStateUsing(function ($record) {
                 $paid = $record->transactions()
-                    ->whereType('refund')
+                    ->where('type', TransactionType::Refund->value)
                     ->get()
                     ->sum('amount.value');
 
@@ -189,20 +191,20 @@ trait DisplaysOrderTotals
         ]);
     }
 
-    public static function getDefaultOrderTotalsInfolist(): Infolists\Components\Component
+    public static function getDefaultOrderTotalsInfolist(): Components\Component
     {
-        return Infolists\Components\Section::make()
+        return Components\Section::make()
             ->schema([
-                Infolists\Components\Grid::make()
+                Components\Grid::make()
                     ->columns(2)
                     ->schema([
-                        Infolists\Components\Grid::make()
+                        Components\Grid::make()
                             ->columns(1)
                             ->columnSpan(1)
                             ->schema(
                                 static::getOrderTotalsAsideSchema()
                             ),
-                        Infolists\Components\Grid::make()
+                        Components\Grid::make()
                             ->columns(1)
                             ->columnSpan(1)
                             ->schema(
@@ -212,7 +214,7 @@ trait DisplaysOrderTotals
             ]);
     }
 
-    public static function getOrderTotalsInfolist(): Infolists\Components\Section
+    public static function getOrderTotalsInfolist(): Components\Section
     {
         return self::callStaticStoreHook('extendOrderTotalsInfolist', static::getDefaultOrderTotalsInfolist());
     }

@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\AsArrayObject;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use App\Base\BaseModel;
 use App\Base\Casts\Price;
+use App\Base\Enums\TransactionType;
 use App\Base\Traits\HasMacros;
 use App\Base\Traits\LogsActivity;
 use App\Database\Factories\TransactionFactory;
 use App\Facades\Payments;
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 /**
  * @property int $id
@@ -49,6 +50,7 @@ class Transaction extends BaseModel implements Contracts\Transaction
         'refund' => 'bool',
         'amount' => Price::class,
         'meta' => AsArrayObject::class,
+        'type' => TransactionType::class,
     ];
 
     /**

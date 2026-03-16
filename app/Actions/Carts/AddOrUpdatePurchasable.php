@@ -5,8 +5,7 @@ namespace App\Actions\Carts;
 use App\Actions\AbstractAction;
 use App\Base\Purchasable;
 use App\Exceptions\InvalidCartLineQuantityException;
-use App\Models\Cart;
-use App\Models\Contracts\Cart as CartContract;
+use App\Models\Contracts\Cart;
 
 class AddOrUpdatePurchasable extends AbstractAction
 {
@@ -14,14 +13,14 @@ class AddOrUpdatePurchasable extends AbstractAction
      * Execute the action.
      */
     public function execute(
-        CartContract $cart,
+        Cart $cart,
         Purchasable $purchasable,
         int $quantity = 1,
         array $meta = []
     ): self {
         throw_if(! $quantity, InvalidCartLineQuantityException::class);
 
-        /** @var Cart $cart */
+        /** @var \App\Models\Cart $cart */
         $existing = app(
             config('store.cart.actions.get_existing_cart_line', GetExistingCartLine::class)
         )->execute(

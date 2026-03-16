@@ -6,10 +6,11 @@ use App\Facades\ShippingManifest;
 use App\Models\Contracts\Cart;
 use App\Shipping\DataTransferObjects\ShippingOptionLookup;
 use App\Shipping\Facades\Shipping;
+use Closure;
 
 class ShippingModifier
 {
-    public function handle(Cart $cart, \Closure $next)
+    public function handle(Cart $cart, Closure $next)
     {
         $shippingRates = Shipping::shippingRates($cart)->get();
 

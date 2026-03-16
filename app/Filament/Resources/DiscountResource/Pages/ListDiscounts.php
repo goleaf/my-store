@@ -6,7 +6,7 @@ use App\Filament\Resources\DiscountResource;
 use App\Support\Pages\BaseListRecords;
 use Filament\Actions;
 use Filament\Forms;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class ListDiscounts extends BaseListRecords
 {
@@ -16,11 +16,11 @@ class ListDiscounts extends BaseListRecords
     {
         return [
             Actions\CreateAction::make()->form([
-                SchemaComponents\Group::make([
+                Components\Group::make([
                     DiscountResource::getNameFormComponent(),
                     DiscountResource::getHandleFormComponent(),
                 ])->columns(2),
-                SchemaComponents\Group::make([
+                Components\Group::make([
                     DiscountResource::getStartsAtFormComponent(),
                     DiscountResource::getEndsAtFormComponent(),
                 ])->columns(2),

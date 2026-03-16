@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('product_reviews', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained('store_products')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained('store_customers')->onDelete('cascade');
             $table->unsignedTinyInteger('rating');
             $table->unsignedTinyInteger('rating_flavor')->nullable();
             $table->unsignedTinyInteger('rating_value')->nullable();
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->timestamp('admin_replied_at')->nullable();
             $table->timestamps();
 
-            $table->unique(['product_id', 'user_id'], 'no_dup_review');
+            $table->unique(['product_id', 'customer_id'], 'no_dup_review');
             $table->index('product_id');
             $table->index('is_approved');
         });

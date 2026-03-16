@@ -6,11 +6,11 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use App\Models\Attribute;
 use App\Models\Brand;
-use App\Models\Collection as ModelsCollection;
 use App\Models\Customer;
 use App\Models\CustomerGroup;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Models;
 
 class AttributeManifest
 {
@@ -24,7 +24,7 @@ class AttributeManifest
     protected $baseTypes = [
         Product::class,
         ProductVariant::class,
-        ModelsCollection::class,
+        Models\Collection::class,
         Customer::class,
         Brand::class,
         CustomerGroup::class,

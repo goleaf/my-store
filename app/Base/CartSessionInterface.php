@@ -2,7 +2,7 @@
 
 namespace App\Base;
 
-use Illuminate\Contracts\Auth\Authenticatable;
+use App\Models\Customer;
 use App\Models\Contracts\Cart;
 use App\Models\Contracts\Channel;
 use App\Models\Contracts\Currency;
@@ -29,7 +29,7 @@ interface CartSessionInterface
      * @param  string  $policy
      * @return void
      */
-    public function associate(Cart $cart, Authenticatable $user, $policy);
+    public function associate(Cart $cart, Customer $user, $policy);
 
     /**
      * Use the given cart and set to the session.

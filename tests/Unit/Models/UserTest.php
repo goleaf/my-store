@@ -1,24 +1,25 @@
 <?php
 
-use App\Models\User;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Customer;
+use Illuminate\Foundation\Auth;
 
-test('user extends authenticatable', function () {
-    expect(User::class)->toExtend(Authenticatable::class);
+test('customer extends authenticatable', function () {
+    expect(Customer::class)->toExtend(Auth\User::class);
 });
 
-test('user has fillable name email password', function () {
-    $user = new User;
+test('customer has fillable name email password', function () {
+    $customer = new Customer;
 
-    expect($user->getFillable())->toContain('name', 'email', 'password');
+    expect($customer->getFillable())->toContain('name', 'email', 'password');
 });
 
-test('user can be created with factory', function () {
-    $user = User::factory()->create([
-        'name' => 'Test User',
+test('customer can be created with factory', function () {
+    $customer = Customer::factory()->create([
+        'first_name' => 'Test',
+        'last_name' => 'Customer',
         'email' => 'test@example.com',
     ]);
 
-    expect($user->name)->toBe('Test User')
-        ->and($user->email)->toBe('test@example.com');
+    expect($customer->name)->toBe('Test Customer')
+        ->and($customer->email)->toBe('test@example.com');
 });

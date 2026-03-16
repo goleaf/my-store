@@ -4,8 +4,6 @@ namespace App\Filament\Resources\ProductResource\Pages;
 
 use App\Events\ProductAssociationsUpdated;
 use App\Filament\Resources\ProductResource;
-use App\Models\Contracts\Product as ProductContract;
-use App\Models\Contracts\ProductAssociation as ProductAssociationContract;
 use App\Models\Product;
 use App\Models\ProductAssociation;
 use App\Support\Pages\BaseManageRelatedRecords;
@@ -15,6 +13,8 @@ use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Actions;
+use App\Base\Enums;
+use App\Models\Contracts;
 
 class ManageProductAssociations extends BaseManageRelatedRecords
 {
@@ -37,7 +37,7 @@ class ManageProductAssociations extends BaseManageRelatedRecords
         return __('admin::product.pages.associations.label');
     }
 
-    public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function form(Schema $schema): Schema
     {
         return $schema
             ->components([
@@ -48,7 +48,7 @@ class ManageProductAssociations extends BaseManageRelatedRecords
                     ->getSearchResultsUsing(static function (Forms\Components\Select $component, string $search): array {
                         return get_search_builder(Product::modelClass(), $search)
                             ->get()
-                            ->mapWithKeys(fn (ProductContract $record): array => [$record->getKey() => $record->translateAttribute('name')])
+                            ->mapWithKeys(fn (Contracts\Product $record): array => [$record->getKey() => $record->translateAttribute('name')])
                             ->all();
                     }),
                 Forms\Components\Select::make('type')
@@ -64,9 +64,9 @@ class ManageProductAssociations extends BaseManageRelatedRecords
             ->inverseRelationship('parent')
             ->columns([
                 Tables\Columns\TextColumn::make('target')
-                    ->formatStateUsing(fn (ProductAssociationContract $record): string => $record->target->translateAttribute('name'))
+                    ->formatStateUsing(fn (Contracts\ProductAssociation $record): string => $record->target->translateAttribute('name'))
                     ->limit(50)
-                    ->tooltip(function (Tables\Columns\TextColumn $column, ProductAssociationContract $record): ?string {
+                    ->tooltip(function (Tables\Columns\TextColumn $column, Contracts\ProductAssociation $record): ?string {
                         $state = $column->getState();
 
                         if (strlen($record->target->translateAttribute('name')) <= $column->getCharacterLimit()) {
@@ -80,7 +80,7 @@ class ManageProductAssociations extends BaseManageRelatedRecords
                 Tables\Columns\TextColumn::make('target.variants.sku')
                     ->label('SKU'),
                 Tables\Columns\TextColumn::make('type')->formatStateUsing(function ($state) {
-                    $enum = config('store.products.association_types_enum', \App\Base\Enums\ProductAssociation::class);
+                    $enum = config('store.products.association_types_enum', Enums\ProductAssociation::class);
 
                     return $enum::tryFrom($state)?->label() ?: $state;
                 }),

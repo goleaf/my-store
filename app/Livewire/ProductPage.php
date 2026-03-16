@@ -11,10 +11,13 @@ use App\Models\ProductVariant;
 use App\Models\Price;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Traits\CanAddToCart;
+use App\Traits\CanManageWishlist;
 
 class ProductPage extends Component
 {
-    use FetchesUrls, CanAddToCart;
+    use FetchesUrls;
+    use CanAddToCart;
+    use CanManageWishlist;
 
     /**
      * The selected option values.
@@ -28,7 +31,7 @@ class ProductPage extends Component
             (new Product)->getMorphClass(),
             [
                 'element.media',
-                'element.brand',
+                'element.brand.defaultUrl',
                 'element.productType',
                 'element.tags',
                 'element.collections.defaultUrl',
@@ -96,6 +99,16 @@ class ProductPage extends Component
     public function getProductProperty(): Product
     {
         return $this->url->element;
+    }
+
+    public function getProductBrandNameProperty(): ?string
+    {
+        return $this->product->brand?->name;
+    }
+
+    public function getProductBrandUrlProperty(): ?string
+    {
+        return $this->routeForSlug('brand.view', $this->product->brand?->defaultUrl?->slug);
     }
 
     /**
@@ -198,10 +211,45 @@ class ProductPage extends Component
         return $out;
     }
 
-    /** Associated products (cross-sell, up-sell, alternate) with type. */
-    public function getAssociationsProperty(): Collection
+    public function getCollectionLinksProperty(): Collection
     {
-        return $this->product->associations()->with(['target.defaultUrl', 'target.thumbnail'])->get();
+        return $this->product->collections->map(function ($collection): array {
+            return [
+                'id' => $collection->id,
+                'name' => $collection->translateAttribute('name'),
+                'url' => $this->routeForSlug('collection.view', $collection->defaultUrl?->slug),
+            ];
+        })->values();
+    }
+
+    /** Associated products (cross-sell, up-sell, alternate) with type. */
+    public function getAssociationCardsProperty(): Collection
+    {
+        return $this->product->associations->map(function ($association): ?array {
+            $target = $association->target;
+            $targetUrl = $this->routeForSlug('product.view', $target?->defaultUrl?->slug);
+
+            if (! $target || blank($targetUrl)) {
+                return null;
+            }
+
+            return [
+                'id' => $association->id,
+                'name' => $target->translateAttribute('name'),
+                'type' => $association->type,
+                'url' => $targetUrl,
+                'thumbnail_url' => $target->thumbnail?->getUrl('small'),
+            ];
+        })->filter()->values();
+    }
+
+    protected function routeForSlug(string $routeName, ?string $slug): ?string
+    {
+        if (blank($slug)) {
+            return null;
+        }
+
+        return route($routeName, $slug);
     }
 
     public function render(): View

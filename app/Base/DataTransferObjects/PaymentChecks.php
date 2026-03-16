@@ -2,7 +2,9 @@
 
 namespace App\Base\DataTransferObjects;
 
-class PaymentChecks implements \ArrayAccess, \Iterator
+use ArrayAccess;
+use Iterator;
+class PaymentChecks implements ArrayAccess, Iterator
 {
     private int $position = 0;
 

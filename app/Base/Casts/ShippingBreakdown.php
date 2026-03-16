@@ -7,6 +7,8 @@ use Illuminate\Contracts\Database\Eloquent\SerializesCastableAttributes;
 use App\Base\ValueObjects\Cart\ShippingBreakdownItem;
 use App\DataTypes\Price;
 use App\Models\Currency;
+use App\Base\ValueObjects\Cart;
+use Exception;
 
 class ShippingBreakdown implements CastsAttributes, SerializesCastableAttributes
 {
@@ -21,7 +23,7 @@ class ShippingBreakdown implements CastsAttributes, SerializesCastableAttributes
      */
     public function get($model, $key, $value, $attributes)
     {
-        $breakdown = new \App\Base\ValueObjects\Cart\ShippingBreakdown;
+        $breakdown = new Cart\ShippingBreakdown;
 
         $breakdown->items = collect(
             json_decode($value, false)
@@ -51,8 +53,8 @@ class ShippingBreakdown implements CastsAttributes, SerializesCastableAttributes
      */
     public function set($model, $key, $value, $attributes)
     {
-        if ($value && ! is_a($value, \App\Base\ValueObjects\Cart\ShippingBreakdown::class)) {
-            throw new \Exception('Shipping breakdown must be instance of App\Base\ValueObjects\Cart\ShippingBreakdown');
+        if ($value && ! is_a($value, Cart\ShippingBreakdown::class)) {
+            throw new Exception('Shipping breakdown must be instance of App\Base\ValueObjects\Cart\ShippingBreakdown');
         }
 
         if (! $value) {

@@ -1,15 +1,13 @@
 <?php
 
 return [
-
     'label' => 'Ürün',
-
     'plural_label' => 'Ürünler',
-
     'tabs' => [
         'all' => 'Tümü',
+        'published' => 'Yayında',
+        'draft' => 'Taslak',
     ],
-
     'status' => [
         'unpublished' => [
             'content' => 'Şu anda taslak durumunda olan bu ürün, tüm kanallarda ve müşteri gruplarında gizlidir.',
@@ -19,7 +17,6 @@ return [
             'channels' => 'Bu ürün şu anda tüm kanallar için mevcut değil.',
         ],
     ],
-
     'table' => [
         'status' => [
             'label' => 'Durum',
@@ -45,14 +42,12 @@ return [
             'label' => 'Ürün Türü',
         ],
     ],
-
     'actions' => [
         'edit_status' => [
             'label' => 'Durumu Güncelle',
             'heading' => 'Durumu Güncelle',
         ],
     ],
-
     'form' => [
         'name' => [
             'label' => 'Ad',
@@ -88,7 +83,6 @@ return [
             'select_collection' => 'Bir koleksiyon seçin',
         ],
     ],
-
     'pages' => [
         'availability' => [
             'label' => 'Erişilebilirlik',
@@ -127,5 +121,4 @@ return [
             'label' => 'Ürün İlişkileri',
         ],
     ],
-
 ];

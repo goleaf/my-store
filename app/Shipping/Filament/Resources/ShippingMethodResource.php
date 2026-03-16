@@ -3,19 +3,21 @@
 namespace App\Shipping\Filament\Resources;
 
 use App\Filament\Components\Shout;
+use App\Shipping\Enums\ShippingMethodChargeBy;
+use App\Shipping\Enums\ShippingMethodDriver;
 use App\Shipping\Filament\Resources\ShippingMethodResource\Pages;
 use App\Shipping\Models\Contracts\ShippingMethod;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
-use Filament\Forms\Components\Component;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Component;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class ShippingMethodResource extends BaseResource
 {
@@ -53,16 +55,16 @@ class ShippingMethodResource extends BaseResource
         ];
     }
 
-    public static function getDefaultForm(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public static function getDefaultForm(Schema $schema): Schema
     {
         return $schema->components([
             Shout::make('product-customer-groups')
                 ->content(
                     __('admin.shipping::shippingmethod.pages.availability.customer_groups')
                 )->type('warning')->hidden(function (Model $record) {
-                    return $record->customerGroups()->where('enabled', true)->count();
+                    return $record->customerGroups()->where('enabled', true)->exists();
                 }),
-            SchemaComponents\Section::make()->schema(
+            Components\Section::make()->schema(
                 static::getMainFormComponents(),
             ),
         ])->columns(1);
@@ -72,11 +74,11 @@ class ShippingMethodResource extends BaseResource
     {
         return [
             static::getNameFormComponent(),
-            SchemaComponents\Group::make([
+            Components\Group::make([
                 static::getCodeFormComponent(),
                 static::getDriverFormComponent(),
             ])->columns(2),
-            SchemaComponents\Group::make([
+            Components\Group::make([
                 static::getCutoffFormComponent(),
                 static::getChargeByFormComponent(),
             ])->columns(2),
@@ -122,15 +124,12 @@ class ShippingMethodResource extends BaseResource
 
     public static function getChargeByFormComponent(): Component
     {
-        return SchemaComponents\Group::make([
+        return Components\Group::make([
             Forms\Components\Select::make('charge_by')
                 ->label(
                     __('admin.shipping::shippingmethod.form.charge_by.label')
                 )
-                ->options([
-                    'cart_total' => __('admin.shipping::shippingmethod.form.charge_by.options.cart_total'),
-                    'weight' => __('admin.shipping::shippingmethod.form.charge_by.options.weight'),
-                ]),
+                ->options(ShippingMethodChargeBy::options()),
 
         ])->columns(1)->statePath('data');
     }
@@ -139,11 +138,8 @@ class ShippingMethodResource extends BaseResource
     {
         return Forms\Components\Select::make('driver')
             ->label(__('admin.shipping::shippingmethod.form.driver.label'))
-            ->options([
-                'ship-by' => __('admin.shipping::shippingmethod.form.driver.options.ship-by'),
-                'collection' => __('admin.shipping::shippingmethod.form.driver.options.collection'),
-            ])->label('Type')
-            ->default('ship-by');
+            ->options(ShippingMethodDriver::options())->label('Type')
+            ->default(ShippingMethodDriver::ShipBy->value);
     }
 
     public static function getDefaultTable(Table $table): Table
@@ -178,7 +174,7 @@ class ShippingMethodResource extends BaseResource
                 ->label(
                     __('admin.shipping::shippingmethod.table.driver.label')
                 )->formatStateUsing(
-                    fn ($state) => __("admin.shipping::shippingmethod.table.driver.options.{$state}")
+                    fn ($state) => ShippingMethodDriver::labelFor($state)
                 ),
         ];
     }

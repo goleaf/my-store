@@ -2,10 +2,14 @@
 
 namespace App\Support\FieldTypes;
 
+use App\Http\Requests\Support\Fields\ConfiguredFieldRequest;
 use App\Models\Attribute;
 use App\Support\Synthesizers\FileSynth;
-use Filament\Forms\Components\Component;
 use Filament\Forms\Components\FileUpload;
+use Filament\Schemas\Components\Component;
+use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 
 class File extends BaseFieldType
 {
@@ -17,10 +21,14 @@ class File extends BaseFieldType
         $multiple = (bool) $attribute->configuration->get('multiple');
         $min_files = $attribute->configuration->get('min_files');
         $max_files = $attribute->configuration->get('max_files');
+        $request = (new ConfiguredFieldRequest)
+            ->forField($attribute->handle)
+            ->required((bool) $attribute->required)
+            ->withRules($attribute->validation_rules);
 
         $input = FileUpload::make($attribute->handle)
-            ->when(filled($attribute->validation_rules), fn (FileUpload $component) => $component->rules($attribute->validation_rules))
-            ->required((bool) $attribute->required)
+            ->rules($request->fieldRules($attribute->handle))
+            ->required($request->fieldHasRule($attribute->handle, 'required'))
             ->helperText($attribute->translate('description'));
 
         if (! blank($file_types) && is_array($file_types)) {
@@ -45,7 +53,7 @@ class File extends BaseFieldType
     public static function getConfigurationFields(): array
     {
         return [
-            \Filament\Forms\Components\TagsInput::make('file_types')
+            TagsInput::make('file_types')
                 ->label(
                     __('admin::fieldtypes.file.form.file_types.label')
                 )->suggestions([
@@ -67,14 +75,14 @@ class File extends BaseFieldType
                 ])
                 ->placeholder(__('admin::fieldtypes.file.form.file_types.placeholder'))
                 ->reorderable(),
-            \Filament\Forms\Components\Toggle::make('multiple')->label(
+            Toggle::make('multiple')->label(
                 __('admin::fieldtypes.file.form.multiple.label')
             ),
-            \Filament\Forms\Components\TextInput::make('min_files')
+            TextInput::make('min_files')
                 ->label(
                     __('admin::fieldtypes.file.form.min_files.label')
                 )->nullable()->numeric(),
-            \Filament\Forms\Components\TextInput::make('max_files')->label(
+            TextInput::make('max_files')->label(
                 __('admin::fieldtypes.file.form.max_files.label')
             )->nullable()->numeric(),
         ];

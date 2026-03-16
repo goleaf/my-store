@@ -2,9 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance as Middleware;
-
-class PreventRequestsDuringMaintenance extends Middleware
+use Illuminate\Foundation\Http\Middleware;
+class PreventRequestsDuringMaintenance extends Middleware\PreventRequestsDuringMaintenance
 {
     /**
      * The URIs that should be reachable while maintenance mode is enabled.

@@ -2,57 +2,101 @@
 
 use Illuminate\Support\Facades\Schema;
 use App\Base\Migration;
+use App\Facades\ModelManifest;
+use App\Models\Address;
+use App\Models\Asset;
+use App\Models\Attribute;
+use App\Models\AttributeGroup;
+use App\Models\Brand;
+use App\Models\Cart;
+use App\Models\CartAddress;
+use App\Models\CartLine;
+use App\Models\Channel;
+use App\Models\Collection;
+use App\Models\CollectionGroup;
+use App\Models\Country;
+use App\Models\Currency;
+use App\Models\Customer;
+use App\Models\CustomerGroup;
+use App\Models\Discount;
+use App\Models\DiscountCollection;
+use App\Models\Discountable;
+use App\Models\Language;
+use App\Models\Order;
+use App\Models\OrderAddress;
+use App\Models\OrderLine;
+use App\Models\Price;
+use App\Models\Product;
+use App\Models\ProductAssociation;
+use App\Models\ProductOption;
+use App\Models\ProductOptionValue;
+use App\Models\ProductType;
+use App\Models\ProductVariant;
+use App\Models\State;
+use App\Models\Tag;
+use App\Models\TaxClass;
+use App\Models\TaxRate;
+use App\Models\TaxRateAmount;
+use App\Models\TaxZone;
+use App\Models\TaxZoneCountry;
+use App\Models\TaxZoneCustomerGroup;
+use App\Models\TaxZonePostcode;
+use App\Models\TaxZoneState;
+use App\Models\Transaction;
+use App\Models\Url;
+use App\Models\UserPermission;
+use Illuminate\Support\Facades\DB;
 
 class RemapPolymorphicRelations extends Migration
 {
     public function up()
     {
         $modelClasses = collect([
-            \App\Models\CartLine::class,
-            \App\Models\ProductOption::class,
-            \App\Models\Asset::class,
-            \App\Models\Brand::class,
-            \App\Models\TaxZone::class,
-            \App\Models\TaxZoneCountry::class,
-            \App\Models\TaxZoneCustomerGroup::class,
-            \App\Models\DiscountCollection::class,
-            \App\Models\TaxClass::class,
-            \App\Models\ProductOptionValue::class,
-            \App\Models\Channel::class,
-            \App\Models\AttributeGroup::class,
-            \App\Models\Tag::class,
-            \App\Models\Cart::class,
-            \App\Models\Collection::class,
-            \App\Models\Discount::class,
-            \App\Models\TaxRate::class,
-            \App\Models\Price::class,
-            \App\Models\Discountable::class,
-            \App\Models\State::class,
-            \App\Models\UserPermission::class,
-            \App\Models\OrderAddress::class,
-            \App\Models\Country::class,
-            \App\Models\Address::class,
-            \App\Models\Url::class,
-            \App\Models\ProductVariant::class,
-            \App\Models\TaxZonePostcode::class,
-            \App\Models\ProductAssociation::class,
-            \App\Models\TaxRateAmount::class,
-            \App\Models\Attribute::class,
-            \App\Models\Order::class,
-            \App\Models\Customer::class,
-            \App\Models\OrderLine::class,
-            \App\Models\CartAddress::class,
-            \App\Models\Language::class,
-            \App\Models\TaxZoneState::class,
-            \App\Models\Currency::class,
-            \App\Models\Product::class,
-            \App\Models\Transaction::class,
-            \App\Models\ProductType::class,
-            \App\Models\CollectionGroup::class,
-            \App\Models\CustomerGroup::class,
+            CartLine::class,
+            ProductOption::class,
+            Asset::class,
+            Brand::class,
+            TaxZone::class,
+            TaxZoneCountry::class,
+            TaxZoneCustomerGroup::class,
+            DiscountCollection::class,
+            TaxClass::class,
+            ProductOptionValue::class,
+            Channel::class,
+            AttributeGroup::class,
+            Tag::class,
+            Cart::class,
+            Collection::class,
+            Discount::class,
+            TaxRate::class,
+            Price::class,
+            Discountable::class,
+            State::class,
+            UserPermission::class,
+            OrderAddress::class,
+            Country::class,
+            Address::class,
+            Url::class,
+            ProductVariant::class,
+            TaxZonePostcode::class,
+            ProductAssociation::class,
+            TaxRateAmount::class,
+            Attribute::class,
+            Order::class,
+            Customer::class,
+            OrderLine::class,
+            CartAddress::class,
+            Language::class,
+            TaxZoneState::class,
+            Currency::class,
+            Product::class,
+            Transaction::class,
+            ProductType::class,
+            CollectionGroup::class,
+            CustomerGroup::class,
         ])->mapWithKeys(
             fn ($class) => [
-                $class => \App\Facades\ModelManifest::getMorphMapKey($class),
+                $class => ModelManifest::getMorphMapKey($class),
             ]
         );
 
@@ -82,7 +126,7 @@ class RemapPolymorphicRelations extends Migration
                 if (! Schema::hasTable($table)) {
                     continue;
                 }
-                \Illuminate\Support\Facades\DB::table($table)
+                DB::table($table)
                     ->where($column, '=', $modelClass)
                     ->update([
                         $column => $mapping,
@@ -90,7 +134,7 @@ class RemapPolymorphicRelations extends Migration
             }
 
             foreach ($tables as $tableName => $columns) {
-                $table = \Illuminate\Support\Facades\DB::table(
+                $table = DB::table(
                     $this->prefix.$tableName
                 );
 

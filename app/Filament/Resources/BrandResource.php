@@ -3,27 +3,27 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\BrandResource\Pages;
-use App\Models\Contracts\Brand as BrandContract;
+use App\Models\Contracts\Brand;
 use App\Support\Forms\Components\Attributes;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
-use Filament\Forms\Components\Component;
 use Filament\Pages\Enums\SubNavigationPosition;
+use Filament\Schemas\Components\Component;
 use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
-use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class BrandResource extends BaseResource
 {
     protected static ?string $permission = 'catalog:manage-products';
 
-    protected static ?string $model = BrandContract::class;
+    protected static ?string $model = Brand::class;
 
     protected static ?int $navigationSort = 3;
 
@@ -66,7 +66,7 @@ class BrandResource extends BaseResource
     {
         return $schema
             ->components([
-                SchemaComponents\Section::make()
+                Components\Section::make()
                     ->schema(
                         static::getMainFormComponents(),
                     ),
@@ -116,10 +116,8 @@ class BrandResource extends BaseResource
     protected static function getTableColumns(): array
     {
         return [
-            SpatieMediaLibraryImageColumn::make('thumbnail')
-                ->collection(config('store.media.collection'))
-                ->conversion('small')
-                ->limit(1)
+            Tables\Columns\ImageColumn::make('thumbnail_image')
+                ->state(fn (Model $record): string => $record->thumbnail?->getUrl('small') ?? '')
                 ->square()
                 ->label(''),
             Tables\Columns\TextColumn::make('name')
@@ -164,5 +162,10 @@ class BrandResource extends BaseResource
         return [
             'name',
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with('thumbnail');
     }
 }

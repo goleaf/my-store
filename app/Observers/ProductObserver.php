@@ -2,14 +2,14 @@
 
 namespace App\Observers;
 
-use App\Models\Contracts\Product as ProductContract;
+use App\Models\Contracts\Product;
 
 class ProductObserver
 {
     /**
      * Handle the ProductVariant "deleted" event.
      */
-    public function deleting(ProductContract $product): void
+    public function deleting(Product $product): void
     {
         if ($product->isForceDeleting()) {
             $product->variants()->withTrashed()->get()->each->forceDelete();
@@ -34,7 +34,7 @@ class ProductObserver
         }
     }
 
-    public function restored(ProductContract $product): void
+    public function restored(Product $product): void
     {
         $product->variants()->withTrashed()->get()->each->restore();
     }

@@ -1,9 +1,22 @@
+@php
+    use App\Base\Enums\ProductStatus;
+    use App\Base\Enums\ProductVariantPurchasable;
+
+    $fieldLabel = function (mixed $key): string {
+        if ($key instanceof \BackedEnum) {
+            $key = $key->value;
+        }
+
+        return str_replace('_', ' ', ucfirst((string) $key));
+    };
+@endphp
+
 <section>
     <div class="max-w-screen-xl px-4 py-12 mx-auto sm:px-6 lg:px-8">
         {{-- Status (from Filament product status) --}}
-        @if($this->product->status !== 'published')
+        @if($this->product->status !== ProductStatus::Published)
             <div class="p-3 mb-6 text-sm rounded-lg bg-amber-50 text-amber-800 dark:bg-amber-900/20 dark:text-amber-200">
-                <span class="font-medium">Status:</span> {{ ucfirst($this->product->status) }}
+                <span class="font-medium">Status:</span> {{ $this->product->status->label() }}
             </div>
         @endif
 
@@ -43,8 +56,10 @@
             <div>
                 {{-- Brand, product type, tags (from Filament) --}}
                 <div class="flex flex-wrap items-center gap-2 text-sm text-gray-500">
-                    @if($this->product->brand)
-                        <a href="#" class="hover:underline">{{ $this->product->brand->name }}</a>
+                    @if($this->productBrandName)
+                        <x-link-or-text :href="$this->productBrandUrl" :navigate="filled($this->productBrandUrl)" class="hover:underline">
+                            {{ $this->productBrandName }}
+                        </x-link-or-text>
                         @if($this->product->productType || $this->product->tags->isNotEmpty())<span>·</span>@endif
                     @endif
                     @if($this->product->productType)
@@ -90,7 +105,7 @@
                             @foreach($this->productAttributeData as $key => $value)
                                 @if(!in_array($key, ['name', 'description']) && $value)
                                     <div class="flex gap-2">
-                                        <dt class="font-medium text-gray-600 dark:text-gray-400">{{ str_replace('_', ' ', ucfirst($key)) }}:</dt>
+                                        <dt class="font-medium text-gray-600 dark:text-gray-400">{{ $fieldLabel($key) }}:</dt>
                                         <dd>{!! is_string($value) ? e($value) : $value !!}</dd>
                                     </div>
                                 @endif
@@ -155,8 +170,8 @@
                     </div>
 
                     {{-- Purchasable (from Filament) --}}
-                    @if($this->variant->purchasable !== 'always')
-                        <p class="mt-2 text-sm text-amber-600 dark:text-amber-400">Availability: {{ ucfirst(str_replace('-', ' ', $this->variant->purchasable)) }}</p>
+                    @if($this->variant->purchasable !== ProductVariantPurchasable::Always)
+                        <p class="mt-2 text-sm text-amber-600 dark:text-amber-400">Availability: {{ $this->variant->purchasable->label() }}</p>
                     @endif
 
                     {{-- Dimensions & weight (from Filament Manage Variant Shipping) --}}
@@ -164,7 +179,7 @@
                         <dl class="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-sm text-gray-500">
                             @foreach($this->variantDimensions as $key => $value)
                                 @if($value)
-                                    <div><span class="font-medium text-gray-700 dark:text-gray-300">{{ ucfirst($key) }}:</span> {{ $value }}</div>
+                                    <div><span class="font-medium text-gray-700 dark:text-gray-300">{{ $fieldLabel($key) }}:</span> {{ $value }}</div>
                                 @endif
                             @endforeach
                         </dl>
@@ -183,32 +198,43 @@
                         <dl class="mt-3 space-y-1 text-sm">
                             @foreach($this->variantAttributeData as $key => $value)
                                 <div class="flex gap-2">
-                                    <dt class="font-medium text-gray-600 dark:text-gray-400">{{ str_replace('_', ' ', ucfirst($key)) }}:</dt>
+                                    <dt class="font-medium text-gray-600 dark:text-gray-400">{{ $fieldLabel($key) }}:</dt>
                                     <dd>{{ $value }}</dd>
                                 </div>
                             @endforeach
                         </dl>
                     @endif
 
-                    <div class="max-w-xs mt-8">
-                        <livewire:components.add-to-cart :purchasable="$this->variant" :wire:key="$this->variant->id" />
+                    <div class="mt-8 flex max-w-md items-center gap-3">
+                        <div class="max-w-xs flex-1">
+                            <livewire:components.add-to-cart :purchasable="$this->variant" :wire:key="$this->variant->id" />
+                        </div>
+                        <button
+                            type="button"
+                            wire:click="toggleWishlist({{ $this->product->id }})"
+                            class="inline-flex items-center justify-center rounded-lg border border-gray-200 px-4 py-3 text-sm font-medium text-gray-700 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+                        >
+                            Save
+                        </button>
                     </div>
                 </form>
             </div>
         </div>
 
         {{-- Collections (from Filament Manage Product Collections) --}}
-        @if($this->product->collections && $this->product->collections->isNotEmpty())
+        @if($this->collectionLinks->isNotEmpty())
             <div class="pt-12 mt-12 border-t border-gray-200 dark:border-gray-700">
                 <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Collections</h2>
                 <ul class="flex flex-wrap gap-2 mt-3">
-                    @foreach($this->product->collections as $collection)
+                    @foreach($this->collectionLinks as $collection)
                         <li>
-                            <a href="{{ $collection->defaultUrl ? route('collection.view', $collection->defaultUrl->slug) : '#' }}"
-                               class="px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600"
-                               wire:navigate>
-                                {{ $collection->translateAttribute('name') }}
-                            </a>
+                            <x-link-or-text
+                                :href="$collection['url']"
+                                :navigate="filled($collection['url'])"
+                                class="px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600"
+                            >
+                                {{ $collection['name'] }}
+                            </x-link-or-text>
                         </li>
                     @endforeach
                 </ul>
@@ -216,23 +242,20 @@
         @endif
 
         {{-- Associated products (from Filament Manage Product Associations) --}}
-        @if($this->associations->isNotEmpty())
+        @if($this->associationCards->isNotEmpty())
             <div class="pt-12 mt-12 border-t border-gray-200 dark:border-gray-700">
                 <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Related products</h2>
                 <div class="grid grid-cols-2 gap-4 mt-4 sm:grid-cols-3 lg:grid-cols-4">
-                    @foreach($this->associations as $assoc)
-                        @php $target = $assoc->target; @endphp
-                        @if($target && $target->defaultUrl)
-                            <a href="{{ route('product.view', $target->defaultUrl->slug) }}"
-                               class="block p-4 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-indigo-500 dark:hover:border-indigo-400"
-                               wire:navigate>
-                                @if($target->thumbnail)
-                                    <img src="{{ $target->thumbnail->getUrl('small') }}" alt="{{ $target->translateAttribute('name') }}" class="object-cover w-full rounded aspect-square" />
-                                @endif
-                                <span class="block mt-2 text-sm font-medium">{{ $target->translateAttribute('name') }}</span>
-                                <span class="text-xs text-gray-500">{{ $assoc->type }}</span>
-                            </a>
-                        @endif
+                    @foreach($this->associationCards as $association)
+                        <a href="{{ $association['url'] }}"
+                           class="block p-4 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-indigo-500 dark:hover:border-indigo-400"
+                           wire:navigate>
+                            @if($association['thumbnail_url'])
+                                <img src="{{ $association['thumbnail_url'] }}" alt="{{ $association['name'] }}" class="object-cover w-full rounded aspect-square" />
+                            @endif
+                            <span class="block mt-2 text-sm font-medium">{{ $association['name'] }}</span>
+                            <span class="text-xs text-gray-500">{{ $association['type'] }}</span>
+                        </a>
                     @endforeach
                 </div>
             </div>

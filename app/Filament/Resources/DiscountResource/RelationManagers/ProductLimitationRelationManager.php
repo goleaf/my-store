@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\DiscountResource\RelationManagers;
 
-use App\Models\Contracts\Product as ProductContract;
 use App\Models\Product;
 use App\Support\RelationManagers\BaseRelationManager;
 use Filament\Forms;
@@ -10,6 +9,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Actions;
+use App\Models\Contracts;
 
 class ProductLimitationRelationManager extends BaseRelationManager
 {
@@ -36,6 +36,7 @@ class ProductLimitationRelationManager extends BaseRelationManager
                 fn ($query) => $query->whereIn('type', ['limitation', 'exclusion'])
                     ->whereDiscountableType(Product::morphName())
                     ->whereHas('discountable')
+                    ->with('discountable.thumbnail')
             )
             ->headerActions([
                 Actions\CreateAction::make()->form([
@@ -47,7 +48,7 @@ class ProductLimitationRelationManager extends BaseRelationManager
                                 ->getSearchResultsUsing(static function (Forms\Components\Select $component, string $search): array {
                                     return get_search_builder(Product::modelClass(), $search)
                                         ->get()
-                                        ->mapWithKeys(fn (ProductContract $record): array => [$record->getKey() => $record->attr('name')])
+                                        ->mapWithKeys(fn (Contracts\Product $record): array => [$record->getKey() => $record->attr('name')])
                                         ->all();
                                 }),
                         ]),
@@ -59,10 +60,8 @@ class ProductLimitationRelationManager extends BaseRelationManager
                     return $data;
                 }),
             ])->columns([
-                Tables\Columns\SpatieMediaLibraryImageColumn::make('discountable.thumbnail')
-                    ->collection(config('store.media.collection'))
-                    ->conversion('small')
-                    ->limit(1)
+                Tables\Columns\ImageColumn::make('discountable_thumbnail')
+                    ->state(fn (Model $record): string => $record->discountable?->getThumbnailImage() ?? '')
                     ->square()
                     ->label(''),
                 Tables\Columns\TextColumn::make('discountable.attribute_data.name')

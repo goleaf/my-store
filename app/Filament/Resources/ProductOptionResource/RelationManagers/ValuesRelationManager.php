@@ -25,7 +25,7 @@ class ValuesRelationManager extends BaseRelationManager
         return $record->translate('name');
     }
 
-    public function getDefaultForm(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function getDefaultForm(Schema $schema): Schema
     {
         return $schema
             ->components([

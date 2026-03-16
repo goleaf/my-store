@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ProductResource\Pages;
 
+use App\Base\Enums\ProductStatus;
 use App\Filament\Resources\ProductResource;
 use App\Facades\DB;
 use App\Models\Attribute;
@@ -10,11 +11,11 @@ use App\Models\Product;
 use App\Models\TaxClass;
 use App\Support\Pages\BaseListRecords;
 use Filament\Actions;
-use Filament\Resources\Components\Tab;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Support\Enums\Width;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class ListProducts extends BaseListRecords
 {
@@ -36,11 +37,11 @@ class ListProducts extends BaseListRecords
     public static function createActionFormInputs(): array
     {
         return [
-            SchemaComponents\Grid::make(2)->schema([
+            Components\Grid::make(2)->schema([
                 ProductResource::getBaseNameFormComponent(),
                 ProductResource::getProductTypeFormComponent()->required(),
             ]),
-            SchemaComponents\Grid::make(2)->schema([
+            Components\Grid::make(2)->schema([
                 ProductResource::getSkuFormComponent(),
                 ProductResource::getBasePriceFormComponent(),
             ]),
@@ -60,7 +61,7 @@ class ListProducts extends BaseListRecords
 
         DB::beginTransaction();
         $product = $model::create([
-            'status' => 'draft',
+            'status' => ProductStatus::Draft->value,
             'product_type_id' => $data['product_type_id'],
             'attribute_data' => [
                 'name' => new $nameAttribute($data['name']),
@@ -85,10 +86,10 @@ class ListProducts extends BaseListRecords
         return [
             'all' => Tab::make(__('admin::product.tabs.all')),
             'published' => Tab::make(__('admin::product.tabs.published'))
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'published')),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', ProductStatus::Published->value)),
             'draft' => Tab::make(__('admin::product.tabs.draft'))
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'draft'))
-                ->badge(Product::query()->where('status', 'draft')->count()),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', ProductStatus::Draft->value))
+                ->badge(Product::query()->where('status', ProductStatus::Draft->value)->count()),
         ];
     }
 

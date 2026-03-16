@@ -2,10 +2,16 @@
 
 namespace App\Support\Resources;
 
+use App\Facades\ModelManifest;
 use App\Base\Traits\Searchable;
 use App\FieldTypes\TranslatedText;
 use App\Models\Attribute;
 use App\Support\Concerns\CallsHooks;
+use App\Support\Resources\Concerns\ExtendsForms;
+use App\Support\Resources\Concerns\ExtendsPages;
+use App\Support\Resources\Concerns\ExtendsRelationManagers;
+use App\Support\Resources\Concerns\ExtendsSubnavigation;
+use App\Support\Resources\Concerns\ExtendsTables;
 use Filament\Facades\Filament;
 use Filament\Resources\Resource;
 use Illuminate\Database\Connection;
@@ -13,15 +19,17 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use function Filament\Support\generate_search_term_expression;
+use ReflectionClass;
+use UnitEnum;
 
 class BaseResource extends Resource
 {
     use CallsHooks;
-    use \App\Support\Resources\Concerns\ExtendsForms;
-    use \App\Support\Resources\Concerns\ExtendsPages;
-    use \App\Support\Resources\Concerns\ExtendsRelationManagers;
-    use \App\Support\Resources\Concerns\ExtendsSubnavigation;
-    use \App\Support\Resources\Concerns\ExtendsTables;
+    use ExtendsForms;
+    use ExtendsPages;
+    use ExtendsRelationManagers;
+    use ExtendsSubnavigation;
+    use ExtendsTables;
 
     protected static ?string $permission = null;
 
@@ -34,7 +42,7 @@ class BaseResource extends Resource
         parent::registerNavigationItems();
     }
 
-    public static function can(\UnitEnum|string $action, ?Model $record = null): bool
+    public static function can(UnitEnum|string $action, ?Model $record = null): bool
     {
         return static::hasPermission();
     }
@@ -52,13 +60,20 @@ class BaseResource extends Resource
 
     public static function getModel(): string
     {
-        $class = new \ReflectionClass(static::$model);
+        $class = new ReflectionClass(static::$model);
 
-        if ($class->isInterface()) {
-            return app()->get(static::$model)::class;
+        if (! $class->isInterface()) {
+            return parent::getModel();
         }
 
-        return parent::getModel();
+        $modelClass = ModelManifest::get(static::$model)
+            ?? str_replace('Contracts\\', '', static::$model);
+
+        if (class_exists($modelClass)) {
+            return $modelClass;
+        }
+
+        return app()->get(static::$model)::class;
     }
 
     /**

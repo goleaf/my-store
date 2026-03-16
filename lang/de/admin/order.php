@@ -1,22 +1,17 @@
 <?php
 
 return [
-
     'label' => 'Bestellung',
-
     'plural_label' => 'Bestellungen',
-
     'breadcrumb' => [
         'manage' => 'Verwalten',
     ],
-
     'transactions' => [
         'capture' => 'Erfasst',
         'intent' => 'Absicht',
         'refund' => 'Erstattet',
         'failed' => 'Fehlgeschlagen',
     ],
-
     'table' => [
         'status' => [
             'label' => 'Status',
@@ -59,7 +54,6 @@ return [
             'label' => 'Plaziert vor',
         ],
     ],
-
     'form' => [
         'address' => [
             'first_name' => [
@@ -98,8 +92,10 @@ return [
             'country_id' => [
                 'label' => 'Land',
             ],
+            'tax_identifier' => [
+                'label' => 'Steuer-ID',
+            ],
         ],
-
         'reference' => [
             'label' => 'Referenz',
         ],
@@ -111,27 +107,22 @@ return [
         ],
         'amount' => [
             'label' => 'Betrag',
-
             'hint' => [
                 'less_than_total' => 'Sie sind dabei, einen Betrag zu erfassen, der kleiner ist als der gesamte Transaktionswert',
             ],
         ],
-
         'notes' => [
             'label' => 'Notizen',
         ],
         'confirm' => [
             'label' => 'Bestätigen',
-
             'alert' => 'Bestätigung erforderlich',
-
             'hint' => [
                 'capture' => 'Bitte bestätigen Sie, dass Sie diese Zahlung erfassen möchten',
                 'refund' => 'Bitte bestätigen Sie, dass Sie diesen Betrag erstatten möchten.',
             ],
         ],
     ],
-
     'infolist' => [
         'notes' => [
             'label' => 'Notizen',
@@ -231,7 +222,6 @@ return [
             'refunded' => 'Diese Bestellung wurde erstattet.',
         ],
     ],
-
     'action' => [
         'bulk_update_status' => [
             'label' => 'Status aktualisieren',
@@ -248,6 +238,8 @@ return [
                 'label' => 'Zusätzlicher E-Mail-Empfänger',
                 'placeholder' => 'optional',
             ],
+            'label' => 'Status aktualisieren',
+            'notification' => 'Bestellstatus aktualisiert',
         ],
         'download_order_pdf' => [
             'label' => 'PDF herunterladen',
@@ -255,14 +247,11 @@ return [
         ],
         'edit_address' => [
             'label' => 'Bearbeiten',
-
             'notification' => [
                 'error' => 'Fehler',
-
                 'billing_address' => [
                     'saved' => 'Rechnungsadresse gespeichert',
                 ],
-
                 'shipping_address' => [
                     'saved' => 'Lieferadresse gespeichert',
                 ],
@@ -270,10 +259,15 @@ return [
         ],
         'edit_tags' => [
             'label' => 'Bearbeiten',
+            'form' => [
+                'tags' => [
+                    'label' => 'Tags',
+                    'helper_text' => 'Trennen Sie Tags mit Enter, Tab oder Komma (,).',
+                ],
+            ],
         ],
         'capture_payment' => [
             'label' => 'Zahlung erfassen',
-
             'notification' => [
                 'error' => 'Bei der Erfassung gab es ein Problem',
                 'success' => 'Erfassung erfolgreich',
@@ -281,12 +275,13 @@ return [
         ],
         'refund_payment' => [
             'label' => 'Rückerstattung',
-
             'notification' => [
                 'error' => 'Bei der Rückerstattung gab es ein Problem',
                 'success' => 'Rückerstattung erfolgreich',
             ],
         ],
     ],
-
+    'tabs' => [
+        'all' => 'Alle',
+    ],
 ];

@@ -3,21 +3,23 @@
 namespace App\Livewire;
 
 use App\Traits\FetchesUrls;
-use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
-use App\Models\Collection as CollectionModel;
 use App\Traits\CanAddToCart;
+use App\Traits\CanManageWishlist;
+use App\Models\Collection;
 
 class CollectionPage extends Component
 {
-    use FetchesUrls, CanAddToCart;
+    use FetchesUrls;
+    use CanAddToCart;
+    use CanManageWishlist;
 
     public function mount(string $slug): void
     {
         $this->url = $this->fetchUrl(
             $slug,
-            (new CollectionModel)->getMorphClass(),
+            (new Collection)->getMorphClass(),
             [
                 'element.thumbnail',
                 'element.products.variants.basePrices.currency',

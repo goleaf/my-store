@@ -3,10 +3,15 @@
 namespace App\Modifiers;
 
 use App\Models\Cart;
+use App\DataTypes\Price;
+use App\DataTypes\ShippingOption;
+use App\Facades\ShippingManifest;
+use App\Models\TaxClass;
+use Closure;
 
 class ShippingModifier
 {
-    public function handle(Cart $cart, \Closure $next)
+    public function handle(Cart $cart, Closure $next)
     {
         /**
          * Custom shipping option.
@@ -16,13 +21,13 @@ class ShippingModifier
          */
 
         if(config('shipping-tables.enabled') == false){
-            \App\Facades\ShippingManifest::addOption(
-                new \App\DataTypes\ShippingOption(
+            ShippingManifest::addOption(
+                new ShippingOption(
                     name: 'Basic Delivery',
                     description: 'Basic Delivery',
                     identifier: 'BASDEL',
-                    price: new \App\DataTypes\Price(500, $cart->currency, 1),
-                    taxClass: \App\Models\TaxClass::getDefault()
+                    price: new Price(500, $cart->currency, 1),
+                    taxClass: TaxClass::getDefault()
                 )
             );
         }

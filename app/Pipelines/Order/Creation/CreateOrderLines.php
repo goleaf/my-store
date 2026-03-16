@@ -4,20 +4,18 @@ namespace App\Pipelines\Order\Creation;
 
 use Closure;
 use Illuminate\Support\Facades\App;
-use App\Models\Contracts\Order as OrderContract;
-use App\Models\Contracts\OrderLine as OrderLineContract;
-use App\Models\Order;
-use App\Models\OrderLine;
 use App\Utils\Arr;
+use App\Models\Contracts\Order;
+use App\Models\Contracts\OrderLine;
 
 class CreateOrderLines
 {
     /**
-     * @param  Closure(OrderContract): mixed  $next
+     * @param  Closure(\App\Models\Contracts\Order): mixed  $next
      */
-    public function handle(OrderContract $order, Closure $next): mixed
+    public function handle(Order $order, Closure $next): mixed
     {
-        /** @var Order $order */
+        /** @var \App\Models\Order $order */
         if (! $order->id) {
             $order->save();
         }
@@ -27,7 +25,7 @@ class CreateOrderLines
         $cart->recalculate();
 
         foreach ($cart->lines as $cartLine) {
-            /** @var OrderLine $orderLine */
+            /** @var \App\Models\OrderLine $orderLine */
             $orderLine = $order->lines->first(function ($line) use ($cartLine) {
                 $diff = Arr::diff($line->meta, $cartLine->meta);
 
@@ -36,7 +34,7 @@ class CreateOrderLines
                     empty($diff->removed) &&
                     $line->purchasable_type == $cartLine->purchasable_type &&
                     $line->purchasable_id == $cartLine->purchasable_id;
-            }) ?: App::make(OrderLineContract::class);
+            }) ?: App::make(OrderLine::class);
 
             $orderLine->fill([
                 'order_id' => $order->id,

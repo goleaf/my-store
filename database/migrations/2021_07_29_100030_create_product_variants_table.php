@@ -12,8 +12,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained($this->prefix.'products');
             $table->foreignId('tax_class_id')->constrained($this->prefix.'tax_classes');
+            $table->json('attribute_data')->nullable();
+            $table->string('label')->nullable();
+            $table->decimal('price_override', 10, 2)->nullable();
+            $table->decimal('price_modifier', 10, 2)->default(0.00);
+            $table->decimal('original_price_override', 10, 2)->nullable();
             $table->string('tax_ref')->index()->nullable();
             $table->integer('unit_quantity')->unsigned()->index()->default(1);
+            $table->integer('min_quantity')->unsigned()->default(1)->index();
+            $table->integer('quantity_increment')->unsigned()->default(1)->index();
             $table->string('sku')->nullable()->index();
             $table->string('gtin')->nullable()->index();
             $table->string('mpn')->nullable()->index();
@@ -23,6 +30,8 @@ return new class extends Migration
             $table->integer('stock')->default(0)->index();
             $table->integer('backorder')->default(0)->index();
             $table->string('purchasable')->default('always')->index();
+            $table->unsignedTinyInteger('sort_order')->default(0);
+            $table->boolean('is_active')->default(true)->index();
             $table->timestamps();
             $table->softDeletes();
         });

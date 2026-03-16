@@ -3,7 +3,7 @@
 namespace App\Base\Traits;
 
 use ReflectionClass;
-use Spatie\LaravelBlink\BlinkFacade as Blink;
+use Spatie\LaravelBlink\BlinkFacade;
 
 trait CachesProperties
 {
@@ -47,7 +47,7 @@ trait CachesProperties
     public function cacheProperties()
     {
         foreach ($this->cachableProperties as $property) {
-            Blink::put($this->cachePropertiesPrefix().$property, $this->{$property});
+            BlinkFacade::put($this->cachePropertiesPrefix().$property, $this->{$property});
         }
 
         return $this;
@@ -61,8 +61,8 @@ trait CachesProperties
     public function restoreProperties()
     {
         foreach ($this->cachableProperties as $property) {
-            if (Blink::has($this->cachePropertiesPrefix().$property)) {
-                $this->{$property} = Blink::get($this->cachePropertiesPrefix().$property);
+            if (BlinkFacade::has($this->cachePropertiesPrefix().$property)) {
+                $this->{$property} = BlinkFacade::get($this->cachePropertiesPrefix().$property);
             }
         }
     }

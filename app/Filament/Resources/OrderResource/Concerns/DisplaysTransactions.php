@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\OrderResource\Concerns;
 
-use App\Support\Infolists\Components\Transaction as InfolistsTransaction;
+use App\Support\Infolists\Components\Transaction;
 use Filament\Infolists;
+use Filament\Schemas\Components;
 
 trait DisplaysTransactions
 {
@@ -15,7 +16,7 @@ trait DisplaysTransactions
             ->getStateUsing(fn ($record) => $record->transactions)
             ->contained(false)
             ->schema([
-                InfolistsTransaction::make('transactions'),
+                Transaction::make('transactions'),
             ]);
     }
 
@@ -24,9 +25,9 @@ trait DisplaysTransactions
         return self::callStaticStoreHook('extendTransactionsRepeatableEntry', static::getDefaultTransactionsRepeatableEntry());
     }
 
-    public static function getDefaultTransactionsInfolist(): Infolists\Components\Component
+    public static function getDefaultTransactionsInfolist(): Components\Component
     {
-        return Infolists\Components\Section::make('transactions')
+        return Components\Section::make('transactions')
             ->heading(__('admin::order.infolist.transactions.label'))
             ->compact()
             ->collapsed(fn ($state) => filled($state))
@@ -36,7 +37,7 @@ trait DisplaysTransactions
             ]);
     }
 
-    public static function getTransactionsInfolist(): Infolists\Components\Component
+    public static function getTransactionsInfolist(): Components\Component
     {
         return self::callStaticStoreHook('extendTransactionsInfolist', static::getDefaultTransactionsInfolist());
     }

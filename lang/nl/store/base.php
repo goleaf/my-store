@@ -11,4 +11,9 @@ return [
         'up-sell' => 'Up-sell',
         'alternate' => 'Alternatief',
     ],
+    'saved-payment-method-types' => [
+        'card' => 'Kaart',
+        'paypal' => 'PayPal',
+        'payoneer' => 'Payoneer',
+    ],
 ];

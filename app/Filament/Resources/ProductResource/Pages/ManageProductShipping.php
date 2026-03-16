@@ -4,7 +4,7 @@ namespace App\Filament\Resources\ProductResource\Pages;
 
 use App\Filament\Resources\ProductResource;
 use App\Filament\Resources\ProductVariantResource\Pages\ManageVariantShipping;
-use App\Models\Contracts\ProductVariant as ProductVariantContract;
+use App\Models\Contracts\ProductVariant;
 use App\Support\Forms\Components\TextInputSelectAffix;
 use App\Support\Pages\BaseEditRecord;
 use Cartalyst\Converter\Laravel\Facades\Converter;
@@ -14,7 +14,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class ManageProductShipping extends BaseEditRecord
 {
@@ -105,7 +105,7 @@ class ManageProductShipping extends BaseEditRecord
         return $record;
     }
 
-    protected function getVariant(): ProductVariantContract
+    protected function getVariant(): ProductVariant
     {
         return $this->getRecord()->variants()->withTrashed()->first();
     }
@@ -117,7 +117,7 @@ class ManageProductShipping extends BaseEditRecord
         ];
     }
 
-    public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function form(Schema $schema): Schema
     {
         $measurements = Converter::getMeasurements();
 
@@ -134,7 +134,7 @@ class ManageProductShipping extends BaseEditRecord
         );
 
         return $schema->components([
-            SchemaComponents\Section::make()->schema([
+            Components\Section::make()->schema([
                 Toggle::make('shippable')->label(
                     __('admin::productvariant.form.shippable.label')
                 )->columnSpan(2),

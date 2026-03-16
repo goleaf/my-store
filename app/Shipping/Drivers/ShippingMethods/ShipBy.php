@@ -5,6 +5,7 @@ namespace App\Shipping\Drivers\ShippingMethods;
 use App\DataTypes\ShippingOption;
 use App\Facades\Pricing;
 use App\Models\Product;
+use App\Shipping\Enums\ShippingMethodChargeBy;
 use App\Shipping\DataTransferObjects\ShippingOptionRequest;
 use App\Shipping\Interfaces\ShippingRateInterface;
 use App\Shipping\Models\ShippingRate;
@@ -41,8 +42,8 @@ class ShipBy implements ShippingRateInterface
         $cart = $shippingOptionRequest->cart;
         $customerGroups = collect([]);
 
-        if ($user = $cart->user) {
-            $customerGroups = $user->customers->pluck('customerGroups')->flatten();
+        if ($customer = $cart->customer) {
+            $customerGroups = $customer->customerGroups;
         }
 
         $subTotal = $cart->lines->sum('subTotal.value');
@@ -61,15 +62,11 @@ class ShipBy implements ShippingRateInterface
             return null;
         }
 
-        $chargeBy = $data['charge_by'] ?? null;
-
-        if (! $chargeBy) {
-            $chargeBy = 'cart_total';
-        }
+        $chargeBy = ShippingMethodChargeBy::resolve($data['charge_by'] ?? null) ?? ShippingMethodChargeBy::CartTotal;
 
         $tier = $subTotal;
 
-        if ($chargeBy == 'weight') {
+        if ($chargeBy === ShippingMethodChargeBy::Weight) {
             $tier = $cart->lines->sum(function ($line) {
                 return $line->purchasable->weight_value * $line->quantity;
             });

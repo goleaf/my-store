@@ -8,6 +8,7 @@ use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Contracts\Support\Htmlable;
+use DateTime;
 
 class NewVsReturningCustomersChart extends ChartWidget
 {
@@ -20,7 +21,7 @@ class NewVsReturningCustomersChart extends ChartWidget
         return $this->heading ?? __('admin::widgets.dashboard.orders.new_returning_customers.heading');
     }
 
-    protected function getOrderQuery(\DateTime|CarbonInterface|null $from = null, \DateTime|CarbonInterface|null $to = null)
+    protected function getOrderQuery(DateTime|CarbonInterface|null $from = null, DateTime|CarbonInterface|null $to = null)
     {
         return Order::whereNotNull('placed_at')
             ->whereBetween('placed_at', [$from, $to]);

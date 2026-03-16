@@ -89,11 +89,6 @@ interface Order
     public function customer(): BelongsTo;
 
     /**
-     * Return the user relationship.
-     */
-    public function user(): BelongsTo;
-
-    /**
      * Determines if this is a draft order.
      */
     public function isDraft(): bool;

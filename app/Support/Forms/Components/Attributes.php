@@ -10,11 +10,13 @@ use App\Models\ProductVariant;
 use App\Support\Facades\AttributeData;
 use Closure;
 use Filament\Forms;
+use Filament\Schemas\Components\Utilities\Get;
 use Illuminate\Database\Eloquent\Model;
-use Livewire\Component as Livewire;
-use Filament\Schemas\Components as SchemaComponents;
+use Livewire\Component;
+use Filament\Schemas\Components;
+use App\Base\FieldType;
 
-class Attributes extends SchemaComponents\Group
+class Attributes extends Components\Group
 {
     public ?string $modelClassOverride = null;
 
@@ -43,7 +45,7 @@ class Attributes extends SchemaComponents\Group
         return $this;
     }
 
-    public function getKey(): ?string
+    public function getKey(bool $isAbsolute = true): ?string
     {
         return 'attributeData'.$this->modelClassOverride;
     }
@@ -55,7 +57,7 @@ class Attributes extends SchemaComponents\Group
         $this->statePath('attribute_data');
 
         if (blank($this->childComponents)) {
-            $this->schema(function (\Filament\Forms\Get $get, Livewire $livewire, ?Model $record) {
+            $this->schema(function (Get $get, Component $livewire, ?Model $record) {
                 $modelClass = $this->modelClassOverride ?: $livewire::getResource()::getModel();
 
                 $productTypeId = null;
@@ -67,24 +69,32 @@ class Attributes extends SchemaComponents\Group
                 // Products are unique in that they use product types to map attributes, so we need
                 // to try and find the product type ID
                 if ($morphMap == Product::morphName()) {
-                    $productTypeId = $record?->product_type_id ?: ProductType::first()->id;
+                    $productTypeId = $record?->product_type_id ?: ProductType::query()->value('id');
 
                     // If we have a product type, the attributes should be based off that.
                     if ($productTypeId) {
-                        $attributeQuery = ProductType::find($productTypeId)->productAttributes();
+                        $productType = ProductType::query()->find($productTypeId);
+
+                        if ($productType) {
+                            $attributeQuery = $productType->productAttributes();
+                        }
                     }
                 }
 
                 if ($morphMap == ProductVariant::morphName()) {
                     if ($record::class === Product::modelClass()) {
-                        $productTypeId = $record?->product_type_id ?: ProductType::first()->id;
+                        $productTypeId = $record?->product_type_id ?: ProductType::query()->value('id');
                     } else {
-                        $productTypeId = $record?->product?->product_type_id ?: ProductType::first()->id;
+                        $productTypeId = $record?->product?->product_type_id ?: ProductType::query()->value('id');
                     }
 
                     // If we have a product type, the attributes should be based off that.
                     if ($productTypeId) {
-                        $attributeQuery = ProductType::find($productTypeId)->variantAttributes();
+                        $productType = ProductType::query()->find($productTypeId);
+
+                        if ($productType) {
+                            $attributeQuery = $productType->variantAttributes();
+                        }
                     }
                 }
 
@@ -111,7 +121,7 @@ class Attributes extends SchemaComponents\Group
                     foreach ($group['fields'] as $field) {
                         $sectionFields[] = AttributeData::getFilamentComponent($field);
                     }
-                    $groupComponents[] = SchemaComponents\Section::make($group['model']
+                    $groupComponents[] = Components\Section::make($group['model']
                         ->translate('name'))
                         ->schema($sectionFields);
                 }
@@ -126,7 +136,7 @@ class Attributes extends SchemaComponents\Group
             }
 
             foreach ($state as $key => $value) {
-                if (! $value instanceof \App\Base\FieldType) {
+                if (! $value instanceof FieldType) {
                     continue;
                 }
 

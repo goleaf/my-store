@@ -3,26 +3,24 @@
 namespace App\Shipping\Resolvers;
 
 use Illuminate\Support\Collection;
-use App\Models\Cart;
-use App\Models\Contracts\Cart as CartContract;
-use App\Models\Contracts\Country as CountryContract;
-use App\Models\Country;
 use App\Models\CustomerGroup;
 use App\Models\State;
 use App\Shipping\DataTransferObjects\PostcodeLookup;
 use App\Shipping\Facades\Shipping;
+use App\Models\Contracts\Cart;
+use App\Models\Contracts\Country;
 
 class ShippingRateResolver
 {
     /**
      * The cart to use when resolving.
      */
-    protected CartContract $cart;
+    protected Cart $cart;
 
     /**
      * The country to use when resolving.
      */
-    protected ?CountryContract $country = null;
+    protected ?Country $country = null;
 
     /**
      * The customer group to limit to.
@@ -47,7 +45,7 @@ class ShippingRateResolver
     /**
      * Initialise the resolver.
      */
-    public function __construct(?CartContract $cart = null)
+    public function __construct(?Cart $cart = null)
     {
         $this->cart($cart);
     }
@@ -55,7 +53,7 @@ class ShippingRateResolver
     /**
      * Set the cart.
      */
-    public function cart(CartContract $cart): self
+    public function cart(Cart $cart): self
     {
         $this->cart = $cart;
 
@@ -67,8 +65,10 @@ class ShippingRateResolver
 
         $this->customerGroups = collect([CustomerGroup::getDefault()]);
 
-        if ($user = $this->cart->user) {
-            $this->customerGroups = $user->customers->first()?->customerGroups ?: $this->customerGroups;
+        if ($customer = $this->cart->customer) {
+            $this->customerGroups = $customer->customerGroups->isNotEmpty()
+                ? $customer->customerGroups
+                : $this->customerGroups;
         }
 
         if (! empty($shippingMeta)) {
@@ -103,7 +103,7 @@ class ShippingRateResolver
     /**
      * Set the value for country.
      */
-    public function country(?CountryContract $country = null): self
+    public function country(?Country $country = null): self
     {
         $this->country = $country;
 

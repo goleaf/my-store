@@ -2,10 +2,11 @@
 
 namespace App\Livewire\Components;
 
-use Illuminate\View\View;
-use Livewire\Component;
 use App\Base\Purchasable;
 use App\Facades\CartSession;
+use App\Http\Requests\Cart\AddToCartRequest;
+use Illuminate\View\View;
+use Livewire\Component;
 
 class AddToCart extends Component
 {
@@ -19,16 +20,12 @@ class AddToCart extends Component
      */
     public int $quantity = 1;
 
-    public function rules(): array
-    {
-        return [
-            'quantity' => 'required|numeric|min:1|max:10000',
-        ];
-    }
-
     public function addToCart(): void
     {
-        $this->validate();
+        $request = new AddToCartRequest;
+        $request->validatePayload([
+            'quantity' => $this->quantity,
+        ]);
 
         if ($this->purchasable->stock < $this->quantity) {
             $this->addError('quantity', 'The quantity exceeds the available stock.');

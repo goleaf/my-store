@@ -9,6 +9,8 @@ use Carbon\CarbonPeriod;
 use Filament\Widgets\ChartWidget;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Illuminate\Contracts\Support\Htmlable;
+use DateTime;
+use Illuminate\Support\Collection;
 
 class OrderTotalsChart extends ChartWidget
 {
@@ -23,14 +25,14 @@ class OrderTotalsChart extends ChartWidget
         return $this->heading ?? __('admin::widgets.dashboard.orders.order_totals_chart.heading');
     }
 
-    protected function getOrderQuery(\DateTime|CarbonInterface|null $from = null, \DateTime|CarbonInterface|null $to = null)
+    protected function getOrderQuery(DateTime|CarbonInterface|null $from = null, DateTime|CarbonInterface|null $to = null)
     {
         return Order::whereNotNull('placed_at')
             ->with(['currency'])
             ->whereBetween('placed_at', [$from, $to]);
     }
 
-    protected function getTotalsForPeriod($from, $to): \Illuminate\Support\Collection
+    protected function getTotalsForPeriod($from, $to): Collection
     {
         $currentPeriod = collect();
         $period = CarbonPeriod::create($from, '1 month', $to);

@@ -4,13 +4,14 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductOptionResource\Pages;
 use App\Filament\Resources\ProductOptionResource\RelationManagers;
-use App\Models\Contracts\ProductOption as ProductOptionContract;
+use App\Models\Contracts\ProductOption;
 use App\Models\Language;
 use App\Support\Forms\Components\TranslatedText;
 use App\Support\Resources\BaseResource;
 use App\Support\Tables\Columns\TranslatedTextColumn;
 use Filament\Forms;
-use Filament\Forms\Components\Component;
+use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -22,7 +23,7 @@ class ProductOptionResource extends BaseResource
 {
     protected static ?string $permission = 'settings';
 
-    protected static ?string $model = ProductOptionContract::class;
+    protected static ?string $model = ProductOption::class;
 
     protected static ?int $navigationSort = 1;
 
@@ -61,7 +62,7 @@ class ProductOptionResource extends BaseResource
             ->label(__('admin::productoption.form.name.label'))
             ->required()
             ->maxLength(255)
-            ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
+            ->afterStateUpdated(function (string $operation, $state, Set $set) {
                 if ($operation !== 'create') {
                     return;
                 }

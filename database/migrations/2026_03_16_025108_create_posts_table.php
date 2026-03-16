@@ -11,7 +11,7 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('author_id')->constrained('users');
+            $table->foreignId('author_id')->constrained('store_staff');
             $table->foreignId('category_id')->nullable()->constrained('post_categories')->onDelete('set null');
             $table->string('title');
             $table->string('slug')->unique();

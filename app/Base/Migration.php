@@ -2,9 +2,8 @@
 
 namespace App\Base;
 
-use Illuminate\Database\Migrations\Migration as BaseMigration;
-
-abstract class Migration extends BaseMigration
+use Illuminate\Database\Migrations;
+abstract class Migration extends Migrations\Migration
 {
     /**
      * Migration table prefix.

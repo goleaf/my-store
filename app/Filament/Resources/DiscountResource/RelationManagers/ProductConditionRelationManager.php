@@ -2,8 +2,6 @@
 
 namespace App\Filament\Resources\DiscountResource\RelationManagers;
 
-use App\Models\Contracts\Product as ProductContract;
-use App\Models\Contracts\ProductVariant as ProductVariantContract;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Support\RelationManagers\BaseRelationManager;
@@ -13,6 +11,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Actions;
+use App\Models\Contracts;
 
 class ProductConditionRelationManager extends BaseRelationManager
 {
@@ -57,7 +56,7 @@ class ProductConditionRelationManager extends BaseRelationManager
                                 ->getSearchResultsUsing(static function (Forms\Components\Select $component, string $search): array {
                                     return get_search_builder(Product::modelClass(), $search)
                                         ->get()
-                                        ->mapWithKeys(fn (ProductContract $record): array => [$record->getKey() => $record->attr('name')])
+                                        ->mapWithKeys(fn (Contracts\Product $record): array => [$record->getKey() => $record->attr('name')])
                                         ->all();
                                 }),
 
@@ -67,7 +66,7 @@ class ProductConditionRelationManager extends BaseRelationManager
                                     return get_search_builder(ProductVariant::modelClass(), $search)
                                         ->orWhere('sku', 'like', $search.'%')
                                         ->get()
-                                        ->mapWithKeys(fn (ProductVariantContract $record): array => [$record->getKey() => $record->product->attr('name').' - '.$record->sku])
+                                        ->mapWithKeys(fn (Contracts\ProductVariant $record): array => [$record->getKey() => $record->product->attr('name').' - '.$record->sku])
                                         ->all();
                                 }),
                         ]),
@@ -88,7 +87,7 @@ class ProductConditionRelationManager extends BaseRelationManager
                         __('admin::discount.relationmanagers.conditions.table.name.label')
                     )
                     ->formatStateUsing(
-                        fn (Model $record) => $record->discountable instanceof ProductVariantContract ? $record->discountable->product->attr('name').' - '.$record->discountable->sku : $record->discountable->attr('name')
+                        fn (Model $record) => $record->discountable instanceof Contracts\ProductVariant ? $record->discountable->product->attr('name').' - '.$record->discountable->sku : $record->discountable->attr('name')
                     ),
 
                 Tables\Columns\TextColumn::make('discountable_type')

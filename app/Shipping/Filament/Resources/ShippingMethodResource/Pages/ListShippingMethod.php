@@ -7,7 +7,7 @@ use App\Shipping\Models\ShippingMethod;
 use App\Models\CustomerGroup;
 use App\Support\Pages\BaseListRecords;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class ListShippingMethod extends BaseListRecords
 {
@@ -18,7 +18,7 @@ class ListShippingMethod extends BaseListRecords
         return [
             Actions\CreateAction::make()->form([
                 ShippingMethodResource::getNameFormComponent(),
-                SchemaComponents\Group::make([
+                Components\Group::make([
                     ShippingMethodResource::getCodeFormComponent(),
                     ShippingMethodResource::getDriverFormComponent(),
                 ])->columns(2),

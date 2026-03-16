@@ -5,9 +5,8 @@ namespace App\Actions\Carts;
 use App\Actions\AbstractAction;
 use App\Exceptions\CartLineIdMismatchException;
 use App\Facades\DB;
-use App\Models\Cart;
 use App\Models\CartLine;
-use App\Models\Contracts\Cart as CartContract;
+use App\Models\Contracts\Cart;
 
 class RemovePurchasable extends AbstractAction
 {
@@ -19,10 +18,10 @@ class RemovePurchasable extends AbstractAction
      * @throws CartLineIdMismatchException
      */
     public function execute(
-        CartContract $cart,
+        Cart $cart,
         int $cartLineId
     ): self {
-        /** @var Cart $cart */
+        /** @var \App\Models\Cart $cart */
         DB::transaction(function () use ($cart, $cartLineId) {
             /** @var CartLine $line */
             $line = $cart->lines()->whereId($cartLineId)->first();

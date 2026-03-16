@@ -7,8 +7,7 @@ use App\Support\DataTransferObjects\Role;
 use App\Support\Facades\AdminPanel;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Spatie\Permission\Models\Permission as SpatiePermission;
-use Spatie\Permission\Models\Role as SpatieRole;
+use Spatie\Permission\Models;
 
 class Manifest
 {
@@ -40,7 +39,7 @@ class Manifest
 
         $baseRoles = $this->getBaseRoles();
 
-        $roles = SpatieRole::where('guard_name', AdminPanel::getPanel()->getAuthGuard())->get('name');
+        $roles = Models\Role::where('guard_name', AdminPanel::getPanel()->getAuthGuard())->get('name');
 
         foreach ($roles as $role) {
             $this->roles->push(Role::make($role->name, in_array($role->name, $baseRoles)));
@@ -70,7 +69,7 @@ class Manifest
 
         $basePermissions = $this->getBasePermissions();
 
-        $permissions = SpatiePermission::where('guard_name', AdminPanel::getPanel()->getAuthGuard())->get('name');
+        $permissions = Models\Permission::where('guard_name', AdminPanel::getPanel()->getAuthGuard())->get('name');
 
         foreach ($permissions as $permission) {
             $this->permissions->push(Permission::make($permission->name, in_array($permission->name, $basePermissions)));

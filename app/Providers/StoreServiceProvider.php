@@ -101,6 +101,8 @@ use App\Observers\ProductOptionValueObserver;
 use App\Observers\ProductVariantObserver;
 use App\Observers\TransactionObserver;
 use App\Observers\UrlObserver;
+use App\Facades;
+use App\Utils;
 
 class StoreServiceProvider extends ServiceProvider
 {
@@ -207,7 +209,7 @@ class StoreServiceProvider extends ServiceProvider
             }
         });
 
-        \App\Facades\ModelManifest::register();
+        Facades\ModelManifest::register();
     }
 
     /**
@@ -224,7 +226,7 @@ class StoreServiceProvider extends ServiceProvider
         $this->registerBlueprintMacros();
         $this->registerStateListeners();
 
-        \App\Facades\ModelManifest::morphMap();
+        Facades\ModelManifest::morphMap();
 
         if ($this->app->runningInConsole()) {
             collect($this->configFiles)->each(function ($config) {
@@ -258,7 +260,7 @@ class StoreServiceProvider extends ServiceProvider
             }
         }
 
-        Arr::macro('permutate', [\App\Utils\Arr::class, 'permutate']);
+        Arr::macro('permutate', [Utils\Arr::class, 'permutate']);
 
         // Handle generator
         Str::macro('handle', function ($string) {
@@ -396,9 +398,9 @@ class StoreServiceProvider extends ServiceProvider
             }
         });
 
-        Blueprint::macro('userForeignKey', function ($field_name = 'user_id', $nullable = false) {
+        Blueprint::macro('customerForeignKey', function ($field_name = 'customer_id', $nullable = false) {
             /** @var Blueprint $this */
-            $userModel = config('auth.providers.users.model');
+            $customerModel = config('auth.providers.customers.model');
 
             $type = config('store.database.users_id_type', 'bigint');
 
@@ -406,18 +408,23 @@ class StoreServiceProvider extends ServiceProvider
                 $this->foreignUuid($field_name)
                     ->nullable($nullable)
                     ->constrained(
-                        (new $userModel)->getTable()
+                        (new $customerModel)->getTable()
                     );
             } elseif ($type == 'int') {
                 $this->unsignedInteger($field_name)->nullable($nullable);
-                $this->foreign($field_name)->references('id')->on('users');
+                $this->foreign($field_name)->references('id')->on((new $customerModel)->getTable());
             } else {
                 $this->foreignId($field_name)
                     ->nullable($nullable)
                     ->constrained(
-                        (new $userModel)->getTable()
+                        (new $customerModel)->getTable()
                     );
             }
+        });
+
+        Blueprint::macro('userForeignKey', function ($field_name = 'customer_id', $nullable = false) {
+            /** @var Blueprint $this */
+            return $this->customerForeignKey($field_name, $nullable);
         });
     }
 }

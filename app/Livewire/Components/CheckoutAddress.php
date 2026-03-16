@@ -2,12 +2,13 @@
 
 namespace App\Livewire\Components;
 
-use Illuminate\View\View;
-use Livewire\Component;
 use App\Facades\CartSession;
+use App\Http\Requests\Checkout\SaveAddressRequest;
 use App\Models\Cart;
 use App\Models\CartAddress;
 use App\Models\Country;
+use Illuminate\View\View;
+use Livewire\Component;
 
 class CheckoutAddress extends Component
 {
@@ -52,21 +53,9 @@ class CheckoutAddress extends Component
 
     public function rules(): array
     {
-        return [
-            'address.first_name' => 'required',
-            'address.last_name' => 'required',
-            'address.line_one' => 'required',
-            'address.country_id' => 'required',
-            'address.city' => 'required',
-            'address.postcode' => 'required',
-            'address.company_name' => 'nullable',
-            'address.line_two' => 'nullable',
-            'address.line_three' => 'nullable',
-            'address.state' => 'nullable',
-            'address.delivery_instructions' => 'nullable',
-            'address.contact_email' => 'nullable|email',
-            'address.contact_phone' => 'nullable',
-        ];
+        return (new SaveAddressRequest)
+            ->withPrefix('address')
+            ->rules();
     }
 
     /**
@@ -74,7 +63,8 @@ class CheckoutAddress extends Component
      */
     public function save(): void
     {
-        $validatedData = $this->validate();
+        $request = (new SaveAddressRequest)->withPrefix('address');
+        $validatedData = $this->validate($request->rules());
 
         if ($this->type == 'billing') {
             $this->cart->setBillingAddress($this->address);

@@ -9,6 +9,7 @@ use Carbon\CarbonInterface;
 use Filament\Widgets\ChartWidget;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Illuminate\Contracts\Support\Htmlable;
+use DateTime;
 
 class OrdersSalesChart extends ChartWidget
 {
@@ -23,7 +24,7 @@ class OrdersSalesChart extends ChartWidget
         return $this->heading ?? __('admin::widgets.dashboard.orders.order_sales_chart.heading');
     }
 
-    protected function getOrderQuery(\DateTime|CarbonInterface|null $from = null, \DateTime|CarbonInterface|null $to = null)
+    protected function getOrderQuery(DateTime|CarbonInterface|null $from = null, DateTime|CarbonInterface|null $to = null)
     {
         return Order::whereNotNull('placed_at')
             ->with(['currency'])

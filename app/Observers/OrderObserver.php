@@ -2,19 +2,18 @@
 
 namespace App\Observers;
 
-use App\Models\Contracts\Order as OrderContract;
-use App\Models\Order;
+use App\Models\Contracts\Order;
 
 class OrderObserver
 {
     /**
-     * Handle the Order "updating" event.
+     * Handle the \App\Models\Order "updating" event.
      *
      * @return void
      */
-    public function updating(OrderContract $order)
+    public function updating(Order $order)
     {
-        /** @var Order $order */
+        /** @var \App\Models\Order $order */
         if ($order->getOriginal('status') != $order->status) {
             activity()
                 ->causedBy(auth()->user())

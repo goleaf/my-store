@@ -23,7 +23,7 @@ class TaxRateAmountRelationManager extends RelationManager
         return false;
     }
 
-    public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function form(Schema $schema): Schema
     {
         return $schema->components([
             Select::make('tax_class_id')

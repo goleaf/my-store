@@ -24,7 +24,6 @@ use App\Actions\Carts\UpdateCartLine;
 use App\Base\Addressable;
 use App\Base\BaseModel;
 use App\Base\Casts\CouponString;
-use App\Base\StoreUser;
 use App\Base\Purchasable;
 use App\Base\Traits\CachesProperties;
 use App\Base\Traits\HasMacros;
@@ -47,7 +46,6 @@ use App\Validation\CartLine\CartLineStock;
 
 /**
  * @property int $id
- * @property ?int $user_id
  * @property ?int $customer_id
  * @property ?int $merged_id
  * @property int $currency_id
@@ -217,11 +215,6 @@ class Cart extends BaseModel implements Contracts\Cart
     public function currency(): BelongsTo
     {
         return $this->belongsTo(Currency::modelClass());
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(config('auth.providers.users.model'));
     }
 
     public function customer(): BelongsTo
@@ -437,36 +430,18 @@ class Cart extends BaseModel implements Contracts\Cart
     }
 
     /**
-     * Associate a user to the cart
-     *
      * @throws Exception
      */
-    public function associate(StoreUser $user, string $policy = 'merge', bool $refresh = true): Cart
+    public function associate(Customer $customer, string $policy = 'merge', bool $refresh = true): Cart
     {
-        if ($this->customer()->exists()) {
-            if (! $user->query()
-                ->whereHas('customers', fn ($query) => $query->where('customer_id', $this->customer->id))
-                ->exists()) {
-                throw new Exception('Invalid user');
-            }
-        }
-
         return app(
             config('store.cart.actions.associate_user', AssociateUser::class)
-        )->execute($this, $user, $policy)
+        )->execute($this, $customer, $policy)
             ->then(fn () => $refresh ? $this->refresh()->recalculate() : $this);
     }
 
     public function setCustomer(Customer $customer): Cart
     {
-        if ($this->user()->exists()) {
-            if (! $customer->query()
-                ->whereHas('users', fn ($query) => $query->where('user_id', $this->user->id))
-                ->exists()) {
-                throw new Exception('Invalid customer');
-            }
-        }
-
         $this->customer()->associate($customer)->save();
 
         return $this->refresh()->recalculate();

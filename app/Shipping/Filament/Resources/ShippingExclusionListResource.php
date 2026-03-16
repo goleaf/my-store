@@ -7,14 +7,14 @@ use App\Shipping\Filament\Resources\ShippingExclusionListResource\RelationManage
 use App\Shipping\Models\Contracts\ShippingExclusionList;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
-use Filament\Forms\Components\Component;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Component;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class ShippingExclusionListResource extends BaseResource
 {
@@ -44,10 +44,10 @@ class ShippingExclusionListResource extends BaseResource
         return __('storepanel.shipping::plugin.navigation.group');
     }
 
-    public static function getDefaultForm(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public static function getDefaultForm(Schema $schema): Schema
     {
         return $schema->components([
-            SchemaComponents\Section::make()->schema(
+            Components\Section::make()->schema(
                 static::getMainFormComponents(),
             ),
         ]);

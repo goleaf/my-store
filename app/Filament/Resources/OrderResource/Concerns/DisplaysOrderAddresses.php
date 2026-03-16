@@ -2,37 +2,37 @@
 
 namespace App\Filament\Resources\OrderResource\Concerns;
 
-use App\Models\Contracts\OrderAddress as OrderAddressContract;
 use App\Models\Country;
 use App\Models\OrderAddress;
 use App\Models\State;
 use Filament\Facades\Filament;
+use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Infolists;
-use Filament\Infolists\Components\Actions\Action;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\FontWeight;
 use Illuminate\Support\Arr;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
+use App\Models\Contracts;
 
 trait DisplaysOrderAddresses
 {
-    public static function getDefaultShippingAddressInfoList(): Infolists\Components\Component
+    public static function getDefaultShippingAddressInfoList(): Components\Component
     {
         return self::getOrderAddressInfolistSchema('shipping');
     }
 
-    public static function getShippingAddressInfolist(): Infolists\Components\Component
+    public static function getShippingAddressInfolist(): Components\Component
     {
         return self::callStaticStoreHook('extendShippingAddressInfolist', static::getDefaultShippingAddressInfoList());
     }
 
-    public static function getDefaultBillingAddressInfoList(): Infolists\Components\Component
+    public static function getDefaultBillingAddressInfoList(): Components\Component
     {
         return self::getOrderAddressInfolistSchema('billing');
     }
 
-    public static function getBillingAddressInfoList(): Infolists\Components\Component
+    public static function getBillingAddressInfoList(): Components\Component
     {
         return self::callStaticStoreHook('extendBillingAddressInfolist', static::getDefaultBillingAddressInfoList());
     }
@@ -40,7 +40,7 @@ trait DisplaysOrderAddresses
     public static function getAddressEditSchema(): array
     {
         return self::callStaticStoreHook('extendAddressEditSchema', [
-            SchemaComponents\Grid::make()
+            Components\Grid::make()
                 ->schema([
                     Forms\Components\TextInput::make('first_name')
                         ->label(__('admin::order.form.address.first_name.label'))
@@ -60,7 +60,7 @@ trait DisplaysOrderAddresses
                 ->label(__('admin::order.form.address.tax_identifier.label'))
                 ->autocomplete(false)
                 ->maxLength(255),
-            SchemaComponents\Grid::make()
+            Components\Grid::make()
                 ->schema([
                     Forms\Components\TextInput::make('contact_phone')
                         ->label(__('admin::order.form.address.contact_phone.label'))
@@ -76,7 +76,7 @@ trait DisplaysOrderAddresses
                 ->autocomplete(false)
                 ->maxLength(255)
                 ->required(),
-            SchemaComponents\Grid::make()
+            Components\Grid::make()
                 ->schema([
                     Forms\Components\TextInput::make('line_two')
                         ->label(__('admin::order.form.address.line_two.label'))
@@ -87,7 +87,7 @@ trait DisplaysOrderAddresses
                         ->autocomplete(false)
                         ->maxLength(255),
                 ]),
-            SchemaComponents\Grid::make(3)
+            Components\Grid::make(3)
                 ->schema([
                     Forms\Components\TextInput::make('city')
                         ->label(__('admin::order.form.address.city.label'))
@@ -113,7 +113,7 @@ trait DisplaysOrderAddresses
         ]);
     }
 
-    public static function getOrderAddressInfolistSchema(string $type): Infolists\Components\Section
+    public static function getOrderAddressInfolistSchema(string $type): Components\Section
     {
         $sameAsShipping = fn ($record) => $type == 'billing' && static::addressesMatch($record->shippingAddress, $record->billingAddress);
 
@@ -122,7 +122,7 @@ trait DisplaysOrderAddresses
             default => $record->shippingAddress,
         };
 
-        return Infolists\Components\Section::make(__("admin::order.infolist.{$type}_address.label"))
+        return Components\Section::make(__("admin::order.infolist.{$type}_address.label"))
             ->statePath($type.'Address')
             ->compact()
             ->headerActions([
@@ -179,7 +179,7 @@ trait DisplaysOrderAddresses
             ]);
     }
 
-    private static function addressesMatch(?OrderAddressContract $original = null, ?OrderAddressContract $comparison = null): bool
+    private static function addressesMatch(?Contracts\OrderAddress $original = null, ?Contracts\OrderAddress $comparison = null): bool
     {
         if (! $original || ! $comparison) {
             return false;

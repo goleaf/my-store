@@ -9,6 +9,9 @@ use App\Shipping\ShippingPlugin;
 use App\Base\ShippingModifiers;
 use App\Support\Facades\AdminPanel;
 use Illuminate\Support\ServiceProvider;
+use App\Facades\ModelManifest;
+use App\Models\Contracts\Product;
+use App\Models;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -39,9 +42,9 @@ class AppServiceProvider extends ServiceProvider
             ShippingModifier::class
         );
 
-        \App\Facades\ModelManifest::replace(
-            \App\Models\Contracts\Product::class,
-            \App\Models\Product::class,
+        ModelManifest::replace(
+            Product::class,
+            Models\Product::class,
             // \App\Models\CustomProduct::class,
         );
     }

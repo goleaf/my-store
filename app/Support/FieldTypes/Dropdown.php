@@ -2,11 +2,12 @@
 
 namespace App\Support\FieldTypes;
 
+use App\Http\Requests\Support\Fields\ConfiguredFieldRequest;
 use App\Models\Attribute;
 use App\Support\Synthesizers\DropdownSynth;
-use Filament\Forms\Components\Component;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Select;
+use Filament\Schemas\Components\Component;
 
 class Dropdown extends BaseFieldType
 {
@@ -14,14 +15,19 @@ class Dropdown extends BaseFieldType
 
     public static function getFilamentComponent(Attribute $attribute): Component
     {
+        $request = (new ConfiguredFieldRequest)
+            ->forField($attribute->handle)
+            ->required((bool) $attribute->required)
+            ->withRules($attribute->validation_rules);
+
         return Select::make($attribute->handle)
             ->options(
                 collect($attribute->configuration->get('lookups'))->mapWithKeys(
                     fn ($lookup) => [$lookup['value'] => $lookup['label'] ?? $lookup['value']]
                 )
             )
-            ->when(filled($attribute->validation_rules), fn (Select $component) => $component->rules($attribute->validation_rules))
-            ->required((bool) $attribute->required)
+            ->rules($request->fieldRules($attribute->handle))
+            ->required($request->fieldHasRule($attribute->handle, 'required'))
             ->helperText($attribute->translate('description'));
     }
 

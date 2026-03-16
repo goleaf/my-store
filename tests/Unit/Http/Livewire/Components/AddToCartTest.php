@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Currency;
 use App\Models\Price;
 use App\Models\Language;
+use App\Models\Cart;
 
 test('component can mount', function () {
     Livewire::test(AddToCart::class, ['purchasable' => null])
@@ -41,7 +42,7 @@ test('addToCart dispatches event when valid', function () {
         Price::factory()->make(['currency_id' => $currency->id])->getAttributes()
     );
 
-    $cart = \App\Models\Cart::factory()->create();
+    $cart = Cart::factory()->create();
     CartSession::shouldReceive('manager')->andReturn($cart);
 
     Livewire::test(AddToCart::class, ['purchasable' => $variant])

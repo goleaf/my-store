@@ -10,13 +10,14 @@ use App\Models\Price;
 use App\Support\RelationManagers\BaseRelationManager;
 use Filament\Forms;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rules\Unique;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class CustomerGroupPricingRelationManager extends BaseRelationManager
 {
@@ -34,11 +35,11 @@ class CustomerGroupPricingRelationManager extends BaseRelationManager
         return __('admin::relationmanagers.customer_group_pricing.table.heading');
     }
 
-    public function getDefaultForm(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function getDefaultForm(Schema $schema): Schema
     {
         return $schema
             ->components([
-                SchemaComponents\Group::make([
+                Components\Group::make([
                     Forms\Components\Select::make('currency_id')
                         ->label(
                             __('admin::relationmanagers.pricing.form.currency_id.label')
@@ -56,7 +57,7 @@ class CustomerGroupPricingRelationManager extends BaseRelationManager
                             __('admin::relationmanagers.pricing.form.customer_group_id.helper_text')
                         )->relationship(name: 'customerGroup', titleAttribute: 'name')
                         ->required()
-                        ->unique(ignoreRecord: true, modifyRuleUsing: function (Unique $rule, Forms\Get $get) {
+                        ->unique(ignoreRecord: true, modifyRuleUsing: function (Unique $rule, Get $get) {
                             $owner = $this->getOwnerRecord();
 
                             return $rule
@@ -70,7 +71,7 @@ class CustomerGroupPricingRelationManager extends BaseRelationManager
                         }),
                 ])->columns(2),
 
-                SchemaComponents\Group::make([
+                Components\Group::make([
                     Forms\Components\TextInput::make('price')->formatStateUsing(
                         fn ($state) => $state?->decimal(rounding: false)
                     )->numeric()->helperText(

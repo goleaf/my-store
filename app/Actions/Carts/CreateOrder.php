@@ -8,10 +8,8 @@ use App\Actions\AbstractAction;
 use App\Exceptions\DisallowMultipleCartOrdersException;
 use App\Facades\DB;
 use App\Jobs\Orders\MarkAsNewCustomer;
-use App\Models\Cart;
-use App\Models\Contracts\Cart as CartContract;
-use App\Models\Contracts\Order as OrderContract;
-use App\Models\Order;
+use App\Models\Contracts\Cart;
+use App\Models\Contracts\Order;
 
 final class CreateOrder extends AbstractAction
 {
@@ -19,14 +17,14 @@ final class CreateOrder extends AbstractAction
      * Execute the action.
      */
     public function execute(
-        CartContract $cart,
+        Cart $cart,
         bool $allowMultipleOrders = false,
         ?int $orderIdToUpdate = null
     ): self {
         $this->passThrough = DB::transaction(function () use ($cart, $allowMultipleOrders, $orderIdToUpdate) {
-            /** @var Order $order */
-            /** @var Cart $cart */
-            $order = $cart->draftOrder($orderIdToUpdate)->first() ?: App::make(OrderContract::class);
+            /** @var \App\Models\Order $order */
+            /** @var \App\Models\Cart $cart */
+            $order = $cart->draftOrder($orderIdToUpdate)->first() ?: App::make(Order::class);
 
             if ($cart->hasCompletedOrders() && ! $allowMultipleOrders) {
                 throw new DisallowMultipleCartOrdersException;

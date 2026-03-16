@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\CustomerResource\RelationManagers;
 
 use App\Events\CustomerAddressEdited;
-use App\Models\Contracts\Address as AddressContract;
+use App\Models\Contracts\Address;
 use App\Models\State;
 use App\Support\RelationManagers\BaseRelationManager;
 use Filament\Forms;
@@ -11,7 +11,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class AddressRelationManager extends BaseRelationManager
 {
@@ -81,7 +81,7 @@ class AddressRelationManager extends BaseRelationManager
                     ->after(
                         fn (Model $record) => CustomerAddressEdited::dispatch($record)
                     )
-                    ->fillForm(fn (AddressContract $record): array => [
+                    ->fillForm(fn (Address $record): array => [
                         'title' => $record->title,
                         'first_name' => $record->first_name,
                         'last_name' => $record->last_name,
@@ -97,7 +97,7 @@ class AddressRelationManager extends BaseRelationManager
                         'contact_phone' => $record->contact_phone,
                     ])
                     ->form([
-                        SchemaComponents\Group::make()->schema([
+                        Components\Group::make()->schema([
                             Forms\Components\TextInput::make('title')->label(
                                 __('admin::address.form.title.label')
                             )->columnSpan(1),
@@ -114,7 +114,7 @@ class AddressRelationManager extends BaseRelationManager
                         Forms\Components\TextInput::make('tax_identifier')->label(
                             __('admin::address.form.tax_identifier.label')
                         ),
-                        SchemaComponents\Group::make()->schema([
+                        Components\Group::make()->schema([
                             Forms\Components\TextInput::make('line_one')->label(
                                 __('admin::address.form.line_one.label')
                             ),
@@ -125,7 +125,7 @@ class AddressRelationManager extends BaseRelationManager
                                 __('admin::address.form.line_three.label')
                             ),
                         ])->columns(3),
-                        SchemaComponents\Group::make()->schema([
+                        Components\Group::make()->schema([
                             Forms\Components\Select::make('country_id')->label(
                                 __('admin::address.form.country_id.label')
                             )->relationship(
@@ -145,7 +145,7 @@ class AddressRelationManager extends BaseRelationManager
                                     );
                             }),
                         ])->columns(2),
-                        SchemaComponents\Group::make()->schema([
+                        Components\Group::make()->schema([
                             Forms\Components\TextInput::make('city')->label(
                                 __('admin::address.form.city.label')
                             ),
@@ -153,7 +153,7 @@ class AddressRelationManager extends BaseRelationManager
                                 __('admin::address.form.postcode.label')
                             ),
                         ])->columns(2),
-                        SchemaComponents\Group::make()->schema([
+                        Components\Group::make()->schema([
                             Forms\Components\TextInput::make('contact_email')->label(
                                 __('admin::address.form.contact_email.label')
                             ),

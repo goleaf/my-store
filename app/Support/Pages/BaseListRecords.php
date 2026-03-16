@@ -3,18 +3,25 @@
 namespace App\Support\Pages;
 
 use App\Base\Traits\Searchable;
+use App\Support\Pages\Concerns\ExtendsFooterWidgets;
+use App\Support\Pages\Concerns\ExtendsHeaderActions;
+use App\Support\Pages\Concerns\ExtendsHeaderWidgets;
+use App\Support\Pages\Concerns\ExtendsHeadings;
+use App\Support\Pages\Concerns\ExtendsTablePagination;
+use App\Support\Pages\Concerns\ExtendsTabs;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
+use App\Support\Concerns\CallsHooks;
 
 abstract class BaseListRecords extends ListRecords
 {
-    use \App\Support\Pages\Concerns\ExtendsFooterWidgets;
-    use \App\Support\Pages\Concerns\ExtendsHeaderActions;
-    use \App\Support\Pages\Concerns\ExtendsHeaderWidgets;
-    use \App\Support\Pages\Concerns\ExtendsHeadings;
-    use \App\Support\Pages\Concerns\ExtendsTablePagination;
-    use \App\Support\Pages\Concerns\ExtendsTabs;
-    use \App\Support\Concerns\CallsHooks;
+    use ExtendsFooterWidgets;
+    use ExtendsHeaderActions;
+    use ExtendsHeaderWidgets;
+    use ExtendsHeadings;
+    use ExtendsTablePagination;
+    use ExtendsTabs;
+    use CallsHooks;
 
     protected function applySearchToTableQuery(Builder $query): Builder
     {

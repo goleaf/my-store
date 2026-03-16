@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources;
 
+use App\Base\Enums\ProductVariantPurchasable;
 use App\Filament\Resources\ProductVariantResource\Pages;
-use App\Models\Contracts\ProductVariant as ProductVariantContract;
+use App\Models\Contracts\ProductVariant;
 use App\Models\TaxClass;
 use App\Support\Forms\Components\Attributes;
 use App\Support\Forms\Components\TextInputSelectAffix;
@@ -11,8 +12,8 @@ use App\Support\Resources\BaseResource;
 use Cartalyst\Converter\Laravel\Facades\Converter;
 use Filament\Actions\Action;
 use Filament\Forms;
-use Filament\Forms\Components\Component;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Component;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
@@ -21,7 +22,7 @@ class ProductVariantResource extends BaseResource
 {
     protected static ?string $permission = 'catalog:manage-products';
 
-    protected static ?string $model = ProductVariantContract::class;
+    protected static ?string $model = ProductVariant::class;
 
     protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::End;
 
@@ -52,7 +53,7 @@ class ProductVariantResource extends BaseResource
         ];
     }
 
-    public static function getBaseBreadcrumbs(ProductVariantContract $productVariant): array
+    public static function getBaseBreadcrumbs(ProductVariant $productVariant): array
     {
         return [
             ProductResource::getUrl('edit', [
@@ -67,7 +68,7 @@ class ProductVariantResource extends BaseResource
         ];
     }
 
-    public static function getDefaultForm(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public static function getDefaultForm(Schema $schema): Schema
     {
         return $schema
             ->components([
@@ -129,11 +130,7 @@ class ProductVariantResource extends BaseResource
     public static function getPurchasableFormComponent(): Forms\Components\Select
     {
         return Forms\Components\Select::make('purchasable')
-            ->options([
-                'always' => __('admin::productvariant.form.purchasable.options.always'),
-                'in_stock' => __('admin::productvariant.form.purchasable.options.in_stock'),
-                'in_stock_or_on_backorder' => __('admin::productvariant.form.purchasable.options.in_stock_or_on_backorder'),
-            ])
+            ->options(ProductVariantPurchasable::options())
             ->label(
                 __('admin::productvariant.form.purchasable.label')
             );

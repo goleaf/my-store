@@ -4,32 +4,31 @@ namespace App\Observers;
 
 use App\Base\Purchasable;
 use App\Exceptions\NonPurchasableItemException;
-use App\Models\CartLine;
-use App\Models\Contracts\CartLine as CartLineContract;
+use App\Models\Contracts\CartLine;
 
 class CartLineObserver
 {
     /**
-     * Handle the CartLine "creating" event.
+     * Handle the \App\Models\CartLine "creating" event.
      *
      * @return void
      */
-    public function creating(CartLineContract $cartLine)
+    public function creating(CartLine $cartLine)
     {
-        /** @var CartLine $cartLine */
+        /** @var \App\Models\CartLine $cartLine */
         if (! $cartLine->purchasable instanceof Purchasable) {
             throw new NonPurchasableItemException($cartLine->purchasable_type);
         }
     }
 
     /**
-     * Handle the CartLine "updated" event.
+     * Handle the \App\Models\CartLine "updated" event.
      *
      * @return void
      */
-    public function updating(CartLineContract $cartLine)
+    public function updating(CartLine $cartLine)
     {
-        /** @var CartLine $cartLine */
+        /** @var \App\Models\CartLine $cartLine */
         if (! $cartLine->purchasable instanceof Purchasable) {
             throw new NonPurchasableItemException($cartLine->purchasable_type);
         }

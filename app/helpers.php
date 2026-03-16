@@ -1,14 +1,12 @@
 <?php
 
-use App\Base\Traits\StoreUser;
 use App\Facades\DB;
+use App\Models\Customer;
 
 if (! function_exists('is_store_user')) {
     function is_store_user($user)
     {
-        $traits = class_uses_recursive($user);
-
-        return in_array(StoreUser::class, $traits);
+        return $user instanceof Customer;
     }
 }
 

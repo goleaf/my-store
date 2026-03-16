@@ -1,6 +1,8 @@
 <?php
 
-use App\Models\User;
+use App\Livewire\Auth\Login;
+use App\Livewire\Auth\Register;
+use App\Models\Customer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use function Pest\Laravel\get;
@@ -26,24 +28,24 @@ test('forgot password page is accessible', function () {
         ->assertSeeLivewire('auth.forgot-password');
 });
 
-test('a user can login', function () {
-    $user = User::factory()->create([
+test('a customer can login', function () {
+    $customer = Customer::factory()->create([
         'password' => bcrypt($password = 'password123'),
     ]);
 
-    Livewire::test(\App\Livewire\Auth\Login::class)
-        ->set('email', $user->email)
+    Livewire::test(Login::class)
+        ->set('email', $customer->email)
         ->set('password', $password)
         ->call('login')
         ->assertHasNoErrors()
         ->assertRedirect(route('home'));
 
-    $this->assertAuthenticatedAs($user);
+    $this->assertAuthenticatedAs($customer);
 });
 
-test('a user can register', function () {
-    Livewire::test(\App\Livewire\Auth\Register::class)
-        ->set('name', 'Test User')
+test('a customer can register', function () {
+    Livewire::test(Register::class)
+        ->set('name', 'Test Customer')
         ->set('email', 'test@example.com')
         ->set('password', 'password123')
         ->set('password_confirmation', 'password123')
@@ -51,22 +53,18 @@ test('a user can register', function () {
         ->assertHasNoErrors()
         ->assertRedirect(route('home'));
 
-    $this->assertDatabaseHas('users', [
+    $this->assertDatabaseHas(Customer::class, [
         'email' => 'test@example.com',
-        'name' => 'Test User',
-    ]);
-
-    $this->assertDatabaseHas(\App\Models\Customer::class, [
         'first_name' => 'Test',
-        'last_name' => 'User',
+        'last_name' => 'Customer',
     ]);
 
     $this->assertAuthenticated();
 });
 
-test('a user can logout', function () {
-    $user = User::factory()->create();
-    $this->actingAs($user);
+test('a customer can logout', function () {
+    $customer = Customer::factory()->create();
+    $this->actingAs($customer);
 
     post(route('logout'))
         ->assertRedirect(route('home'));

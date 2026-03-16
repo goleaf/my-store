@@ -5,11 +5,11 @@ namespace App\Filament\Resources\CustomerResource\Widgets;
 use App\DataTypes\Price;
 use App\Facades\DB;
 use App\Models\Currency;
-use Filament\Widgets\StatsOverviewWidget as BaseWidget;
+use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerStatsOverviewWidget extends BaseWidget
+class CustomerStatsOverviewWidget extends StatsOverviewWidget
 {
     public ?Model $record = null;
 

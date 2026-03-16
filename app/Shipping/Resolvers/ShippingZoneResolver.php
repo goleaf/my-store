@@ -2,20 +2,20 @@
 
 namespace App\Shipping\Resolvers;
 
-use Illuminate\Support\Collection;
-use App\Models\Contracts\Country as CountryContract;
-use App\Models\Contracts\State as StateContract;
-use App\Models\Country;
 use App\Models\State;
+use App\Shipping\Enums\ShippingZoneType;
 use App\Shipping\DataTransferObjects\PostcodeLookup;
 use App\Shipping\Models\ShippingZone;
+use App\Models\Contracts;
+use App\Models\Contracts\Country;
+use Illuminate\Support\Collection;
 
 class ShippingZoneResolver
 {
     /**
      * The country to use when resolving zones.
      */
-    protected ?CountryContract $country = null;
+    protected ?Country $country = null;
 
     /**
      * The state to use when resolving zones.
@@ -43,10 +43,10 @@ class ShippingZoneResolver
     /**
      * Set the country.
      */
-    public function country(?CountryContract $country = null): self
+    public function country(?Country $country = null): self
     {
         $this->country = $country;
-        $this->types->push('countries');
+        $this->types->push(ShippingZoneType::Countries->value);
 
         return $this;
     }
@@ -54,10 +54,10 @@ class ShippingZoneResolver
     /**
      * Set the state.
      */
-    public function state(?StateContract $state = null): self
+    public function state(?Contracts\State $state = null): self
     {
         $this->state = $state;
-        $this->types->push('states');
+        $this->types->push(ShippingZoneType::States->value);
 
         return $this;
     }
@@ -68,7 +68,7 @@ class ShippingZoneResolver
     public function postcode(PostcodeLookup $postcodeLookup): self
     {
         $this->postcodeLookup = $postcodeLookup;
-        $this->types->push('postcodes');
+        $this->types->push(ShippingZoneType::Postcodes->value);
 
         return $this;
     }
@@ -78,14 +78,14 @@ class ShippingZoneResolver
      */
     public function get(): Collection
     {
-        $query = ShippingZone::query()->whereType('unrestricted');
+        $query = ShippingZone::query()->where('type', ShippingZoneType::Unrestricted->value);
 
         $query->orWhere(function ($builder) {
             if ($this->country) {
                 $builder->orWhere(function ($qb) {
                     $qb->whereHas('countries', function ($query) {
                         $query->where('country_id', $this->country->id);
-                    })->whereType('countries');
+                    })->where('type', ShippingZoneType::Countries->value);
                 });
             }
 
@@ -93,7 +93,7 @@ class ShippingZoneResolver
                 $builder->orWhere(function ($qb) {
                     $qb->whereHas('states', function ($query) {
                         $query->where('state_id', $this->state->id);
-                    })->whereType('states');
+                    })->where('type', ShippingZoneType::States->value);
                 });
             }
 
@@ -108,11 +108,11 @@ class ShippingZoneResolver
                         $qb->whereHas('countries', function ($query) {
                             $query->where('country_id', $this->postcodeLookup->country->id);
                         });
-                    })->whereType('postcodes');
+                    })->where('type', ShippingZoneType::Postcodes->value);
                 })->orWhere(function ($qb) {
                     $qb->whereHas('countries', function ($query) {
                         $query->where('country_id', $this->postcodeLookup->country->id);
-                    })->whereType('countries');
+                    })->where('type', ShippingZoneType::Countries->value);
                 });
             }
         });

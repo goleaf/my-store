@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources\ProductResource\Pages;
 
+use App\Base\Enums\ProductVariantPurchasable;
 use App\Filament\Resources\ProductResource;
 use App\Filament\Resources\ProductVariantResource\Pages\ManageVariantInventory;
-use App\Models\Contracts\ProductVariant as ProductVariantContract;
+use App\Models\Contracts\ProductVariant;
 use App\Support\Pages\BaseEditRecord;
 use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
@@ -19,7 +20,7 @@ class ManageProductInventory extends BaseEditRecord
 
     public ?string $backorder = null;
 
-    public ?string $purchasable = null;
+    public ProductVariantPurchasable|string|null $purchasable = null;
 
     public ?int $unit_quantity = 1;
 
@@ -65,7 +66,7 @@ class ManageProductInventory extends BaseEditRecord
 
         $this->stock = $variant->stock;
         $this->backorder = $variant->backorder;
-        $this->purchasable = $variant->purchasable;
+        $this->purchasable = $variant->purchasable?->value;
         $this->unit_quantity = $variant->unit_quantity;
         $this->min_quantity = $variant->min_quantity;
         $this->quantity_increment = $variant->quantity_increment;
@@ -80,7 +81,7 @@ class ManageProductInventory extends BaseEditRecord
         return $record;
     }
 
-    protected function getVariant(): ProductVariantContract
+    protected function getVariant(): ProductVariant
     {
         return $this->getRecord()->variants()->withTrashed()->first();
     }
@@ -92,7 +93,7 @@ class ManageProductInventory extends BaseEditRecord
         ];
     }
 
-    public function getDefaultForm(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function getDefaultForm(Schema $schema): Schema
     {
         return (new ManageVariantInventory)->form($schema)->statePath('');
     }

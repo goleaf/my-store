@@ -4,8 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\Pages\ManageOrder;
-use App\Models\Contracts\Order as OrderContract;
-use App\Models\Order;
 use App\Support\Actions\Orders\UpdateStatusBulkAction;
 use App\Support\CustomerStatus;
 use App\Support\OrderStatus;
@@ -20,12 +18,13 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Actions;
+use App\Models\Contracts\Order;
 
 class OrderResource extends BaseResource
 {
     protected static ?string $permission = 'sales:manage-orders';
 
-    protected static ?string $model = OrderContract::class;
+    protected static ?string $model = Order::class;
 
     protected static ?int $navigationSort = 1;
 
@@ -242,7 +241,7 @@ class OrderResource extends BaseResource
 
     public static function getGlobalSearchResultDetails(Model $record): array
     {
-        /** @var Order $record */
+        /** @var \App\Models\Order $record */
         $details = [
             __('admin::order.table.status.label') => $record->getStatusLabelAttribute(),
             __('admin::order.table.total.label') => $record->total?->formatted,

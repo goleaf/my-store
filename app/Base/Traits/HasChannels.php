@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Collection;
 use App\Facades\DB;
 use App\Models\Channel;
-use App\Models\Contracts\Channel as ChannelContract;
+use App\Models\Contracts;
 
 trait HasChannels
 {
@@ -94,7 +94,7 @@ trait HasChannels
      * @param  Builder  $query
      * @return Builder
      */
-    public function scopeChannel($query, ChannelContract|iterable|null $channel = null, ?DateTime $startsAt = null, ?DateTime $endsAt = null)
+    public function scopeChannel($query, Contracts\Channel|iterable|null $channel = null, ?DateTime $startsAt = null, ?DateTime $endsAt = null)
     {
         if (blank($channel)) {
             return $query;

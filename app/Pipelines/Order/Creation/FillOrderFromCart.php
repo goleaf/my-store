@@ -5,22 +5,20 @@ namespace App\Pipelines\Order\Creation;
 use Closure;
 use Illuminate\Support\Facades\App;
 use App\Actions\Orders\GenerateOrderReference;
-use App\Models\Contracts\Currency as CurrencyContract;
-use App\Models\Contracts\Order as OrderContract;
-use App\Models\Order;
+use App\Models\Contracts\Currency;
+use App\Models\Contracts\Order;
 
 class FillOrderFromCart
 {
     /**
-     * @param  Closure(OrderContract): mixed  $next
+     * @param  Closure(\App\Models\Contracts\Order): mixed  $next
      */
-    public function handle(OrderContract $order, Closure $next): mixed
+    public function handle(Order $order, Closure $next): mixed
     {
-        /** @var Order $order */
+        /** @var \App\Models\Order $order */
         $cart = $order->cart->calculate();
 
         $order->fill([
-            'user_id' => $cart->user_id,
             'customer_id' => $cart->customer_id,
             'channel_id' => $cart->channel_id,
             'status' => config('store.orders.draft_status'),
@@ -36,7 +34,7 @@ class FillOrderFromCart
             'tax_total' => $cart->taxTotal->value,
             'currency_code' => $cart->currency->code,
             'exchange_rate' => $cart->currency->exchange_rate,
-            'compare_currency_code' => App::make(CurrencyContract::class)::getDefault()?->code,
+            'compare_currency_code' => App::make(Currency::class)::getDefault()?->code,
             'meta' => $cart->meta,
         ])->save();
 

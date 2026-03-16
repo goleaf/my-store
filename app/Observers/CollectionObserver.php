@@ -3,29 +3,28 @@
 namespace App\Observers;
 
 use App\Jobs\Collections\UpdateProductPositions;
-use App\Models\Collection;
-use App\Models\Contracts\Collection as CollectionContract;
+use App\Models\Contracts\Collection;
 
 class CollectionObserver
 {
     /**
-     * Handle the Collection "updated" event.
+     * Handle the \App\Models\Collection "updated" event.
      *
      * @return void
      */
-    public function updated(CollectionContract $collection)
+    public function updated(Collection $collection)
     {
         UpdateProductPositions::dispatch($collection);
     }
 
     /**
-     * Handle the Collection "deleting" event.
+     * Handle the \App\Models\Collection "deleting" event.
      *
      * @return void
      */
-    public function deleting(CollectionContract $collection)
+    public function deleting(Collection $collection)
     {
-        /** @var Collection $collection */
+        /** @var \App\Models\Collection $collection */
         $collection->products()->detach();
         $collection->channels()->detach();
         $collection->urls()->delete();

@@ -16,7 +16,7 @@ use App\Base\Traits\LogsActivity;
 use App\Base\Traits\Searchable;
 use App\Database\Factories\BrandFactory;
 use App\Facades\DB;
-use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
+use Spatie\MediaLibrary;
 
 /**
  * @property int $id
@@ -25,7 +25,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property ?\Illuminate\Support\Carbon $created_at
  * @property ?\Illuminate\Support\Carbon $updated_at
  */
-class Brand extends BaseModel implements Contracts\Brand, SpatieHasMedia
+class Brand extends BaseModel implements Contracts\Brand, MediaLibrary\HasMedia
 {
     use HasAttributes;
     use HasFactory;

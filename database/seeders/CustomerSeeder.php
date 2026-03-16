@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Faker\Factory;
 use Illuminate\Support\Facades\DB;
 use App\Models\Address;
@@ -23,27 +22,11 @@ class CustomerSeeder extends AbstractSeeder
             $customers = Customer::factory(100)->create();
 
             foreach ($customers as $customer) {
-                for ($i = 0; $i < $faker->numberBetween(1, 10); $i++) {
-                    $user = User::factory()->create();
-
-                    $customer->users()->attach($user);
-                }
-
                 Address::factory()->create([
                     'shipping_default' => true,
-                    'country_id' => $countryId,
-                    'customer_id' => $customer->id,
-                ]);
-
-                Address::factory()->create([
-                    'shipping_default' => false,
-                    'country_id' => $countryId,
-                    'customer_id' => $customer->id,
-                ]);
-
-                Address::factory()->create([
-                    'shipping_default' => false,
                     'billing_default' => true,
+                    'contact_email' => $customer->email,
+                    'contact_phone' => $customer->phone,
                     'country_id' => $countryId,
                     'customer_id' => $customer->id,
                 ]);
@@ -51,6 +34,26 @@ class CustomerSeeder extends AbstractSeeder
                 Address::factory()->create([
                     'shipping_default' => false,
                     'billing_default' => false,
+                    'contact_email' => $customer->email,
+                    'contact_phone' => $customer->phone,
+                    'country_id' => $countryId,
+                    'customer_id' => $customer->id,
+                ]);
+
+                Address::factory()->create([
+                    'shipping_default' => false,
+                    'billing_default' => true,
+                    'contact_email' => $customer->email,
+                    'contact_phone' => $customer->phone,
+                    'country_id' => $countryId,
+                    'customer_id' => $customer->id,
+                ]);
+
+                Address::factory()->create([
+                    'shipping_default' => false,
+                    'billing_default' => false,
+                    'contact_email' => $customer->email,
+                    'contact_phone' => $customer->phone,
                     'country_id' => $countryId,
                     'customer_id' => $customer->id,
                 ]);

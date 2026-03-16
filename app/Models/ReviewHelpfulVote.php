@@ -11,7 +11,7 @@ class ReviewHelpfulVote extends Model
 
     protected $fillable = [
         'review_id',
-        'user_id',
+        'customer_id',
     ];
 
     public function review()
@@ -19,8 +19,8 @@ class ReviewHelpfulVote extends Model
         return $this->belongsTo(ProductReview::class, 'review_id');
     }
 
-    public function user()
+    public function customer()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Customer::class);
     }
 }

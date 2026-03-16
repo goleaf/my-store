@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use Filament\Support\Colors\Color;
 class OrderStatus
 {
     protected static array $cachedStatusColor = [];
@@ -15,6 +16,6 @@ class OrderStatus
 
     public static function getColor($status): array
     {
-        return static::$cachedStatusColor[$status] ??= \Filament\Support\Colors\Color::hex(filled($color = config('store.orders.statuses.'.$status.'.color')) ? $color : '#7C7C7C');
+        return static::$cachedStatusColor[$status] ??= Color::hex(filled($color = config('store.orders.statuses.'.$status.'.color')) ? $color : '#7C7C7C');
     }
 }

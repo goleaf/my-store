@@ -9,10 +9,7 @@ use App\DiscountTypes\AbstractDiscountType;
 
 interface Discount
 {
-    /**
-     * Return the discount's users relationship.
-     */
-    public function users(): BelongsToMany;
+    public function customers(): BelongsToMany;
 
     /**
      * Return the discount's discountables relationship.

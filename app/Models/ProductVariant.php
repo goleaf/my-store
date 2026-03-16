@@ -2,13 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Collection;
 use App\Base\BaseModel;
 use App\Base\Casts\AsAttributeData;
+use App\Base\Enums\ProductVariantPurchasable;
 use App\Base\HasThumbnailImage;
 use App\Base\Purchasable;
 use App\Base\Traits\HasAttributes;
@@ -18,7 +14,12 @@ use App\Base\Traits\HasPrices;
 use App\Base\Traits\HasTranslations;
 use App\Base\Traits\LogsActivity;
 use App\Database\Factories\ProductVariantFactory;
-use Spatie\LaravelBlink\BlinkFacade as Blink;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
+use Spatie\LaravelBlink\BlinkFacade;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
@@ -80,6 +81,7 @@ class ProductVariant extends BaseModel implements Contracts\ProductVariant, HasT
             'original_price_override' => 'decimal:2',
             'sort_order' => 'integer',
             'is_active' => 'boolean',
+            'purchasable' => ProductVariantPurchasable::class,
         ];
     }
 
@@ -131,7 +133,7 @@ class ProductVariant extends BaseModel implements Contracts\ProductVariant, HasT
      */
     public function getTaxClass(): TaxClass
     {
-        return Blink::once("tax_class_{$this->tax_class_id}", function () {
+        return BlinkFacade::once("tax_class_{$this->tax_class_id}", function () {
             return $this->taxClass;
         });
     }
@@ -208,7 +210,7 @@ class ProductVariant extends BaseModel implements Contracts\ProductVariant, HasT
 
     public function canBeFulfilledAtQuantity(int $quantity): bool
     {
-        if ($this->purchasable == 'always') {
+        if ($this->purchasable === ProductVariantPurchasable::Always) {
             return true;
         }
 
@@ -217,7 +219,7 @@ class ProductVariant extends BaseModel implements Contracts\ProductVariant, HasT
 
     public function getTotalInventory(): int
     {
-        if ($this->purchasable == 'in_stock') {
+        if ($this->purchasable === ProductVariantPurchasable::InStock) {
             return $this->stock;
         }
 

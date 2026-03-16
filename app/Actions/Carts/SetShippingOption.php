@@ -4,8 +4,7 @@ namespace App\Actions\Carts;
 
 use App\Actions\AbstractAction;
 use App\DataTypes\ShippingOption;
-use App\Models\Cart;
-use App\Models\Contracts\Cart as CartContract;
+use App\Models\Contracts\Cart;
 
 class SetShippingOption extends AbstractAction
 {
@@ -13,10 +12,10 @@ class SetShippingOption extends AbstractAction
      * Execute the action.
      */
     public function execute(
-        CartContract $cart,
+        Cart $cart,
         ShippingOption $shippingOption
     ): self {
-        /** @var Cart $cart */
+        /** @var \App\Models\Cart $cart */
         $cart->shippingAddress->shippingOption = $shippingOption;
         $cart->shippingAddress->update([
             'shipping_option' => $shippingOption->getIdentifier(),

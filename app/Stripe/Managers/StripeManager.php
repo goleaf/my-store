@@ -3,8 +3,6 @@
 namespace App\Stripe\Managers;
 
 use Illuminate\Support\Collection;
-use App\Models\Cart;
-use App\Models\Contracts\Cart as CartContract;
 use App\Stripe\Enums\CancellationReason;
 use Stripe\Charge;
 use Stripe\Exception\ApiErrorException;
@@ -13,6 +11,8 @@ use Stripe\PaymentIntent;
 use Stripe\PaymentMethod;
 use Stripe\Stripe;
 use Stripe\StripeClient;
+use App\Models\Contracts\Cart;
+use Exception;
 
 class StripeManager
 {
@@ -31,14 +31,14 @@ class StripeManager
         ]);
     }
 
-    public function getCartIntentId(CartContract $cart): ?string
+    public function getCartIntentId(Cart $cart): ?string
     {
         return $cartModel->meta['payment_intent'] ?? $cart->paymentIntents()->active()->first()?->intent_id;
     }
 
-    public function fetchOrCreateIntent(CartContract $cart, array $createOptions = []): PaymentIntent
+    public function fetchOrCreateIntent(Cart $cart, array $createOptions = []): PaymentIntent
     {
-        /** @var Cart $cart */
+        /** @var \App\Models\Cart $cart */
         $existingIntentId = $this->getCartIntentId($cart);
 
         $intent = $existingIntentId ? $this->fetchIntent($existingIntentId) : $this->createIntent($cart, $createOptions);
@@ -70,9 +70,9 @@ class StripeManager
     /**
      * Create a payment intent from a Cart
      */
-    public function createIntent(CartContract $cart, array $opts = []): PaymentIntent
+    public function createIntent(Cart $cart, array $opts = []): PaymentIntent
     {
-        /** @var Cart $cart */
+        /** @var \App\Models\Cart $cart */
         $existingId = $this->getCartIntentId($cart);
 
         if (
@@ -98,9 +98,9 @@ class StripeManager
         return $paymentIntent;
     }
 
-    public function updateShippingAddress(CartContract $cart): void
+    public function updateShippingAddress(Cart $cart): void
     {
-        /** @var Cart $cart */
+        /** @var \App\Models\Cart $cart */
         $address = $cart->shippingAddress;
 
         if ($address) {
@@ -121,9 +121,9 @@ class StripeManager
         }
     }
 
-    public function updateIntent(CartContract $cart, array $values): void
+    public function updateIntent(Cart $cart, array $values): void
     {
-        /** @var Cart $cart */
+        /** @var \App\Models\Cart $cart */
         $intentId = $this->getCartIntentId($cart);
 
         if (! $intentId) {
@@ -141,9 +141,9 @@ class StripeManager
         );
     }
 
-    public function syncIntent(CartContract $cart): void
+    public function syncIntent(Cart $cart): void
     {
-        /** @var Cart $cart */
+        /** @var \App\Models\Cart $cart */
         $intentId = $this->getCartIntentId($cart);
 
         if (! $intentId) {
@@ -158,9 +158,9 @@ class StripeManager
         );
     }
 
-    public function cancelIntent(CartContract $cart, CancellationReason $reason): void
+    public function cancelIntent(Cart $cart, CancellationReason $reason): void
     {
-        /** @var Cart $cart */
+        /** @var \App\Models\Cart $cart */
         $intentId = $this->getCartIntentId($cart);
 
         if (! $intentId) {
@@ -177,7 +177,7 @@ class StripeManager
                 'processing_at' => now(),
                 'processed_at' => now(),
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
 
         }
     }
@@ -204,7 +204,7 @@ class StripeManager
                     'payment_intent' => $paymentIntentId,
                 ])['data'] ?? null
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             //
         }
 

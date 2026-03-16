@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Facades\CartSession;
+use App\Facades\Payments;
 
 uses(RefreshDatabase::class);
 
@@ -10,6 +12,6 @@ test('store config is merged', function () {
 });
 
 test('store facades are resolvable', function () {
-    expect(app(\App\Facades\CartSession::class))->toBeObject();
-    expect(app(\App\Facades\Payments::class))->toBeObject();
+    expect(app(CartSession::class))->toBeObject();
+    expect(app(Payments::class))->toBeObject();
 });

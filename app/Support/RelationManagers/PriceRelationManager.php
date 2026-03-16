@@ -4,18 +4,19 @@ namespace App\Support\RelationManagers;
 
 use App\Events\ModelPricesUpdated;
 use App\Facades\DB;
+use App\Http\Requests\Filament\Pricing\MinQuantityRequest;
 use App\Models\Currency;
 use App\Models\CustomerGroup;
 use App\Models\Price;
-use Closure;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Schemas\Components\Utilities\Get;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class PriceRelationManager extends BaseRelationManager
 {
@@ -31,11 +32,11 @@ class PriceRelationManager extends BaseRelationManager
         return __('admin::relationmanagers.pricing.table.heading');
     }
 
-    public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function form(Schema $schema): Schema
     {
         return $schema
             ->components([
-                SchemaComponents\Group::make([
+                Components\Group::make([
                     Forms\Components\Select::make('currency_id')
                         ->label(
                             __('admin::relationmanagers.pricing.form.currency_id.label')
@@ -63,29 +64,17 @@ class PriceRelationManager extends BaseRelationManager
                         ->default(2)
                         ->minValue(2)
                         ->required()
-                        ->rules([
-                            fn (Forms\Get $get, $record) => function (string $attribute, $value, Closure $fail) use ($get, $record) {
-                                $owner = $this->getOwnerRecord();
-
-                                $exist = Price::query()
-                                    ->when(filled($record), fn ($query) => $query->where('id', '!=', $record->id))
-                                    ->when(blank($get('customer_group_id')),
-                                        fn ($query) => $query->whereNull('customer_group_id'),
-                                        fn ($query) => $query->where('customer_group_id', $get('customer_group_id')))
-                                    ->where('currency_id', $get('currency_id'))
-                                    ->where('priceable_type', $owner->getMorphClass())
-                                    ->where('priceable_id', $owner->id)
-                                    ->where('min_quantity', $get('min_quantity'))
-                                    ->count();
-
-                                if ($exist) {
-                                    $fail(__('admin::relationmanagers.pricing.form.min_quantity.validation.unique'));
-                                }
-                            },
-                        ]),
+                        ->rules(fn (Get $get, $record) => app(MinQuantityRequest::class)
+                            ->forContext(
+                                owner: $this->getOwnerRecord(),
+                                record: $record,
+                                currencyId: $get('currency_id'),
+                                customerGroupId: $get('customer_group_id'),
+                            )
+                            ->fieldRules('min_quantity')),
                 ])->columns(3),
 
-                SchemaComponents\Group::make([
+                Components\Group::make([
                     Forms\Components\TextInput::make('price')->formatStateUsing(
                         fn ($state) => $state?->decimal(rounding: false)
                     )->numeric()->helperText(
@@ -148,9 +137,10 @@ class PriceRelationManager extends BaseRelationManager
                         __('admin::relationmanagers.pricing.table.currency.label')
                     ),
                 Tables\Filters\SelectFilter::make('min_quantity')->options(
-                    Price::where('priceable_id', $this->getOwnerRecord()->id)
+                    Price::query()
+                        ->where('priceable_id', $this->getOwnerRecord()->id)
                         ->where('priceable_type', $this->getOwnerRecord()->getMorphClass())
-                        ->get()
+                        ->orderBy('min_quantity')
                         ->pluck('min_quantity', 'min_quantity')
                 )->label(
                     __('admin::relationmanagers.pricing.table.min_quantity.label')

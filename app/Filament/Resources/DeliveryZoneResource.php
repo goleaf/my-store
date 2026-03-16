@@ -4,19 +4,21 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\DeliveryZoneResource\Pages;
+use App\Http\Requests\Filament\Shipping\DeliveryZoneRequest;
 use App\Models\Store\Models\DeliveryZone;
 use App\Support\Resources\BaseResource;
+use BackedEnum;
+use Filament\Actions;
 use Filament\Forms;
+use Filament\Schemas\Components;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
 
 class DeliveryZoneResource extends BaseResource
 {
     protected static ?string $model = DeliveryZone::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'lucide-truck';
+    protected static string|BackedEnum|null $navigationIcon = 'lucide-truck';
 
     public static function getLabel(): string
     {
@@ -35,21 +37,32 @@ class DeliveryZoneResource extends BaseResource
 
     protected static function getMainFormComponents(): array
     {
+        $request = static::request();
+
         return [
-            SchemaComponents\Section::make()->schema([
+            Components\Section::make()->schema([
                 Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
+                    ->rules($request->fieldRules('name'))
+                    ->required($request->fieldHasRule('name', 'required')),
                 Forms\Components\TextInput::make('min_order')
-                    ->numeric()
+                    ->type('number')
+                    ->inputMode('decimal')
+                    ->step('0.0001')
+                    ->rules($request->fieldRules('min_order'))
+                    ->required($request->fieldHasRule('min_order', 'required'))
                     ->prefix('$')
                     ->default(0),
                 Forms\Components\TextInput::make('delivery_fee')
-                    ->numeric()
+                    ->type('number')
+                    ->inputMode('decimal')
+                    ->step('0.0001')
+                    ->rules($request->fieldRules('delivery_fee'))
+                    ->required($request->fieldHasRule('delivery_fee', 'required'))
                     ->prefix('$')
                     ->default(0),
                 Forms\Components\Toggle::make('is_active')
-                    ->required()
+                    ->rules($request->fieldRules('is_active'))
+                    ->required($request->fieldHasRule('is_active', 'required'))
                     ->default(true),
             ])->columns(2),
         ];
@@ -104,5 +117,10 @@ class DeliveryZoneResource extends BaseResource
             'create' => Pages\CreateDeliveryZone::route('/create'),
             'edit' => Pages\EditDeliveryZone::route('/{record}/edit'),
         ];
+    }
+
+    protected static function request(): DeliveryZoneRequest
+    {
+        return new DeliveryZoneRequest;
     }
 }

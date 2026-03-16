@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Channel;
-use App\Models\Contracts\Channel as ChannelContract;
+use App\Models\Contracts;
 
 class ChannelObserver
 {
@@ -12,7 +12,7 @@ class ChannelObserver
      *
      * @return void
      */
-    public function created(ChannelContract $channel)
+    public function created(Contracts\Channel $channel)
     {
         $this->ensureOnlyOneDefault($channel);
     }
@@ -22,7 +22,7 @@ class ChannelObserver
      *
      * @return void
      */
-    public function updated(ChannelContract $channel)
+    public function updated(Contracts\Channel $channel)
     {
         $this->ensureOnlyOneDefault($channel);
     }
@@ -32,7 +32,7 @@ class ChannelObserver
      *
      * @return void
      */
-    public function deleted(ChannelContract $channel)
+    public function deleted(Contracts\Channel $channel)
     {
         //
     }
@@ -42,7 +42,7 @@ class ChannelObserver
      *
      * @return void
      */
-    public function forceDeleted(ChannelContract $channel)
+    public function forceDeleted(Contracts\Channel $channel)
     {
         //
     }
@@ -52,7 +52,7 @@ class ChannelObserver
      *
      * @param  Channel  $savedChannel  The channel that was just saved.
      */
-    protected function ensureOnlyOneDefault(ChannelContract $savedChannel): void
+    protected function ensureOnlyOneDefault(Contracts\Channel $savedChannel): void
     {
         // Wrap here so we avoid a query if it's not been set to default.
         if ($savedChannel->default) {

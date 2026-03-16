@@ -8,9 +8,9 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Contracts\Product as ProductContract;
 use App\Models\Product;
 use Filament\Actions;
+use App\Models\Contracts;
 
 class ShippingExclusionRelationManager extends RelationManager
 {
@@ -23,7 +23,7 @@ class ShippingExclusionRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function form(Schema $schema): Schema
     {
         return $schema
             ->components([
@@ -32,12 +32,12 @@ class ShippingExclusionRelationManager extends RelationManager
                         Forms\Components\MorphToSelect\Type::make(Product::modelClass())
                             ->titleAttribute('name')
                             ->getOptionLabelUsing(
-                                fn (Model $record) => $record->purchasable->attr('name')
+                                fn (Model $record) => $record->attr('name')
                             )
                             ->getSearchResultsUsing(static function (Forms\Components\Select $component, string $search): array {
                                 return get_search_builder(Product::modelClass(), $search)
                                     ->get()
-                                    ->mapWithKeys(fn (ProductContract $record): array => [$record->getKey() => $record->translateAttribute('name')])
+                                    ->mapWithKeys(fn (Contracts\Product $record): array => [$record->getKey() => $record->translateAttribute('name')])
                                     ->all();
                             }),
                     ])
@@ -52,11 +52,12 @@ class ShippingExclusionRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(
+                fn ($query) => $query->with(['purchasable.thumbnail', 'purchasable.variants'])
+            )
             ->columns([
-                Tables\Columns\SpatieMediaLibraryImageColumn::make('purchasable.thumbnail')
-                    ->collection(config('store.media.collection'))
-                    ->conversion('small')
-                    ->limit(1)
+                Tables\Columns\ImageColumn::make('purchasable_thumbnail')
+                    ->state(fn (Model $record): string => $record->purchasable?->getThumbnailImage() ?? '')
                     ->square()
                     ->label(''),
                 Tables\Columns\TextColumn::make('purchasable')

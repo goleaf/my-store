@@ -2,14 +2,14 @@
 
 namespace App\Base;
 
-use App\Models\Contracts\Order as OrderContract;
+use App\Models\Contracts\Order;
 
 class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
 {
     /**
      * {@inheritDoc}
      */
-    public function generate(OrderContract $order): string
+    public function generate(Order $order): string
     {
         $config = config('store.orders.reference_format', []);
 

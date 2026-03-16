@@ -2,10 +2,11 @@
 
 namespace App\Support\FieldTypes;
 
+use App\Http\Requests\Support\Fields\ConfiguredFieldRequest;
 use App\Models\Attribute;
 use App\Support\Synthesizers\ListSynth;
-use Filament\Forms\Components\Component;
 use Filament\Forms\Components\KeyValue;
+use Filament\Schemas\Components\Component;
 
 class ListField extends BaseFieldType
 {
@@ -13,13 +14,18 @@ class ListField extends BaseFieldType
 
     public static function getFilamentComponent(Attribute $attribute): Component
     {
+        $request = (new ConfiguredFieldRequest)
+            ->forField($attribute->handle)
+            ->required((bool) $attribute->required)
+            ->withRules($attribute->validation_rules);
+
         return KeyValue::make($attribute->handle)
             ->reorderable()
             ->dehydrateStateUsing(function ($state) {
                 return $state;
             })
-            ->when(filled($attribute->validation_rules), fn (KeyValue $component) => $component->rules($attribute->validation_rules))
-            ->required((bool) $attribute->required)
+            ->rules($request->fieldRules($attribute->handle))
+            ->required($request->fieldHasRule($attribute->handle, 'required'))
             ->helperText($attribute->translate('description'));
     }
 }

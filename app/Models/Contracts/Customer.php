@@ -14,11 +14,6 @@ interface Customer
     public function customerGroups(): BelongsToMany;
 
     /**
-     * Return the customer group relationship.
-     */
-    public function users(): BelongsToMany;
-
-    /**
      * Return the customer's addresses relationship.
      */
     public function addresses(): HasMany;

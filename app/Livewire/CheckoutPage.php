@@ -2,15 +2,17 @@
 
 namespace App\Livewire;
 
-use Illuminate\Support\Collection;
-use Illuminate\View\View;
-use Livewire\Component;
 use App\Facades\CartSession;
 use App\Facades\Payments;
 use App\Facades\ShippingManifest;
+use App\Http\Requests\Checkout\SaveAddressRequest;
+use App\Http\Requests\Checkout\SelectShippingOptionRequest;
 use App\Models\Cart;
 use App\Models\CartAddress;
 use App\Models\Country;
+use Illuminate\Support\Collection;
+use Illuminate\View\View;
+use Livewire\Component;
 
 class CheckoutPage extends Component
 {
@@ -76,18 +78,23 @@ class CheckoutPage extends Component
         'payment_intent_client_secret',
     ];
 
-    /**
-     * {@inheritDoc}
-     */
     public function rules(): array
     {
         return array_merge(
-            $this->getAddressValidation('shipping'),
-            $this->getAddressValidation('billing'),
+            (new SaveAddressRequest)
+                ->withPrefix('shipping')
+                ->requireContactEmail()
+                ->rules(),
+            (new SaveAddressRequest)
+                ->withPrefix('billing')
+                ->requireContactEmail()
+                ->rules(),
+            (new SelectShippingOptionRequest)
+                ->forField('chosenShipping')
+                ->rules(),
             [
-                'shippingIsBilling' => 'boolean',
-                'chosenShipping' => 'required',
-            ]
+                'shippingIsBilling' => ['boolean'],
+            ],
         );
     }
 
@@ -196,9 +203,10 @@ class CheckoutPage extends Component
      */
     public function saveAddress(string $type): void
     {
-        $validatedData = $this->validate(
-            $this->getAddressValidation($type)
-        );
+        $request = (new SaveAddressRequest)
+            ->withPrefix($type)
+            ->requireContactEmail();
+        $validatedData = $this->validate($request->rules());
 
         $address = $this->{$type};
 
@@ -235,6 +243,11 @@ class CheckoutPage extends Component
      */
     public function saveShippingOption(): void
     {
+        $request = (new SelectShippingOptionRequest)->forField('chosenShipping');
+        $request->validatePayload([
+            'chosenShipping' => $this->chosenShipping,
+        ]);
+
         $option = $this->shippingOptions->first(fn ($option) => $option->getIdentifier() == $this->chosenShipping);
 
         CartSession::setShippingOption($option);
@@ -276,28 +289,6 @@ class CheckoutPage extends Component
         return ShippingManifest::getOptions(
             $this->cart
         );
-    }
-
-    /**
-     * Return the address validation rules for a given type.
-     */
-    protected function getAddressValidation(string $type): array
-    {
-        return [
-            "{$type}.first_name" => 'required',
-            "{$type}.last_name" => 'required',
-            "{$type}.line_one" => 'required',
-            "{$type}.country_id" => 'required',
-            "{$type}.city" => 'required',
-            "{$type}.postcode" => 'required',
-            "{$type}.company_name" => 'nullable',
-            "{$type}.line_two" => 'nullable',
-            "{$type}.line_three" => 'nullable',
-            "{$type}.state" => 'nullable',
-            "{$type}.delivery_instructions" => 'nullable',
-            "{$type}.contact_email" => 'required|email',
-            "{$type}.contact_phone" => 'nullable',
-        ];
     }
 
     public function render(): View

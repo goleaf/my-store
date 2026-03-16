@@ -2,10 +2,10 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Foundation\Exceptions;
 
-class Handler extends ExceptionHandler
+class Handler extends Exceptions\Handler
 {
     /**
      * A list of the inputs that are never flashed to the session on validation exceptions.

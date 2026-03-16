@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +12,7 @@ use App\DataTypes\Price;
 use App\Facades\Pricing;
 use App\Models\Channel;
 use App\Models\Country;
+use App\Models\Customer;
 use App\Models\Currency;
 use App\Models\Order;
 use App\Models\OrderAddress;
@@ -28,7 +28,7 @@ class OrderSeeder extends Seeder
     {
         DB::transaction(function () {
             $variants = ProductVariant::get();
-            $users = User::get();
+            $customers = Customer::with('customerGroups')->get();
             $faker = Factory::create();
             $channel = Channel::getDefault();
             $currency = Currency::getDefault();
@@ -77,8 +77,7 @@ class OrderSeeder extends Seeder
                     ]);
                 }
 
-                // Is this for a user?
-                $hasUser = $faker->boolean(75);
+                $hasCustomer = $faker->boolean(75);
 
                 $order = [
                     'channel_id' => $channel->id,
@@ -101,11 +100,10 @@ class OrderSeeder extends Seeder
                     ])),
                 ];
 
-                if ($hasUser) {
-                    $user = $users->shuffle()->first();
+                if ($hasCustomer) {
+                    $customer = $customers->shuffle()->first();
 
-                    $order['customer_id'] = $user->customers->first()?->id;
-                    $order['user_id'] = $user->id;
+                    $order['customer_id'] = $customer?->id;
                 }
 
                 $orderModel = Order::factory()->create($order);

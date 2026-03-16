@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\DiscountResource\RelationManagers;
 
-use App\Models\Contracts\ProductVariant as ProductVariantContract;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Support\RelationManagers\BaseRelationManager;
@@ -11,6 +10,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Actions;
+use App\Models\Contracts;
 
 class ProductVariantLimitationRelationManager extends BaseRelationManager
 {
@@ -54,7 +54,7 @@ class ProductVariantLimitationRelationManager extends BaseRelationManager
                                     return ProductVariant::whereIn('product_id', $products->pluck('id'))
                                         ->with(['product'])
                                         ->get()
-                                        ->mapWithKeys(fn (ProductVariantContract $record): array => [$record->getKey() => $record->product->attr('name').' - '.$record->sku])
+                                        ->mapWithKeys(fn (Contracts\ProductVariant $record): array => [$record->getKey() => $record->product->attr('name').' - '.$record->sku])
                                         ->all();
                                 }),
                         ]),

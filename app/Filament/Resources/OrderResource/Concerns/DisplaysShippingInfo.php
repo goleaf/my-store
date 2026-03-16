@@ -3,18 +3,19 @@
 namespace App\Filament\Resources\OrderResource\Concerns;
 
 use Filament\Infolists;
+use Filament\Schemas\Components;
 use Filament\Support\Enums\IconPosition;
 
 trait DisplaysShippingInfo
 {
-    public static function getShippingInfolist(): Infolists\Components\Section
+    public static function getShippingInfolist(): Components\Section
     {
         return self::callStaticStoreHook('extendShippingInfolist', static::getDefaultShippingInfolist());
     }
 
-    public static function getDefaultShippingInfolist(): Infolists\Components\Section
+    public static function getDefaultShippingInfolist(): Components\Section
     {
-        return Infolists\Components\Section::make()
+        return Components\Section::make()
             ->schema([
                 Infolists\Components\RepeatableEntry::make('shippingLines')
                     ->hiddenLabel()

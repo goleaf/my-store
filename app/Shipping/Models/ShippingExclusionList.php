@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Base\BaseModel;
 use App\Base\Traits\LogsActivity;
-use App\Shipping\Factories\ShippingExclusionListFactory;
+use App\Shipping\Database\Factories\ShippingExclusionListFactory;
 
 class ShippingExclusionList extends BaseModel implements Contracts\ShippingExclusionList
 {

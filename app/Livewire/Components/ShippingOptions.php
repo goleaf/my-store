@@ -2,11 +2,12 @@
 
 namespace App\Livewire\Components;
 
+use App\Facades\CartSession;
+use App\Facades\ShippingManifest;
+use App\Http\Requests\Checkout\SelectShippingOptionRequest;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
-use App\Facades\CartSession;
-use App\Facades\ShippingManifest;
 
 class ShippingOptions extends Component
 {
@@ -35,19 +36,15 @@ class ShippingOptions extends Component
         );
     }
 
-    public function rules(): array
-    {
-        return [
-            'chosenOption' => 'required',
-        ];
-    }
-
     /**
      * Save the shipping option.
      */
     public function save(): void
     {
-        $this->validate();
+        $request = new SelectShippingOptionRequest;
+        $request->validatePayload([
+            'chosenOption' => $this->chosenOption,
+        ]);
 
         $option = $this->shippingOptions->first(fn ($option) => $option->getIdentifier() == $this->chosenOption);
 

@@ -5,6 +5,7 @@ namespace App\Database\Factories;
 use Illuminate\Support\Str;
 use App\Models\Attribute;
 use App\Models\AttributeGroup;
+use App\FieldTypes\Text;
 
 class AttributeFactory extends BaseFactory
 {
@@ -26,7 +27,7 @@ class AttributeFactory extends BaseFactory
             ],
             'handle' => Str::slug($this->faker->name()),
             'section' => $this->faker->name(),
-            'type' => \App\FieldTypes\Text::class,
+            'type' => Text::class,
             'required' => false,
             'default_value' => '',
             'configuration' => [

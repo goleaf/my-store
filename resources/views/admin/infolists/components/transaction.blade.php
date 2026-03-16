@@ -1,5 +1,8 @@
 @php
+    use App\Base\Enums\TransactionType;
+
     $transaction = $getState();
+    $type = $transaction->type;
 @endphp
 
 @once
@@ -11,10 +14,10 @@
     @class([
         'text-sm rounded-lg shadow-md border dark:bg-gray-900',
         'text-gray-950 dark:text-white',
-        match($transaction->type){
-            'refund' => 'border-orange-300',
-            'intent' => 'border-sky-300',
-            'capture' => 'border-green-300',
+        match($type){
+            TransactionType::Refund => 'border-orange-300',
+            TransactionType::Intent => 'border-sky-300',
+            TransactionType::Capture => 'border-green-300',
         },
         '!border-red-500 bg-red-50' => !$transaction->success,
         'bg-gray-50' => $transaction->success,
@@ -57,13 +60,13 @@
                 @class([
                     "text-sm",
                     'text-red-500' => !$transaction->success,
-                    match($transaction->type){
-                        'refund' => "text-orange-500",
+                    match($type){
+                        TransactionType::Refund => "text-orange-500",
                         default => "text-gray-900 dark:text-gray-100",
                     },
                 ])
             >
-                @if($transaction->type == 'refund')-@endif{{ $transaction->amount->formatted }}
+                @if($type === TransactionType::Refund)-@endif{{ $transaction->amount->formatted }}
             </strong>
         </div>
 
@@ -108,18 +111,17 @@
         @class([
             "bottom-0 left-0 block w-full text-center rounded-b-lg border-t text-xs py-1",
             "!bg-red-50 !dark:bg-red-400/10 !border-red-300 !text-red-600 !dark:text-red-400" => !$transaction->success,
-            match($transaction->type){
-                'refund' => "bg-orange-50 dark:bg-orange-400/10 border-orange-300 text-orange-600 dark:text-orange-400",
-                'intent' => "bg-sky-50 dark:bg-sky-400/10 border-sky-300 text-sky-600 dark:text-sky-400",
-                'capture' => "bg-green-50 dark:bg-green-400/10 border-green-300 text-green-600 dark:text-green-400",
+            match($type){
+                TransactionType::Refund => "bg-orange-50 dark:bg-orange-400/10 border-orange-300 text-orange-600 dark:text-orange-400",
+                TransactionType::Intent => "bg-sky-50 dark:bg-sky-400/10 border-sky-300 text-sky-600 dark:text-sky-400",
+                TransactionType::Capture => "bg-green-50 dark:bg-green-400/10 border-green-300 text-green-600 dark:text-green-400",
             },
         ])
     >
         @if(!$transaction->success)
             {{ __('admin::order.transactions.failed') }}
         @else
-            {{ __('admin::order.transactions.'.$transaction->type) }}
+            {{ __('admin::order.transactions.'.$type->value) }}
         @endif
     </div>
 </div>
-

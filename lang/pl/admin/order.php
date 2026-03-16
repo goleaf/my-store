@@ -1,26 +1,20 @@
 <?php
 
 return [
-
     'label' => 'Zamówienie',
-
     'plural_label' => 'Zamówienia',
-
     'breadcrumb' => [
         'manage' => 'Zarządzanie zamówieniami',
     ],
-
     'tabs' => [
         'all' => 'Wszelkie',
     ],
-
     'transactions' => [
         'capture' => 'Przechwycona',
         'intent' => 'Rozpoczęta',
         'refund' => 'Zwrócona',
         'failed' => 'Nieudana',
     ],
-
     'table' => [
         'status' => [
             'label' => 'Status',
@@ -63,7 +57,6 @@ return [
             'label' => 'Złożone przed',
         ],
     ],
-
     'form' => [
         'address' => [
             'first_name' => [
@@ -102,8 +95,10 @@ return [
             'country_id' => [
                 'label' => 'Kraj',
             ],
+            'tax_identifier' => [
+                'label' => 'Identyfikator podatkowy',
+            ],
         ],
-
         'reference' => [
             'label' => 'Numer zamówienia',
         ],
@@ -115,27 +110,22 @@ return [
         ],
         'amount' => [
             'label' => 'Kwota',
-
             'hint' => [
                 'less_than_total' => 'Próbujesz pobrać kwotę mniejszą niż całkowita wartość transakcji.',
             ],
         ],
-
         'notes' => [
             'label' => 'Notatki',
         ],
         'confirm' => [
             'label' => 'Potwierdź',
-
             'alert' => 'Wymaga potwierdzenia',
-
             'hint' => [
                 'capture' => 'Potwierdź, że chcesz przechwycić tę kwotę.',
                 'refund' => 'Potwierdź, że chcesz zwrócić tę kwotę.',
             ],
         ],
     ],
-
     'infolist' => [
         'notes' => [
             'label' => 'Notatki',
@@ -235,7 +225,6 @@ return [
             'refunded' => 'To zamówienie zostało zwrócone.',
         ],
     ],
-
     'action' => [
         'bulk_update_status' => [
             'label' => 'Aktualizuj statusy',
@@ -252,6 +241,8 @@ return [
                 'label' => 'Dodatkowy odbiorca email',
                 'placeholder' => 'opcjonalnie',
             ],
+            'label' => 'Zaktualizuj status',
+            'notification' => 'Zaktualizowano status zamówienia',
         ],
         'download_order_pdf' => [
             'label' => 'Pobierz fakturę',
@@ -259,14 +250,11 @@ return [
         ],
         'edit_address' => [
             'label' => 'Edytuj adres',
-
             'notification' => [
                 'error' => 'Błąd',
-
                 'billing_address' => [
                     'saved' => 'Adres rozliczeniowy zapisany',
                 ],
-
                 'shipping_address' => [
                     'saved' => 'Adres dostawy zapisany',
                 ],
@@ -274,10 +262,15 @@ return [
         ],
         'edit_tags' => [
             'label' => 'Edytuj tagi',
+            'form' => [
+                'tags' => [
+                    'label' => 'Tagi',
+                    'helper_text' => 'Oddziel tagi, naciskając Enter, Tab lub przecinek (,)',
+                ],
+            ],
         ],
         'capture_payment' => [
             'label' => 'Przechwyć płatność',
-
             'notification' => [
                 'error' => 'Wystąpił problem z przechwyceniem płatności',
                 'success' => 'Płatność przechwycona',
@@ -285,12 +278,10 @@ return [
         ],
         'refund_payment' => [
             'label' => 'Zwróć płatność',
-
             'notification' => [
                 'error' => 'Wystąpił problem ze zwróceniem płatności',
                 'success' => 'Płatność zwrócona',
             ],
         ],
     ],
-
 ];

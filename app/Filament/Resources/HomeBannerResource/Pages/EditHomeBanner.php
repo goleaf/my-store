@@ -8,7 +8,7 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditHomeBanner extends EditRecord
 {
-    protected static string $resource = \App\Filament\Resources\HomeBannerResource::class;
+    protected static string $resource = HomeBannerResource::class;
 
     protected function getHeaderActions(): array
     {

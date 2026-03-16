@@ -2,8 +2,7 @@
 
 namespace App\Facades;
 
-use Illuminate\Support\Facades\DB as DBFacade;
-
+use Illuminate\Support\Facades;
 /**
  * @method static \Illuminate\Database\ConnectionInterface build(array $config)
  * @method static string calculateDynamicConnectionName(array $config)
@@ -113,7 +112,7 @@ use Illuminate\Support\Facades\DB as DBFacade;
  *
  * @see \Illuminate\Database\DatabaseManager
  */
-class DB extends DBFacade
+class DB extends Facades\DB
 {
     /**
      * Get the registered DatabaseManger class.

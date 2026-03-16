@@ -2,20 +2,22 @@
 
 namespace App\Filament\Resources;
 
+use App\Base\Enums\HomeBannerType;
+use App\Filament\Resources\HomeBannerResource\Pages;
 use App\Models\HomeBanner;
 use App\Support\Resources\BaseResource;
-use App\Filament\Resources\HomeBannerResource\Pages;
 use Filament\Forms;
+use Filament\Actions;
+use Filament\Schemas\Components;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use BackedEnum;
 
 class HomeBannerResource extends BaseResource
 {
     protected static ?string $model = HomeBanner::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'lucide-image';
+    protected static string|BackedEnum|null $navigationIcon = 'lucide-image';
 
     public static function getLabel(): string
     {
@@ -35,7 +37,7 @@ class HomeBannerResource extends BaseResource
     protected static function getMainFormComponents(): array
     {
         return [
-            SchemaComponents\Section::make()->schema([
+            Components\Section::make()->schema([
                 Forms\Components\TextInput::make('title')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('subtitle')
@@ -47,13 +49,9 @@ class HomeBannerResource extends BaseResource
                     ->directory('home-banners')
                     ->required(),
                 Forms\Components\Select::make('type')
-                    ->options([
-                        'top' => 'Top',
-                        'middle' => 'Middle',
-                        'bottom' => 'Bottom',
-                    ])
+                    ->options(HomeBannerType::options())
                     ->required()
-                    ->default('middle'),
+                    ->default(HomeBannerType::Middle->value),
                 Forms\Components\TextInput::make('sort_order')
                     ->numeric()
                     ->default(0),
@@ -88,7 +86,8 @@ class HomeBannerResource extends BaseResource
             Tables\Columns\ImageColumn::make('image'),
             Tables\Columns\TextColumn::make('title')
                 ->searchable(),
-            Tables\Columns\TextColumn::make('type'),
+            Tables\Columns\TextColumn::make('type')
+                ->formatStateUsing(fn ($state) => HomeBannerType::labelFor($state)),
             Tables\Columns\IconColumn::make('is_active')
                 ->boolean(),
             Tables\Columns\TextColumn::make('sort_order')

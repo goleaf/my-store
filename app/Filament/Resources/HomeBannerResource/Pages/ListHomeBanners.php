@@ -8,7 +8,7 @@ use Filament\Actions;
 
 class ListHomeBanners extends BaseListRecords
 {
-    protected static string $resource = \App\Filament\Resources\HomeBannerResource::class;
+    protected static string $resource = HomeBannerResource::class;
 
     protected function getDefaultHeaderActions(): array
     {

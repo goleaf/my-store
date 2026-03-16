@@ -11,4 +11,9 @@ return [
         'up-sell' => 'Montée en gamme',
         'alternate' => 'Alternative',
     ],
+    'saved-payment-method-types' => [
+        'card' => 'Carte',
+        'paypal' => 'PayPal',
+        'payoneer' => 'Payoneer',
+    ],
 ];

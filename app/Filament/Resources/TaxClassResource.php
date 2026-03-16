@@ -4,16 +4,16 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TaxClassResource\Pages;
 use App\Filament\Clusters\Taxes;
-use App\Models\Contracts\TaxClass as TaxClassContract;
+use App\Models\Contracts\TaxClass;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
-use Filament\Forms\Components\Component;
+use Filament\Schemas\Components\Component;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class TaxClassResource extends BaseResource
 {
@@ -21,7 +21,7 @@ class TaxClassResource extends BaseResource
 
     protected static ?string $permission = 'settings:core';
 
-    protected static ?string $model = TaxClassContract::class;
+    protected static ?string $model = TaxClass::class;
 
     protected static ?int $navigationSort = 1;
 
@@ -43,7 +43,7 @@ class TaxClassResource extends BaseResource
     protected static function getMainFormComponents(): array
     {
         return [
-            SchemaComponents\Section::make()->schema([
+            Components\Section::make()->schema([
                 static::getNameFormComponent(),
                 static::getDefaultFormComponent(),
             ]),

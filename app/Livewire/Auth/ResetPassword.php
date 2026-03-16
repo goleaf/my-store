@@ -2,13 +2,13 @@
 
 namespace App\Livewire\Auth;
 
+use App\Http\Requests\Auth\ResetPasswordRequest;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 #[Layout('layouts.auth')]
@@ -17,10 +17,8 @@ class ResetPassword extends Component
 {
     public string $token;
 
-    #[Validate('required|email')]
     public string $email = '';
 
-    #[Validate('required|string|min:8|confirmed')]
     public string $password = '';
 
     public string $password_confirmation = '';
@@ -33,13 +31,18 @@ class ResetPassword extends Component
 
     public function resetPassword(): void
     {
-        $this->validate();
+        $request = new ResetPasswordRequest;
+        $validated = $request->validatePayload([
+            'email' => $this->email,
+            'password' => $this->password,
+            'password_confirmation' => $this->password_confirmation,
+        ]);
 
         $status = Password::reset(
             [
                 'token' => $this->token,
-                'email' => $this->email,
-                'password' => $this->password,
+                'email' => $validated['email'],
+                'password' => $validated['password'],
                 'password_confirmation' => $this->password_confirmation,
             ],
             function ($user, $password) {

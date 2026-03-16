@@ -3,16 +3,16 @@
 namespace App\Stripe\Components;
 
 use Livewire\Component;
-use App\Models\Contracts\Cart as CartContract;
-use App\Stripe\Facades\Stripe;
-use Stripe\Stripe as StripeClient;
+use App\Models\Contracts\Cart;
+use App\Stripe\Facades;
+use Stripe;
 
 class PaymentForm extends Component
 {
     /**
      * The instance of the order.
      */
-    public CartContract $cart;
+    public Cart $cart;
 
     /**
      * The return URL on a successful transaction
@@ -40,7 +40,7 @@ class PaymentForm extends Component
      */
     public function mount()
     {
-        StripeClient::setApiKey(config('services.stripe.key'));
+        Stripe\Stripe::setApiKey(config('services.stripe.key'));
         $this->policy = config('stripe.policy', 'capture');
     }
 
@@ -51,7 +51,7 @@ class PaymentForm extends Component
      */
     public function getClientSecretProperty()
     {
-        $intent = Stripe::createIntent($this->cart);
+        $intent = Facades\Stripe::createIntent($this->cart);
 
         return $intent->client_secret;
     }

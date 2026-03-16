@@ -6,7 +6,7 @@
 
         <div class="grid grid-cols-1 gap-8 mt-8 sm:grid-cols-2 lg:grid-cols-4">
             @foreach ($this->brand->products as $product)
-                <x-product-card :product="$product" />
+                <x-product-card :product="$product" :is-wishlisted="in_array($product->id, $this->wishlistProductIds, true)" />
             @endforeach
         </div>
     </div>

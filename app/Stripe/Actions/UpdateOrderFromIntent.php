@@ -3,18 +3,18 @@
 namespace App\Stripe\Actions;
 
 use Illuminate\Support\Facades\DB;
-use App\Models\Contracts\Order as OrderContract;
+use App\Models\Contracts\Order;
 use App\Stripe\Facades\Stripe;
 use Stripe\PaymentIntent;
 
 class UpdateOrderFromIntent
 {
     final public static function execute(
-        OrderContract $order,
+        Order $order,
         PaymentIntent $paymentIntent,
         string $successStatus = 'paid',
         string $failStatus = 'failed'
-    ): OrderContract {
+    ): Order {
         return DB::transaction(function () use ($order, $paymentIntent) {
 
             $charges = Stripe::getCharges($paymentIntent->id);

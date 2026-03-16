@@ -5,17 +5,16 @@ namespace App\Observers;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use App\Base\Purchasable;
 use App\Exceptions\NonPurchasableItemException;
-use App\Models\Contracts\OrderLine as OrderLineContract;
-use App\Models\OrderLine as OrderLine;
+use App\Models\Contracts\OrderLine;
 
 class OrderLineObserver
 {
     /**
-     * Handle the OrderLine "creating" event.
+     * Handle the \App\Models\OrderLine "creating" event.
      */
-    public function creating(OrderLineContract $orderLine): void
+    public function creating(OrderLine $orderLine): void
     {
-        /** @var OrderLine $orderLine */
+        /** @var \App\Models\OrderLine $orderLine */
         $purchasableModel = class_exists($orderLine->purchasable_type) ?
             $orderLine->purchasable_type :
             Relation::getMorphedModel($orderLine->purchasable_type);
@@ -26,9 +25,9 @@ class OrderLineObserver
     }
 
     /**
-     * Handle the OrderLine "updated" event.
+     * Handle the \App\Models\OrderLine "updated" event.
      */
-    public function updating(OrderLineContract $orderLine): void
+    public function updating(OrderLine $orderLine): void
     {
         $purchasableModel = class_exists($orderLine->purchasable_type) ?
             $orderLine->purchasable_type :

@@ -1,5 +1,6 @@
 <?php
 
+use App\Base\Enums\ProductStatus;
 use App\Livewire\ShopGrid;
 use App\Models\Product;
 use App\Models\Brand;
@@ -10,8 +11,11 @@ use App\Models\Channel;
 use App\Models\CustomerGroup;
 use Livewire\Livewire;
 use Illuminate\Support\Facades\DB;
+use App\Models\Price;
+use App\Models\ProductVariant;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
     Language::factory()->create([
@@ -46,10 +50,10 @@ test('can filter by categories', function () {
     $category1 = Collection::factory()->create();
     $category2 = Collection::factory()->create();
 
-    $product1 = Product::factory()->create(['status' => 'published']);
+    $product1 = Product::factory()->create(['status' => ProductStatus::Published->value]);
     $product1->collections()->attach($category1);
 
-    $product2 = Product::factory()->create(['status' => 'published']);
+    $product2 = Product::factory()->create(['status' => ProductStatus::Published->value]);
     $product2->collections()->attach($category2);
 
     Livewire::test(ShopGrid::class)
@@ -63,8 +67,8 @@ test('can filter by brands', function () {
     $brand1 = Brand::factory()->create();
     $brand2 = Brand::factory()->create();
 
-    $product1 = Product::factory()->create(['brand_id' => $brand1->id, 'status' => 'published']);
-    $product2 = Product::factory()->create(['brand_id' => $brand2->id, 'status' => 'published']);
+    $product1 = Product::factory()->create(['brand_id' => $brand1->id, 'status' => ProductStatus::Published->value]);
+    $product2 = Product::factory()->create(['brand_id' => $brand2->id, 'status' => ProductStatus::Published->value]);
 
     Livewire::test(ShopGrid::class)
         ->set('brands', [$brand1->id])
@@ -74,8 +78,8 @@ test('can filter by brands', function () {
 });
 
 test('can filter by ratings', function () {
-    $product1 = Product::factory()->create(['rating' => 5, 'status' => 'published']);
-    $product2 = Product::factory()->create(['rating' => 2, 'status' => 'published']);
+    $product1 = Product::factory()->create(['rating' => 5, 'status' => ProductStatus::Published->value]);
+    $product2 = Product::factory()->create(['rating' => 2, 'status' => ProductStatus::Published->value]);
 
     Livewire::test(ShopGrid::class)
         ->set('ratings', [4])
@@ -85,19 +89,19 @@ test('can filter by ratings', function () {
 });
 
 test('can sort by price asc', function () {
-    $product1 = Product::factory()->create(['status' => 'published']);
-    $variant1 = \App\Models\ProductVariant::factory()->create(['product_id' => $product1->id]);
+    $product1 = Product::factory()->create(['status' => ProductStatus::Published->value]);
+    $variant1 = ProductVariant::factory()->create(['product_id' => $product1->id]);
     $currency = Currency::whereCode('USD')->first();
-    \App\Models\Price::factory()->create([
+    Price::factory()->create([
         'priceable_id' => $variant1->id,
         'priceable_type' => $variant1->getMorphClass(),
         'price' => 1000,
         'currency_id' => $currency->id,
     ]);
 
-    $product2 = Product::factory()->create(['status' => 'published']);
-    $variant2 = \App\Models\ProductVariant::factory()->create(['product_id' => $product2->id]);
-    \App\Models\Price::factory()->create([
+    $product2 = Product::factory()->create(['status' => ProductStatus::Published->value]);
+    $variant2 = ProductVariant::factory()->create(['product_id' => $product2->id]);
+    Price::factory()->create([
         'priceable_id' => $variant2->id,
         'priceable_type' => $variant2->getMorphClass(),
         'price' => 500,
@@ -112,8 +116,8 @@ test('can sort by price asc', function () {
 });
 
 test('can add to cart', function () {
-    $product = Product::factory()->create(['status' => 'published']);
-    $variant = \App\Models\ProductVariant::factory()->create(['product_id' => $product->id]);
+    $product = Product::factory()->create(['status' => ProductStatus::Published->value]);
+    $variant = ProductVariant::factory()->create(['product_id' => $product->id]);
 
     Livewire::test(ShopGrid::class)
         ->call('addToCart', $variant->id)

@@ -15,25 +15,28 @@ use App\Filament\Resources\DiscountResource\RelationManagers\ProductVariantLimit
 use App\DiscountTypes\AmountOff;
 use App\DiscountTypes\BuyXGetY;
 use App\Facades\Discounts;
-use App\Models\Contracts\Discount as DiscountContract;
+use App\Models\Contracts\Discount;
 use App\Models\Currency;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
-use Filament\Forms\Components\Component;
 use Filament\Schemas\Schema;
 use Filament\Pages\Enums\SubNavigationPosition;
+use Filament\Schemas\Components\Component;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use App\Models;
 
 class DiscountResource extends BaseResource
 {
     protected static ?string $permission = 'sales:manage-discounts';
 
-    protected static ?string $model = DiscountContract::class;
+    protected static ?string $model = Discount::class;
 
     protected static ?int $navigationSort = 3;
 
@@ -59,44 +62,44 @@ class DiscountResource extends BaseResource
         return __('admin::global.sections.sales');
     }
 
-    public static function getDefaultForm(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public static function getDefaultForm(Schema $schema): Schema
     {
         $discountSchemas = Discounts::getTypes()->map(function ($discount) {
             if (! $discount instanceof AdminPanelDiscountInterface) {
                 return;
             }
 
-            return SchemaComponents\Section::make(Str::slug(get_class($discount)))
+            return Components\Section::make(Str::slug(get_class($discount)))
                 ->heading($discount->getName())
                 ->visible(
-                    fn (Forms\Get $get) => $get('type') == get_class($discount)
+                    fn (Get $get) => $get('type') == get_class($discount)
                 )->schema($discount->adminPanelSchema());
         })->filter();
 
         return $schema->components([
-            SchemaComponents\Section::make('')->schema(
+            Components\Section::make('')->schema(
                 static::getMainFormComponents()
             ),
-            SchemaComponents\Section::make('conditions')->schema(
+            Components\Section::make('conditions')->schema(
                 static::getConditionsFormComponents()
             )->heading(
                 __('admin::discount.form.conditions.heading')
             ),
-            SchemaComponents\Section::make('buy_x_get_y')
+            Components\Section::make('buy_x_get_y')
                 ->heading(
                     __('admin::discount.form.buy_x_get_y.heading')
                 )
                 ->visible(
-                    fn (Forms\Get $get) => $get('type') == BuyXGetY::class
+                    fn (Get $get) => $get('type') == BuyXGetY::class
                 )->schema(
                     static::getBuyXGetYFormComponents()
                 ),
-            SchemaComponents\Section::make('amount_off')
+            Components\Section::make('amount_off')
                 ->heading(
                     __('admin::discount.form.amount_off.heading')
                 )
                 ->visible(
-                    fn (Forms\Get $get) => $get('type') == AmountOff::class
+                    fn (Get $get) => $get('type') == AmountOff::class
                 )->schema(
                     static::getAmountOffFormComponents()
                 ),
@@ -107,15 +110,15 @@ class DiscountResource extends BaseResource
     protected static function getMainFormComponents(): array
     {
         return [
-            SchemaComponents\Group::make([
+            Components\Group::make([
                 static::getNameFormComponent(),
                 static::getHandleFormComponent(),
             ])->columns(2),
-            SchemaComponents\Group::make([
+            Components\Group::make([
                 static::getStartsAtFormComponent(),
                 static::getEndsAtFormComponent(),
             ])->columns(2),
-            SchemaComponents\Group::make([
+            Components\Group::make([
                 static::getPriorityFormComponent(),
                 static::getDiscountTypeFormComponent(),
             ])->columns(2),
@@ -126,12 +129,12 @@ class DiscountResource extends BaseResource
     protected static function getConditionsFormComponents(): array
     {
         return [
-            SchemaComponents\Group::make([
+            Components\Group::make([
                 static::getCouponFormComponent(),
                 static::getMaxUsesFormComponent(),
                 static::getMaxUsesPerUserFormComponent(),
             ])->columns(3),
-            SchemaComponents\Fieldset::make()->schema(
+            Components\Fieldset::make()->schema(
                 static::getMinimumCartAmountsFormComponents()
             )->label(
                 __('admin::discount.form.minimum_cart_amount.label')
@@ -144,7 +147,7 @@ class DiscountResource extends BaseResource
         return Forms\Components\TextInput::make('name')
             ->label(__('admin::discount.form.name.label'))
             ->live(onBlur: true)
-            ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
+            ->afterStateUpdated(function (string $operation, $state, Set $set) {
                 if ($operation !== 'create') {
                     return;
                 }
@@ -170,7 +173,7 @@ class DiscountResource extends BaseResource
         return Forms\Components\DateTimePicker::make('starts_at')
             ->label(__('admin::discount.form.starts_at.label'))
             ->required()
-            ->before(function (Forms\Get $get) {
+            ->before(function (Get $get) {
                 return $get('ends_at');
             });
     }
@@ -294,12 +297,12 @@ class DiscountResource extends BaseResource
             Forms\Components\TextInput::make('data.percentage')
                 ->label(__('admin::discount.form.percentage.label'))
                 ->visible(
-                    fn (Forms\Get $get) => ! $get('data.fixed_value')
+                    fn (Get $get) => ! $get('data.fixed_value')
                 )->numeric(),
-            SchemaComponents\Group::make(
+            Components\Group::make(
                 $currencyInputs
             )->visible(
-                fn (Forms\Get $get) => (bool) $get('data.fixed_value')
+                fn (Get $get) => (bool) $get('data.fixed_value')
             )->columns(3),
         ];
     }
@@ -313,7 +316,7 @@ class DiscountResource extends BaseResource
                 )->helperText(
                     __('admin::discount.form.min_qty.helper_text')
                 )->numeric(),
-            SchemaComponents\Group::make([
+            Components\Group::make([
                 Forms\Components\TextInput::make('data.reward_qty')
                     ->label(
                         __('admin::discount.form.reward_qty.label')
@@ -363,10 +366,10 @@ class DiscountResource extends BaseResource
                 ->label(__('admin::discount.table.status.label'))
                 ->badge()
                 ->color(fn (string $state): string => match ($state) {
-                    \App\Models\Discount::ACTIVE => 'success',
-                    \App\Models\Discount::EXPIRED => 'danger',
-                    \App\Models\Discount::PENDING => 'gray',
-                    \App\Models\Discount::SCHEDULED => 'info',
+                    Models\Discount::ACTIVE => 'success',
+                    Models\Discount::EXPIRED => 'danger',
+                    Models\Discount::PENDING => 'gray',
+                    Models\Discount::SCHEDULED => 'info',
                 })
                 ->toggleable(),
             Tables\Columns\TextColumn::make('name')

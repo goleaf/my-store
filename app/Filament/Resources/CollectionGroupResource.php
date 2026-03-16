@@ -3,23 +3,24 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CollectionGroupResource\Pages;
-use App\Models\Contracts\CollectionGroup as CollectionGroupContract;
+use App\Models\Contracts\CollectionGroup;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
-use Filament\Forms\Components\Component;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class CollectionGroupResource extends BaseResource
 {
     protected static ?string $permission = 'catalog:manage-collections';
 
-    protected static ?string $model = CollectionGroupContract::class;
+    protected static ?string $model = CollectionGroup::class;
 
     protected static ?int $navigationSort = 3;
 
@@ -43,11 +44,11 @@ class CollectionGroupResource extends BaseResource
         return __('admin::global.sections.catalog');
     }
 
-    public static function getDefaultForm(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public static function getDefaultForm(Schema $schema): Schema
     {
         return $schema
             ->components([
-                SchemaComponents\Section::make()->schema(
+                Components\Section::make()->schema(
                     static::getMainFormComponents()
                 )->columns(2),
             ]);
@@ -70,7 +71,7 @@ class CollectionGroupResource extends BaseResource
             ->autofocus()
             ->unique(ignoreRecord: true)
             ->live(onBlur: true)
-            ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
+            ->afterStateUpdated(function (string $operation, $state, Set $set) {
                 if ($operation !== 'create') {
                     return;
                 }

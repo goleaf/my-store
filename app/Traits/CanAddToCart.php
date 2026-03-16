@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Models\ProductVariant;
 use App\Facades\CartSession;
 use Filament\Notifications\Notification;
+use Exception;
 
 trait CanAddToCart
 {
@@ -33,7 +34,7 @@ trait CanAddToCart
                 ->title('Added to cart')
                 ->success()
                 ->send();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Notification::make()
                 ->title('Could not add to cart')
                 ->body($e->getMessage())

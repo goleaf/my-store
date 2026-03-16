@@ -9,7 +9,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class ChannelRelationManager extends BaseRelationManager
 {
@@ -27,7 +27,7 @@ class ChannelRelationManager extends BaseRelationManager
         return false;
     }
 
-    public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function form(Schema $schema): Schema
     {
         return $schema->components(
             static::getFormInputs()
@@ -43,7 +43,7 @@ class ChannelRelationManager extends BaseRelationManager
                 false => __('admin::relationmanagers.channels.form.enabled.helper_text_false'),
                 true => '',
             })->hintColor('danger')->live()->columnSpan(2),
-            SchemaComponents\Grid::make(2)->schema([
+            Components\Grid::make(2)->schema([
                 Filament\Forms\Components\DateTimePicker::make('starts_at')->label(
                     __('admin::relationmanagers.channels.form.starts_at.label')
                 )->helperText(

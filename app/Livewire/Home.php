@@ -2,51 +2,107 @@
 
 namespace App\Livewire;
 
+use App\Base\Enums\HomeBannerType;
+use App\Models\Collection;
+use App\Models\FeaturedCategory;
+use App\Models\HomeBanner;
+use App\Models\HomeHero;
+use App\Models\HomeSection;
+use App\Models\Url;
+use App\Traits\CanAddToCart;
+use App\Traits\CanManageWishlist;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\View\View;
 use Livewire\Component;
-use App\Models\Collection;
-use App\Models\Url;
-
-use App\Models\HomeHero;
-use App\Models\FeaturedCategory;
-use App\Models\HomeSection;
-use App\Models\HomeBanner;
-use App\Traits\CanAddToCart;
 
 class Home extends Component
 {
     use CanAddToCart;
+    use CanManageWishlist;
+
     /**
      * Get active home heroes.
      */
-    public function getHeroesProperty()
+    public function getHeroesProperty(): EloquentCollection
     {
-        return HomeHero::where('is_active', true)
-            ->orderBy('sort_order')
+        return HomeHero::query()
+            ->select([
+                'id',
+                'title',
+                'subtitle',
+                'description',
+                'link',
+                'button_text',
+                'image',
+                'sort_order',
+                'is_active',
+            ])
+            ->active()
+            ->ordered()
             ->get();
     }
 
     /**
      * Get active featured categories.
      */
-    public function getFeaturedCategoriesProperty()
+    public function getFeaturedCategoriesProperty(): EloquentCollection
     {
-        return FeaturedCategory::with(['collection.defaultUrl', 'collection.thumbnail'])
-            ->where('is_active', true)
-            ->orderBy('sort_order')
+        return FeaturedCategory::query()
+            ->select([
+                'id',
+                'collection_id',
+                'title',
+                'image',
+                'sort_order',
+                'is_active',
+            ])
+            ->with([
+                'collection' => fn ($query) => $query
+                    ->select([
+                        'id',
+                        'attribute_data',
+                    ])
+                    ->with([
+                        'defaultUrl' => fn ($relationQuery) => $relationQuery->select([
+                            'id',
+                            'element_id',
+                            'element_type',
+                            'slug',
+                            'default',
+                        ]),
+                        'thumbnail',
+                    ]),
+            ])
+            ->whereHas('collection', fn (Builder $query): Builder => $query->whereHas('defaultUrl'))
+            ->active()
+            ->ordered()
             ->get();
     }
 
     /**
      * Get active home sections with their collections and products.
      */
-    public function getSectionsProperty()
+    public function getSectionsProperty(): EloquentCollection
     {
-        return HomeSection::with([
-            'collection.products.variants.basePrices.currency',
-            'collection.products.defaultUrl',
-            'collection.products.brand',
-        ])
+        return HomeSection::query()
+            ->select([
+                'id',
+                'title',
+                'subtitle',
+                'type',
+                'collection_id',
+                'sort_order',
+                'is_active',
+            ])
+            ->with([
+                'collection.defaultUrl',
+                'collection.products.variants.basePrices.currency',
+                'collection.products.variants.prices.currency',
+                'collection.products.defaultUrl',
+                'collection.products.brand',
+                'collection.products.thumbnail',
+            ])
             ->where('is_active', true)
             ->orderBy('sort_order')
             ->get();
@@ -55,11 +111,43 @@ class Home extends Component
     /**
      * Get active home banners.
      */
-    public function getBannersProperty()
+    public function getBannersProperty(): EloquentCollection
     {
-        return HomeBanner::where('is_active', true)
+        return HomeBanner::query()
+            ->select([
+                'id',
+                'title',
+                'subtitle',
+                'link',
+                'image',
+                'type',
+                'sort_order',
+                'is_active',
+            ])
+            ->where('is_active', true)
             ->orderBy('sort_order')
             ->get();
+    }
+
+    public function getTopBannersProperty(): EloquentCollection
+    {
+        return $this->banners
+            ->filter(fn (HomeBanner $banner): bool => $banner->type === HomeBannerType::Top)
+            ->values();
+    }
+
+    public function getMiddleBannersProperty(): EloquentCollection
+    {
+        return $this->banners
+            ->filter(fn (HomeBanner $banner): bool => $banner->type === HomeBannerType::Middle)
+            ->values();
+    }
+
+    public function getBottomBannersProperty(): EloquentCollection
+    {
+        return $this->banners
+            ->filter(fn (HomeBanner $banner): bool => $banner->type === HomeBannerType::Bottom)
+            ->values();
     }
 
     /**

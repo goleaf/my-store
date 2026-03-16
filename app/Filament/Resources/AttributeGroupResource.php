@@ -5,25 +5,28 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\AttributeGroupResource\Pages;
 use App\Filament\Resources\AttributeGroupResource\RelationManagers;
 use App\Facades\AttributeManifest;
-use App\Models\Contracts\AttributeGroup as AttributeGroupContract;
+use App\Models\Contracts\AttributeGroup;
 use App\Models\Language;
 use App\Support\Resources\BaseResource;
 use App\Support\Tables\Columns\TranslatedTextColumn;
 use Filament\Forms;
-use Filament\Forms\Components\Component;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
+use App\Facades\ModelManifest;
+use App\Support\Forms\Components\TranslatedText;
 
 class AttributeGroupResource extends BaseResource
 {
     protected static ?string $permission = 'settings:manage-attributes';
 
-    protected static ?string $model = AttributeGroupContract::class;
+    protected static ?string $model = AttributeGroup::class;
 
     protected static ?int $navigationSort = 1;
 
@@ -51,7 +54,7 @@ class AttributeGroupResource extends BaseResource
     {
         return $schema
             ->components([
-                SchemaComponents\Section::make()->schema(
+                Components\Section::make()->schema(
                     static::getMainFormComponents()
                 ),
             ]);
@@ -74,7 +77,7 @@ class AttributeGroupResource extends BaseResource
             ->options(function () {
                 return AttributeManifest::getTypes()->mapWithKeys(
                     fn ($type) => [
-                        \App\Facades\ModelManifest::getMorphMapKey($type) => class_basename($type),
+                        ModelManifest::getMorphMapKey($type) => class_basename($type),
                     ]
                 );
             })
@@ -84,11 +87,11 @@ class AttributeGroupResource extends BaseResource
 
     protected static function getNameFormComponent(): Component
     {
-        return \App\Support\Forms\Components\TranslatedText::make('name')
+        return TranslatedText::make('name')
             ->label(__('admin::attributegroup.form.name.label'))
             ->required()
             ->maxLength(255)
-            ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
+            ->afterStateUpdated(function (string $operation, $state, Set $set) {
                 if ($operation !== 'create') {
                     return;
                 }

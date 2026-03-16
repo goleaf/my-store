@@ -28,7 +28,7 @@ class ManageDiscountLimitations extends BaseEditRecord
         return FilamentIcon::resolve('store::discount-limitations');
     }
 
-    public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function form(Schema $schema): Schema
     {
         return $schema->components([]);
     }

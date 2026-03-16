@@ -2,24 +2,19 @@
 
 return [
     'label' => 'Đơn hàng',
-
     'plural_label' => 'Đơn hàng',
-
     'breadcrumb' => [
         'manage' => 'Quản lý',
     ],
-
     'tabs' => [
         'all' => 'Tất cả',
     ],
-
     'transactions' => [
         'capture' => 'Đã thu tiền',
         'intent' => 'Chờ thanh toán',
         'refund' => 'Đã hoàn tiền',
         'failed' => 'Thất bại',
     ],
-
     'table' => [
         'status' => [
             'label' => 'Trạng thái',
@@ -62,7 +57,6 @@ return [
             'label' => 'Đặt trước',
         ],
     ],
-
     'form' => [
         'address' => [
             'first_name' => [
@@ -101,8 +95,10 @@ return [
             'country_id' => [
                 'label' => 'Quốc gia',
             ],
+            'tax_identifier' => [
+                'label' => 'Mã số thuế',
+            ],
         ],
-
         'reference' => [
             'label' => 'Mã tham chiếu',
         ],
@@ -130,7 +126,6 @@ return [
             ],
         ],
     ],
-
     'infolist' => [
         'notes' => [
             'label' => 'Ghi chú',
@@ -230,7 +225,6 @@ return [
             'refunded' => 'Đơn hàng này đã được hoàn tiền',
         ],
     ],
-
     'action' => [
         'bulk_update_status' => [
             'label' => 'Cập nhật trạng thái',
@@ -247,6 +241,8 @@ return [
                 'label' => 'Người nhận email bổ sung',
                 'placeholder' => 'tùy chọn',
             ],
+            'label' => 'Cập nhật trạng thái',
+            'notification' => 'Đã cập nhật trạng thái đơn hàng',
         ],
         'download_order_pdf' => [
             'label' => 'Tải PDF',
@@ -266,6 +262,12 @@ return [
         ],
         'edit_tags' => [
             'label' => 'Chỉnh sửa',
+            'form' => [
+                'tags' => [
+                    'label' => 'Thẻ',
+                    'helper_text' => 'Phân tách thẻ bằng Enter, Tab hoặc dấu phẩy (,)',
+                ],
+            ],
         ],
         'capture_payment' => [
             'label' => 'Thu tiền thanh toán',

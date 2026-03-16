@@ -2,9 +2,8 @@
 
 namespace App\Actions\Collections;
 
-use App\Models\Collection;
-use App\Models\Contracts\Collection as CollectionContract;
 use App\Models\Currency;
+use App\Models\Contracts\Collection;
 
 class SortProducts
 {
@@ -13,9 +12,9 @@ class SortProducts
      *
      * @return void
      */
-    public function execute(CollectionContract $collection)
+    public function execute(Collection $collection)
     {
-        /** @var Collection $collection */
+        /** @var \App\Models\Collection $collection */
         [$sort, $direction] = explode(':', $collection->sort);
 
         switch ($sort) {

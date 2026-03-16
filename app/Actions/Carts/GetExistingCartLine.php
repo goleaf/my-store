@@ -4,10 +4,9 @@ namespace App\Actions\Carts;
 
 use App\Actions\AbstractAction;
 use App\Base\Purchasable;
-use App\Models\Cart;
-use App\Models\Contracts\Cart as CartContract;
-use App\Models\Contracts\CartLine as CartLineContract;
+use App\Models\Contracts\CartLine;
 use App\Utils\Arr;
+use App\Models\Contracts\Cart;
 
 class GetExistingCartLine extends AbstractAction
 {
@@ -15,11 +14,11 @@ class GetExistingCartLine extends AbstractAction
      * Execute the action
      */
     public function execute(
-        CartContract $cart,
+        Cart $cart,
         Purchasable $purchasable,
         array $meta = []
-    ): ?CartLineContract {
-        /** @var Cart $cart */
+    ): ?CartLine {
+        /** @var \App\Models\Cart $cart */
 
         // Get all possible cart lines
         $lines = $cart->lines()

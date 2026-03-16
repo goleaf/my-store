@@ -10,10 +10,11 @@ use App\Base\DataTransferObjects\PricingResponse;
 use App\Base\PricingManagerInterface;
 use App\Base\Purchasable;
 use App\Exceptions\MissingCurrencyPriceException;
-use App\Models\Contracts\Currency as CurrencyContract;
-use App\Models\Contracts\CustomerGroup as CustomerGroupContract;
 use App\Models\Currency;
 use App\Models\CustomerGroup;
+use App\Models\Contracts;
+use App\Models\Price;
+use ErrorException;
 
 class PricingManager implements PricingManagerInterface
 {
@@ -27,15 +28,12 @@ class PricingManager implements PricingManagerInterface
      */
     public Purchasable $purchasable;
 
-    /**
-     * The instance of the user.
-     */
-    public ?Authenticatable $user = null;
+    public ?Authenticatable $customer = null;
 
     /**
      * The instance of the currency.
      */
-    public ?CurrencyContract $currency = null;
+    public ?Contracts\Currency $currency = null;
 
     /**
      * The quantity value.
@@ -50,7 +48,7 @@ class PricingManager implements PricingManagerInterface
     public function __construct()
     {
         if (Auth::check() && is_store_user(Auth::user())) {
-            $this->user = Auth::user();
+            $this->customer = Auth::user();
         }
     }
 
@@ -71,9 +69,9 @@ class PricingManager implements PricingManagerInterface
      *
      * @return self
      */
-    public function user(?Authenticatable $user)
+    public function user(?Authenticatable $customer)
     {
-        $this->user = $user;
+        $this->customer = $customer;
 
         return $this;
     }
@@ -85,7 +83,7 @@ class PricingManager implements PricingManagerInterface
      */
     public function guest()
     {
-        $this->user = null;
+        $this->customer = null;
 
         return $this;
     }
@@ -95,7 +93,7 @@ class PricingManager implements PricingManagerInterface
      *
      * @return self
      */
-    public function currency(?CurrencyContract $currency)
+    public function currency(?Contracts\Currency $currency)
     {
         $this->currency = $currency;
 
@@ -131,7 +129,7 @@ class PricingManager implements PricingManagerInterface
      *
      * @return self
      */
-    public function customerGroup(?CustomerGroupContract $customerGroup)
+    public function customerGroup(?Contracts\CustomerGroup $customerGroup)
     {
         $this->customerGroups(
             collect([$customerGroup])
@@ -148,7 +146,7 @@ class PricingManager implements PricingManagerInterface
     public function get()
     {
         if (! $this->purchasable) {
-            throw new \ErrorException('No purchasable set.');
+            throw new ErrorException('No purchasable set.');
         }
 
         if (! $this->currency) {
@@ -161,14 +159,8 @@ class PricingManager implements PricingManagerInterface
             ]);
         }
 
-        // Do we have a user?
-        if ($this->user && $this->user->customers->count()) {
-            $customers = $this->user->customers;
-            $customerGroups = $customers->pluck('customerGroups')->flatten();
-
-            if ($customerGroups->count()) {
-                $this->customerGroups = $customerGroups;
-            }
+        if ($this->customer && $this->customer->customerGroups->count()) {
+            $this->customerGroups = $this->customer->customerGroups;
         }
 
         $currencyPrices = $this->purchasable->getPrices()->filter(function ($price) {
@@ -178,7 +170,7 @@ class PricingManager implements PricingManagerInterface
         if (! $currencyPrices->count()) {
             if (app()->environment('testing')) {
                 // Return a dummy price during tests to avoid MissingCurrencyPriceException
-                $dummyPrice = new \App\Models\Price([
+                $dummyPrice = new Price([
                     'price' => 1000,
                     'currency_id' => $this->currency->id,
                 ]);
@@ -222,7 +214,7 @@ class PricingManager implements PricingManagerInterface
         $matched = $priceBreaks->first() ?: $matched;
 
         if (! $matched) {
-            throw new \ErrorException('No price set.');
+            throw new ErrorException('No price set.');
         }
 
         $this->pricing = new PricingResponse(

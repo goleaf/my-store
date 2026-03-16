@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained('store_orders')->onDelete('cascade');
             $table->string('status', 50);
             $table->text('comment')->nullable();
-            $table->foreignId('changed_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('changed_by')->nullable()->constrained('store_staff')->onDelete('set null');
             $table->timestamps();
         });
     }

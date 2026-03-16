@@ -3,14 +3,16 @@
 namespace App\Shipping\Filament\Resources;
 
 use App\Filament\Components\Shout;
-use App\Shipping\Filament\Resources\ShippingZoneResource\Pages;
-use App\Shipping\Models\Contracts\ShippingZone;
 use App\Models\Country;
 use App\Models\State;
+use App\Shipping\Enums\ShippingZoneType;
+use App\Shipping\Filament\Resources\ShippingZoneResource\Pages;
+use App\Shipping\Models\Contracts\ShippingZone;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
-use Filament\Forms\Components\Component;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Pages\Page;
 use Filament\Support\Facades\FilamentIcon;
@@ -19,7 +21,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class ShippingZoneResource extends BaseResource
 {
@@ -58,10 +60,10 @@ class ShippingZoneResource extends BaseResource
         ]);
     }
 
-    public static function getDefaultForm(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public static function getDefaultForm(Schema $schema): Schema
     {
         return $schema->components([
-            SchemaComponents\Section::make()->schema(
+            Components\Section::make()->schema(
                 static::getMainFormComponents(),
             ),
         ]);
@@ -79,7 +81,7 @@ class ShippingZoneResource extends BaseResource
             Shout::make('unrestricted')->content(
                 __('admin.shipping::shippingzone.form.unrestricted.content')
             )->hidden(
-                fn (Forms\Get $get) => $get('type') != 'unrestricted'
+                fn (Get $get) => $get('type') !== ShippingZoneType::Unrestricted->value
             ),
         ];
     }
@@ -98,12 +100,7 @@ class ShippingZoneResource extends BaseResource
         return Forms\Components\Select::make('type')
             ->label(__('admin.shipping::shippingzone.form.type.label'))
             ->required()
-            ->options([
-                'unrestricted' => __('admin.shipping::shippingzone.form.type.options.unrestricted'),
-                'countries' => __('admin.shipping::shippingzone.form.type.options.countries'),
-                'states' => __('admin.shipping::shippingzone.form.type.options.states'),
-                'postcodes' => __('admin.shipping::shippingzone.form.type.options.postcodes'),
-            ])->live();
+            ->options(ShippingZoneType::options())->live();
     }
 
     protected static function getCountryFormComponent(): Component
@@ -112,9 +109,12 @@ class ShippingZoneResource extends BaseResource
             ->label(__('admin.shipping::shippingzone.form.country.label'))
             ->dehydrated(false)
             ->visible(
-                fn (Forms\Get $get) => ! in_array($get('type'), ['countries', 'unrestricted'])
+                fn (Get $get) => ! in_array($get('type'), [
+                    ShippingZoneType::Countries->value,
+                    ShippingZoneType::Unrestricted->value,
+                ], true)
             )
-            ->options(Country::get()->pluck('name', 'id'))
+            ->options(Country::query()->orderBy('name')->pluck('name', 'id'))
 
             ->required()
             ->searchable()
@@ -135,9 +135,7 @@ class ShippingZoneResource extends BaseResource
                     ->toArray();
             })
             ->saveRelationshipsUsing(static function (Model $record, $state) {
-                $selectedCountry = Country::where('id', $state)->first();
-
-                $record->countries()->sync($selectedCountry->id);
+                $record->countries()->sync(filled($state) ? [$state] : []);
             });
     }
 
@@ -145,9 +143,9 @@ class ShippingZoneResource extends BaseResource
     {
         return Forms\Components\Select::make('countries')
             ->label(__('admin.shipping::shippingzone.form.countries.label'))
-            ->visible(fn ($get) => $get('type') == 'countries')
+            ->visible(fn (Get $get) => $get('type') === ShippingZoneType::Countries->value)
             ->dehydrated(false)
-            ->options(Country::get()->pluck('name', 'id'))
+            ->options(Country::query()->orderBy('name')->pluck('name', 'id'))
             ->multiple()
             ->required()
             ->loadStateFromRelationshipsUsing(static function (Forms\Components\Select $component, Model $record): void {
@@ -177,9 +175,9 @@ class ShippingZoneResource extends BaseResource
     {
         return Forms\Components\Select::make('states')
             ->label(__('admin.shipping::shippingzone.form.states.label'))
-            ->visible(fn ($get) => $get('type') == 'states')
+            ->visible(fn (Get $get) => $get('type') === ShippingZoneType::States->value)
             ->dehydrated(false)
-            ->options(fn ($get) => State::where('country_id', $get('country'))->get()->pluck('name', 'id'))
+            ->options(fn (Get $get) => State::query()->where('country_id', $get('country'))->orderBy('name')->pluck('name', 'id'))
             ->multiple()
             ->required()
             ->loadStateFromRelationshipsUsing(static function (Forms\Components\Select $component, Model $record): void {
@@ -210,7 +208,7 @@ class ShippingZoneResource extends BaseResource
     {
         return Forms\Components\Textarea::make('postcodes')
             ->label(__('admin.shipping::shippingzone.form.postcodes.label'))
-            ->visible(fn ($get) => $get('type') == 'postcodes')
+            ->visible(fn (Get $get) => $get('type') === ShippingZoneType::Postcodes->value)
             ->dehydrated(false)
             ->rows(10)
             ->helperText(__('admin.shipping::shippingzone.form.postcodes.helper'))
@@ -225,14 +223,14 @@ class ShippingZoneResource extends BaseResource
                         ->join("\n"),
                 );
             })
-            ->saveRelationshipsUsing(static function (Model $record, $state, $get) {
-                static::syncPostcodes($record, $get('zone_country'), $state);
+            ->saveRelationshipsUsing(static function (Model $record, $state): void {
+                static::syncPostcodes($record, $state);
 
                 $record->states()->detach();
             });
     }
 
-    private static function syncPostcodes(ShippingZone $shippingZone, $countryId, $postcodes)
+    private static function syncPostcodes(ShippingZone $shippingZone, $postcodes): void
     {
         $postcodes = collect(
             explode(
@@ -281,7 +279,7 @@ class ShippingZoneResource extends BaseResource
                     __('admin.shipping::shippingzone.table.type.label')
                 )
                 ->formatStateUsing(
-                    fn ($state) => __("admin.shipping::shippingzone.table.type.options.{$state}")
+                    fn ($state) => ShippingZoneType::labelFor($state)
                 ),
         ];
     }

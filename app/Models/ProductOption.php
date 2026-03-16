@@ -14,7 +14,7 @@ use App\Base\Traits\HasTranslations;
 use App\Base\Traits\LogsActivity;
 use App\Base\Traits\Searchable;
 use App\Database\Factories\ProductOptionFactory;
-use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
+use Spatie\MediaLibrary;
 
 /**
  * @property int $id
@@ -27,7 +27,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property ?\Illuminate\Support\Carbon $created_at
  * @property ?\Illuminate\Support\Carbon $updated_at
  */
-class ProductOption extends BaseModel implements Contracts\ProductOption, SpatieHasMedia
+class ProductOption extends BaseModel implements Contracts\ProductOption, MediaLibrary\HasMedia
 {
     use HasFactory;
     use HasMacros;

@@ -3,8 +3,11 @@
         {{ $getLabel() }}
     </x-filament::section.heading>
 
-
-    @livewire('store.admin.livewire.components.activity-log-feed', [
-        'subject' => $getRecord()
-    ])
+    @livewire(
+        \App\Livewire\Components\ActivityLogFeed::class,
+        [
+            'subject' => $getRecord(),
+        ],
+        key('activity-log-feed-'.$getRecord()->getKey())
+    )
 </section>

@@ -3,25 +3,27 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductTypeResource\Pages;
-use App\Models\Contracts\ProductType as ProductTypeContract;
+use App\Models\Contracts\ProductType;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Support\Forms\Components\AttributeSelector;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
-use Filament\Forms\Components\Component;
+use Filament\Schemas\Components\Component;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
+use BackedEnum;
+use Filament\Schemas\Schema;
 
 class ProductTypeResource extends BaseResource
 {
     protected static ?string $permission = 'catalog:manage-products';
 
-    protected static ?string $model = ProductTypeContract::class;
+    protected static ?string $model = ProductType::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-swatch';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-swatch';
 
     protected static ?int $navigationSort = 2;
 
@@ -45,15 +47,15 @@ class ProductTypeResource extends BaseResource
         return __('admin::global.sections.catalog');
     }
 
-    public static function getDefaultForm(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public static function getDefaultForm(Schema $schema): Schema
     {
         return $schema
             ->components([
-                SchemaComponents\Section::make()->schema(
+                Components\Section::make()->schema(
                     static::getMainFormComponents()
                 ),
-                SchemaComponents\Tabs::make('Attributes')->tabs([
-                    SchemaComponents\Tabs\Tab::make(__('admin::producttype.tabs.product_attributes.label'))
+                Components\Tabs::make('Attributes')->tabs([
+                    Components\Tabs\Tab::make(__('admin::producttype.tabs.product_attributes.label'))
                         ->schema([
                             AttributeSelector::make('mappedAttributes')
                                 ->withType(Product::morphName())
@@ -61,7 +63,7 @@ class ProductTypeResource extends BaseResource
                                 ->label('')
                                 ->columnSpan(2),
                         ]),
-                    SchemaComponents\Tabs\Tab::make(__('admin::producttype.tabs.variant_attributes.label'))
+                    Components\Tabs\Tab::make(__('admin::producttype.tabs.variant_attributes.label'))
                         ->schema([
                             AttributeSelector::make('mappedAttributes')
                                 ->withType(ProductVariant::morphName())

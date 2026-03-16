@@ -10,13 +10,15 @@ use App\Support\Tables\Columns\TranslatedTextColumn;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Unique;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class AttributesRelationManager extends BaseRelationManager
 {
@@ -29,7 +31,7 @@ class AttributesRelationManager extends BaseRelationManager
 
     protected static ?string $recordTitleAttribute = 'name.en';  // TODO: localise somehow
 
-    public function getDefaultForm(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function getDefaultForm(Schema $schema): Schema
     {
         return $schema
             ->components([
@@ -40,7 +42,7 @@ class AttributesRelationManager extends BaseRelationManager
                     ->required()
                     ->maxLength(255)
                     ->live(onBlur: true)
-                    ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
+                    ->afterStateUpdated(function (string $operation, $state, Set $set) {
                         if ($operation !== 'create') {
                             return;
                         }
@@ -65,7 +67,7 @@ class AttributesRelationManager extends BaseRelationManager
                         fn (?Model $record) => (bool) $record
                     )
                     ->required(),
-                SchemaComponents\Grid::make(3)->schema([
+                Components\Grid::make(3)->schema([
                     Forms\Components\Toggle::make('searchable')
                         ->label(
                             __('admin::attribute.form.searchable.label')
@@ -107,8 +109,8 @@ class AttributesRelationManager extends BaseRelationManager
                     ->helperText(
                         __('admin::attribute.form.validation_rules.helper')
                     ),
-                SchemaComponents\Grid::make(1)
-                    ->schema(function (Forms\Get $get) {
+                Components\Grid::make(1)
+                    ->schema(function (Get $get) {
                         return AttributeData::getConfigurationFields($get('type'));
                     })->key('configuration')->statePath('configuration'),
             ]);

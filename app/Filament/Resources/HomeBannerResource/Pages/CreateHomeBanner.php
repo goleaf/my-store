@@ -7,5 +7,5 @@ use App\Support\Pages\BaseCreateRecord;
 
 class CreateHomeBanner extends BaseCreateRecord
 {
-    protected static string $resource = \App\Filament\Resources\HomeBannerResource::class;
+    protected static string $resource = HomeBannerResource::class;
 }

@@ -4,6 +4,7 @@ namespace App\Models\Contracts;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use App\DataTypes;
 
 interface Price
 {
@@ -25,10 +26,10 @@ interface Price
     /**
      * Return the price exclusive of tax.
      */
-    public function priceExTax(): \App\DataTypes\Price;
+    public function priceExTax(): DataTypes\Price;
 
     /**
      * Return the price inclusive of tax.
      */
-    public function priceIncTax(): int|\App\DataTypes\Price;
+    public function priceIncTax(): int|DataTypes\Price;
 }

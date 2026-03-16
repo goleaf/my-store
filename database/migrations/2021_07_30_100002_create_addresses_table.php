@@ -16,15 +16,17 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('company_name')->nullable();
+            $table->string('tax_identifier')->nullable();
             $table->string('line_one');
             $table->string('line_two')->nullable();
             $table->string('line_three')->nullable();
             $table->string('city');
             $table->string('state')->nullable();
             $table->string('postcode')->nullable();
-            $table->string('delivery_instructions')->nullable();
+            $table->string('delivery_instructions', 1000)->nullable();
             $table->string('contact_email')->nullable();
             $table->string('contact_phone')->nullable();
+            $table->timestamp('last_used_at')->nullable();
             $table->json('meta')->nullable();
             $table->boolean('shipping_default')->default(false);
             $table->boolean('billing_default')->default(false);

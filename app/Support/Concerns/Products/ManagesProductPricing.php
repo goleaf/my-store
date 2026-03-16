@@ -6,10 +6,13 @@ use App\Filament\Resources\ProductVariantResource;
 use App\Models\Currency;
 use App\Models\Price;
 use Filament\Forms;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
+use Filament\Schemas\Schema;
 
 trait ManagesProductPricing
 {
@@ -81,12 +84,12 @@ trait ManagesProductPricing
     {
         //        dd($this->basePrices);
 
-        return SchemaComponents\SchemaComponents\Section::make(
+        return Components\Section::make(
             __('admin::relationmanagers.pricing.form.basePrices.title')
         )
             ->schema(
-                collect($this->basePrices)->map(callback: function ($price, $index): SchemaComponents\Fieldset {
-                    return SchemaComponents\Fieldset::make($price['label'])->schema([
+                collect($this->basePrices)->map(callback: function ($price, $index): Components\Fieldset {
+                    return Components\Fieldset::make($price['label'])->schema([
                         Forms\Components\TextInput::make('value')
                             ->label('')
                             ->statePath($index.'.value')
@@ -101,13 +104,13 @@ trait ManagesProductPricing
                             ->extraInputAttributes([
                                 'class' => '',
                             ])
-                            ->hintIcon(function (Forms\Get $get, Forms\Components\TextInput $component) use ($index, $price) {
+                            ->hintIcon(function (Get $get) use ($index, $price) {
                                 if (! ($price['sync_prices'] ?? false) && $get('basePrices.'.$index.'.id', true)) {
                                     return null;
                                 }
 
                                 return FilamentIcon::resolve('store::info');
-                            })->hintIconTooltip(function (Forms\Get $get, Forms\Components\TextInput $component) use ($index, $price) {
+                            })->hintIconTooltip(function (Get $get) use ($index, $price) {
                                 if ($price['sync_prices'] ?? false) {
                                     return __('admin::relationmanagers.pricing.form.basePrices.form.price.sync_price');
                                 }
@@ -134,13 +137,13 @@ trait ManagesProductPricing
                             ->extraInputAttributes([
                                 'class' => '',
                             ])
-                            ->hintIcon(function (Forms\Get $get, Forms\Components\TextInput $component) use ($index, $price) {
+                            ->hintIcon(function (Get $get) use ($index, $price) {
                                 if (! ($price['sync_prices'] ?? false) && $get('basePrices.'.$index.'.id', true)) {
                                     return null;
                                 }
 
                                 return FilamentIcon::resolve('store::info');
-                            })->hintIconTooltip(function (Forms\Get $get, Forms\Components\TextInput $component) use ($index, $price) {
+                            })->hintIconTooltip(function (Get $get) use ($index, $price) {
                                 if ($price['sync_prices'] ?? false) {
                                     return __('admin::relationmanagers.pricing.form.basePrices.form.price.sync_price');
                                 }
@@ -158,15 +161,15 @@ trait ManagesProductPricing
             )->statePath('basePrices')->columns(1);
     }
 
-    public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function form(Schema $schema): Schema
     {
         if (! count($this->basePrices)) {
             $this->basePrices = $this->getBasePrices();
         }
 
         $schema->components([
-            SchemaComponents\SchemaComponents\Section::make()->schema([
-                SchemaComponents\Group::make([
+            Components\Section::make()->schema([
+                Components\Group::make([
                     ProductVariantResource::getTaxClassIdFormComponent(),
                     ProductVariantResource::getTaxRefFormComponent(),
                 ])->columns(2),

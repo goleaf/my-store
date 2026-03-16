@@ -3,17 +3,16 @@
 namespace App\Pipelines\Order\Creation;
 
 use Closure;
-use App\Models\Contracts\Order as OrderContract;
-use App\Models\Order;
+use App\Models\Contracts\Order;
 
 class CleanUpOrderLines
 {
     /**
-     * @param  Closure(OrderContract): mixed  $next
+     * @param  Closure(\App\Models\Contracts\Order): mixed  $next
      */
-    public function handle(OrderContract $order, Closure $next): mixed
+    public function handle(Order $order, Closure $next): mixed
     {
-        /** @var Order $order */
+        /** @var \App\Models\Order $order */
         $cart = $order->cart;
 
         // Build a set of "signatures" that uniquely identify each cart line

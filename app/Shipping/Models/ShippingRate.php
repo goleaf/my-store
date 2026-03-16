@@ -11,11 +11,11 @@ use App\Base\Purchasable;
 use App\Base\Traits\HasPrices;
 use App\Base\Traits\LogsActivity;
 use App\DataTypes\ShippingOption;
-use App\Models\Contracts\Cart as CartContract;
-use App\Models\Contracts\TaxClass as TaxClassContract;
+use App\Models\Contracts\Cart;
 use App\Models\TaxClass;
 use App\Shipping\Database\Factories\ShippingRateFactory;
 use App\Shipping\DataTransferObjects\ShippingOptionRequest;
+use App\Models;
 
 class ShippingRate extends BaseModel implements Contracts\ShippingRate, Purchasable
 {
@@ -76,7 +76,7 @@ class ShippingRate extends BaseModel implements Contracts\ShippingRate, Purchasa
     /**
      * Return the tax class.
      */
-    public function getTaxClass(): TaxClassContract
+    public function getTaxClass(): Models\Contracts\TaxClass
     {
         return $this->resolvedTaxClass ?? TaxClass::getDefault();
     }
@@ -142,7 +142,7 @@ class ShippingRate extends BaseModel implements Contracts\ShippingRate, Purchasa
     /**
      * Return the shipping method driver.
      */
-    public function getShippingOption(CartContract $cart): ?ShippingOption
+    public function getShippingOption(Cart $cart): ?ShippingOption
     {
         if (config('store.shipping-tables.shipping_rate_tax_calculation') == 'highest') {
             $this->resolvedTaxClass = $this->resolveHighestTaxRateInCart($cart);
@@ -166,7 +166,7 @@ class ShippingRate extends BaseModel implements Contracts\ShippingRate, Purchasa
         return 1;
     }
 
-    private function resolveHighestTaxRateInCart(CartContract $cart): ?TaxClass
+    private function resolveHighestTaxRateInCart(Cart $cart): ?TaxClass
     {
         $highestRate = false;
         $highestTaxClass = null;

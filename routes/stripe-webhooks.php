@@ -1,8 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Stripe\Http\Controllers\WebhookController;
+use App\Stripe\Http\Middleware\StripeWebhookMiddleware;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
-Route::post(config('store.stripe.webhook_path', 'stripe/webhook'), \App\Stripe\Http\Controllers\WebhookController::class)
-    ->middleware([\App\Stripe\Http\Middleware\StripeWebhookMiddleware::class, 'api'])
-    ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class])
+Route::post(config('store.stripe.webhook_path', 'stripe/webhook'), WebhookController::class)
+    ->middleware([StripeWebhookMiddleware::class, 'api'])
+    ->withoutMiddleware([VerifyCsrfToken::class])
     ->name('store.stripe.webhook');

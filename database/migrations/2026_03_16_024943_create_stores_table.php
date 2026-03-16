@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('owner_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('owner_id')->nullable()->constrained('store_customers')->onDelete('set null');
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('logo', 500)->nullable();

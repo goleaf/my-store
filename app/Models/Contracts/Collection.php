@@ -5,6 +5,7 @@ namespace App\Models\Contracts;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support;
 
 interface Collection
 {
@@ -26,7 +27,7 @@ interface Collection
     /**
      * Get the translated name of ancestor collections.
      */
-    public function getBreadcrumbAttribute(): \Illuminate\Support\Collection;
+    public function getBreadcrumbAttribute(): Support\Collection;
 
     /**
      * Return the customer groups relationship.

@@ -2,11 +2,13 @@
 
 namespace App\Support\FieldTypes;
 
+use App\Http\Requests\Support\Fields\ConfiguredFieldRequest;
 use App\Models\Attribute;
 use App\Support\Synthesizers\TextSynth;
-use Filament\Forms\Components\Component;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Component;
+use Filament\Forms\Components\Toggle;
 
 class TextField extends BaseFieldType
 {
@@ -15,7 +17,7 @@ class TextField extends BaseFieldType
     public static function getConfigurationFields(): array
     {
         return [
-            \Filament\Forms\Components\Toggle::make('richtext')->label(
+            Toggle::make('richtext')->label(
                 __('admin::fieldtypes.text.form.richtext.label')
             ),
         ];
@@ -23,16 +25,21 @@ class TextField extends BaseFieldType
 
     public static function getFilamentComponent(Attribute $attribute): Component
     {
+        $request = (new ConfiguredFieldRequest)
+            ->forField($attribute->handle)
+            ->required((bool) $attribute->required)
+            ->withRules($attribute->validation_rules);
+
         if ($attribute->configuration->get('richtext')) {
             return RichEditor::make($attribute->handle)
-                ->when(filled($attribute->validation_rules), fn (RichEditor $component) => $component->rules($attribute->validation_rules))
-                ->required((bool) $attribute->required)
+                ->rules($request->fieldRules($attribute->handle))
+                ->required($request->fieldHasRule($attribute->handle, 'required'))
                 ->helperText($attribute->translate('description'));
         }
 
         return TextInput::make($attribute->handle)
-            ->when(filled($attribute->validation_rules), fn (TextInput $component) => $component->rules($attribute->validation_rules))
-            ->required((bool) $attribute->required)
+            ->rules($request->fieldRules($attribute->handle))
+            ->required($request->fieldHasRule($attribute->handle, 'required'))
             ->helperText($attribute->translate('description'));
     }
 }

@@ -2,28 +2,28 @@
 
 namespace App\Shipping\Observers;
 
-use App\Models\Contracts\Order as OrderContract;
 use App\Models\Order;
 use App\Shipping\DataTransferObjects\PostcodeLookup;
 use App\Shipping\Facades\Shipping;
+use App\Models\Contracts;
 
 class OrderObserver
 {
-    public function updated(OrderContract $order): void
+    public function updated(Contracts\Order $order): void
     {
         $this->updateShippingZone(
             $order
         );
     }
 
-    public function created(OrderContract $order): void
+    public function created(Contracts\Order $order): void
     {
         $this->updateShippingZone(
             $order
         );
     }
 
-    protected function updateShippingZone(OrderContract $order): void
+    protected function updateShippingZone(Contracts\Order $order): void
     {
         $shippingAddress = $order->shippingAddress ?: $order->cart?->shippingAddress;
 
@@ -50,7 +50,7 @@ class OrderObserver
     /**
      * Called when we're about to index the order.
      **/
-    public function indexing(OrderContract $order): void
+    public function indexing(Contracts\Order $order): void
     {
         /** @var Order $order */
         $order->addSearchableAttribute('shipping_zone', $order->meta?->shipping_zone ?? null);

@@ -3,11 +3,11 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CustomerGroupResource\Pages;
-use App\Models\Contracts\CustomerGroup as CustomerGroupContract;
+use App\Models\Contracts\CustomerGroup;
 use App\Support\Forms\Components\Attributes;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
-use Filament\Forms\Components\Component;
+use Filament\Schemas\Components\Component;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -18,7 +18,7 @@ class CustomerGroupResource extends BaseResource
 {
     protected static ?string $permission = 'settings:core';
 
-    protected static ?string $model = CustomerGroupContract::class;
+    protected static ?string $model = CustomerGroup::class;
 
     protected static ?int $navigationSort = 1;
 

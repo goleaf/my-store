@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ProductResource\Pages;
 
+use App\Base\Enums\ProductStatus;
 use App\Filament\Resources\ProductResource;
 use App\Support\Pages\BaseEditRecord;
 use Filament\Actions;
@@ -43,13 +44,10 @@ class EditProduct extends BaseEditRecord
                 ->record(
                     $this->record
                 )->form([
-                    Forms\Components\Radio::make('status')->options([
-                        'published' => __('admin::product.form.status.options.published.label'),
-                        'draft' => __('admin::product.form.status.options.draft.label'),
-                    ])
+                    Forms\Components\Radio::make('status')->options(ProductStatus::options())
                         ->descriptions([
-                            'published' => __('admin::product.form.status.options.published.description'),
-                            'draft' => __('admin::product.form.status.options.draft.description'),
+                            ProductStatus::Published->value => __('admin::product.form.status.options.published.description'),
+                            ProductStatus::Draft->value => __('admin::product.form.status.options.draft.description'),
                         ])->live(),
                 ]),
             Actions\DeleteAction::make(),

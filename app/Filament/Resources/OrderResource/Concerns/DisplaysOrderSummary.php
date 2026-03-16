@@ -4,6 +4,7 @@ namespace App\Filament\Resources\OrderResource\Concerns;
 
 use App\Support\OrderStatus;
 use Filament\Infolists;
+use Filament\Schemas\Components;
 use Filament\Support\Enums\IconPosition;
 
 trait DisplaysOrderSummary
@@ -119,9 +120,9 @@ trait DisplaysOrderSummary
         ]);
     }
 
-    public static function getDefaultOrderSummaryInfolist(): Infolists\Components\Section
+    public static function getDefaultOrderSummaryInfolist(): Components\Section
     {
-        return Infolists\Components\Section::make()
+        return Components\Section::make()
             ->compact()
             ->inlineLabel()
             ->schema(
@@ -129,7 +130,7 @@ trait DisplaysOrderSummary
             );
     }
 
-    public static function getOrderSummaryInfolist(): Infolists\Components\Section
+    public static function getOrderSummaryInfolist(): Components\Section
     {
         return self::callStaticStoreHook('extendOrderSummaryInfolist', static::getDefaultOrderSummaryInfolist());
     }

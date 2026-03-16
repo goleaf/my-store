@@ -3,7 +3,7 @@
 namespace App\Shipping\Managers;
 
 use Illuminate\Support\Manager;
-use App\Models\Contracts\Cart as CartContract;
+use App\Models\Contracts\Cart;
 use App\Shipping\Drivers\ShippingMethods\Collection;
 use App\Shipping\Drivers\ShippingMethods\FlatRate;
 use App\Shipping\Drivers\ShippingMethods\FreeShipping;
@@ -12,6 +12,7 @@ use App\Shipping\Interfaces\ShippingMethodManagerInterface;
 use App\Shipping\Resolvers\ShippingOptionResolver;
 use App\Shipping\Resolvers\ShippingRateResolver;
 use App\Shipping\Resolvers\ShippingZoneResolver;
+use Illuminate\Support;
 
 class ShippingManager extends Manager implements ShippingMethodManagerInterface
 {
@@ -35,7 +36,7 @@ class ShippingManager extends Manager implements ShippingMethodManagerInterface
         return $this->buildProvider(Collection::class);
     }
 
-    public function getSupportedDrivers(): \Illuminate\Support\Collection
+    public function getSupportedDrivers(): Support\Collection
     {
         return collect([
             'free-shipping' => $this->createDriver('free-shipping'),
@@ -59,12 +60,12 @@ class ShippingManager extends Manager implements ShippingMethodManagerInterface
         return app(ShippingZoneResolver::class);
     }
 
-    public function shippingRates(?CartContract $cart = null): ShippingRateResolver
+    public function shippingRates(?Cart $cart = null): ShippingRateResolver
     {
         return new ShippingRateResolver($cart);
     }
 
-    public function shippingOptions(?CartContract $cart = null): ShippingOptionResolver
+    public function shippingOptions(?Cart $cart = null): ShippingOptionResolver
     {
         return new ShippingOptionResolver($cart);
     }

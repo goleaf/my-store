@@ -11,4 +11,9 @@ return [
         'up-sell' => 'Vânzare superioară',
         'alternate' => 'Alternativă',
     ],
+    'saved-payment-method-types' => [
+        'card' => 'Card',
+        'paypal' => 'PayPal',
+        'payoneer' => 'Payoneer',
+    ],
 ];

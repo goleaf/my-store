@@ -6,7 +6,7 @@ use App\Base\DataTransferObjects\PaymentAuthorize;
 use App\Base\DataTransferObjects\PaymentCapture;
 use App\Base\DataTransferObjects\PaymentRefund;
 use App\Events\PaymentAttemptEvent;
-use App\Models\Contracts\Transaction as TransactionContract;
+use App\Models\Contracts\Transaction;
 
 class OfflinePayment extends AbstractPayment
 {
@@ -47,7 +47,7 @@ class OfflinePayment extends AbstractPayment
     /**
      * {@inheritDoc}
      */
-    public function refund(TransactionContract $transaction, int $amount = 0, $notes = null): PaymentRefund
+    public function refund(Transaction $transaction, int $amount = 0, $notes = null): PaymentRefund
     {
         return new PaymentRefund(true);
     }
@@ -55,7 +55,7 @@ class OfflinePayment extends AbstractPayment
     /**
      * {@inheritDoc}
      */
-    public function capture(TransactionContract $transaction, $amount = 0): PaymentCapture
+    public function capture(Transaction $transaction, $amount = 0): PaymentCapture
     {
         return new PaymentCapture(true);
     }

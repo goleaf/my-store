@@ -4,7 +4,6 @@ namespace App\Filament\Resources\BrandResource\Pages;
 
 use App\Filament\Resources\BrandResource;
 use App\Filament\Resources\ProductResource;
-use App\Models\Contracts\Product as ProductContract;
 use App\Models\Product;
 use App\Support\Pages\BaseManageRelatedRecords;
 use Filament\Forms;
@@ -15,6 +14,7 @@ use Filament\Actions\DetachAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Actions;
+use App\Models\Contracts;
 
 class ManageBrandProducts extends BaseManageRelatedRecords
 {
@@ -75,7 +75,7 @@ class ManageBrandProducts extends BaseManageRelatedRecords
                         ->getSearchResultsUsing(static function (Forms\Components\Select $component, string $search): array {
                             return Product::search($search)
                                 ->get()
-                                ->mapWithKeys(fn (ProductContract $record): array => [$record->getKey() => $record->translateAttribute('name')])
+                                ->mapWithKeys(fn (Contracts\Product $record): array => [$record->getKey() => $record->translateAttribute('name')])
                                 ->all();
                         }),
                 ])

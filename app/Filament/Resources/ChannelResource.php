@@ -3,10 +3,11 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ChannelResource\Pages;
-use App\Models\Contracts\Channel as ChannelContract;
+use App\Models\Contracts\Channel;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
-use Filament\Forms\Components\Component;
+use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -20,7 +21,7 @@ class ChannelResource extends BaseResource
 {
     protected static ?string $permission = 'settings:core';
 
-    protected static ?string $model = ChannelContract::class;
+    protected static ?string $model = Channel::class;
 
     protected static ?int $navigationSort = 1;
 
@@ -60,7 +61,7 @@ class ChannelResource extends BaseResource
             ->label(__('admin::channel.form.name.label'))
             ->required()
             ->maxLength(255)
-            ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
+            ->afterStateUpdated(function (string $operation, $state, Set $set) {
                 if ($operation !== 'create') {
                     return;
                 }

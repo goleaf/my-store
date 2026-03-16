@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\PostResource\Tables;
 
+use App\Base\Enums\PostStatus;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -35,12 +36,8 @@ class PostsTable
                     ->sortable(),
                 TextColumn::make('status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'draft' => 'gray',
-                        'published' => 'success',
-                        'archived' => 'danger',
-                        default => 'gray',
-                    })
+                    ->formatStateUsing(fn ($state) => PostStatus::labelFor($state))
+                    ->color(fn ($state): string => PostStatus::resolve($state)?->color() ?? 'gray')
                     ->sortable(),
                 TextColumn::make('published_at')
                     ->dateTime()
@@ -60,11 +57,7 @@ class PostsTable
                 SelectFilter::make('category')
                     ->relationship('category', 'name'),
                 SelectFilter::make('status')
-                    ->options([
-                        'draft' => 'Draft',
-                        'published' => 'Published',
-                        'archived' => 'Archived',
-                    ]),
+                    ->options(PostStatus::options()),
             ])
             ->actions([
                 EditAction::make(),

@@ -5,8 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\User;
-
 class Store extends Model
 {
     use HasFactory, SoftDeletes;
@@ -47,7 +45,7 @@ class Store extends Model
 
     public function owner()
     {
-        return $this->belongsTo(User::class, 'owner_id');
+        return $this->belongsTo(Customer::class, 'owner_id');
     }
 
     public function products()

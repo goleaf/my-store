@@ -5,9 +5,9 @@ namespace App\Generators;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use App\Models\Contracts\Language as LanguageContract;
 use App\Models\Language;
 use App\Models\Url;
+use App\Models\Contracts;
 
 class UrlGenerator
 {
@@ -21,7 +21,7 @@ class UrlGenerator
     /**
      * The default language.
      */
-    protected LanguageContract $defaultLanguage;
+    protected Contracts\Language $defaultLanguage;
 
     /**
      * Construct the class.

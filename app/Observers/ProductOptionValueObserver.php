@@ -2,19 +2,18 @@
 
 namespace App\Observers;
 
-use App\Models\Contracts\ProductOptionValue as ProductOptionValueContract;
-use App\Models\ProductOptionValue;
+use App\Models\Contracts\ProductOptionValue;
 
 class ProductOptionValueObserver
 {
     /**
-     * Handle the ProductOptionValue "deleting" event.
+     * Handle the \App\Models\ProductOptionValue "deleting" event.
      *
      * @return void
      */
-    public function deleting(ProductOptionValueContract $productOptionValue)
+    public function deleting(ProductOptionValue $productOptionValue)
     {
-        /** @var ProductOptionValue $productOptionValue */
+        /** @var \App\Models\ProductOptionValue $productOptionValue */
         $productOptionValue->variants()->detach();
     }
 }

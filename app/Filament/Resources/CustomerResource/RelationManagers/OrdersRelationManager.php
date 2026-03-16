@@ -4,7 +4,7 @@ namespace App\Filament\Resources\CustomerResource\RelationManagers;
 
 use App\Filament\Resources\OrderResource;
 use App\Filament\Resources\OrderResource\Pages\ManageOrder;
-use App\Models\Contracts\Order as OrderContract;
+use App\Models\Contracts\Order;
 use App\Support\RelationManagers\BaseRelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -29,7 +29,7 @@ class OrdersRelationManager extends BaseRelationManager
             fn (Builder $query): Builder => $query->with(['currency'])
         )->actions([
             Actions\Action::make('viewOrder')
-                ->url(fn (OrderContract $record): string => ManageOrder::getUrl(['record' => $record])),
+                ->url(fn (Order $record): string => ManageOrder::getUrl(['record' => $record])),
         ]);
     }
 }

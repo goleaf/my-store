@@ -5,7 +5,6 @@ namespace App\Filament\Resources\CollectionGroupResource\Widgets;
 use App\Filament\Resources\CollectionResource;
 use App\Facades\DB;
 use App\Models\Collection;
-use App\Models\Contracts\Collection as CollectionContract;
 use App\Support\Tables\Actions\Collections\CreateChildCollection;
 use App\Support\Actions\Collections\CreateRootCollection;
 use App\Support\Actions\Collections\DeleteCollection;
@@ -21,6 +20,7 @@ use Filament\Support\Facades\FilamentIcon;
 use Filament\Widgets\Widget;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use App\Models\Contracts;
 
 class CollectionTreeView extends Widget implements HasActions, HasForms
 {
@@ -198,7 +198,7 @@ class CollectionTreeView extends Widget implements HasActions, HasForms
                     ->getSearchResultsUsing(static function (Forms\Components\Select $component, string $search): array {
                         return get_search_builder(Collection::modelClass(), $search)
                             ->get()
-                            ->mapWithKeys(fn (CollectionContract $record): array => [$record->getKey() => $record->breadcrumb->push($record->translateAttribute('name'))->join(' > ')])
+                            ->mapWithKeys(fn (Contracts\Collection $record): array => [$record->getKey() => $record->breadcrumb->push($record->translateAttribute('name'))->join(' > ')])
                             ->all();
                     }),
             ])->after(

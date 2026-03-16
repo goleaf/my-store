@@ -2,10 +2,11 @@
 
 namespace App\Livewire\Components;
 
+use App\Facades\CartSession;
+use App\Http\Requests\Cart\UpdateCartLinesRequest;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
-use App\Facades\CartSession;
 
 class Cart extends Component
 {
@@ -19,13 +20,6 @@ class Cart extends Component
     protected $listeners = [
         'add-to-cart' => 'handleAddToCart',
     ];
-
-    public function rules(): array
-    {
-        return [
-            'lines.*.quantity' => 'required|numeric|min:1|max:10000',
-        ];
-    }
 
     public function mount(): void
     {
@@ -61,7 +55,10 @@ class Cart extends Component
      */
     public function updateLines(): void
     {
-        $this->validate();
+        $request = new UpdateCartLinesRequest;
+        $request->validatePayload([
+            'lines' => $this->lines,
+        ]);
 
         CartSession::updateLines(
             collect($this->lines)

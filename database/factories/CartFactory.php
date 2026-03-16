@@ -13,11 +13,12 @@ class CartFactory extends BaseFactory
     public function definition(): array
     {
         return [
-            'user_id' => null,
             'customer_id' => null,
             'merged_id' => null,
             'currency_id' => Currency::factory(),
             'channel_id' => Channel::factory(),
+            'session_id' => null,
+            'zone_id' => null,
             'completed_at' => null,
             'meta' => [],
         ];

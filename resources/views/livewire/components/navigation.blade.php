@@ -1,4 +1,4 @@
-<header class="relative bg-white border-b border-gray-100 shadow-sm sticky top-0 z-[60]">
+<header class="relative bg-white border-b border-gray-100 shadow-sm sticky top-0 z-[60]" x-data="{ mobileMenu: false }">
     <!-- Row 1: Main Header -->
     <div class="h-20 flex items-center px-4 mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
         <!-- Logo -->
@@ -20,12 +20,13 @@
                 @livewire('components.location-picker')
             </div>
 
-            <!-- Wishlist Placeholder -->
-            <a href="#" class="relative p-2 text-gray-400 hover:text-primary-600 transition-colors">
+            <a href="{{ auth()->check() ? route('wishlist.view') : route('login') }}" wire:navigate class="relative p-2 text-gray-400 hover:text-primary-600 transition-colors">
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
-                <span class="absolute top-1 right-1 bg-red-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">0</span>
+                @if($this->wishlistCount > 0)
+                    <span class="absolute top-1 right-1 bg-red-500 text-white text-[10px] font-bold rounded-full min-w-4 h-4 px-1 flex items-center justify-center">{{ $this->wishlistCount }}</span>
+                @endif
             </a>
 
             <!-- Cart -->
@@ -105,11 +106,32 @@
             <!-- Main Navigation -->
             <nav class="flex items-center space-x-8 ml-8">
                 <a href="{{ url('/') }}" class="text-sm font-bold text-gray-700 hover:text-primary-600 uppercase tracking-wide py-4 {{ request()->is('/') ? 'text-primary-600 border-b-2 border-primary-600' : '' }}" wire:navigate>Home</a>
-                <a href="#" class="text-sm font-bold text-gray-700 hover:text-primary-600 uppercase tracking-wide py-4" wire:navigate>Shop</a>
-                <a href="#" class="text-sm font-bold text-gray-700 hover:text-primary-600 uppercase tracking-wide py-4" wire:navigate>Stores</a>
-                <a href="#" class="text-sm font-bold text-gray-700 hover:text-primary-600 uppercase tracking-wide py-4" wire:navigate>Mega Menu</a>
-                <a href="#" class="text-sm font-bold text-gray-700 hover:text-primary-600 uppercase tracking-wide py-4" wire:navigate>Pages</a>
-                <a href="#" class="text-sm font-bold text-gray-700 hover:text-primary-600 uppercase tracking-wide py-4" wire:navigate>Dashboard</a>
+                <a href="{{ route('shop.view') }}" class="text-sm font-bold text-gray-700 hover:text-primary-600 uppercase tracking-wide py-4 {{ request()->routeIs('shop.view') ? 'text-primary-600 border-b-2 border-primary-600' : '' }}" wire:navigate>Shop</a>
+                <a href="{{ route('search.view') }}" class="text-sm font-bold text-gray-700 hover:text-primary-600 uppercase tracking-wide py-4 {{ request()->routeIs('search.view') ? 'text-primary-600 border-b-2 border-primary-600' : '' }}" wire:navigate>Search</a>
+                @if($this->brands->whereNotNull('defaultUrl')->isNotEmpty())
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" type="button" class="text-sm font-bold text-gray-700 hover:text-primary-600 uppercase tracking-wide py-4 flex items-center gap-2">
+                            <span>Brands</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div x-show="open" @click.away="open = false" x-cloak class="absolute left-0 mt-1 w-56 rounded-xl border border-gray-100 bg-white py-2 shadow-2xl">
+                            @foreach($this->brands->whereNotNull('defaultUrl')->take(8) as $brand)
+                                <a href="{{ route('brand.view', $brand->defaultUrl->slug) }}" wire:navigate class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-700">
+                                    {{ $brand->name }}
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+                <a href="{{ route('cart.view') }}" class="text-sm font-bold text-gray-700 hover:text-primary-600 uppercase tracking-wide py-4 {{ request()->routeIs('cart.view') ? 'text-primary-600 border-b-2 border-primary-600' : '' }}" wire:navigate>Cart</a>
+                @auth
+                    <a href="{{ route('account.orders') }}" class="text-sm font-bold text-gray-700 hover:text-primary-600 uppercase tracking-wide py-4 {{ request()->routeIs('account.orders*') ? 'text-primary-600 border-b-2 border-primary-600' : '' }}" wire:navigate>Orders</a>
+                @endauth
+                @if($this->canAccessAdmin)
+                    <a href="{{ route('filament.admin.pages.dashboard') }}" class="text-sm font-bold text-gray-700 hover:text-primary-600 uppercase tracking-wide py-4">Dashboard</a>
+                @endif
             </nav>
 
             <!-- Promo/Help -->
@@ -123,7 +145,7 @@
     </div>
 
     <!-- Mobile Navigation (Row 3 simplified for now) -->
-    <div class="lg:hidden flex items-center justify-between px-4 py-2 bg-gray-50 border-t border-gray-100" x-data="{ mobileMenu: false }">
+    <div class="lg:hidden flex items-center justify-between px-4 py-2 bg-gray-50 border-t border-gray-100">
         <button @click="mobileMenu = !mobileMenu" class="p-2 text-gray-700">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -165,6 +187,20 @@
                     </div>
                     
                     <nav class="space-y-1">
+                        <a href="{{ route('home') }}" wire:navigate class="block px-6 py-3 text-lg font-bold text-gray-900 border-b border-gray-50">
+                            Home
+                        </a>
+                        <a href="{{ route('shop.view') }}" wire:navigate class="block px-6 py-3 text-lg font-bold text-gray-900 border-b border-gray-50">
+                            Shop
+                        </a>
+                        <a href="{{ route('search.view') }}" wire:navigate class="block px-6 py-3 text-lg font-bold text-gray-900 border-b border-gray-50">
+                            Search
+                        </a>
+                        @if(auth()->check())
+                            <a href="{{ route('wishlist.view') }}" wire:navigate class="block px-6 py-3 text-lg font-bold text-gray-900 border-b border-gray-50">
+                                Wishlist
+                            </a>
+                        @endif
                         @foreach ($this->collections as $collection)
                             <a href="{{ route('collection.view', $collection->defaultUrl->slug) }}" class="block px-6 py-3 text-lg font-bold text-gray-900 border-b border-gray-50" wire:navigate>
                                 {{ $collection->translateAttribute('name') }}

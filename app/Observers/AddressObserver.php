@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Address;
-use App\Models\Contracts\Address as AddressContract;
+use App\Models\Contracts;
 
 class AddressObserver
 {
@@ -12,7 +12,7 @@ class AddressObserver
      *
      * @return void
      */
-    public function creating(AddressContract $address)
+    public function creating(Contracts\Address $address)
     {
         $this->ensureOnlyOneDefaultShipping($address);
         $this->ensureOnlyOneDefaultBilling($address);
@@ -23,7 +23,7 @@ class AddressObserver
      *
      * @return void
      */
-    public function updating(AddressContract $address)
+    public function updating(Contracts\Address $address)
     {
         $this->ensureOnlyOneDefaultShipping($address);
         $this->ensureOnlyOneDefaultBilling($address);
@@ -32,9 +32,9 @@ class AddressObserver
     /**
      * Ensures that only one default shipping address exists.
      *
-     * @param  AddressContract  $address  The address that will be saved.
+     * @param  \App\Models\Contracts\Address  $address  The address that will be saved.
      */
-    protected function ensureOnlyOneDefaultShipping(AddressContract $address): void
+    protected function ensureOnlyOneDefaultShipping(Contracts\Address $address): void
     {
         /** @var Address $address */
         if ($address->shipping_default) {
@@ -54,9 +54,9 @@ class AddressObserver
     /**
      * Ensures that only one default billing address exists.
      *
-     * @param  AddressContract  $address  The address that will be saved.
+     * @param  \App\Models\Contracts\Address  $address  The address that will be saved.
      */
-    protected function ensureOnlyOneDefaultBilling(AddressContract $address): void
+    protected function ensureOnlyOneDefaultBilling(Contracts\Address $address): void
     {
         /** @var Address $address */
         if ($address->billing_default) {

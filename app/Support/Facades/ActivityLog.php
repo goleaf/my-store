@@ -5,10 +5,10 @@ namespace App\Support\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \App\Admin\Support\ActivityLog\Manifest addRender(string $subject, string $renderer)
+ * @method static \App\Support\ActivityLog\Manifest addRender(string $subject, string $renderer)
  * @method static \Illuminate\Support\Collection getItems(string $subject)
  *
- * @see \App\Admin\Support\ActivityLog\Manifest
+ * @see \App\Support\ActivityLog\Manifest
  */
 class ActivityLog extends Facade
 {
@@ -17,8 +17,8 @@ class ActivityLog extends Facade
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
-        return 'store-activity-log';
+        return 'admin-activity-log';
     }
 }

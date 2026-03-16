@@ -86,16 +86,6 @@ class Discount extends BaseModel implements Contracts\Discount
         return $active ? static::ACTIVE : static::PENDING;
     }
 
-    public function users(): BelongsToMany
-    {
-        $prefix = config('store.database.table_prefix');
-
-        return $this->belongsToMany(
-            config('auth.providers.users.model'),
-            "{$prefix}discount_user"
-        )->withTimestamps();
-    }
-
     public function discountables(): HasMany
     {
         return $this->hasMany(Discountable::modelClass());

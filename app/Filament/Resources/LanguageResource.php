@@ -3,10 +3,10 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\LanguageResource\Pages;
-use App\Models\Contracts\Language as LanguageContract;
+use App\Models\Contracts\Language;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
-use Filament\Forms\Components\Component;
+use Filament\Schemas\Components\Component;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +15,7 @@ class LanguageResource extends BaseResource
 {
     protected static ?string $permission = 'settings:core';
 
-    protected static ?string $model = LanguageContract::class;
+    protected static ?string $model = Language::class;
 
     protected static ?int $navigationSort = 1;
 

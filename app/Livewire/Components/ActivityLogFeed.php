@@ -12,12 +12,14 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Schemas\Schema;
 use Filament\Notifications\Notification;
-use Filament\Support\Enums\ActionSize;
+use Filament\Support\Enums\Size;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ActivityLogFeed extends Component implements HasActions, HasForms
 {
@@ -56,7 +58,7 @@ class ActivityLogFeed extends Component implements HasActions, HasForms
         return Action::make('addComment')
             ->label(__('admin::components.activity-log.action.add-comment'))
             ->action(fn () => $this->addComment())
-            ->size(ActionSize::ExtraSmall)
+            ->size(Size::ExtraSmall)
             ->after(function () {
                 Notification::make()
                     ->title(__('admin::components.activity-log.notification.comment_added'))
@@ -71,10 +73,8 @@ class ActivityLogFeed extends Component implements HasActions, HasForms
 
     /**
      * Add a comment to the order.
-     *
-     * @return void
      */
-    public function addComment()
+    public function addComment(): void
     {
         $data = $this->form->getState();
 
@@ -97,7 +97,7 @@ class ActivityLogFeed extends Component implements HasActions, HasForms
      * Returns the activity log for the subject.
      */
     #[Computed]
-    public function activityLog(): \Illuminate\Pagination\LengthAwarePaginator
+    public function activityLog(): LengthAwarePaginator
     {
         $activities = $this->subject->activities()
             ->orderBy('created_at', 'desc')
@@ -141,7 +141,7 @@ class ActivityLogFeed extends Component implements HasActions, HasForms
         return Filament::getDefaultAvatarProvider()::generateGravatarUrl($email, size: 200);
     }
 
-    public function render()
+    public function render(): View
     {
         return view('admin::livewire.components.activity-log-feed');
     }

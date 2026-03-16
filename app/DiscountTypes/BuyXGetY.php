@@ -7,12 +7,11 @@ use Illuminate\Support\Collection;
 use App\Base\ValueObjects\Cart\DiscountBreakdown;
 use App\Base\ValueObjects\Cart\DiscountBreakdownLine;
 use App\DataTypes\Price;
-use App\Models\Cart;
 use App\Models\CartLine;
-use App\Models\Collection as StoreCollection;
-use App\Models\Contracts\Cart as CartContract;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Models;
+use App\Models\Contracts\Cart;
 
 class BuyXGetY extends AbstractDiscountType
 {
@@ -49,7 +48,7 @@ class BuyXGetY extends AbstractDiscountType
      *
      * @return CartLine
      */
-    public function apply(CartContract $cart): CartContract
+    public function apply(Cart $cart): Cart
     {
         $data = $this->discount->data;
 
@@ -73,7 +72,7 @@ class BuyXGetY extends AbstractDiscountType
                     return true;
                 }
 
-                if ($item->discountable_type == StoreCollection::morphName() &&
+                if ($item->discountable_type == Models\Collection::morphName() &&
                     $line->purchasable->product->collections->pluck('id')->contains($item->discountable_id)
                 ) {
                     return true;
@@ -211,7 +210,7 @@ class BuyXGetY extends AbstractDiscountType
         return $cart;
     }
 
-    private function processAutomaticRewards(CartContract $cart, int $remainingRewardQty, Collection $affectedLines, int $discountTotal)
+    private function processAutomaticRewards(Cart $cart, int $remainingRewardQty, Collection $affectedLines, int $discountTotal)
     {
         // we have lines to add
         if ($remainingRewardQty > 0) {

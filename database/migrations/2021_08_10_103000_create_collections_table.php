@@ -14,6 +14,15 @@ return new class extends Migration
             $table->nestedSet();
             $table->string('type')->default('static')->index();
             $table->json('attribute_data');
+            $table->string('name')->nullable()->index();
+            $table->string('slug')->nullable()->index();
+            $table->string('image', 500)->nullable();
+            $table->text('description')->nullable();
+            $table->boolean('is_featured')->default(false)->index();
+            $table->boolean('is_active')->default(true)->index();
+            $table->unsignedSmallInteger('sort_order')->default(0);
+            $table->string('meta_title')->nullable();
+            $table->string('meta_description', 500)->nullable();
             $table->string('sort')->default('custom')->index();
             $table->timestamps();
             $table->softDeletes();

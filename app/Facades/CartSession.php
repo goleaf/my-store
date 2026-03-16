@@ -12,7 +12,7 @@ use App\Base\CartSessionInterface;
  * @method static array getShippingEstimateMeta()
  * @method static void forget(bool $delete = true)
  * @method static \App\Models\Cart|null manager()
- * @method static void associate(\App\Models\Contracts\Cart $cart, \Illuminate\Contracts\Auth\Authenticatable $user, string $policy)
+ * @method static void associate(\App\Models\Contracts\Cart $cart, \App\Models\Customer $user, string $policy)
  * @method static \App\Models\Contracts\Cart use(\App\Models\Contracts\Cart $cart)
  * @method static void estimateShipping()
  * @method static string getSessionKey()

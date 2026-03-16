@@ -9,6 +9,7 @@ use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Contracts\Support\Htmlable;
+use DateTime;
 
 class AverageOrderValueChart extends ChartWidget
 {
@@ -21,7 +22,7 @@ class AverageOrderValueChart extends ChartWidget
         return $this->heading ?? __('admin::widgets.dashboard.orders.average_order_value.heading');
     }
 
-    protected function getOrderQuery(\DateTime|CarbonInterface|null $from = null, \DateTime|CarbonInterface|null $to = null)
+    protected function getOrderQuery(DateTime|CarbonInterface|null $from = null, DateTime|CarbonInterface|null $to = null)
     {
         return Order::whereNotNull('placed_at')
             ->with(['currency'])
@@ -40,7 +41,7 @@ class AverageOrderValueChart extends ChartWidget
             $guestOrders = collect();
 
             if ($group->default) {
-                $guestOrders = $query->clone()->with(['currency'])->whereNull('user_id')->whereNull('customer_id')
+                $guestOrders = $query->clone()->with(['currency'])->whereNull('customer_id')
                     ->select(
                         DB::RAW('ROUND(AVG(sub_total), 0) as sub_total'),
                         DB::RAW(db_date('placed_at', '%Y-%m', 'date'))

@@ -3,6 +3,7 @@
 namespace App\Utils;
 
 use TreeWalker;
+use InvalidArgumentException;
 
 class Arr
 {
@@ -27,7 +28,7 @@ class Arr
 
         foreach ($setTuples as $tuple) {
             if (! is_array($tuple)) {
-                throw new \InvalidArgumentException('The set builder requires a single array of one or more array sets.');
+                throw new InvalidArgumentException('The set builder requires a single array of one or more array sets.');
             }
         }
 

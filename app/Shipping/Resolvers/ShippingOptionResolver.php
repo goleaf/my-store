@@ -3,22 +3,21 @@
 namespace App\Shipping\Resolvers;
 
 use Illuminate\Support\Collection;
-use App\Models\Cart;
-use App\Models\Contracts\Cart as CartContract;
 use App\Shipping\DataTransferObjects\ShippingOptionLookup;
 use App\Shipping\Events\ShippingOptionResolvedEvent;
+use App\Models\Contracts\Cart;
 
 class ShippingOptionResolver
 {
     /**
      * The cart to use when resolving.
      */
-    protected ?CartContract $cart;
+    protected ?Cart $cart;
 
     /**
      * Initialise the resolver.
      */
-    public function __construct(?CartContract $cart = null)
+    public function __construct(?Cart $cart = null)
     {
         $this->cart = $cart;
     }
@@ -26,7 +25,7 @@ class ShippingOptionResolver
     /**
      * Set the cart.
      */
-    public function cart(CartContract $cart): self
+    public function cart(Cart $cart): self
     {
         $this->cart = $cart;
 

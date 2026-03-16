@@ -10,7 +10,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class ManageVariantInventory extends BaseEditRecord
 {
@@ -61,10 +61,10 @@ class ManageVariantInventory extends BaseEditRecord
         ];
     }
 
-    public function getDefaultForm(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function getDefaultForm(Schema $schema): Schema
     {
         return $schema->components([
-            SchemaComponents\Section::make()->schema([
+            Components\Section::make()->schema([
                 ProductVariantResource::getStockFormComponent(),
                 ProductVariantResource::getBackorderFormComponent(),
                 ProductVariantResource::getPurchasableFormComponent(),

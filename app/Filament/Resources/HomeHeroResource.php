@@ -2,20 +2,24 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\HomeHero;
 use App\Support\Resources\BaseResource;
+use App\Support\Forms\Components\TranslatedText;
+use App\Support\Tables\Columns\TranslatedTextColumn;
 use App\Filament\Resources\HomeHeroResource\Pages;
+use App\Models\HomeHero;
+use BackedEnum;
 use Filament\Forms;
+use Filament\Actions;
+use Filament\Schemas\Components;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Illuminate\Database\Eloquent\Builder;
 
 class HomeHeroResource extends BaseResource
 {
     protected static ?string $model = HomeHero::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'lucide-monitor';
+    protected static string|BackedEnum|null $navigationIcon = 'lucide-monitor';
 
     public static function getLabel(): string
     {
@@ -32,19 +36,36 @@ class HomeHeroResource extends BaseResource
         return 'Home Page';
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->select([
+            'id',
+            'title',
+            'subtitle',
+            'description',
+            'link',
+            'button_text',
+            'image',
+            'sort_order',
+            'is_active',
+        ]);
+    }
+
     protected static function getMainFormComponents(): array
     {
         return [
-            SchemaComponents\Section::make()->schema([
-                Forms\Components\TextInput::make('title')
+            Components\Section::make()->schema([
+                TranslatedText::make('title')
+                    ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('subtitle')
+                TranslatedText::make('subtitle')
                     ->maxLength(255),
-                Forms\Components\Textarea::make('description')
+                TranslatedText::make('description')
                     ->maxLength(65535),
-                Forms\Components\TextInput::make('link')
+                TranslatedText::make('link')
+                    ->url()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('button_text')
+                TranslatedText::make('button_text')
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('image')
                     ->image()
@@ -81,9 +102,9 @@ class HomeHeroResource extends BaseResource
     {
         return [
             Tables\Columns\ImageColumn::make('image'),
-            Tables\Columns\TextColumn::make('title')
+            TranslatedTextColumn::make('title')
                 ->searchable(),
-            Tables\Columns\TextColumn::make('subtitle')
+            TranslatedTextColumn::make('subtitle')
                 ->searchable(),
             Tables\Columns\IconColumn::make('is_active')
                 ->boolean(),

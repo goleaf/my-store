@@ -12,7 +12,7 @@ class PostComment extends Model
     protected $fillable = [
         'post_id',
         'parent_id',
-        'user_id',
+        'customer_id',
         'guest_name',
         'guest_email',
         'body',
@@ -33,9 +33,9 @@ class PostComment extends Model
         return $this->belongsTo(Post::class);
     }
 
-    public function user()
+    public function customer()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Customer::class);
     }
 
     public function parent()

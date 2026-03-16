@@ -11,7 +11,7 @@ use App\Base\Traits\HasMacros;
 use App\Base\Traits\HasMedia;
 use App\Base\Traits\HasTranslations;
 use App\Database\Factories\ProductOptionValueFactory;
-use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
+use Spatie\MediaLibrary;
 
 /**
  * @property int $id
@@ -22,7 +22,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property ?\Illuminate\Support\Carbon $created_at
  * @property ?\Illuminate\Support\Carbon $updated_at
  */
-class ProductOptionValue extends BaseModel implements Contracts\ProductOptionValue, SpatieHasMedia
+class ProductOptionValue extends BaseModel implements Contracts\ProductOptionValue, MediaLibrary\HasMedia
 {
     use HasFactory;
     use HasMacros;

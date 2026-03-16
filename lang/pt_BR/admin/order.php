@@ -1,26 +1,20 @@
 <?php
 
 return [
-
     'label' => 'Pedido',
-
     'plural_label' => 'Pedidos',
-
     'breadcrumb' => [
         'manage' => 'Gerenciar',
     ],
-
     'tabs' => [
         'all' => 'Todos',
     ],
-
     'transactions' => [
         'capture' => 'Capturado',
         'intent' => 'Intenção',
         'refund' => 'Reembolsado',
         'failed' => 'Falhou',
     ],
-
     'table' => [
         'status' => [
             'label' => 'Status',
@@ -63,7 +57,6 @@ return [
             'label' => 'Realizado antes',
         ],
     ],
-
     'form' => [
         'address' => [
             'first_name' => [
@@ -106,7 +99,6 @@ return [
                 'label' => 'País',
             ],
         ],
-
         'reference' => [
             'label' => 'Referência',
         ],
@@ -118,27 +110,22 @@ return [
         ],
         'amount' => [
             'label' => 'Valor',
-
             'hint' => [
                 'less_than_total' => 'Você está prestes a capturar um valor menor que o total da transação',
             ],
         ],
-
         'notes' => [
             'label' => 'Notas',
         ],
         'confirm' => [
             'label' => 'Confirmar',
-
             'alert' => 'Confirmação necessária',
-
             'hint' => [
                 'capture' => 'Confirme que deseja capturar este pagamento',
                 'refund' => 'Confirme que deseja reembolsar este valor.',
             ],
         ],
     ],
-
     'infolist' => [
         'notes' => [
             'label' => 'Notas',
@@ -238,7 +225,6 @@ return [
             'refunded' => 'Este pedido foi reembolsado.',
         ],
     ],
-
     'action' => [
         'bulk_update_status' => [
             'label' => 'Atualizar status',
@@ -255,6 +241,8 @@ return [
                 'label' => 'Destinatário de e-mail adicional',
                 'placeholder' => 'opcional',
             ],
+            'label' => 'Atualizar status',
+            'notification' => 'Status do pedido atualizado',
         ],
         'download_order_pdf' => [
             'label' => 'Baixar PDF',
@@ -262,14 +250,11 @@ return [
         ],
         'edit_address' => [
             'label' => 'Editar',
-
             'notification' => [
                 'error' => 'Erro',
-
                 'billing_address' => [
                     'saved' => 'Endereço de cobrança salvo',
                 ],
-
                 'shipping_address' => [
                     'saved' => 'Endereço de entrega salvo',
                 ],
@@ -280,13 +265,12 @@ return [
             'form' => [
                 'tags' => [
                     'label' => 'Tags',
-                    'helper_text' => 'Separe tags pressionando Enter, Tab ou vírgula (,)',
+                    'helper_text' => 'Separe as tags pressionando Enter, Tab ou vírgula (,)',
                 ],
             ],
         ],
         'capture_payment' => [
             'label' => 'Capturar pagamento',
-
             'notification' => [
                 'error' => 'Houve um problema na captura',
                 'success' => 'Captura realizada com sucesso',
@@ -294,12 +278,10 @@ return [
         ],
         'refund_payment' => [
             'label' => 'Reembolsar',
-
             'notification' => [
                 'error' => 'Houve um problema no reembolso',
                 'success' => 'Reembolso realizado com sucesso',
             ],
         ],
     ],
-
 ];

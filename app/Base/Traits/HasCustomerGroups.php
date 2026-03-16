@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
-use App\Models\Contracts\CustomerGroup as CustomerGroupContract;
 use App\Models\CustomerGroup;
+use App\Models\Contracts;
 
 trait HasCustomerGroups
 {
@@ -19,7 +19,7 @@ trait HasCustomerGroups
      */
     abstract public function customerGroups(): Relation;
 
-    public static function getExtraCustomerGroupPivotValues(CustomerGroupContract $customerGroup): array
+    public static function getExtraCustomerGroupPivotValues(Contracts\CustomerGroup $customerGroup): array
     {
         return [
         ];
@@ -117,10 +117,10 @@ trait HasCustomerGroups
      * Apply the customer group scope
      *
      * @param  Builder  $query
-     * @param  CustomerGroupContract|string  $customerGroup
+     * @param  \App\Models\Contracts\CustomerGroup|string  $customerGroup
      * @return Builder
      */
-    public function scopeCustomerGroup($query, CustomerGroupContract|iterable|null $customerGroup = null, ?DateTime $startsAt = null, ?DateTime $endsAt = null)
+    public function scopeCustomerGroup($query, Contracts\CustomerGroup|iterable|null $customerGroup = null, ?DateTime $startsAt = null, ?DateTime $endsAt = null)
     {
         if (blank($customerGroup)) {
             return $query;

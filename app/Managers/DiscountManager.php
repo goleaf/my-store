@@ -11,11 +11,9 @@ use App\DiscountTypes\AmountOff;
 use App\DiscountTypes\BuyXGetY;
 use App\Models\Cart;
 use App\Models\Channel;
-use App\Models\Contracts\Cart as CartContract;
-use App\Models\Contracts\Channel as ChannelContract;
-use App\Models\Contracts\CustomerGroup as CustomerGroupContract;
 use App\Models\CustomerGroup;
 use App\Models\Discount;
+use App\Models\Contracts;
 
 class DiscountManager implements DiscountManagerInterface
 {
@@ -66,16 +64,16 @@ class DiscountManager implements DiscountManagerInterface
     /**
      * Set a single channel or a collection.
      */
-    public function channel(ChannelContract|iterable $channel): self
+    public function channel(Contracts\Channel|iterable $channel): self
     {
         $channels = collect(
             ! is_iterable($channel) ? [$channel] : $channel
         );
 
-        if ($nonChannel = $channels->filter(fn ($channel) => ! $channel instanceof ChannelContract)->first()) {
+        if ($nonChannel = $channels->filter(fn ($channel) => ! $channel instanceof Contracts\Channel)->first()) {
             throw new InvalidArgumentException(
                 __('store::exceptions.discounts.invalid_type', [
-                    'expected' => ChannelContract::class,
+                    'expected' => Contracts\Channel::class,
                     'actual' => $nonChannel->getMorphClass(),
                 ])
             );
@@ -89,16 +87,16 @@ class DiscountManager implements DiscountManagerInterface
     /**
      * Set a single customer group or a collection.
      */
-    public function customerGroup(CustomerGroupContract|iterable $customerGroups): self
+    public function customerGroup(Contracts\CustomerGroup|iterable $customerGroups): self
     {
         $customerGroups = collect(
             ! is_iterable($customerGroups) ? [$customerGroups] : $customerGroups
         );
 
-        if ($nonGroup = $customerGroups->filter(fn ($channel) => ! $channel instanceof CustomerGroupContract)->first()) {
+        if ($nonGroup = $customerGroups->filter(fn ($channel) => ! $channel instanceof Contracts\CustomerGroup)->first()) {
             throw new InvalidArgumentException(
                 __('store::exceptions.discounts.invalid_type', [
-                    'expected' => CustomerGroupContract::class,
+                    'expected' => Contracts\CustomerGroup::class,
                     'actual' => $nonGroup->getMorphClass(),
                 ])
             );
@@ -217,7 +215,7 @@ class DiscountManager implements DiscountManagerInterface
         return $this->applied;
     }
 
-    public function apply(CartContract $cart): CartContract
+    public function apply(Contracts\Cart $cart): Contracts\Cart
     {
         if (! $this->discounts || $this->discounts?->isEmpty()) {
             $this->discounts = $this->getDiscounts($cart);

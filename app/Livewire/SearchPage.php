@@ -8,10 +8,13 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Product;
 use App\Traits\CanAddToCart;
+use App\Traits\CanManageWishlist;
 
 class SearchPage extends Component
 {
-    use WithPagination, CanAddToCart;
+    use WithPagination;
+    use CanAddToCart;
+    use CanManageWishlist;
 
     /**
      * {@inheritDoc}

@@ -6,13 +6,16 @@ use App\Admin\Support\Concerns;
 use Filament\Resources\RelationManagers\RelationManager;
 use Illuminate\Support\Facades\App;
 use Livewire\Attributes\On;
+use App\Support\Concerns\CallsHooks;
+use App\Support\Concerns\RelationManagers\ExtendsForms;
+use App\Support\Concerns\RelationManagers\ExtendsTables;
 
 #[On('refresh-relation-manager')]
 class BaseRelationManager extends RelationManager
 {
-    use \App\Support\Concerns\CallsHooks;
-    use \App\Support\Concerns\RelationManagers\ExtendsForms;
-    use \App\Support\Concerns\RelationManagers\ExtendsTables;
+    use CallsHooks;
+    use ExtendsForms;
+    use ExtendsTables;
 
     protected function getForms(): array
     {

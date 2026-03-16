@@ -3,10 +3,10 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TagResource\Pages;
-use App\Models\Contracts\Tag as TagContract;
+use App\Models\Contracts\Tag;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
-use Filament\Forms\Components\Component;
+use Filament\Schemas\Components\Component;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -16,7 +16,7 @@ class TagResource extends BaseResource
 {
     protected static ?string $permission = 'settings';
 
-    protected static ?string $model = TagContract::class;
+    protected static ?string $model = Tag::class;
 
     protected static ?int $navigationSort = 1;
 

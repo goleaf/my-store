@@ -35,7 +35,7 @@ class ManageShippingExclusions extends ManageRelatedRecords
         return __('storepanel.shipping::relationmanagers.exclusions.title_plural');
     }
 
-    public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function form(Schema $schema): Schema
     {
         return $schema->components([]);
     }

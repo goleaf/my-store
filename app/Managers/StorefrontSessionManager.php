@@ -3,29 +3,24 @@
 namespace App\Managers;
 
 use Illuminate\Auth\AuthManager;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Collection;
 use App\Base\StorefrontSessionInterface;
-use App\Exceptions\CustomerNotBelongsToUserException;
 use App\Models\Channel;
-use App\Models\Contracts\Channel as ChannelContract;
-use App\Models\Contracts\Currency as CurrencyContract;
-use App\Models\Contracts\Customer as CustomerContract;
-use App\Models\Contracts\CustomerGroup as CustomerGroupContract;
 use App\Models\Currency;
 use App\Models\Customer;
 use App\Models\CustomerGroup;
+use App\Models\Contracts;
 
 class StorefrontSessionManager implements StorefrontSessionInterface
 {
-    protected ?ChannelContract $channel = null;
+    protected ?Contracts\Channel $channel = null;
 
     protected ?Collection $customerGroups = null;
 
-    protected ?CurrencyContract $currency = null;
+    protected ?Contracts\Currency $currency = null;
 
-    protected ?CustomerContract $customer = null;
+    protected ?Contracts\Customer $customer = null;
 
     public function __construct(
         protected SessionManager $sessionManager,
@@ -39,12 +34,12 @@ class StorefrontSessionManager implements StorefrontSessionInterface
         $this->initCustomer();
     }
 
-    public function getChannel(): ChannelContract
+    public function getChannel(): Contracts\Channel
     {
         return $this->channel;
     }
 
-    public function setChannel(ChannelContract $channel): static
+    public function setChannel(Contracts\Channel $channel): static
     {
         $this->sessionManager->put(
             $this->getSessionKey().'_channel',
@@ -79,7 +74,7 @@ class StorefrontSessionManager implements StorefrontSessionInterface
         return $this;
     }
 
-    public function setCustomerGroup(CustomerGroupContract $customerGroup): static
+    public function setCustomerGroup(Contracts\CustomerGroup $customerGroup): static
     {
         return $this->setCustomerGroups(new Collection([$customerGroup]));
     }
@@ -93,12 +88,12 @@ class StorefrontSessionManager implements StorefrontSessionInterface
         return $this;
     }
 
-    public function getCurrency(): CurrencyContract
+    public function getCurrency(): Contracts\Currency
     {
         return $this->currency;
     }
 
-    public function setCurrency(CurrencyContract $currency): static
+    public function setCurrency(Contracts\Currency $currency): static
     {
         $this->sessionManager->put(
             $this->getSessionKey().'_currency',
@@ -110,38 +105,21 @@ class StorefrontSessionManager implements StorefrontSessionInterface
         return $this;
     }
 
-    public function getCustomer(): ?CustomerContract
+    public function getCustomer(): ?Contracts\Customer
     {
         return $this->customer;
     }
 
-    public function setCustomer(CustomerContract $customer): static
+    public function setCustomer(Contracts\Customer $customer): static
     {
         $this->sessionManager->put(
             $this->getSessionKey().'_customer',
             $customer->id,
         );
 
-        if (
-            $this->authManager->check()
-            && is_store_user($this->authManager->user())
-            && ! $this->customerBelongsToUser($customer)
-        ) {
-            throw new CustomerNotBelongsToUserException;
-        }
-
         $this->customer = $customer;
 
         return $this;
-    }
-
-    protected function customerBelongsToUser(CustomerContract $customer): bool
-    {
-        $user = $this->authManager->user();
-
-        return $customer->query()
-            ->whereHas('users', fn (Builder $query): Builder => $query->where('user_id', $user->id))
-            ->exists();
     }
 
     public function initChannel(): void
@@ -222,11 +200,7 @@ class StorefrontSessionManager implements StorefrontSessionInterface
         }
 
         if ($this->authManager->check() && is_store_user($this->authManager->user())) {
-            $user = $this->authManager->user();
-
-            if ($customer = $user->latestCustomer()) {
-                $this->setCustomer($customer);
-            }
+            $this->setCustomer($this->authManager->user());
         }
     }
 

@@ -10,13 +10,14 @@ use Filament\Forms;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
+use BackedEnum;
 
 class AnnouncementResource extends BaseResource
 {
     protected static ?string $model = Announcement::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'lucide-megaphone';
+    protected static string|BackedEnum|null $navigationIcon = 'lucide-megaphone';
 
     public static function getLabel(): string
     {
@@ -36,7 +37,7 @@ class AnnouncementResource extends BaseResource
     protected static function getMainFormComponents(): array
     {
         return [
-            SchemaComponents\Section::make()->schema([
+            Components\Section::make()->schema([
                 Forms\Components\Textarea::make('message')
                     ->required()
                     ->maxLength(65535)

@@ -2,31 +2,36 @@
 
 namespace App\Filament\Resources\OrderResource\Pages;
 
+use App\Base\Enums\TransactionType;
 use App\Filament\Components\Shout;
 use App\Filament\Resources\CustomerResource;
 use App\Filament\Resources\OrderResource;
+use App\Http\Requests\Filament\Order\ConfirmActionRequest;
 use App\Models\Tag;
 use App\Models\Transaction;
 use App\Support\Actions\Orders\UpdateStatusAction;
 use App\Support\Actions\PdfDownload;
 use App\Support\ActivityLog\Concerns\CanDispatchActivityUpdated;
 use App\Support\Concerns\CallsHooks;
-use App\Support\Forms\Components\Tags as TagsComponent;
 use App\Support\Infolists\Components\Livewire;
 use App\Support\Infolists\Components\Tags;
 use App\Support\Pages\BaseViewRecord;
-use Closure;
 use Filament\Actions;
+use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Infolists;
-use Filament\Infolists\Components\Actions\Action;
-use Filament\Infolists\Components\TextEntry\TextEntrySize;
 use Filament\Notifications\Notification;
-use Filament\Support\Enums\ActionSize;
+use Filament\Schemas\Components;
 use Filament\Support\Enums\FontWeight;
+use Filament\Support\Enums\Size;
+use Filament\Support\Enums\TextSize;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Contracts\Support\Htmlable;
 use Livewire\Attributes\Computed;
+use App\Support;
+use Filament\Schemas\Schema;
+use Filament\Support\Enums\Width;
+use Illuminate\Support\Collection;
 
 /**
  * @property \App\Models\Order $record
@@ -57,7 +62,7 @@ class ManageOrder extends BaseViewRecord
 
     protected string $view = 'admin::resources.order-resource.pages.manage-order';
 
-    protected \Filament\Support\Enums\Width|string|null $maxContentWidth = 'screen-2xl';
+    protected Width|string|null $maxContentWidth = 'screen-2xl';
 
     public function getBreadcrumb(): string
     {
@@ -106,41 +111,41 @@ class ManageOrder extends BaseViewRecord
             ->hidden(fn ($state) => blank($state?->id))
             ->formatStateUsing(fn ($state) => $state->fullName)
             ->weight(FontWeight::SemiBold)
-            ->size(TextEntrySize::Large)
+            ->size(TextSize::Large)
             ->hiddenLabel()
             ->suffixAction(fn ($state) => Action::make('view customer')
                 ->color('gray')
                 ->button()
-                ->size(ActionSize::ExtraSmall)
+                ->size(Size::ExtraSmall)
                 ->url(CustomerResource::getUrl('edit', ['record' => $state->id])));
     }
 
-    public static function getCustomerEntry(): Infolists\Components\Component
+    public static function getCustomerEntry(): Infolists\Components\Entry
     {
         return self::callStaticStoreHook('extendCustomerEntry', static::getDefaultCustomerEntry());
     }
 
-    public static function getDefaultTagsSection(): Infolists\Components\Section
+    public static function getDefaultTagsSection(): Components\Section
     {
-        return Infolists\Components\Section::make('tags')
+        return Components\Section::make('tags')
             ->heading(__('admin::order.infolist.tags.label'))
             ->headerActions([
                 fn ($record) => static::getEditTagsActions(),
             ])
             ->compact()
             ->schema([
-                Tags::make(''),
+                Tags::make('tags'),
             ]);
     }
 
-    public static function getTagsSection(): Infolists\Components\Component
+    public static function getTagsSection(): Components\Component
     {
         return self::callStaticStoreHook('extendTagsSection', static::getDefaultTagsSection());
     }
 
-    public static function getDefaultAdditionalInfoSection(): Infolists\Components\Section
+    public static function getDefaultAdditionalInfoSection(): Components\Section
     {
-        return Infolists\Components\Section::make('additional_info')
+        return Components\Section::make('additional_info')
             ->heading(__('admin::order.infolist.additional_info.label'))
             ->compact()
             ->statePath('meta')
@@ -170,18 +175,18 @@ class ManageOrder extends BaseViewRecord
                 ->toArray());
     }
 
-    public static function getAdditionalInfoSection(): Infolists\Components\Component
+    public static function getAdditionalInfoSection(): Components\Component
     {
         return self::callStaticStoreHook('extendAdditionalInfoSection', static::getDefaultAdditionalInfoSection());
     }
 
-    public function getDefaultInfolist(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function getDefaultInfolist(Schema $schema): Schema
     {
         return $schema
             ->components([
-                Infolists\Components\Group::make()
+                Components\Group::make()
                     ->schema([
-                        Infolists\Components\Group::make()->key('shouts')->schema([
+                        Components\Group::make()->key('shouts')->schema([
                             Infolists\Components\TextEntry::make('requires_capture')
                                 ->state(__('admin::order.infolist.alert.requires_capture'))
                                 ->color('danger')
@@ -206,7 +211,7 @@ class ManageOrder extends BaseViewRecord
                         ...static::getInfolistSchema(),
                     ])
                     ->columnSpan(['lg' => 2]),
-                Infolists\Components\Group::make()
+                Components\Group::make()
                     ->schema(static::getInfolistAsideSchema())
                     ->columnSpan(['lg' => 1]),
             ])
@@ -220,11 +225,11 @@ class ManageOrder extends BaseViewRecord
     public function requiresCapture(): bool
     {
         $captures = $this->transactions->filter(function ($transaction) {
-            return $transaction->type == 'capture';
+            return $transaction->type === TransactionType::Capture;
         })->count();
 
         $intents = $this->transactions->filter(function ($transaction) {
-            return $transaction->type == 'intent';
+            return $transaction->type === TransactionType::Intent;
         })->count();
 
         if (! $intents) {
@@ -238,7 +243,7 @@ class ManageOrder extends BaseViewRecord
      * Return the order transactions.
      */
     #[Computed]
-    public function transactions(): \Illuminate\Support\Collection
+    public function transactions(): Collection
     {
         return $this->record->transactions()->orderBy('created_at', 'desc')->get();
     }
@@ -280,7 +285,7 @@ class ManageOrder extends BaseViewRecord
     public function captureTotal(): int
     {
         return $this->transactions->filter(function ($transaction) {
-            return $transaction->type == 'capture' && $transaction->success;
+            return $transaction->type === TransactionType::Capture && $transaction->success;
         })->sum('amount.value');
     }
 
@@ -291,7 +296,7 @@ class ManageOrder extends BaseViewRecord
     public function refundTotal(): int
     {
         return $this->transactions->filter(function ($transaction) {
-            return $transaction->type == 'refund' && $transaction->success;
+            return $transaction->type === TransactionType::Refund && $transaction->success;
         })->sum('amount.value');
     }
 
@@ -302,7 +307,7 @@ class ManageOrder extends BaseViewRecord
     public function intentTotal(): int
     {
         return $this->transactions->filter(function ($transaction) {
-            return $transaction->type == 'intent' && $transaction->success;
+            return $transaction->type === TransactionType::Intent && $transaction->success;
         })->sum('amount.value');
     }
 
@@ -318,7 +323,7 @@ class ManageOrder extends BaseViewRecord
             ])
             ->form(function () {
                 return [
-                    TagsComponent::make('')
+                    Support\Forms\Components\Tags::make('')
                         ->splitKeys(['Tab', ','])
                         ->label(__('admin::order.action.edit_tags.form.tags.label'))
                         ->helperText(__('admin::order.action.edit_tags.form.tags.helper_text'))
@@ -387,15 +392,7 @@ class ManageOrder extends BaseViewRecord
                 Forms\Components\Toggle::make('confirm')
                     ->label(__('admin::order.form.confirm.label'))
                     ->helperText(__('admin::order.form.confirm.hint.refund'))
-                    ->rules([
-                        function () {
-                            return function (string $attribute, $value, Closure $fail) {
-                                if ($value !== true) {
-                                    $fail(__('admin::order.form.confirm.alert'));
-                                }
-                            };
-                        },
-                    ]),
+                    ->rules((new ConfirmActionRequest)->fieldRules('confirm')),
             ])
             ->action(function ($data, $record, Actions\Action $action) {
                 $transaction = Transaction::findOrFail($data['transaction']);
@@ -423,15 +420,15 @@ class ManageOrder extends BaseViewRecord
     }
 
     #[Computed]
-    public function charges(): \Illuminate\Support\Collection
+    public function charges(): Collection
     {
-        return $this->record->transactions()->whereType('capture')->whereSuccess(true)->get();
+        return $this->record->transactions()->where('type', TransactionType::Capture->value)->whereSuccess(true)->get();
     }
 
     #[Computed]
-    public function refunds(): \Illuminate\Support\Collection
+    public function refunds(): Collection
     {
-        return $this->record->transactions()->whereType('refund')->whereSuccess(true)->get();
+        return $this->record->transactions()->where('type', TransactionType::Refund->value)->whereSuccess(true)->get();
     }
 
     #[Computed]
@@ -490,15 +487,7 @@ class ManageOrder extends BaseViewRecord
                 Forms\Components\Toggle::make('confirm')
                     ->label(__('admin::order.form.confirm.label'))
                     ->helperText(__('admin::order.form.confirm.hint.capture'))
-                    ->rules([
-                        function () {
-                            return function (string $attribute, $value, Closure $fail) {
-                                if ($value !== true) {
-                                    $fail(__('admin::order.form.confirm.alert'));
-                                }
-                            };
-                        },
-                    ]),
+                    ->rules((new ConfirmActionRequest)->fieldRules('confirm')),
             ])
             ->action(function ($data, $record, Actions\Action $action) {
                 $transaction = Transaction::findOrFail($data['transaction']);
@@ -525,8 +514,8 @@ class ManageOrder extends BaseViewRecord
     }
 
     #[Computed]
-    public function intents(): \Illuminate\Support\Collection
+    public function intents(): Collection
     {
-        return $this->record->transactions()->whereType('intent')->whereSuccess(true)->get();
+        return $this->record->transactions()->where('type', TransactionType::Intent->value)->whereSuccess(true)->get();
     }
 }

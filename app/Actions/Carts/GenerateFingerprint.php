@@ -2,18 +2,16 @@
 
 namespace App\Actions\Carts;
 
-use App\Models\Cart;
-use App\Models\CartLine;
-use App\Models\Contracts\Cart as CartContract;
-use App\Models\Contracts\CartLine as CartLineContract;
+use App\Models\Contracts\Cart;
+use App\Models\Contracts\CartLine;
 
 class GenerateFingerprint
 {
-    public function execute(CartContract $cart)
+    public function execute(Cart $cart)
     {
-        /** @var Cart $cart */
-        $value = $cart->lines->reduce(function (?string $carry, CartLineContract $line) {
-            /** @var CartLine $line */
+        /** @var \App\Models\Cart $cart */
+        $value = $cart->lines->reduce(function (?string $carry, CartLine $line) {
+            /** @var \App\Models\CartLine $line */
             return $carry.
                 $line->purchasable_type.
                 $line->purchasable_id.
@@ -21,7 +19,7 @@ class GenerateFingerprint
                 $line->subTotal;
         });
 
-        $value .= $cart->user_id.$cart->currency_id.$cart->coupon_code;
+        $value .= $cart->customer_id.$cart->currency_id.$cart->coupon_code;
 
         return sha1($value);
     }

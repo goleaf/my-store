@@ -4,7 +4,7 @@ namespace App\Shipping\Models\Contracts;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\DataTypes\ShippingOption;
-use App\Models\Contracts\Cart as CartContract;
+use App\Models\Contracts\Cart;
 
 interface ShippingRate
 {
@@ -15,5 +15,5 @@ interface ShippingRate
     /**
      * Return the shipping method driver.
      */
-    public function getShippingOption(CartContract $cart): ?ShippingOption;
+    public function getShippingOption(Cart $cart): ?ShippingOption;
 }

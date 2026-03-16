@@ -15,11 +15,11 @@ class ProductReviewsTable
     {
         return $table
             ->columns([
-                TextColumn::make('product_id')
-                    ->numeric()
+                TextColumn::make('product.name')
                     ->sortable(),
-                TextColumn::make('user_id')
-                    ->numeric()
+                TextColumn::make('customer.email')
+                    ->label('Customer')
+                    ->searchable()
                     ->sortable(),
                 TextColumn::make('rating')
                     ->numeric()

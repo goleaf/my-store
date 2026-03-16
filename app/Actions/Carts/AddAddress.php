@@ -4,9 +4,8 @@ namespace App\Actions\Carts;
 
 use App\Actions\AbstractAction;
 use App\Base\Addressable;
-use App\Models\Cart;
 use App\Models\CartAddress;
-use App\Models\Contracts\Cart as CartContract;
+use App\Models\Contracts\Cart;
 
 class AddAddress extends AbstractAction
 {
@@ -33,11 +32,11 @@ class AddAddress extends AbstractAction
      * Execute the action.
      */
     public function execute(
-        CartContract $cart,
+        Cart $cart,
         array|Addressable $address,
         string $type
     ): self {
-        /** @var Cart $cart */
+        /** @var \App\Models\Cart $cart */
         // Do we already have an address for this type?
         $cart->addresses()->whereType($type)->delete();
 

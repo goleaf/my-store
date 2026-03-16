@@ -2,10 +2,10 @@
 
 namespace App\Base\Casts;
 
-use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use Illuminate\Support\Facades\Validator;
-use App\DataTypes\Price as PriceDataType;
+use App\Http\Requests\Support\PriceCastRequest;
 use App\Models\Currency;
+use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use App\DataTypes;
 
 class Price implements CastsAttributes
 {
@@ -29,13 +29,13 @@ class Price implements CastsAttributes
             $value = preg_replace('/[^0-9]/', '', $value);
         }
 
-        Validator::make([
-            $key => $value,
-        ], [
-            $key => 'nullable|numeric',
-        ])->validate();
+        app(PriceCastRequest::class)
+            ->forField($key)
+            ->validatePayload([
+                $key => $value,
+            ]);
 
-        return new PriceDataType(
+        return new DataTypes\Price(
             (int) $value,
             $currency,
             $model->priceable->unit_quantity ?? $model->unit_quantity ?? 1,

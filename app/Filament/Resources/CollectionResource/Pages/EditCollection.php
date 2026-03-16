@@ -6,11 +6,11 @@ use App\Filament\Resources\CollectionGroupResource;
 use App\Filament\Resources\CollectionResource;
 use App\Facades\DB;
 use App\Models\Collection;
-use App\Models\Contracts\Collection as CollectionContract;
 use App\Support\Pages\BaseEditRecord;
 use Filament\Actions\DeleteAction;
 use Filament\Forms;
 use Illuminate\Contracts\Support\Htmlable;
+use App\Models\Contracts;
 
 class EditCollection extends BaseEditRecord
 {
@@ -60,14 +60,14 @@ class EditCollection extends BaseEditRecord
                             ->reject(
                                 fn ($result) => $result->isDescendantOf($record)
                             )
-                            ->mapWithKeys(fn (CollectionContract $record): array => [$record->getKey() => $record->translateAttribute('name')])
+                            ->mapWithKeys(fn (Contracts\Collection $record): array => [$record->getKey() => $record->translateAttribute('name')])
                             ->all();
                     })->helperText(
                         'Choose which collection the children of this collection should be transferred to.'
                     )->hidden(
                         fn () => ! $record->children()->count()
                     ),
-            ])->before(function (CollectionContract $collection, array $data) {
+            ])->before(function (Contracts\Collection $collection, array $data) {
 
                 $targetId = $data['target_collection'] ?? null;
 

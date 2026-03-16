@@ -2,19 +2,18 @@
 
 namespace App\Observers;
 
-use App\Models\Contracts\Transaction as TransactionContract;
-use App\Models\Transaction;
+use App\Models\Contracts\Transaction;
 
 class TransactionObserver
 {
     /**
-     * Handle the Transaction "created" event.
+     * Handle the \App\Models\Transaction "created" event.
      *
      * @return void
      */
-    public function created(TransactionContract $transaction)
+    public function created(Transaction $transaction)
     {
-        /** @var Transaction $transaction */
+        /** @var \App\Models\Transaction $transaction */
         activity()
             ->causedBy(auth()->user())
             ->performedOn($transaction->order)

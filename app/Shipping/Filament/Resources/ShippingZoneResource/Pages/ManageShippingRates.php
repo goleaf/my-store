@@ -4,7 +4,7 @@ namespace App\Shipping\Filament\Resources\ShippingZoneResource\Pages;
 
 use App\Filament\Components\Shout;
 use App\Shipping\Filament\Resources\ShippingZoneResource;
-use App\Shipping\Models\Contracts\ShippingMethod as ShippingMethodContract;
+use App\Shipping\Enums\ShippingMethodChargeBy;
 use App\Shipping\Models\ShippingMethod;
 use App\Shipping\Models\ShippingRate;
 use App\Models\Currency;
@@ -12,7 +12,7 @@ use App\Models\CustomerGroup;
 use App\Models\Price;
 use Filament\Forms;
 use Filament\Schemas\Schema;
-use Filament\Forms\Get;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
@@ -21,6 +21,7 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Actions;
+use App\Shipping\Models\Contracts;
 
 class ManageShippingRates extends ManageRelatedRecords
 {
@@ -43,10 +44,10 @@ class ManageShippingRates extends ManageRelatedRecords
         return __('storepanel.shipping::relationmanagers.shipping_rates.title_plural');
     }
 
-    public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function form(Schema $schema): Schema
     {
         return $schema->components([
-            Shout::make('')->content(
+            Shout::make('shipping-rate-pricing-notice')->content(
                 function () {
                     $pricesIncTax = config('store.pricing.stored_inclusive_of_tax', false);
 
@@ -90,7 +91,7 @@ class ManageShippingRates extends ManageRelatedRecords
                             __('storepanel.shipping::relationmanagers.shipping_rates.form.prices.repeater.customer_group_id.label')
                         )
                         ->options(
-                            fn () => CustomerGroup::all()->pluck('name', 'id')
+                            fn () => CustomerGroup::query()->orderBy('name')->pluck('name', 'id')
                         )->placeholder(
                             __('storepanel.shipping::relationmanagers.shipping_rates.form.prices.repeater.customer_group_id.placeholder')
                         )->preload(),
@@ -99,9 +100,13 @@ class ManageShippingRates extends ManageRelatedRecords
                             __('storepanel.shipping::relationmanagers.shipping_rates.form.prices.repeater.currency_id.label')
                         )
                         ->options(
-                            fn () => Currency::all()->pluck('name', 'id')
+                            fn () => Currency::query()
+                                ->select(['id', 'name', 'default'])
+                                ->orderBy('default', 'desc')
+                                ->orderBy('name')
+                                ->pluck('name', 'id')
                         )->default(
-                            Currency::getDefault()->id
+                            Currency::getDefault()?->id
                         )->required()->preload(),
                     Forms\Components\TextInput::make('price')
                         ->label(
@@ -112,7 +117,7 @@ class ManageShippingRates extends ManageRelatedRecords
                     Forms\Components\TextInput::make('min_quantity')
                         ->label(
                             function (Get $get) {
-                                if (static::getShippingChargeBy($get('../../shipping_method_id')) == 'weight') {
+                                if (static::getShippingChargeBy($get('../../shipping_method_id')) === ShippingMethodChargeBy::Weight) {
                                     return __('storepanel.shipping::relationmanagers.shipping_rates.form.prices.repeater.min_weight.label');
                                 }
 
@@ -125,17 +130,20 @@ class ManageShippingRates extends ManageRelatedRecords
                     static function (Forms\Components\Repeater $component, ?Model $record = null): void {
                         if ($record) {
                             $chargeBy = static::getShippingChargeBy($record->shippingMethod);
-                            $currencies = Currency::all();
+                            $currencies = Currency::query()
+                                ->select(['id', 'factor'])
+                                ->get()
+                                ->keyBy('id');
 
                             $component->state(
                                 $record->priceBreaks->map(function ($price) use ($chargeBy, $currencies) {
-                                    $currency = $currencies->first(fn ($currency) => $currency->id == $price->currency_id);
+                                $currency = $currencies->get($price->currency_id);
 
                                     return [
                                         'customer_group_id' => $price->customer_group_id,
                                         'price' => $price->price->decimal,
                                         'currency_id' => $price->currency_id,
-                                        'min_quantity' => $chargeBy == 'cart_total' ? $price->min_quantity / $currency->factor : $price->min_quantity / 100,
+                                        'min_quantity' => $chargeBy === ShippingMethodChargeBy::CartTotal ? $price->min_quantity / $currency->factor : $price->min_quantity / 100,
                                     ];
                                 })->toArray()
                             );
@@ -196,17 +204,17 @@ class ManageShippingRates extends ManageRelatedRecords
         ]);
     }
 
-    private static function getShippingChargeBy(ShippingMethodContract|int|null $method): string
+    private static function getShippingChargeBy(Contracts\ShippingMethod|int|null $method): ShippingMethodChargeBy
     {
         if (blank($method)) {
-            return 'cart_total';
+            return ShippingMethodChargeBy::CartTotal;
         }
 
-        if (! $method instanceof ShippingMethodContract) {
+        if (! $method instanceof Contracts\ShippingMethod) {
             $method = ShippingMethod::find($method);
         }
 
-        return ($method?->data['charge_by'] ?? null) ?? 'cart_total';
+        return ShippingMethodChargeBy::resolve(($method?->data['charge_by'] ?? null)) ?? ShippingMethodChargeBy::CartTotal;
     }
 
     protected static function saveShippingRate(?ShippingRate $shippingRate = null, array $data = []): void
@@ -224,14 +232,21 @@ class ManageShippingRates extends ManageRelatedRecords
 
         $shippingRate->priceBreaks()->delete();
 
-        $currencies = Currency::all();
+        $currencies = Currency::query()
+            ->select(['id', 'factor'])
+            ->get()
+            ->keyBy('id');
         $chargeBy = static::getShippingChargeBy($shippingRate->shippingMethod);
 
         $tiers = collect($data['prices'] ?? [])->map(
             function ($price) use ($chargeBy, $currencies) {
-                $currency = $currencies->first(fn ($currency) => $currency->id == $price['currency_id']);
+                $currency = $currencies->get($price['currency_id']);
 
-                if ($chargeBy == 'cart_total') {
+                if (! $currency) {
+                    return null;
+                }
+
+                if ($chargeBy === ShippingMethodChargeBy::CartTotal) {
                     $price['min_quantity'] = (int) ($price['min_quantity'] * $currency->factor);
                 } else {
                     $price['min_quantity'] = (int) ($price['min_quantity'] * 100);
@@ -241,7 +256,7 @@ class ManageShippingRates extends ManageRelatedRecords
 
                 return $price;
             }
-        );
+        )->filter();
 
         $shippingRate->prices()->createMany($tiers->toArray());
     }

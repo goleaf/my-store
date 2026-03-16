@@ -2,9 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Routing\Middleware\ValidateSignature as Middleware;
-
-class ValidateSignature extends Middleware
+use Illuminate\Routing\Middleware;
+class ValidateSignature extends Middleware\ValidateSignature
 {
     /**
      * The names of the query string parameters that should be ignored.

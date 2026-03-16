@@ -6,9 +6,8 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use App\DataTypes\ShippingOption;
-use App\Models\Cart;
-use App\Models\Contracts\Cart as CartContract;
 use App\Shipping\Models\ShippingRate;
+use App\Models\Contracts\Cart;
 
 class ShippingOptionResolvedEvent
 {
@@ -27,9 +26,9 @@ class ShippingOptionResolvedEvent
     /**
      * The instance of the cart.
      */
-    public CartContract $cart;
+    public Cart $cart;
 
-    public function __construct(CartContract $cart, ShippingRate $shippingRate, ShippingOption $shippingOption)
+    public function __construct(Cart $cart, ShippingRate $shippingRate, ShippingOption $shippingOption)
     {
         $this->cart = $cart;
         $this->shippingRate = $shippingRate;

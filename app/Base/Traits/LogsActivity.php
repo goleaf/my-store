@@ -4,11 +4,11 @@ namespace App\Base\Traits;
 
 use Illuminate\Support\Arr;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Traits\LogsActivity as SpatieLogsActivity;
+use Spatie\Activitylog\Traits;
 
 trait LogsActivity
 {
-    use SpatieLogsActivity;
+    use Traits\LogsActivity;
 
     public static array $logExcept = [];
 

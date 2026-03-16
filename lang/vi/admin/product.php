@@ -1,15 +1,13 @@
 <?php
 
 return [
-
     'label' => 'Sản phẩm',
-
     'plural_label' => 'Sản phẩm',
-
     'tabs' => [
         'all' => 'Tất cả',
+        'published' => 'Đã xuất bản',
+        'draft' => 'Bản nháp',
     ],
-
     'status' => [
         'unpublished' => [
             'content' => 'Hiện đang ở trạng thái nháp, sản phẩm này bị ẩn trên tất cả các kênh và nhóm khách hàng.',
@@ -19,7 +17,6 @@ return [
             'channels' => 'Sản phẩm này hiện không có sẵn trên tất cả các kênh.',
         ],
     ],
-
     'table' => [
         'status' => [
             'label' => 'Trạng thái',
@@ -45,14 +42,12 @@ return [
             'label' => 'Loại sản phẩm',
         ],
     ],
-
     'actions' => [
         'edit_status' => [
             'label' => 'Cập nhật trạng thái',
             'heading' => 'Cập nhật trạng thái',
         ],
     ],
-
     'form' => [
         'name' => [
             'label' => 'Tên',
@@ -81,12 +76,13 @@ return [
         ],
         'tags' => [
             'label' => 'Thẻ',
+            'helper_text' => 'Phân tách thẻ bằng Enter, Tab hoặc dấu phẩy (,)',
         ],
         'collections' => [
             'label' => 'Bộ sưu tập',
+            'select_collection' => 'Chọn một bộ sưu tập',
         ],
     ],
-
     'pages' => [
         'availability' => [
             'label' => 'Tình trạng có sẵn',
@@ -125,5 +121,4 @@ return [
             'label' => 'Liên kết sản phẩm',
         ],
     ],
-
 ];

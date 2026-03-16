@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use App\Base\Enums\DeliverySlotDayType;
+use App\Models\Store\Models\DeliveryZone;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DeliverySlot extends Model
 {
@@ -27,14 +30,15 @@ class DeliverySlot extends Model
     protected function casts(): array
     {
         return [
+            'day_type' => DeliverySlotDayType::class,
             'specific_date' => 'date',
             'fee' => 'decimal:2',
             'is_active' => 'boolean',
         ];
     }
 
-    public function zone()
+    public function zone(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\Store\Models\DeliveryZone::class, 'zone_id');
+        return $this->belongsTo(DeliveryZone::class, 'zone_id');
     }
 }

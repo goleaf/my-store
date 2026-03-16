@@ -1,15 +1,13 @@
 <?php
 
 return [
-
     'label' => 'Produit',
-
     'plural_label' => 'Produits',
-
     'tabs' => [
         'all' => 'Tous',
+        'published' => 'Publié',
+        'draft' => 'Brouillon',
     ],
-
     'status' => [
         'unpublished' => [
             'content' => 'Actuellement en statut de brouillon, ce produit est masqué sur tous les canaux et groupes de clients.',
@@ -19,7 +17,6 @@ return [
             'channels' => 'Ce produit est actuellement indisponible pour tous les canaux.',
         ],
     ],
-
     'table' => [
         'status' => [
             'label' => 'Statut',
@@ -45,14 +42,12 @@ return [
             'label' => 'Type de produit',
         ],
     ],
-
     'actions' => [
         'edit_status' => [
             'label' => 'Mettre à jour le statut',
             'heading' => 'Mettre à jour le statut',
         ],
     ],
-
     'form' => [
         'name' => [
             'label' => 'Nom',
@@ -81,12 +76,13 @@ return [
         ],
         'tags' => [
             'label' => 'Étiquettes',
+            'helper_text' => 'Séparez les étiquettes en appuyant sur Entrée, Tabulation ou virgule (,)',
         ],
         'collections' => [
             'label' => 'Collections',
+            'select_collection' => 'Sélectionnez une collection',
         ],
     ],
-
     'pages' => [
         'availability' => [
             'label' => 'Disponibilité',
@@ -125,5 +121,4 @@ return [
             'label' => 'Associations de produits',
         ],
     ],
-
 ];

@@ -11,7 +11,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class CustomerGroupRelationManager extends BaseRelationManager
 {
@@ -39,7 +39,7 @@ class CustomerGroupRelationManager extends BaseRelationManager
             )->toArray();
     }
 
-    public function getDefaultForm(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function getDefaultForm(Schema $schema): Schema
     {
         return $schema->components(
             static::getFormInputs(
@@ -59,14 +59,14 @@ class CustomerGroupRelationManager extends BaseRelationManager
         $grid = [];
 
         if (! $columns->isEmpty()) {
-            $grid[] = SchemaComponents\Grid::make($columns->count())->schema(
+            $grid[] = Components\Grid::make($columns->count())->schema(
                 $columns->toArray()
             );
         }
 
         return [
             ...$grid,
-            ...[SchemaComponents\Grid::make(2)->schema([
+            ...[Components\Grid::make(2)->schema([
                 Filament\Forms\Components\DateTimePicker::make('starts_at')->label(
                     __('admin::relationmanagers.customer_groups.form.starts_at.label')
                 ),

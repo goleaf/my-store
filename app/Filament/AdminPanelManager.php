@@ -5,6 +5,7 @@ namespace App\Filament;
 use App\Filament\Pages;
 use App\Filament\Resources;
 use App\Filament\AvatarProviders\GravatarProvider;
+use App\Http\Controllers\DownloadPdfController;
 use App\Filament\Widgets\Dashboard\Orders\AverageOrderValueChart;
 use App\Filament\Widgets\Dashboard\Orders\LatestOrdersTable;
 use App\Filament\Widgets\Dashboard\Orders\NewVsReturningCustomersChart;
@@ -12,9 +13,6 @@ use App\Filament\Widgets\Dashboard\Orders\OrdersSalesChart;
 use App\Filament\Widgets\Dashboard\Orders\OrderStatsOverview;
 use App\Filament\Widgets\Dashboard\Orders\OrderTotalsChart;
 use App\Filament\Widgets\Dashboard\Orders\PopularProductsTable;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Http\Request;
 use App\Support\Facades\AdminAccessControl;
 use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
@@ -35,6 +33,9 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Closure;
+use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
+use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin;
 
 class AdminPanelManager
 {
@@ -42,44 +43,52 @@ class AdminPanelManager
 
     protected bool $twoFactorAuthDisabled = false;
 
-    protected ?\Closure $closure = null;
+    protected ?Closure $closure = null;
 
     protected array $extensions = [];
 
     protected string $panelId = 'admin';
 
     protected static $resources = [
-        \App\Filament\Resources\ActivityResource::class,
-        \App\Filament\Resources\AttributeGroupResource::class,
-        \App\Filament\Resources\BrandResource::class,
-        \App\Filament\Resources\ChannelResource::class,
-        \App\Filament\Resources\CollectionGroupResource::class,
-        \App\Filament\Resources\CollectionResource::class,
-        \App\Filament\Resources\CurrencyResource::class,
-        \App\Filament\Resources\CustomerGroupResource::class,
-        \App\Filament\Resources\CustomerResource::class,
-        \App\Filament\Resources\DiscountResource::class,
-        \App\Filament\Resources\LanguageResource::class,
-        \App\Filament\Resources\OrderResource::class,
-        \App\Filament\Resources\ProductOptionResource::class,
-        \App\Filament\Resources\ProductResource::class,
-        \App\Filament\Resources\ProductTypeResource::class,
-        \App\Filament\Resources\ProductVariantResource::class,
-        \App\Filament\Resources\StaffResource::class,
-        \App\Filament\Resources\TagResource::class,
-        \App\Filament\Resources\TaxClassResource::class,
-        \App\Filament\Resources\TaxZoneResource::class,
-        \App\Filament\Resources\TaxRateResource::class,
-        \App\Filament\Resources\HomeHeroResource::class,
-        \App\Filament\Resources\FeaturedCategoryResource::class,
-        \App\Filament\Resources\HomeSectionResource::class,
-        \App\Filament\Resources\HomeBannerResource::class,
-        \App\Filament\Resources\AnnouncementResource::class,
-        \App\Filament\Resources\DeliveryZoneResource::class,
+        Resources\ActivityResource::class,
+        Resources\AttributeGroupResource::class,
+        Resources\BrandResource::class,
+        Resources\ChannelResource::class,
+        Resources\CollectionGroupResource::class,
+        Resources\CollectionResource::class,
+        Resources\CurrencyResource::class,
+        Resources\CustomerGroupResource::class,
+        Resources\CustomerResource::class,
+        Resources\DiscountResource::class,
+        Resources\LanguageResource::class,
+        Resources\OrderResource::class,
+        Resources\ProductOptionResource::class,
+        Resources\ProductResource::class,
+        Resources\ProductTypeResource::class,
+        Resources\ProductVariantResource::class,
+        Resources\StaffResource::class,
+        Resources\TagResource::class,
+        Resources\TaxClassResource::class,
+        Resources\TaxZoneResource::class,
+        Resources\TaxRateResource::class,
+        Resources\HomeHeroResource::class,
+        Resources\FeaturedCategoryResource::class,
+        Resources\HomeSectionResource::class,
+        Resources\HomeBannerResource::class,
+        Resources\AnnouncementResource::class,
+        Resources\ContactSubmissionResource::class,
+        Resources\DeliverySlotResource::class,
+        Resources\DeliveryZoneResource::class,
+        Resources\PostCategoryResource::class,
+        Resources\PostResource::class,
+        Resources\ProductReviewResource::class,
+        Resources\PromoBlockResource::class,
+        Resources\SiteSettingResource::class,
+        Resources\StoreResource::class,
     ];
 
     protected static $pages = [
-        \App\Filament\Pages\Dashboard::class,
+        Pages\Dashboard::class,
     ];
 
     protected static $widgets = [
@@ -96,7 +105,7 @@ class AdminPanelManager
     {
         $panel = $this->defaultPanel();
 
-        if ($this->closure instanceof \Closure) {
+        if ($this->closure instanceof Closure) {
             $fn = $this->closure;
             $panel = $fn($panel);
         }
@@ -169,7 +178,7 @@ class AdminPanelManager
         return $this;
     }
 
-    public function panel(\Closure $closure): self
+    public function panel(Closure $closure): self
     {
         $this->closure = $closure;
 
@@ -210,35 +219,16 @@ class AdminPanelManager
         ];
 
         if (config('store.panel.pdf_rendering', 'download') == 'stream') {
-            Route::get('store/pdf/download', function (Request $request) {
-                if (! $request->hasValidSignature()) {
-                    abort(401);
-                }
-                $request->validate([
-                    'record' => 'required',
-                    'record_type' => 'required',
-                    'view' => 'required',
-                ]);
-
-                $recordType = Relation::getMorphedModel($request->get('record_type'));
-                $view = $request->get('view');
-                $record = $request->get('record');
-
-                $model = $recordType::find($record);
-
-                return Pdf::loadView($view, [
-                    'record' => $model,
-                ])->stream();
-            })
+            Route::get('store/pdf/download', DownloadPdfController::class)
                 ->name('admin.pdf.download')->middleware($panelMiddleware);
         }
 
         $plugins = [];
-        if (class_exists(\Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin::class)) {
-            $plugins[] = \Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin::make();
+        if (class_exists(FilamentApexChartsPlugin::class)) {
+            $plugins[] = FilamentApexChartsPlugin::make();
         }
-        if (! $this->twoFactorAuthDisabled && class_exists(\Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin::class)) {
-            $plugins[] = \Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin::make()
+        if (! $this->twoFactorAuthDisabled && class_exists(TwoFactorAuthenticationPlugin::class)) {
+            $plugins[] = TwoFactorAuthenticationPlugin::make()
                 ->enableTwoFactorAuthentication()
                 ->addTwoFactorMenuItem(label: '2FA Settings')
                 ->forceTwoFactorSetup(condition: $this->twoFactorAuthForced);
@@ -278,8 +268,8 @@ class AdminPanelManager
             ->plugins($plugins)
             ->discoverLivewireComponents(__DIR__.'/Livewire', 'App\\Filament\\Livewire')
             ->livewireComponents([
-                \App\Filament\Resources\OrderResource\Pages\Components\OrderItemsTable::class,
-                \App\Filament\Resources\CollectionGroupResource\Widgets\CollectionTreeView::class,
+                OrderItemsTable::class,
+                CollectionTreeView::class,
             ])
             ->navigationGroups([
                 'Home Page',

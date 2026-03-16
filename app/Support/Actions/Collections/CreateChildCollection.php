@@ -9,6 +9,7 @@ use App\Support\Forms\Components\TranslatedText;
 use Filament\Actions\CreateAction;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Model;
+use App\FieldTypes;
 
 class CreateChildCollection extends CreateAction
 {
@@ -31,7 +32,7 @@ class CreateChildCollection extends CreateAction
 
         $formInput = TextInput::class;
 
-        if ($attribute?->type == \App\FieldTypes\TranslatedText::class) {
+        if ($attribute?->type == FieldTypes\TranslatedText::class) {
             $formInput = TranslatedText::class;
         }
 

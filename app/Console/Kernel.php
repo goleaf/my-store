@@ -3,9 +3,9 @@
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Foundation\Console;
 
-class Kernel extends ConsoleKernel
+class Kernel extends Console\Kernel
 {
     /**
      * Define the application's command schedule.

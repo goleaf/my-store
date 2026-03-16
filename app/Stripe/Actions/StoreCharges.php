@@ -2,16 +2,16 @@
 
 namespace App\Stripe\Actions;
 
+use App\Base\Enums\TransactionType;
 use Illuminate\Support\Collection;
-use App\Models\Contracts\Order as OrderContract;
-use App\Models\Order;
 use App\Models\Transaction;
+use App\Models\Contracts\Order;
 
 class StoreCharges
 {
-    public function store(OrderContract $order, Collection $charges)
+    public function store(Order $order, Collection $charges)
     {
-        /** @var Order $order */
+        /** @var \App\Models\Order $order */
         /**
          * If charges are empty, there is nothing to update.
          */
@@ -31,14 +31,14 @@ class StoreCharges
                 fn ($t) => $t->reference == $charge->id
             ) ?: new Transaction;
 
-            $type = 'capture';
+            $type = TransactionType::Capture;
 
             if (! $charge->captured) {
-                $type = 'intent';
+                $type = TransactionType::Intent;
             }
 
             if ($charge->amount_refunded && $charge->amount_refunded < $charge->amount) {
-                $type = 'refund';
+                $type = TransactionType::Refund;
             }
 
             $paymentType = collect($charge->payment_method_details)->keys()->first();
@@ -63,7 +63,7 @@ class StoreCharges
             $transaction->fill([
                 'order_id' => $order->id,
                 'success' => (bool) ! $charge->failure_code,
-                'type' => $charge->refunded ? 'refund' : $type,
+                'type' => ($charge->refunded ? TransactionType::Refund : $type)->value,
                 'driver' => 'stripe',
                 'amount' => $charge->amount,
                 'reference' => $charge->id,

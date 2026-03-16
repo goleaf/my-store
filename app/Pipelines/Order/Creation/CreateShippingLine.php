@@ -5,31 +5,29 @@ namespace App\Pipelines\Order\Creation;
 use Closure;
 use Illuminate\Support\Facades\App;
 use App\DataTypes\ShippingOption;
-use App\Models\Contracts\Order as OrderContract;
-use App\Models\Contracts\OrderLine as OrderLineContract;
-use App\Models\Order;
-use App\Models\OrderLine;
+use App\Models\Contracts\Order;
+use App\Models\Contracts\OrderLine;
 
 class CreateShippingLine
 {
     /**
-     * @param  Closure(OrderContract): mixed  $next
+     * @param  Closure(\App\Models\Contracts\Order): mixed  $next
      */
-    public function handle(OrderContract $order, Closure $next): mixed
+    public function handle(Order $order, Closure $next): mixed
     {
-        /** @var Order $order */
+        /** @var \App\Models\Order $order */
         $cart = $order->cart->recalculate();
 
         // If we have a shipping address with a shipping option.
         if (($shippingAddress = $cart->shippingAddress) &&
             ($shippingOption = $cart->getShippingOption())
         ) {
-            /** @var OrderLine $shippingLine */
+            /** @var \App\Models\OrderLine $shippingLine */
             $shippingLine = $order->lines->first(function ($orderLine) use ($shippingOption) {
                 return $orderLine->type == 'shipping' &&
                     $orderLine->purchasable_type == ShippingOption::class &&
                     $orderLine->identifier == $shippingOption->getIdentifier();
-            }) ?: App::make(OrderLineContract::class);
+            }) ?: App::make(OrderLine::class);
 
             $shippingLine->fill([
                 'order_id' => $order->id,

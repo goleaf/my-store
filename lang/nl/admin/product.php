@@ -1,15 +1,13 @@
 <?php
 
 return [
-
     'label' => 'Product',
-
     'plural_label' => 'Producten',
-
     'tabs' => [
         'all' => 'Allemaal',
+        'published' => 'Gepubliceerd',
+        'draft' => 'Concept',
     ],
-
     'status' => [
         'unpublished' => [
             'content' => 'Momenteel in conceptstatus, dit product is verborgen op alle kanalen en klantgroepen.',
@@ -19,7 +17,6 @@ return [
             'channels' => 'Dit product is momenteel niet beschikbaar voor alle kanalen.',
         ],
     ],
-
     'table' => [
         'status' => [
             'label' => 'Status',
@@ -45,14 +42,12 @@ return [
             'label' => 'Producttype',
         ],
     ],
-
     'actions' => [
         'edit_status' => [
             'label' => 'Status Bijwerken',
             'heading' => 'Status Bijwerken',
         ],
     ],
-
     'form' => [
         'name' => [
             'label' => 'Naam',
@@ -81,12 +76,13 @@ return [
         ],
         'tags' => [
             'label' => 'Tags',
+            'helper_text' => 'Scheid tags door op Enter, Tab of komma (,) te drukken',
         ],
         'collections' => [
             'label' => 'Collecties',
+            'select_collection' => 'Selecteer een collectie',
         ],
     ],
-
     'pages' => [
         'availability' => [
             'label' => 'Beschikbaarheid',
@@ -121,6 +117,8 @@ return [
         'associations' => [
             'label' => 'Productassociaties',
         ],
+        'edit' => [
+            'title' => 'Basisinformatie',
+        ],
     ],
-
 ];

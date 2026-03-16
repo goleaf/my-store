@@ -3,15 +3,15 @@
 namespace App\Pricing;
 
 use Illuminate\Support\Facades\App;
-use App\Models\Contracts\Currency as CurrencyContract;
 use App\Models\Currency;
 use NumberFormatter;
+use App\Models\Contracts;
 
 class DefaultPriceFormatter implements PriceFormatterInterface
 {
     public function __construct(
         public int $value,
-        public ?CurrencyContract $currency = null,
+        public ?Contracts\Currency $currency = null,
         public int $unitQty = 1
     ) {
         if (! $this->currency) {

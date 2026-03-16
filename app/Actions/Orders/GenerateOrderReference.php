@@ -2,7 +2,7 @@
 
 namespace App\Actions\Orders;
 
-use App\Models\Contracts\Order as OrderContract;
+use App\Models\Contracts\Order;
 
 class GenerateOrderReference
 {
@@ -11,7 +11,7 @@ class GenerateOrderReference
      *
      * @return string
      */
-    public function execute(OrderContract $order)
+    public function execute(Order $order)
     {
         $generator = config('store.orders.reference_generator');
 

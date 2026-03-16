@@ -5,10 +5,11 @@ namespace App\Support\Actions\Traits;
 use App\Models\Order;
 use Filament\Forms;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Utilities\Get;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 trait UpdatesOrderStatus
 {
@@ -16,7 +17,7 @@ trait UpdatesOrderStatus
     {
         return Forms\Components\Textarea::make('additional_content')
             ->label(__('admin::order.action.update_status.additional_content.label'))
-            ->hidden(function (Forms\Get $get) {
+            ->hidden(function (Get $get) {
                 return ! count(
                     static::getMailers($get('status'))
                 );
@@ -37,7 +38,7 @@ trait UpdatesOrderStatus
     protected static function getEmailAddressesInput(): Forms\Components\CheckboxList
     {
         return Forms\Components\CheckboxList::make('email_addresses')
-            ->hidden(function (Forms\Get $get, ?Order $record = null) {
+            ->hidden(function (Get $get, ?Order $record = null) {
 
                 if (! $record) {
                     return true;
@@ -69,7 +70,7 @@ trait UpdatesOrderStatus
         return Forms\Components\TextInput::make('additional_email')
             ->label(__('admin::order.action.update_status.additional_email_recipient.label'))
             ->placeholder(__('admin::order.action.update_status.additional_email_recipient.placeholder'))
-            ->hidden(function (Forms\Get $get) {
+            ->hidden(function (Get $get) {
                 return ! count(
                     static::getMailers($get('status'))
                 );
@@ -78,7 +79,7 @@ trait UpdatesOrderStatus
 
     protected static function getMailersCheckboxInput(): Forms\Components\CheckboxList
     {
-        return Forms\Components\CheckboxList::make('mailers')->options(function (Forms\Get $get) {
+        return Forms\Components\CheckboxList::make('mailers')->options(function (Get $get) {
             $mailers = config('store.orders.statuses.'.$get('status').'.mailers', []);
 
             return collect($mailers)->mapWithKeys(function ($mailer) {
@@ -88,7 +89,7 @@ trait UpdatesOrderStatus
                     ),
                 ];
             });
-        })->hidden(function (Forms\Get $get) {
+        })->hidden(function (Get $get) {
             return ! count(
                 static::getMailers($get('status'))
             );
@@ -99,19 +100,19 @@ trait UpdatesOrderStatus
     {
         return [
             static::getStatusSelectInput(),
-            SchemaComponents\Group::make([
+            Components\Group::make([
                 static::getMailersCheckboxInput(),
-                SchemaComponents\Group::make([
+                Components\Group::make([
                     static::getAdditionalContentInput(),
                     static::getEmailAddressesInput(),
                     static::getAdditionalEmailInput(),
-                ])->hidden(function (Forms\Get $get) {
+                ])->hidden(function (Get $get) {
                     return ! count($get('mailers')) ||
                         ! count(
                             static::getMailers($get('status'))
                         );
                 }),
-            ])->hidden(function (Forms\Get $get) {
+            ])->hidden(function (Get $get) {
                 return ! count(
                     static::getMailers($get('status'))
                 );
@@ -119,7 +120,7 @@ trait UpdatesOrderStatus
         ];
     }
 
-    protected function updateStatus(Order $record, array $data)
+    protected function updateStatus(Order $record, array $data): void
     {
         $record->update([
             'status' => $data['status'],

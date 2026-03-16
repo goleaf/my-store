@@ -9,14 +9,14 @@ use App\Support\Forms\Components\PermissionSelector;
 use App\Support\Resources\BaseResource;
 use Filament\Facades\Filament;
 use Filament\Forms;
-use Filament\Forms\Components\Component;
+use Filament\Schemas\Components\Component;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Filament\Actions;
-use Filament\Schemas\Components as SchemaComponents;
+use Filament\Schemas\Components;
 
 class StaffResource extends BaseResource
 {
@@ -150,7 +150,7 @@ class StaffResource extends BaseResource
 
     protected static function getRolePermissionContainerFormComponent(): Component
     {
-        return SchemaComponents\Grid::make()
+        return Components\Grid::make()
             ->hidden(fn ($record) => $record ? $record->admin : false)
             ->schema([
                 static::getRoleFormComponent(),

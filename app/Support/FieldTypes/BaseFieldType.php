@@ -4,7 +4,7 @@ namespace App\Support\FieldTypes;
 
 use App\Models\Attribute;
 use App\Support\Synthesizers\TextSynth;
-use Filament\Forms\Components\Component;
+use Filament\Schemas\Components\Component;
 use Livewire\Livewire;
 
 abstract class BaseFieldType
@@ -18,7 +18,7 @@ abstract class BaseFieldType
 
     abstract public static function getFilamentComponent(Attribute $attribute): Component;
 
-    public static function synthesize()
+    public static function synthesize(): void
     {
         Livewire::propertySynthesizer(static::$synthesizer);
     }

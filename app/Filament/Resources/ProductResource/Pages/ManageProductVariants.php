@@ -53,7 +53,7 @@ class ManageProductVariants extends BaseManageRelatedRecords
         return __('admin::product.pages.variants.label');
     }
 
-    public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function form(Schema $schema): Schema
     {
         return $schema
             ->components([

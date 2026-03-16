@@ -2,7 +2,7 @@
 
 namespace App\Validation\Cart;
 
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\Cart\OrderAddressRequest;
 use App\Validation\BaseValidator;
 
 class ValidateCartForOrderCreation extends BaseValidator
@@ -24,9 +24,8 @@ class ValidateCartForOrderCreation extends BaseValidator
             return $this->fail('cart', __('store::exceptions.carts.billing_missing'));
         }
 
-        $billingValidator = Validator::make(
-            $cart->billingAddress->toArray(),
-            $this->getAddressRules()
+        $billingValidator = app(OrderAddressRequest::class)->makeValidator(
+            $cart->billingAddress->toArray()
         );
 
         if ($billingValidator->fails()) {
@@ -45,9 +44,8 @@ class ValidateCartForOrderCreation extends BaseValidator
                     return $this->fail('cart', __('store::exceptions.carts.shipping_missing'));
                 }
 
-                $shippingValidator = Validator::make(
-                    $cart->shippingAddress->toArray(),
-                    $this->getAddressRules()
+                $shippingValidator = app(OrderAddressRequest::class)->makeValidator(
+                    $cart->shippingAddress->toArray()
                 );
 
                 if ($shippingValidator->fails()) {
@@ -57,21 +55,5 @@ class ValidateCartForOrderCreation extends BaseValidator
         }
 
         return $this->pass();
-    }
-
-    /**
-     * Return the address rules for validation.
-     *
-     * @return array
-     */
-    private function getAddressRules()
-    {
-        return [
-            'country_id' => 'required',
-            'first_name' => 'required',
-            'line_one' => 'required',
-            'city' => 'required',
-            'postcode' => 'required',
-        ];
     }
 }

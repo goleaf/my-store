@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Base\BaseModel;
 use App\Base\Enums\Concerns\ProvidesProductAssociationType;
-use App\Base\Enums\ProductAssociation as ProductAssociationEnum;
 use App\Base\Traits\HasMacros;
 use App\Database\Factories\ProductAssociationFactory;
+use App\Base\Enums;
 
 /**
  * @property int $id
@@ -88,7 +88,7 @@ class ProductAssociation extends BaseModel implements Contracts\ProductAssociati
      */
     public function scopeCrossSell(Builder $query): Builder
     {
-        return $query->type(ProductAssociationEnum::CROSS_SELL);
+        return $query->type(Enums\ProductAssociation::CROSS_SELL);
     }
 
     /**
@@ -96,7 +96,7 @@ class ProductAssociation extends BaseModel implements Contracts\ProductAssociati
      */
     public function scopeUpSell(Builder $query): Builder
     {
-        return $query->type(ProductAssociationEnum::UP_SELL);
+        return $query->type(Enums\ProductAssociation::UP_SELL);
     }
 
     /**
@@ -104,7 +104,7 @@ class ProductAssociation extends BaseModel implements Contracts\ProductAssociati
      */
     public function scopeAlternate(Builder $query): Builder
     {
-        return $query->type(ProductAssociationEnum::ALTERNATE);
+        return $query->type(Enums\ProductAssociation::ALTERNATE);
     }
 
     /**
@@ -121,7 +121,7 @@ class ProductAssociation extends BaseModel implements Contracts\ProductAssociati
 
     public static function getTypes(): array
     {
-        $enum = config('store.products.association_types_enum', \App\Base\Enums\ProductAssociation::class);
+        $enum = config('store.products.association_types_enum', Enums\ProductAssociation::class);
 
         return collect($enum::cases())->mapWithKeys(function ($item) {
             return [

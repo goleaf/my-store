@@ -51,7 +51,7 @@ class ManageCollectionChildren extends BaseManageRelatedRecords
         return __('admin::collection.pages.children.label');
     }
 
-    public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
+    public function form(Schema $schema): Schema
     {
         return $schema;
     }

@@ -3,7 +3,7 @@
 namespace App\Base\Traits;
 
 use Illuminate\Support\Str;
-use Spatie\LaravelBlink\BlinkFacade as Blink;
+use Spatie\LaravelBlink\BlinkFacade;
 
 trait HasDefaultRecord
 {
@@ -27,7 +27,7 @@ trait HasDefaultRecord
     {
         $key = 'store_default_'.Str::snake(self::class);
 
-        return Blink::once($key, function () {
+        return BlinkFacade::once($key, function () {
             return self::query()->default(true)->first();
         });
     }

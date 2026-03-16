@@ -1,5 +1,5 @@
-<div class="relative w-full max-w-2xl" x-data="{ open: @entangle('showDropdown') }" @click.away="open = false">
-    <div class="relative flex items-center">
+<div class="relative w-full max-w-2xl" x-data="{ open: @entangle('showDropdown') }" @click.away="open = false" @keydown.escape.window="open = false">
+    <form wire:submit="search" class="relative flex items-center">
         <input 
             type="text" 
             wire:model.live.debounce.300ms="term"
@@ -80,4 +80,5 @@
             <p class="text-gray-400 text-sm mt-1">Try checking for typos or using broader terms.</p>
         </div>
     @endif
+    </form>
 </div>
