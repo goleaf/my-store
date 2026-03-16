@@ -12,13 +12,24 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('store_product_variants', function (Blueprint $table) {
-            $table->string('label')->nullable()->after('product_id'); // e.g. "250g", "500g"
-            $table->decimal('price_override', 10, 2)->nullable()->after('label');
-            $table->decimal('price_modifier', 10, 2)->default(0.00)->after('price_override');
-            $table->decimal('original_price_override', 10, 2)->nullable()->after('price_modifier');
-            $table->unsignedInteger('stock')->default(0)->after('original_price_override');
-            $table->unsignedTinyInteger('sort_order')->default(0)->after('stock');
-            $table->boolean('is_active')->default(true)->after('sort_order');
+            if (!Schema::hasColumn('store_product_variants', 'label')) {
+                $table->string('label')->nullable()->after('product_id');
+            }
+            if (!Schema::hasColumn('store_product_variants', 'price_override')) {
+                $table->decimal('price_override', 10, 2)->nullable()->after('label');
+            }
+            if (!Schema::hasColumn('store_product_variants', 'price_modifier')) {
+                $table->decimal('price_modifier', 10, 2)->default(0.00)->after('price_override');
+            }
+            if (!Schema::hasColumn('store_product_variants', 'original_price_override')) {
+                $table->decimal('original_price_override', 10, 2)->nullable()->after('price_modifier');
+            }
+            if (!Schema::hasColumn('store_product_variants', 'sort_order')) {
+                $table->unsignedTinyInteger('sort_order')->default(0)->after('stock');
+            }
+            if (!Schema::hasColumn('store_product_variants', 'is_active')) {
+                $table->boolean('is_active')->default(true)->after('sort_order');
+            }
         });
     }
 
@@ -30,7 +41,7 @@ return new class extends Migration
         Schema::table('store_product_variants', function (Blueprint $table) {
             $table->dropColumn([
                 'label', 'price_override', 'price_modifier', 'original_price_override',
-                'stock', 'sort_order', 'is_active'
+                'sort_order', 'is_active'
             ]);
         });
     }
