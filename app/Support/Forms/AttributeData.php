@@ -62,7 +62,7 @@ class AttributeData
                 return $state;
             })
             ->mutateStateForValidationUsing(function ($state) {
-                if ($state instanceof \Lunar\Base\FieldType) {
+                if ($state instanceof \App\Store\Base\FieldType) {
                     return $state->getValue();
                 }
 

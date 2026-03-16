@@ -31,8 +31,8 @@
         {{ $slot }}
     </main>
 
-    <x-footer />
-
+    @livewire('footer')
+    <livewire:notifications />
     @livewireScripts
 </body>
 

@@ -87,16 +87,16 @@ return [
         ],
         'status' => [
             'label' => 'Statut',
-            \Lunar\Models\Discount::ACTIVE => [
+            \Store\Models\Discount::ACTIVE => [
                 'label' => 'Actif',
             ],
-            \Lunar\Models\Discount::PENDING => [
+            \Store\Models\Discount::PENDING => [
                 'label' => 'En attente',
             ],
-            \Lunar\Models\Discount::EXPIRED => [
+            \Store\Models\Discount::EXPIRED => [
                 'label' => 'Expiré',
             ],
-            \Lunar\Models\Discount::SCHEDULED => [
+            \Store\Models\Discount::SCHEDULED => [
                 'label' => 'Planifié',
             ],
         ],

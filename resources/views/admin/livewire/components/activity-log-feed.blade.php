@@ -1,4 +1,4 @@
-<div class="px-2 pb-4 scroll-mt-32" id="lunar-panel-timeline">
+<div class="px-2 pb-4 scroll-mt-32" id="store-panel-timeline">
     <div class="relative flex items-end gap-4 mt-4">
         <div class="shrink-0">
             <div>

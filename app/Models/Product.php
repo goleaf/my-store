@@ -1,12 +1,221 @@
 <?php
 
-namespace App\Models;
+namespace App\Store\Models;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use App\Store\Models\Product as LunarProduct;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Store\Base\BaseModel;
+use App\Store\Base\Casts\AsAttributeData;
+use App\Store\Base\Enums\Concerns\ProvidesProductAssociationType;
+use App\Store\Base\HasThumbnailImage;
+use App\Store\Base\Traits\HasChannels;
+use App\Store\Base\Traits\HasCustomerGroups;
+use App\Store\Base\Traits\HasMacros;
+use App\Store\Base\Traits\HasMedia;
+use App\Store\Base\Traits\HasTags;
+use App\Store\Base\Traits\HasTranslations;
+use App\Store\Base\Traits\HasUrls;
+use App\Store\Base\Traits\LogsActivity;
+use App\Store\Base\Traits\Searchable;
+use App\Store\Database\Factories\ProductFactory;
+use App\Store\Jobs\Products\Associations\Associate;
+use App\Store\Jobs\Products\Associations\Dissociate;
+use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
-class Product extends LunarProduct
+/**
+ * @property int $id
+ * @property ?int $brand_id
+ * @property int $product_type_id
+ * @property string $status
+ * @property ?\Illuminate\Support\Collection $attribute_data
+ * @property ?\Illuminate\Support\Carbon $created_at
+ * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?\Illuminate\Support\Carbon $deleted_at
+ */
+class Product extends BaseModel implements Contracts\Product, HasThumbnailImage, SpatieHasMedia
 {
-    //
+    use HasChannels;
+    use HasCustomerGroups;
+    use HasFactory;
+    use HasMacros;
+    use HasMedia;
+    use HasTags;
+    use HasTranslations;
+    use HasUrls;
+    use LogsActivity;
+    use Searchable;
+    use SoftDeletes;
+
+    /**
+     * Return a new factory instance for the model.
+     */
+    protected static function newFactory()
+    {
+        return ProductFactory::new();
+    }
+
+    /**
+     * Define which attributes should be
+     * fillable during mass assignment.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'attribute_data',
+        'product_type_id',
+        'status',
+        'brand_id',
+    ];
+
+    /**
+     * Define which attributes should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'attribute_data' => AsAttributeData::class,
+    ];
+
+    /**
+     * Record's title
+     */
+    protected function recordTitle(): Attribute
+    {
+        return Attribute::make(
+            get: fn (mixed $value) => $this->translateAttribute('name'),
+        );
+    }
+
+    public function mappedAttributes(): Collection
+    {
+        return $this->productType->mappedAttributes;
+    }
+
+    public function productType(): BelongsTo
+    {
+        return $this->belongsTo(ProductType::modelClass());
+    }
+
+    public function images(): MorphMany
+    {
+        return $this->media()->where('collection_name', config('store.media.collection'));
+    }
+
+    public function variants(): HasMany
+    {
+        return $this->hasMany(ProductVariant::modelClass());
+    }
+
+    public function variant(): HasOne
+    {
+        return $this->hasOne(ProductVariant::modelClass());
+    }
+
+    protected function hasVariants(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->variants()->count() > 1,
+        );
+    }
+
+    public function collections(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            \App\Store\Models\Collection::modelClass(),
+            config('store.database.table_prefix').'collection_product'
+        )->withPivot(['position'])->orderByPivot('position')->withTimestamps();
+    }
+
+    public function associations(): HasMany
+    {
+        return $this->hasMany(ProductAssociation::modelClass(), 'product_parent_id');
+    }
+
+    public function inverseAssociations(): HasMany
+    {
+        return $this->hasMany(ProductAssociation::modelClass(), 'product_target_id');
+    }
+
+    public function associate(mixed $product, ProvidesProductAssociationType|string $type): void
+    {
+        Associate::dispatch($this, $product, $type);
+    }
+
+    /**
+     * Dissociate a product to another with a type.
+     */
+    public function dissociate(mixed $product, ProvidesProductAssociationType|string|null $type = null): void
+    {
+        Dissociate::dispatch($this, $product, $type);
+    }
+
+    public function customerGroups(): BelongsToMany
+    {
+        $prefix = config('store.database.table_prefix');
+
+        return $this->belongsToMany(
+            CustomerGroup::modelClass(),
+            "{$prefix}customer_group_product"
+        )->withPivot([
+            'purchasable',
+            'visible',
+            'enabled',
+            'starts_at',
+            'ends_at',
+        ])->withTimestamps();
+    }
+
+    public static function getExtraCustomerGroupPivotValues(CustomerGroup $customerGroup): array
+    {
+        return [
+            'purchasable' => $customerGroup->default,
+        ];
+    }
+
+    /**
+     * Return the brand relationship.
+     */
+    public function brand(): BelongsTo
+    {
+        return $this->belongsTo(Brand::modelClass());
+    }
+
+    public function scopeStatus(Builder $query, string $status): Builder
+    {
+        return $query->whereStatus($status);
+    }
+
+    public function prices(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Price::modelClass(),
+            ProductVariant::modelClass(),
+            'product_id',
+            'priceable_id'
+        )->wherePriceableType('product_variant');
+    }
+
+    public function productOptions(): BelongsToMany
+    {
+        $prefix = config('store.database.table_prefix');
+
+        return $this->belongsToMany(
+            ProductOption::modelClass(),
+            "{$prefix}product_product_option"
+        )->withPivot(['position'])->orderByPivot('position');
+    }
+
+    public function getThumbnailImage(): string
+    {
+        return $this->thumbnail?->getUrl('small') ?? '';
+    }
 }

@@ -4,6 +4,6 @@
         [
             'record' => $getRecord(),
         ],
-        key('lunar_livewire_'.$getContentName())
+        key('store_livewire_'.$getContentName())
     )
 </div>

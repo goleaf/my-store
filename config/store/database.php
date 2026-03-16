@@ -4,15 +4,15 @@ return [
 
     'connection' => null,
 
-    'table_prefix' => 'lunar_',
+    'table_prefix' => 'store_',
 
     /*
     |--------------------------------------------------------------------------
     | Morph Prefix
     |--------------------------------------------------------------------------
     |
-    | If you wish to prefix Lunar's morph mapping in the database, you can
-    | set that here e.g. `lunar_product` instead of `product`
+    | If you wish to prefix Store's morph mapping in the database, you can
+    | set that here e.g. `store_product` instead of `product`
     |
     */
     'morph_prefix' => null,
@@ -22,7 +22,7 @@ return [
     | Users Table ID
     |--------------------------------------------------------------------------
     |
-    | Lunar adds a relationship to your 'users' table and by default assumes
+    | Store adds a relationship to your 'users' table and by default assumes
     | a 'bigint'. You can change this to either an 'int' or 'uuid'.
     |
     */
@@ -33,7 +33,7 @@ return [
     | Disable migrations
     |--------------------------------------------------------------------------
     |
-    | Prevent Lunar`s default package migrations from running for the core.
+    | Prevent Store`s default package migrations from running for the core.
     | Set to 'true' to disable.
     |
     */

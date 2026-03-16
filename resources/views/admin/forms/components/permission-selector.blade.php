@@ -24,7 +24,7 @@
                 @foreach ($getGroupedPermissions() as $groupedPermission)
                     <x-filament-tables::row>
                         <x-filament-tables::cell
-                            :wire:key="'lunar.permission.name.' . $groupedPermission->handle"
+                            :wire:key="'store.permission.name.' . $groupedPermission->handle"
                             class="!p-3"
                         >
                             <div class="grid gap-0.5">
@@ -59,7 +59,7 @@
                         </x-filament-tables::cell>
 
                         <x-filament-tables::cell
-                            :wire:key="'lunar.permission.' . $groupedPermission->handle"
+                            :wire:key="'store.permission.' . $groupedPermission->handle"
                             class="!p-0"
                         >
                             <div 
@@ -80,19 +80,19 @@
                             >
                                 <x-heroicon-s-link
                                     x-show="enabled === null"
-                                    :wire:key="'lunar.permission.' . $groupedPermission->handle.'.inherited'"
+                                    :wire:key="'store.permission.' . $groupedPermission->handle.'.inherited'"
                                     class="w-6 h-6 text-primary-500 dark:text-primary-400/80" 
                                     defer/>
                                 
                                 <x-heroicon-s-check-circle 
                                     x-show="enabled === true"
-                                    :wire:key="'lunar.permission.' . $groupedPermission->handle.'.enabled'"
+                                    :wire:key="'store.permission.' . $groupedPermission->handle.'.enabled'"
                                     class="w-8 h-8 group-hover:scale-110 transition-transform text-green-500 group-hover:text-green-600 dark:text-green-400/80 dark:group-hover:text-green-400" 
                                     defer/>
 
                                 <x-heroicon-s-x-circle 
                                     x-show="enabled === false"
-                                    :wire:key="'lunar.permission.' . $groupedPermission->handle.'.disabled'"
+                                    :wire:key="'store.permission.' . $groupedPermission->handle.'.disabled'"
                                     class="w-8 h-8 group-hover:scale-110 transition-transform text-red-500 group-hover:text-red-600 dark:text-red-400/80 dark:group-hover:text-red-400" 
                                     defer/>
                             </div>
@@ -102,7 +102,7 @@
                     @foreach($groupedPermission->children as $permission)
                         <x-filament-tables::row>
                             <x-filament-tables::cell
-                                :wire:key="'lunar.permission.name.' . $permission->handle"
+                                :wire:key="'store.permission.name.' . $permission->handle"
                                 class="py-2.5 !ps-6 pe-2"
                             >
                                 <div class="grid gap-0.5">
@@ -134,7 +134,7 @@
                             </x-filament-tables::cell>
                                 
                             <x-filament-tables::cell
-                                :wire:key="'lunar.permission.' . $groupedPermission->handle . '.' . $permission->handle"
+                                :wire:key="'store.permission.' . $groupedPermission->handle . '.' . $permission->handle"
                                 class="!p-0"
                             >
                                 <div 
@@ -164,19 +164,19 @@
                                 >
                                     <x-heroicon-s-link
                                         x-show="enabled === null"
-                                        :wire:key="'lunar.permission.' . $groupedPermission->handle . '.' . $permission->handle.'.inherited'"
+                                        :wire:key="'store.permission.' . $groupedPermission->handle . '.' . $permission->handle.'.inherited'"
                                         class="w-6 h-6 text-primary-500 dark:text-primary-400/80"
                                         defer/>
 
                                     <x-heroicon-s-check-circle 
                                         x-show="enabled === true"
-                                        :wire:key="'lunar.permission.' . $groupedPermission->handle . '.' . $permission->handle.'.enabled'"
+                                        :wire:key="'store.permission.' . $groupedPermission->handle . '.' . $permission->handle.'.enabled'"
                                         class="w-8 h-8 group-hover:scale-110 transition-transform text-green-500 group-hover:text-green-600 dark:text-green-400/80 dark:group-hover:text-green-400"
                                         defer/>
 
                                     <x-heroicon-s-x-circle 
                                         x-show="enabled === false"
-                                        :wire:key="'lunar.permission.' . $groupedPermission->handle . '.' . $permission->handle.'.disabled'"
+                                        :wire:key="'store.permission.' . $groupedPermission->handle . '.' . $permission->handle.'.disabled'"
                                         class="w-8 h-8 group-hover:scale-110 transition-transform text-red-500 group-hover:text-red-600 dark:text-red-400/80 dark:group-hover:text-red-400" 
                                         x-bind:class="{
                                             '!text-red-400/80 dark:!text-red-400/60': group === false

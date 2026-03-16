@@ -17,6 +17,12 @@
                       stroke-width="2"
                       d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
             </svg>
+
+            @if ($this->totalQuantity > 0)
+                <span class="absolute top-2 right-2 flex items-center justify-center w-4 h-4 text-[10px] font-bold text-white bg-indigo-600 rounded-full">
+                    {{ $this->totalQuantity }}
+                </span>
+            @endif
         </span>
     </button>
 
@@ -127,12 +133,11 @@
 
         @if ($this->cart)
             <div class="mt-4 space-y-4 text-center">
-                <button class="block w-full p-3 text-sm font-medium text-blue-800 border border-blue-600 rounded-lg hover:ring-1 hover:ring-blue-600"
-                        type="button"
-                        wire:click="updateLines">
-                    Update Cart
-                </button>
-
+                <a class="block w-full p-3 text-sm font-medium text-blue-800 border border-blue-600 rounded-lg hover:ring-1 hover:ring-blue-600"
+                   href="{{ route('cart.view') }}"
+                   wire:navigate>
+                    View Cart
+                </a>
                 <a class="block w-full p-3 text-sm font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-500"
                    href="{{ route('checkout.view') }}"
                    wire:navigate

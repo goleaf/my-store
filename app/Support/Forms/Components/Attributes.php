@@ -126,7 +126,7 @@ class Attributes extends SchemaComponents\Group
             }
 
             foreach ($state as $key => $value) {
-                if (! $value instanceof \Lunar\Base\FieldType) {
+                if (! $value instanceof \App\Store\Base\FieldType) {
                     continue;
                 }
 

@@ -17,7 +17,7 @@ final class WebhookController extends Controller
 {
     public function __invoke(Request $request): JsonResponse
     {
-        $secret = config('services.stripe.webhooks.lunar');
+        $secret = config('services.stripe.webhooks.store');
         $stripeSig = $request->header('Stripe-Signature');
 
         try {

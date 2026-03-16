@@ -87,16 +87,16 @@ return [
         ],
         'status' => [
             'label' => 'Státusz',
-            \Lunar\Models\Discount::ACTIVE => [
+            \Store\Models\Discount::ACTIVE => [
                 'label' => 'Aktív',
             ],
-            \Lunar\Models\Discount::PENDING => [
+            \Store\Models\Discount::PENDING => [
                 'label' => 'Függőben',
             ],
-            \Lunar\Models\Discount::EXPIRED => [
+            \Store\Models\Discount::EXPIRED => [
                 'label' => 'Lejárt',
             ],
-            \Lunar\Models\Discount::SCHEDULED => [
+            \Store\Models\Discount::SCHEDULED => [
                 'label' => 'Ütemezett',
             ],
         ],

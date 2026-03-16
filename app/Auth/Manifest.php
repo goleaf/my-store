@@ -122,7 +122,7 @@ class Manifest
     }
 
     /**
-     * Returns the base permissions which are required by Lunar.
+     * Returns the base permissions which are required by Store.
      */
     public function getBaseRoles(): array
     {
@@ -133,7 +133,7 @@ class Manifest
     }
 
     /**
-     * Returns the base permissions which are required by Lunar.
+     * Returns the base permissions which are required by Store.
      */
     public function getBasePermissions(): array
     {

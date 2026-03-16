@@ -52,7 +52,7 @@ class StripePaymentsServiceProvider extends ServiceProvider
             EOT;
         });
 
-        $this->loadViewsFrom(resource_path('views/vendor/store'), 'store');
+        $this->loadViewsFrom(resource_path('views/store'), 'store');
         $this->loadRoutesFrom(base_path('routes/stripe-webhooks.php'));
 
         if (! config('store.database.disable_migrations', false)) {

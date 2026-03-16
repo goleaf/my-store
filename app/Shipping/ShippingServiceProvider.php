@@ -32,7 +32,7 @@ class ShippingServiceProvider extends ServiceProvider
             return;
         }
 
-        $this->loadTranslationsFrom(lang_path('vendor/admin/shipping'), 'admin.shipping');
+        $this->loadTranslationsFrom(lang_path('admin/shipping'), 'admin.shipping');
 
         if (! config('store.database.disable_migrations', false)) {
             $this->loadMigrationsFrom(database_path('migrations'));

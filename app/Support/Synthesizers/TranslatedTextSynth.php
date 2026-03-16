@@ -8,7 +8,7 @@ use App\Store\Models\Language;
 
 class TranslatedTextSynth extends AbstractFieldSynth
 {
-    public static $key = 'lunar_translatedtext_field';
+    public static $key = 'store_translatedtext_field';
 
     protected static $targetClass = TranslatedText::class;
 

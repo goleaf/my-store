@@ -49,6 +49,14 @@ class Cart extends Component
     }
 
     /**
+     * Get the total quantity of items in the cart.
+     */
+    public function getTotalQuantityProperty(): int
+    {
+        return $this->cartLines->sum('quantity');
+    }
+
+    /**
      * Update the cart lines.
      */
     public function updateLines(): void

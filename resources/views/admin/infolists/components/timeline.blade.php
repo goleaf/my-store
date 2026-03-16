@@ -4,7 +4,7 @@
     </x-filament::section.heading>
 
 
-    @livewire('lunar.admin.livewire.components.activity-log-feed', [
+    @livewire('store.admin.livewire.components.activity-log-feed', [
         'subject' => $getRecord()
     ])
 </section>

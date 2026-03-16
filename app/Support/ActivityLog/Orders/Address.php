@@ -23,7 +23,7 @@ class Address extends AbstractRender
 
         $diff = [];
 
-        $getCountryName = fn ($countryId) => BlinkFacade::once('lunar_activitylog_country_'.$countryId,
+        $getCountryName = fn ($countryId) => BlinkFacade::once('store_activitylog_country_'.$countryId,
             fn () => Country::whereId($countryId)->first()?->name ?? $countryId);
 
         foreach ($fields as $field) {

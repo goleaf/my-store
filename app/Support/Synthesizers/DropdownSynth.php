@@ -6,7 +6,7 @@ use App\Store\FieldTypes\Dropdown;
 
 class DropdownSynth extends AbstractFieldSynth
 {
-    public static $key = 'lunar_dropdown_field';
+    public static $key = 'store_dropdown_field';
 
     protected static $targetClass = Dropdown::class;
 }

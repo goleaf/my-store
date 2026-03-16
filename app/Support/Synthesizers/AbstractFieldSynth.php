@@ -7,7 +7,7 @@ use Livewire\Mechanisms\HandleComponents\Synthesizers\Synth;
 
 abstract class AbstractFieldSynth extends Synth
 {
-    public static $key = 'lunar_field';
+    public static $key = 'store_field';
 
     protected static $targetClass = FieldType::class;
 

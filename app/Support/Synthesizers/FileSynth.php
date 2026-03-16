@@ -7,7 +7,7 @@ use Illuminate\Support\Arr;
 
 class FileSynth extends AbstractFieldSynth
 {
-    public static $key = 'lunar_file_field';
+    public static $key = 'store_file_field';
 
     protected static $targetClass = File::class;
 

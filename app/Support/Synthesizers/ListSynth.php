@@ -6,7 +6,7 @@ use App\Store\FieldTypes\ListField;
 
 class ListSynth extends AbstractFieldSynth
 {
-    public static $key = 'lunar_list_field';
+    public static $key = 'store_list_field';
 
     protected static $targetClass = ListField::class;
 

@@ -12,7 +12,9 @@ use App\Filament\Widgets\Dashboard\Orders\OrdersSalesChart;
 use App\Filament\Widgets\Dashboard\Orders\OrderStatsOverview;
 use App\Filament\Widgets\Dashboard\Orders\OrderTotalsChart;
 use App\Filament\Widgets\Dashboard\Orders\PopularProductsTable;
-use App\Http\Controllers\DownloadPdfController;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\Request;
 use App\Support\Facades\AdminAccessControl;
 use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
@@ -68,6 +70,10 @@ class AdminPanelManager
         \App\Filament\Resources\TaxClassResource::class,
         \App\Filament\Resources\TaxZoneResource::class,
         \App\Filament\Resources\TaxRateResource::class,
+        \App\Filament\Resources\HomeHeroResource::class,
+        \App\Filament\Resources\FeaturedCategoryResource::class,
+        \App\Filament\Resources\HomeSectionResource::class,
+        \App\Filament\Resources\HomeBannerResource::class,
     ];
 
     protected static $pages = [
@@ -103,7 +109,7 @@ class AdminPanelManager
             'actions::delete-action' => 'lucide-trash-2',
             'actions::make-collection-root-action' => 'lucide-corner-left-up',
 
-            // Lunar
+            // Store
             'store::activity' => 'lucide-activity',
             'store::attributes' => 'lucide-pencil-ruler',
             'store::availability' => 'lucide-calendar',
@@ -189,19 +195,6 @@ class AdminPanelManager
 
     protected function defaultPanel(): Panel
     {
-        $brandAsset = function ($asset) {
-            $vendorPath = 'vendor/admin/';
-
-            if (file_exists(public_path($vendorPath.$asset))) {
-                return asset($vendorPath.$asset);
-            }
-            if (file_exists(public_path($asset))) {
-                return asset($asset);
-            }
-            $type = str($asset)->endsWith('.png') ? 'image/png' : 'image/svg+xml';
-            return "data:{$type};base64,".base64_encode('');
-        };
-
         $panelMiddleware = [
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
@@ -215,7 +208,26 @@ class AdminPanelManager
         ];
 
         if (config('store.panel.pdf_rendering', 'download') == 'stream') {
-            Route::get('lunar/pdf/download', DownloadPdfController::class)
+            Route::get('store/pdf/download', function (Request $request) {
+                if (! $request->hasValidSignature()) {
+                    abort(401);
+                }
+                $request->validate([
+                    'record' => 'required',
+                    'record_type' => 'required',
+                    'view' => 'required',
+                ]);
+
+                $recordType = Relation::getMorphedModel($request->get('record_type'));
+                $view = $request->get('view');
+                $record = $request->get('record');
+
+                $model = $recordType::find($record);
+
+                return Pdf::loadView($view, [
+                    'record' => $model,
+                ])->stream();
+            })
                 ->name('admin.pdf.download')->middleware($panelMiddleware);
         }
 
@@ -235,9 +247,6 @@ class AdminPanelManager
             ->default()
             ->id($this->panelId)
             ->brandName('Admin')
-            ->brandLogo($brandAsset('admin-logo.svg'))
-            ->darkModeBrandLogo($brandAsset('admin-logo-dark.svg'))
-            ->favicon($brandAsset('admin-icon.png'))
             ->brandLogoHeight('2rem')
             ->path('admin')
             ->authGuard('staff')
@@ -271,6 +280,7 @@ class AdminPanelManager
                 \App\Filament\Resources\CollectionGroupResource\Widgets\CollectionTreeView::class,
             ])
             ->navigationGroups([
+                'Home Page',
                 'Catalog',
                 'Sales',
                 NavigationGroup::make()

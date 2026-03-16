@@ -6,7 +6,7 @@ use App\Store\FieldTypes\Toggle;
 
 class ToggleSynth extends AbstractFieldSynth
 {
-    public static $key = 'lunar_toggle_field';
+    public static $key = 'store_toggle_field';
 
     protected static $targetClass = Toggle::class;
 

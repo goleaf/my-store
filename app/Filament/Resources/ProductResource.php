@@ -137,6 +137,16 @@ class ProductResource extends BaseResource
             static::getBrandFormComponent(),
             static::getProductTypeFormComponent(),
             static::getTagsFormComponent(),
+            Forms\Components\TextInput::make('rating')
+                ->numeric()
+                ->minValue(0)
+                ->maxValue(5)
+                ->step(0.1)
+                ->label('Rating'),
+            Forms\Components\TextInput::make('total_reviews')
+                ->numeric()
+                ->minValue(0)
+                ->label('Total Reviews'),
         ];
     }
 
@@ -305,6 +315,14 @@ class ProductResource extends BaseResource
                     // Only render the tooltip if the column contents exceeds the length limit.
                     return $state;
                 })
+                ->toggleable(),
+            Tables\Columns\TextColumn::make('rating')
+                ->label('Rating')
+                ->sortable()
+                ->toggleable(),
+            Tables\Columns\TextColumn::make('total_reviews')
+                ->label('Reviews')
+                ->sortable()
                 ->toggleable(),
         ];
     }

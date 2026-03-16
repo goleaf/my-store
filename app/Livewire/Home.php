@@ -7,8 +7,59 @@ use Livewire\Component;
 use App\Store\Models\Collection;
 use App\Store\Models\Url;
 
+use App\Store\Models\HomeHero;
+use App\Store\Models\FeaturedCategory;
+use App\Store\Models\HomeSection;
+use App\Store\Models\HomeBanner;
+
 class Home extends Component
 {
+    /**
+     * Get active home heroes.
+     */
+    public function getHeroesProperty()
+    {
+        return HomeHero::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+    }
+
+    /**
+     * Get active featured categories.
+     */
+    public function getFeaturedCategoriesProperty()
+    {
+        return FeaturedCategory::with(['collection.defaultUrl', 'collection.thumbnail'])
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+    }
+
+    /**
+     * Get active home sections with their collections and products.
+     */
+    public function getSectionsProperty()
+    {
+        return HomeSection::with([
+            'collection.products.variants.basePrices.currency',
+            'collection.products.defaultUrl',
+            'collection.products.brand',
+        ])
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+    }
+
+    /**
+     * Get active home banners.
+     */
+    public function getBannersProperty()
+    {
+        return HomeBanner::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+    }
+
     /**
      * Return the sale collection (with defaultUrl and description for Filament-backed fields).
      */
@@ -63,6 +114,14 @@ class Home extends Component
             ]);
         }
         return $collection;
+    }
+
+    /**
+     * Return all collections.
+     */
+    public function getCollectionsProperty()
+    {
+        return Collection::with(['defaultUrl', 'thumbnail'])->whereHas('defaultUrl')->get();
     }
 
     public function render(): View

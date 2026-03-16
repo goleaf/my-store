@@ -8,7 +8,7 @@ use Livewire\Mechanisms\HandleComponents\Synthesizers\Synth;
 
 final class PriceSynth extends Synth
 {
-    public static $key = 'lunar_price';
+    public static $key = 'store_price';
 
     public static function match($target)
     {

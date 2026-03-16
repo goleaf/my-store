@@ -5,13 +5,13 @@ namespace App\Support\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \Filament\Forms\Components\Component getFilamentComponent(\Lunar\Models\Attribute $attribute)
- * @method static \Lunar\Admin\Support\Forms\AttributeData registerFieldType(string $coreFieldType, string $panelFieldType)
+ * @method static \Filament\Forms\Components\Component getFilamentComponent(\App\Store\Models\Attribute $attribute)
+ * @method static \App\Store\Admin\Support\Forms\AttributeData registerFieldType(string $coreFieldType, string $panelFieldType)
  * @method static \Illuminate\Support\Collection getFieldTypes()
  * @method static array getConfigurationFields(string|null $type = null)
  * @method static void synthesizeLivewireProperties()
  *
- * @see \Lunar\Admin\Support\Forms\AttributeData
+ * @see \App\Store\Admin\Support\Forms\AttributeData
  */
 class AttributeData extends Facade
 {

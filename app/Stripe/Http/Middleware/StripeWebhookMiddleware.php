@@ -12,7 +12,7 @@ class StripeWebhookMiddleware
 {
     public function handle(Request $request, ?Closure $next = null)
     {
-        $secret = config('services.stripe.webhooks.lunar');
+        $secret = config('services.stripe.webhooks.store');
         $stripeSig = $request->header('Stripe-Signature');
 
         try {

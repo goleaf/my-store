@@ -79,7 +79,7 @@ class ActivityLogFeed extends Component implements HasActions, HasForms
         $data = $this->form->getState();
 
         activity()
-            ->useLog('lunarpanel')
+            ->useLog('storepanel')
             ->performedOn($this->subject)
             ->causedBy(Filament::auth()->user())
             ->event('comment')

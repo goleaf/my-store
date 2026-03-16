@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Store\Base\Traits\LunarUser;
+use App\Store\Base\Traits\StoreUser;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, LunarUser, Notifiable;
+    use HasApiTokens, HasFactory, StoreUser, Notifiable;
 
     /**
      * The attributes that are mass assignable.

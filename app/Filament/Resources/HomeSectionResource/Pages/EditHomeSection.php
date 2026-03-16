@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Filament\Resources\HomeSectionResource\Pages;
+
+use App\Filament\Resources\HomeSectionResource;
+use App\Support\Pages\BaseEditRecord;
+use Filament\Actions;
+
+class EditHomeSection extends BaseEditRecord
+{
+    protected static string $resource = HomeSectionResource::class;
+
+    protected function getDefaultHeaderActions(): array
+    {
+        return [
+            Actions\DeleteAction::make(),
+        ];
+    }
+}

@@ -5,6 +5,7 @@ namespace App\Livewire\Components;
 use Illuminate\View\View;
 use Livewire\Component;
 use App\Store\Models\Collection;
+use App\Store\Models\Brand;
 
 class Navigation extends Component
 {
@@ -28,6 +29,14 @@ class Navigation extends Component
     public function getCollectionsProperty()
     {
         return Collection::with(['defaultUrl'])->get()->toTree();
+    }
+
+    /**
+     * Return the brands.
+     */
+    public function getBrandsProperty()
+    {
+        return Brand::with(['defaultUrl'])->get();
     }
 
     public function render(): View

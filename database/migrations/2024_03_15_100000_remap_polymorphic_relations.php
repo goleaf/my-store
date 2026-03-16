@@ -69,7 +69,7 @@ class RemapPolymorphicRelations extends Migration
             'urls' => ['element_type'],
         ];
 
-        $nonLunarTables = [
+        $nonStoreTables = [
             'activity_log' => 'subject_type',
             'media' => 'model_type',
             'model_has_permissions' => 'model_type',
@@ -78,7 +78,7 @@ class RemapPolymorphicRelations extends Migration
 
         foreach ($modelClasses as $modelClass => $mapping) {
 
-            foreach ($nonLunarTables as $table => $column) {
+            foreach ($nonStoreTables as $table => $column) {
                 if (! Schema::hasTable($table)) {
                     continue;
                 }

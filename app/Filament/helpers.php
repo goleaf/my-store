@@ -40,7 +40,7 @@ if (! function_exists('sync_with_search')) {
             $model->customer()->first()->searchable();
         }
 
-        if (is_lunar_user($model)) {
+        if (is_store_user($model)) {
             foreach ($model->customers()->get() as $customer) {
                 $customer->searchable();
             }

@@ -29,7 +29,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Livewire\Attributes\Computed;
 
 /**
- * @property \Lunar\Models\Order $record
+ * @property \App\Store\Models\Order $record
  * @property \Illuminate\Support\Collection $transactions
  * @property string $paymentStatus
  * @property bool $requiresCapture

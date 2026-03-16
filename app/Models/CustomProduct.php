@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Store\Models\Product as LunarProduct;
+use App\Store\Models\Product as BaseProduct;
 
-class CustomProduct extends LunarProduct
+class CustomProduct extends BaseProduct
 {
     protected $table = 'products';
 }

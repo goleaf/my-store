@@ -91,15 +91,11 @@ class StoreSetupSeeder extends Seeder
 
     private function callImportAddressData(): int
     {
-        foreach (['lunar:import:address-data', 'store:import:address-data'] as $command) {
-            try {
-                return Artisan::call($command);
-            } catch (Throwable) {
-                continue;
-            }
+        try {
+            return Artisan::call('store:import:address-data');
+        } catch (Throwable) {
+            return 1;
         }
-
-        return 1;
     }
 
     private function seedChannel(): void

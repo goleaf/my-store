@@ -1,9 +1,8 @@
 <?php
 
-use App\Admin\Filament\Resources\ProductResource\Widgets\ProductOptionsWidget as AdminProductOptionsWidget;
+use App\Filament\Resources\ProductResource\Widgets\ProductOptionsWidget;
 use App\Filament\Resources\CollectionGroupResource\Widgets\CollectionTreeView;
 use App\Filament\Resources\CustomerResource\Widgets\CustomerStatsOverviewWidget;
-use App\Filament\Resources\ProductResource\Widgets\ProductOptionsWidget as FrontendProductOptionsWidget;
 use App\Filament\Widgets\Dashboard\Orders\AverageOrderValueChart;
 use App\Filament\Widgets\Dashboard\Orders\LatestOrdersTable;
 use App\Filament\Widgets\Dashboard\Orders\NewVsReturningCustomersChart;
@@ -29,8 +28,7 @@ it('can instantiate collection and customer widgets', function () {
 });
 
 it('can instantiate product widgets', function () {
-    expect(new AdminProductOptionsWidget())->toBeInstanceOf(AdminProductOptionsWidget::class);
-    expect(new FrontendProductOptionsWidget())->toBeInstanceOf(FrontendProductOptionsWidget::class);
+    expect(new ProductOptionsWidget())->toBeInstanceOf(ProductOptionsWidget::class);
     expect(new VariantSwitcherTable())->toBeInstanceOf(VariantSwitcherTable::class);
 });
 

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'enabled' => env('LUNAR_SHIPPING_TABLES_ENABLED', true),
+    'enabled' => env('STORE_SHIPPING_TABLES_ENABLED', true),
 
     /*
      * What method should we use for a shipping rate tax calculation?

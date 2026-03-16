@@ -6,7 +6,7 @@ use App\Store\FieldTypes\Vimeo;
 
 class VimeoSynth extends AbstractFieldSynth
 {
-    public static $key = 'lunar_vimeo_field';
+    public static $key = 'store_vimeo_field';
 
     protected static $targetClass = Vimeo::class;
 }

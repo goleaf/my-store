@@ -18,11 +18,11 @@ $isRtl = __('filament-panels::layout.direction') === 'rtl';
 <nav
     aria-label="{{ __('filament::components/pagination.label') }}"
     role="navigation"
-    class="lunar-panel-timeline-pagination flex justify-end items-center gap-x-3"
+    class="store-panel-timeline-pagination flex justify-end items-center gap-x-3"
 >
     @if ($paginator->hasPages())
         <ol
-            class="lunar-panel-timeline-pagination-items flex justify-self-end rounded-lg bg-white shadow-sm ring-1 ring-gray-950/10 dark:bg-white/5 dark:ring-white/20"
+            class="store-panel-timeline-pagination-items flex justify-self-end rounded-lg bg-white shadow-sm ring-1 ring-gray-950/10 dark:bg-white/5 dark:ring-white/20"
         >
             @if (! $paginator->onFirstPage())
                 <x-admin::activity-log.timeline-paginator.item

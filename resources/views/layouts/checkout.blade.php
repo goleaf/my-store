@@ -43,7 +43,7 @@
         {{ $slot }}
     </main>
 
-    <x-footer />
+    @livewire('footer')
 
     @livewireScripts
 </body>

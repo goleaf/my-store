@@ -15,7 +15,7 @@ class TransactionFactory extends BaseFactory
             'order_id' => Order::factory(),
             'success' => true,
             'type' => $this->faker->boolean(85) ? 'capture' : 'refund',
-            'driver' => 'lunar',
+            'driver' => 'store',
             'amount' => 100,
             'reference' => $this->faker->unique()->regexify('[A-Z]{8}'),
             'status' => 'settled',

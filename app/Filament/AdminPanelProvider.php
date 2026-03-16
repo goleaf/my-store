@@ -17,12 +17,10 @@ use App\Events\ProductCollectionsUpdated;
 use App\Events\ProductCustomerGroupsUpdated;
 use App\Events\ProductPricingUpdated;
 use App\Events\ProductVariantOptionsUpdated;
-use App\Listeners\FilamentUpgradedListener;
 use App\Models\Staff;
 use App\Support\ActivityLog\Manifest as ActivityLogManifest;
 use App\Support\Forms\AttributeData;
 use App\Support\Synthesizers\PriceSynth;
-use Filament\Support\Events\FilamentUpgraded;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Events\MigrationsEnded;
 use Illuminate\Database\Events\MigrationsStarted;
@@ -63,13 +61,13 @@ class AdminPanelProvider extends ServiceProvider
             $this->loadMigrationsFrom(database_path('migrations'));
         }
 
-        $this->loadViewsFrom(resource_path('views/vendor/admin'), 'admin');
+        $this->loadViewsFrom(resource_path('views/admin'), 'admin');
 
-        $this->loadTranslationsFrom(lang_path('vendor/admin'), 'admin');
+        $this->loadTranslationsFrom(lang_path('admin'), 'admin');
 
         $this->publishes([
             resource_path('views/vendor/admin') => resource_path('views/vendor/admin'),
-            lang_path('vendor/admin') => lang_path('vendor/admin'),
+            base_path('lang/admin') => base_path('lang/admin'),
         ]);
 
         $this->publishes([
@@ -111,15 +109,10 @@ class AdminPanelProvider extends ServiceProvider
             ModelUrlsUpdated::class,
         ], fn ($event) => sync_with_search($event->model));
 
-        $this->publishes([
-            public_path('vendor/admin') => public_path('vendor/admin'),
-        ], 'public');
-
         $this->registerAuthGuard();
         $this->registerPermissionManifest();
         $this->registerStateListeners();
         $this->registerPanelSynthesizer();
-        // $this->registerUpgradedListener();
     }
 
     /**
@@ -150,11 +143,6 @@ class AdminPanelProvider extends ServiceProvider
                 return $user->admin || $user->hasPermissionTo($ability);
             }
         });
-    }
-
-    protected function registerUpgradedListener(): void
-    {
-        Event::listen(FilamentUpgraded::class, FilamentUpgradedListener::class);
     }
 
     protected function registerStateListeners()

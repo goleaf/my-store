@@ -26,12 +26,12 @@ class ShippingExclusionListResource extends BaseResource
 
     public static function getLabel(): string
     {
-        return __('lunarpanel.shipping::shippingexclusionlist.label');
+        return __('storepanel.shipping::shippingexclusionlist.label');
     }
 
     public static function getPluralLabel(): string
     {
-        return __('lunarpanel.shipping::shippingexclusionlist.label_plural');
+        return __('storepanel.shipping::shippingexclusionlist.label_plural');
     }
 
     public static function getNavigationIcon(): ?string
@@ -41,7 +41,7 @@ class ShippingExclusionListResource extends BaseResource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('lunarpanel.shipping::plugin.navigation.group');
+        return __('storepanel.shipping::plugin.navigation.group');
     }
 
     public static function getDefaultForm(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
@@ -70,7 +70,7 @@ class ShippingExclusionListResource extends BaseResource
     public static function getNameFormComponent(): Component
     {
         return Forms\Components\TextInput::make('name')
-            ->label(__('lunarpanel.shipping::shippingexclusionlist.form.name.label'))
+            ->label(__('storepanel.shipping::shippingexclusionlist.form.name.label'))
             ->required()
             ->maxLength(255)
             ->autofocus();
@@ -98,11 +98,11 @@ class ShippingExclusionListResource extends BaseResource
         return [
             Tables\Columns\TextColumn::make('name')
                 ->label(
-                    __('lunarpanel.shipping::shippingexclusionlist.table.name.label')
+                    __('storepanel.shipping::shippingexclusionlist.table.name.label')
                 ),
             Tables\Columns\TextColumn::make('exclusions_count')
                 ->label(
-                    __('lunarpanel.shipping::shippingexclusionlist.table.exclusions_count.label')
+                    __('storepanel.shipping::shippingexclusionlist.table.exclusions_count.label')
                 )
                 ->counts('exclusions'),
         ];
