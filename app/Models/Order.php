@@ -54,19 +54,31 @@ class Order extends BaseModel implements Contracts\Order
     /**
      * {@inheritDoc}
      */
-    protected $casts = [
-        'tax_breakdown' => TaxBreakdown::class,
-        'meta' => AsArrayObject::class,
-        'placed_at' => 'datetime',
-        'sub_total' => Price::class,
-        'discount_total' => Price::class,
-        'discount_breakdown' => DiscountBreakdown::class,
-        'shipping_breakdown' => ShippingBreakdown::class,
-        'tax_total' => Price::class,
-        'total' => Price::class,
-        'shipping_total' => Price::class,
-        'new_customer' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'tax_breakdown' => TaxBreakdown::class,
+            'meta' => AsArrayObject::class,
+            'placed_at' => 'datetime',
+            'sub_total' => Price::class,
+            'discount_total' => Price::class,
+            'discount_breakdown' => DiscountBreakdown::class,
+            'shipping_breakdown' => ShippingBreakdown::class,
+            'tax_total' => Price::class,
+            'total' => Price::class,
+            'shipping_total' => Price::class,
+            'new_customer' => 'boolean',
+            'delivery_date' => 'date',
+            'delivery_start_time' => 'datetime', // or custom time cast if exists
+            'delivery_end_time' => 'datetime',
+            'items_subtotal' => 'decimal:2',
+            'service_fee' => 'decimal:2',
+            'delivery_fee' => 'decimal:2',
+            'discount_amount' => 'decimal:2',
+            'cancelled_at' => 'datetime',
+            'delivered_at' => 'datetime',
+        ];
+    }
 
     /**
      * {@inheritDoc}
@@ -180,6 +192,11 @@ class Order extends BaseModel implements Contracts\Order
     public function isPlaced(): bool
     {
         return ! blank($this->placed_at);
+    }
+
+    public function statusHistory()
+    {
+        return $this->hasMany(OrderStatusHistory::class);
     }
 
     public static function getDefaultLogExcept(): array

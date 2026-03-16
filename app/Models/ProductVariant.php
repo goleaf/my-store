@@ -70,13 +70,18 @@ class ProductVariant extends BaseModel implements Contracts\ProductVariant, HasT
      */
     protected $guarded = [];
 
-    /**
-     * {@inheritDoc}
-     */
-    protected $casts = [
-        'requires_shipping' => 'bool',
-        'attribute_data' => AsAttributeData::class,
-    ];
+    protected function casts(): array
+    {
+        return [
+            'requires_shipping' => 'bool',
+            'attribute_data' => AsAttributeData::class,
+            'price_override' => 'decimal:2',
+            'price_modifier' => 'decimal:2',
+            'original_price_override' => 'decimal:2',
+            'sort_order' => 'integer',
+            'is_active' => 'boolean',
+        ];
+    }
 
     /**
      * Return a new factory instance for the model.
@@ -221,6 +226,7 @@ class ProductVariant extends BaseModel implements Contracts\ProductVariant, HasT
 
     public function getThumbnailImage(): string
     {
-        return $this->getThumbnail()?->getUrl('small') ?? '';
+        $thumbnail = $this->getThumbnail();
+        return $thumbnail ? $thumbnail->getUrl('small') : '';
     }
 }

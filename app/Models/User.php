@@ -8,9 +8,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Base\Traits\StoreUser;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, StoreUser, Notifiable;
+    use HasApiTokens, HasFactory, StoreUser, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +22,13 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
+        'role',
+        'status',
+        'locale',
+        'avatar',
+        'last_login_at',
     ];
 
     /**
@@ -33,12 +41,22 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'last_login_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(UserAddress::class);
+    }
+
+    public function paymentMethods()
+    {
+        return $this->hasMany(SavedPaymentMethod::class);
+    }
 }

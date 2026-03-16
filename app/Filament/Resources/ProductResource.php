@@ -134,19 +134,74 @@ class ProductResource extends BaseResource
     protected static function getMainFormComponents(): array
     {
         return [
-            static::getBrandFormComponent(),
-            static::getProductTypeFormComponent(),
+            Forms\Components\Grid::make(3)->schema([
+                Forms\Components\Select::make('store_id')
+                    ->relationship('store', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+                Forms\Components\Select::make('category_id')
+                    ->label('Category')
+                    ->relationship('category', 'id') // Will show ID, better to show name
+                    ->getOptionLabelFromRecordUsing(fn ($record) => $record->translateAttribute('name'))
+                    ->searchable()
+                    ->preload(),
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn (Forms\Set $set, ?string $state) => $set('slug', \Illuminate\Support\Str::slug($state))),
+                Forms\Components\TextInput::make('slug')
+                    ->unique(ignoreRecord: true)
+                    ->required(),
+                Forms\Components\TextInput::make('sku')
+                    ->label('SKU')
+                    ->unique(ignoreRecord: true),
+                Forms\Components\TextInput::make('price')
+                    ->numeric()
+                    ->prefix('$')
+                    ->required(),
+                Forms\Components\TextInput::make('original_price')
+                    ->numeric()
+                    ->prefix('$'),
+                Forms\Components\TextInput::make('stock')
+                    ->numeric()
+                    ->default(0),
+                Forms\Components\TextInput::make('badge')
+                    ->placeholder('e.g. Sale, Hot'),
+                Forms\Components\TextInput::make('seller_name'),
+                Forms\Components\TextInput::make('units_per_pack'),
+            ]),
+            Forms\Components\Textarea::make('short_description')
+                ->rows(2),
+            Forms\Components\RichEditor::make('description'),
+            Forms\Components\Grid::make(4)->schema([
+                Forms\Components\Toggle::make('is_active')->default(true),
+                Forms\Components\Toggle::make('is_popular'),
+                Forms\Components\Toggle::make('is_featured'),
+                Forms\Components\Toggle::make('is_daily_best'),
+            ]),
+            Forms\Components\Section::make('SEO')->schema([
+                Forms\Components\TextInput::make('meta_title'),
+                Forms\Components\Textarea::make('meta_description'),
+                Forms\Components\FileUpload::make('og_image')->image(),
+            ])->collapsed(),
+            Forms\Components\Grid::make(2)->schema([
+                static::getBrandFormComponent(),
+                static::getProductTypeFormComponent(),
+            ]),
             static::getTagsFormComponent(),
-            Forms\Components\TextInput::make('rating')
-                ->numeric()
-                ->minValue(0)
-                ->maxValue(5)
-                ->step(0.1)
-                ->label('Rating'),
-            Forms\Components\TextInput::make('total_reviews')
-                ->numeric()
-                ->minValue(0)
-                ->label('Total Reviews'),
+            Forms\Components\Grid::make(2)->schema([
+                Forms\Components\TextInput::make('rating')
+                    ->numeric()
+                    ->minValue(0)
+                    ->maxValue(5)
+                    ->step(0.1)
+                    ->label('Rating'),
+                Forms\Components\TextInput::make('total_reviews')
+                    ->numeric()
+                    ->minValue(0)
+                    ->label('Total Reviews'),
+            ]),
         ];
     }
 
@@ -293,28 +348,25 @@ class ProductResource extends BaseResource
                 ->limit(1)
                 ->square()
                 ->label(''),
-            static::getNameTableColumn(),
-            Tables\Columns\TextColumn::make('brand.name')
-                ->label(__('admin::product.table.brand.label'))
-                ->toggleable()
-                ->searchable(),
-            static::getSkuTableColumn(),
-            Tables\Columns\TextColumn::make('variants_sum_stock')
-                ->label(__('admin::product.table.stock.label'))
-                ->sum('variants', 'stock'),
-            Tables\Columns\TextColumn::make('productType.name')
-                ->label(__('admin::product.table.producttype.label'))
-                ->limit(30)
-                ->tooltip(function (Tables\Columns\TextColumn $column): ?string {
-                    $state = $column->getState();
-
-                    if (strlen($state) <= $column->getCharacterLimit()) {
-                        return null;
-                    }
-
-                    // Only render the tooltip if the column contents exceeds the length limit.
-                    return $state;
-                })
+            Tables\Columns\TextColumn::make('name')
+                ->searchable()
+                ->sortable(),
+            Tables\Columns\TextColumn::make('store.name')
+                ->searchable()
+                ->sortable()
+                ->toggleable(),
+            Tables\Columns\TextColumn::make('sku')
+                ->searchable()
+                ->sortable()
+                ->toggleable(),
+            Tables\Columns\TextColumn::make('price')
+                ->money('USD')
+                ->sortable(),
+            Tables\Columns\TextColumn::make('stock')
+                ->sortable()
+                ->toggleable(),
+            Tables\Columns\IconColumn::make('is_active')
+                ->boolean()
                 ->toggleable(),
             Tables\Columns\TextColumn::make('rating')
                 ->label('Rating')

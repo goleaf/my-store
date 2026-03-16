@@ -74,6 +74,36 @@ class Product extends BaseModel implements Contracts\Product, HasThumbnailImage,
         'product_type_id',
         'status',
         'brand_id',
+        'store_id',
+        'category_id',
+        'name',
+        'slug',
+        'sku',
+        'short_description',
+        'description',
+        'price',
+        'original_price',
+        'cost_price',
+        'stock',
+        'low_stock_threshold',
+        'weight_grams',
+        'badge',
+        'badge_custom',
+        'availability_note',
+        'shipping_info',
+        'product_type',
+        'product_code',
+        'seller_name',
+        'units_per_pack',
+        'disclaimer',
+        'is_active',
+        'is_popular',
+        'is_featured',
+        'is_daily_best',
+        'sort_order',
+        'meta_title',
+        'meta_description',
+        'og_image',
     ];
 
     /**
@@ -217,5 +247,35 @@ class Product extends BaseModel implements Contracts\Product, HasThumbnailImage,
     public function getThumbnailImage(): string
     {
         return $this->thumbnail?->getUrl('small') ?? '';
+    }
+
+    public function store(): BelongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Collection::class, 'category_id');
+    }
+
+    public function productImages(): HasMany
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+
+    public function details(): HasMany
+    {
+        return $this->hasMany(ProductDetail::class);
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(ProductReview::class);
+    }
+
+    public function approvedReviews(): HasMany
+    {
+        return $this->reviews()->where('is_approved', true);
     }
 }

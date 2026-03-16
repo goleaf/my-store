@@ -48,14 +48,14 @@ class Collection extends BaseModel implements Contracts\Collection, HasThumbnail
             NodeTrait::usesSoftDelete insteadof Searchable;
         }
 
-    /**
-     * Define which attributes should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'attribute_data' => AsAttributeData::class,
-    ];
+    protected function casts(): array
+    {
+        return [
+            'attribute_data' => AsAttributeData::class,
+            'is_featured' => 'boolean',
+            'is_active' => 'boolean',
+        ];
+    }
 
     protected $guarded = [];
 
