@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\Base\Casts;
+namespace App\Base\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use App\Store\DataTypes\Price;
-use App\Store\Models\Currency;
-use App\Store\Models\OrderLine;
+use App\DataTypes\Price;
+use App\Models\Currency;
+use App\Models\OrderLine;
 
 class DiscountBreakdown implements CastsAttributes
 {

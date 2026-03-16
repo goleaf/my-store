@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\Pipelines\Cart;
+namespace App\Pipelines\Cart;
 
 use Closure;
-use App\Store\DataTypes\Price;
-use App\Store\Models\Cart;
-use App\Store\Models\Contracts\Cart as CartContract;
+use App\DataTypes\Price;
+use App\Models\Cart;
+use App\Models\Contracts\Cart as CartContract;
 
 class Calculate
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Store\Jobs\Currencies;
+namespace App\Jobs\Currencies;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Store\Models\Contracts\Currency;
+use App\Models\Contracts\Currency;
 
 class CreateCurrencyPrices implements ShouldQueue
 {
@@ -27,13 +27,13 @@ class CreateCurrencyPrices implements ShouldQueue
      */
     public function handle()
     {
-        $default = \App\Store\Models\Currency::where('default', true)->first();
+        $default = \App\Models\Currency::where('default', true)->first();
 
         // Check whether this new currency has been made default
         // if that is the case we will need to find which
         // currency has just been made non default.
         if ($default->id == $this->currency->id) {
-            $default = \App\Store\Models\Currency::whereBetween(
+            $default = \App\Models\Currency::whereBetween(
                 'updated_at',
                 [now()->subSeconds(15), now()]
             )->whereDefault(false)->first();
@@ -43,6 +43,6 @@ class CreateCurrencyPrices implements ShouldQueue
             return;
         }
 
-        (new \App\Store\Actions\Currencies\CreateCurrencyPrices)->handle($this->currency, $default);
+        (new \App\Actions\Currencies\CreateCurrencyPrices)->handle($this->currency, $default);
     }
 }

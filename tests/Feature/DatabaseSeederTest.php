@@ -1,15 +1,15 @@
 <?php
 
-use App\Store\Models\Attribute;
-use App\Store\Models\Channel;
-use App\Store\Models\CollectionGroup;
-use App\Store\Models\Country;
-use App\Store\Models\Currency;
-use App\Store\Models\CustomerGroup;
-use App\Store\Models\Language;
-use App\Store\Models\ProductType;
-use App\Store\Models\TaxClass;
-use App\Store\Models\TaxZone;
+use App\Models\Attribute;
+use App\Models\Channel;
+use App\Models\CollectionGroup;
+use App\Models\Country;
+use App\Models\Currency;
+use App\Models\CustomerGroup;
+use App\Models\Language;
+use App\Models\ProductType;
+use App\Models\TaxClass;
+use App\Models\TaxZone;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\Pipelines\Order\Creation;
+namespace App\Pipelines\Order\Creation;
 
 use Closure;
-use App\Store\Models\Contracts\Order as OrderContract;
-use App\Store\Models\Order;
-use App\Store\Utils\Arr;
+use App\Models\Contracts\Order as OrderContract;
+use App\Models\Order;
+use App\Utils\Arr;
 
 class MapDiscountBreakdown
 {

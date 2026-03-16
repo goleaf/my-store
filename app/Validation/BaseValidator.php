@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Validation;
+namespace App\Validation;
 
 use Illuminate\Support\MessageBag;
-use App\Store\Exceptions\Carts\CartException;
+use App\Exceptions\Carts\CartException;
 
 abstract class BaseValidator
 {

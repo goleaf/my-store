@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Store\Database\Seeders;
+namespace App\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use App\Store\Models\Attribute;
-use App\Store\Models\AttributeGroup;
-use App\Store\Models\Channel;
-use App\Store\Models\ProductType;
+use App\Models\Attribute;
+use App\Models\AttributeGroup;
+use App\Models\Channel;
+use App\Models\ProductType;
 
 class DemoSeeder extends Seeder
 {

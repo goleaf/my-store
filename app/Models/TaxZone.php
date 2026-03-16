@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Facades\DB;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Traits\HasDefaultRecord;
-use App\Store\Base\Traits\HasMacros;
-use App\Store\Base\Traits\LogsActivity;
-use App\Store\Database\Factories\TaxZoneFactory;
+use App\Base\BaseModel;
+use App\Base\Traits\HasDefaultRecord;
+use App\Base\Traits\HasMacros;
+use App\Base\Traits\LogsActivity;
+use App\Database\Factories\TaxZoneFactory;
 
 /**
  * @property int $id

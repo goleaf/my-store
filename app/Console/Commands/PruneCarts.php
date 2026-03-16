@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Pipeline\Pipeline;
-use App\Store\Models\Cart;
+use App\Models\Cart;
 
 class PruneCarts extends Command
 {

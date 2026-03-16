@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Store\Base\Traits;
+namespace App\Base\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use App\Store\Base\BaseModel;
-use App\Store\Facades\ModelManifest;
+use App\Base\BaseModel;
+use App\Facades\ModelManifest;
 use ReflectionClass;
 
 trait HasModelExtending

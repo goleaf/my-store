@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Store\Models\FeaturedCategory;
+use App\Models\FeaturedCategory;
 use App\Support\Resources\BaseResource;
 use App\Filament\Resources\FeaturedCategoryResource\Pages;
 use Filament\Forms;

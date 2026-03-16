@@ -2,7 +2,7 @@
 
 namespace App\Support\Synthesizers;
 
-use App\Store\FieldTypes\Vimeo;
+use App\FieldTypes\Vimeo;
 
 class VimeoSynth extends AbstractFieldSynth
 {

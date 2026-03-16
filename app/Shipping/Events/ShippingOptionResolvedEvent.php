@@ -5,9 +5,9 @@ namespace App\Shipping\Events;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Store\DataTypes\ShippingOption;
-use App\Store\Models\Cart;
-use App\Store\Models\Contracts\Cart as CartContract;
+use App\DataTypes\ShippingOption;
+use App\Models\Cart;
+use App\Models\Contracts\Cart as CartContract;
 use App\Shipping\Models\ShippingRate;
 
 class ShippingOptionResolvedEvent

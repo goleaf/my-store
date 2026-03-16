@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
 use Closure;
-use App\Store\Models\Contracts\CartLine as CartLineContract;
+use App\Models\Contracts\CartLine as CartLineContract;
 
 abstract class CartLineModifier
 {

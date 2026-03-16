@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Store\Generators;
+namespace App\Generators;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use App\Store\Models\Contracts\Language as LanguageContract;
-use App\Store\Models\Language;
-use App\Store\Models\Url;
+use App\Models\Contracts\Language as LanguageContract;
+use App\Models\Language;
+use App\Models\Url;
 
 class UrlGenerator
 {

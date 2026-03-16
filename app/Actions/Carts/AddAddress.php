@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Store\Actions\Carts;
+namespace App\Actions\Carts;
 
-use App\Store\Actions\AbstractAction;
-use App\Store\Base\Addressable;
-use App\Store\Models\Cart;
-use App\Store\Models\CartAddress;
-use App\Store\Models\Contracts\Cart as CartContract;
+use App\Actions\AbstractAction;
+use App\Base\Addressable;
+use App\Models\Cart;
+use App\Models\CartAddress;
+use App\Models\Contracts\Cart as CartContract;
 
 class AddAddress extends AbstractAction
 {

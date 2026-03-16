@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Store\Base\Traits;
+namespace App\Base\Traits;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Collection;
-use App\Store\Facades\DB;
-use App\Store\Models\Channel;
-use App\Store\Models\Contracts\Channel as ChannelContract;
+use App\Facades\DB;
+use App\Models\Channel;
+use App\Models\Contracts\Channel as ChannelContract;
 
 trait HasChannels
 {

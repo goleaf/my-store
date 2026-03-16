@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\DataTypes;
+namespace App\DataTypes;
 
 use Illuminate\Support\Collection;
-use App\Store\Base\Purchasable;
-use App\Store\Models\TaxClass;
+use App\Base\Purchasable;
+use App\Models\TaxClass;
 
 class ShippingOption implements Purchasable
 {
@@ -25,7 +25,7 @@ class ShippingOption implements Purchasable
     /**
      * Get the price for the purchasable item.
      *
-     * @return \App\Store\DataTypes\Price
+     * @return \App\DataTypes\Price
      */
     public function getPrice()
     {

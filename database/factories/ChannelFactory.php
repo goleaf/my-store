@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
 use Illuminate\Support\Str;
-use App\Store\Models\Channel;
+use App\Models\Channel;
 
 class ChannelFactory extends BaseFactory
 {

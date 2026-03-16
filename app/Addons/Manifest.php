@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Addons;
+namespace App\Addons;
 
 use Illuminate\Foundation\PackageManifest;
 use Illuminate\Support\Arr;

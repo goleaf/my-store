@@ -6,11 +6,11 @@ use App\Traits\HasVariantFormSkuAndPrice;
 use Filament\Widgets\Widget;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
-use App\Store\Facades\DB;
-use App\Store\Models\ProductVariant;
+use App\Facades\DB;
+use App\Models\ProductVariant;
 use App\Events\ProductVariantOptionsUpdated;
-use App\Store\Models\Contracts\ProductVariant as ProductVariantContract;
-use App\Store\Models\Contracts\ProductOption as ProductOptionContract;
+use App\Models\Contracts\ProductVariant as ProductVariantContract;
+use App\Models\Contracts\ProductOption as ProductOptionContract;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductOptionsWidget extends Widget
@@ -69,7 +69,7 @@ class ProductOptionsWidget extends Widget
     public function mapOptionValuesToIds($values)
     {
         // Logic to map option value names to IDs
-        return \App\Store\Models\ProductOptionValue::whereIn('id', array_keys($values))->pluck('id')->toArray();
+        return \App\Models\ProductOptionValue::whereIn('id', array_keys($values))->pluck('id')->toArray();
     }
 
     /**

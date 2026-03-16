@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Base\ValueObjects\Cart;
+namespace App\Base\ValueObjects\Cart;
 
 use Illuminate\Support\Collection;
-use App\Store\DataTypes\Price;
-use App\Store\Models\Contracts\Discount;
+use App\DataTypes\Price;
+use App\Models\Contracts\Discount;
 
 class DiscountBreakdown
 {

@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Store\Facades;
+namespace App\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use App\Store\Base\PaymentManagerInterface;
+use App\Base\PaymentManagerInterface;
 
 /**
  * @method static void createOfflineDriver()
  * @method static mixed buildProvider(string $provider)
  * @method static void getDefaultDriver()
  * @method static mixed driver(string|null $driver = null)
- * @method static \App\Store\Managers\PaymentManager extend(string $driver, \Closure $callback)
+ * @method static \App\Managers\PaymentManager extend(string $driver, \Closure $callback)
  * @method static array getDrivers()
  * @method static \Illuminate\Contracts\Container\Container getContainer()
- * @method static \App\Store\Managers\PaymentManager setContainer(\Illuminate\Contracts\Container\Container $container)
- * @method static \App\Store\Managers\PaymentManager forgetDrivers()
+ * @method static \App\Managers\PaymentManager setContainer(\Illuminate\Contracts\Container\Container $container)
+ * @method static \App\Managers\PaymentManager forgetDrivers()
  *
- * @see \App\Store\Managers\PaymentManager
+ * @see \App\Managers\PaymentManager
  */
 class Payments extends Facade
 {

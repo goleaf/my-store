@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources\CustomerResource\Widgets;
 
-use App\Store\DataTypes\Price;
-use App\Store\Facades\DB;
-use App\Store\Models\Currency;
+use App\DataTypes\Price;
+use App\Facades\DB;
+use App\Models\Currency;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Database\Eloquent\Model;

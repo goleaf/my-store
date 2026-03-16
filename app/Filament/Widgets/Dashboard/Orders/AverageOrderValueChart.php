@@ -2,9 +2,9 @@
 
 namespace App\Filament\Widgets\Dashboard\Orders;
 
-use App\Store\Facades\DB;
-use App\Store\Models\CustomerGroup;
-use App\Store\Models\Order;
+use App\Facades\DB;
+use App\Models\CustomerGroup;
+use App\Models\Order;
 use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
 use Filament\Widgets\ChartWidget;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Jobs;
+namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,8 +10,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use App\Store\Facades\DB;
-use App\Store\Models\Tag;
+use App\Facades\DB;
+use App\Models\Tag;
 
 class SyncTags implements ShouldQueue
 {

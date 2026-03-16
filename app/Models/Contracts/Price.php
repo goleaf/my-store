@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Models\Contracts;
+namespace App\Models\Contracts;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -25,10 +25,10 @@ interface Price
     /**
      * Return the price exclusive of tax.
      */
-    public function priceExTax(): \App\Store\DataTypes\Price;
+    public function priceExTax(): \App\DataTypes\Price;
 
     /**
      * Return the price inclusive of tax.
      */
-    public function priceIncTax(): int|\App\Store\DataTypes\Price;
+    public function priceIncTax(): int|\App\DataTypes\Price;
 }

@@ -2,9 +2,9 @@
 
 namespace App\Support\Actions\Collections;
 
-use App\Store\Facades\DB;
-use App\Store\Models\Attribute;
-use App\Store\Models\Collection;
+use App\Facades\DB;
+use App\Models\Attribute;
+use App\Models\Collection;
 use App\Support\Forms\Components\TranslatedText;
 use Filament\Actions\CreateAction;
 use Filament\Forms\Components\TextInput;
@@ -63,7 +63,7 @@ class CreateRootCollection extends CreateAction
 
         $formInput = TextInput::class;
 
-        if ($attribute?->type == \App\Store\FieldTypes\TranslatedText::class) {
+        if ($attribute?->type == \App\FieldTypes\TranslatedText::class) {
             $formInput = TranslatedText::class;
         }
 

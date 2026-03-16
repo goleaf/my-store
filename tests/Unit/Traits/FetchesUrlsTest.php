@@ -1,9 +1,9 @@
 <?php
 
 use App\Traits\FetchesUrls;
-use App\Store\Models\Url;
-use App\Store\Models\Product;
-use App\Store\Models\Language;
+use App\Models\Url;
+use App\Models\Product;
+use App\Models\Language;
 
 test('fetchUrl returns null when no url exists', function () {
     $trait = new class {

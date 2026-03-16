@@ -2,8 +2,8 @@
 
 namespace App\Filament\Widgets\Dashboard\Orders;
 
-use App\Store\Facades\DB;
-use App\Store\Models\Order;
+use App\Facades\DB;
+use App\Models\Order;
 use Carbon\CarbonInterface;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;

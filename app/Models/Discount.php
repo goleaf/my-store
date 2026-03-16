@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Casts\CouponString;
-use App\Store\Base\Traits\HasChannels;
-use App\Store\Base\Traits\HasCustomerGroups;
-use App\Store\Base\Traits\HasTranslations;
-use App\Store\Base\Traits\LogsActivity;
-use App\Store\Database\Factories\DiscountFactory;
-use App\Store\DiscountTypes\AbstractDiscountType;
+use App\Base\BaseModel;
+use App\Base\Casts\CouponString;
+use App\Base\Traits\HasChannels;
+use App\Base\Traits\HasCustomerGroups;
+use App\Base\Traits\HasTranslations;
+use App\Base\Traits\LogsActivity;
+use App\Database\Factories\DiscountFactory;
+use App\DiscountTypes\AbstractDiscountType;
 
 /**
  * @property int $id

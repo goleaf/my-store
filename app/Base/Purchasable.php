@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
 use Illuminate\Support\Collection;
-use App\Store\Models\Contracts\TaxClass;
+use App\Models\Contracts\TaxClass;
 
 interface Purchasable
 {
     /**
      * Get the purchasable prices.
      *
-     * @return \Illuminate\Support\Collection<\App\Store\Models\Price>
+     * @return \Illuminate\Support\Collection<\App\Models\Price>
      */
     public function getPrices(): Collection;
 

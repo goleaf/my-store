@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
-use App\Store\Models\Contracts\Cart;
+use App\Models\Contracts\Cart;
 
 interface DiscountTypeInterface
 {

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\OrderResource\Concerns;
 
-use App\Store\DataTypes\Price;
+use App\DataTypes\Price;
 use Filament\Infolists;
 use Filament\Support\Enums\FontWeight;
 use Illuminate\Support\HtmlString;

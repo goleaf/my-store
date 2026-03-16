@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
 use Illuminate\Support\Collection;
-use App\Store\Models\Currency;
-use App\Store\Models\Language;
-use App\Store\Models\Order;
-use App\Store\Models\Product;
-use App\Store\Models\ProductVariant;
+use App\Models\Currency;
+use App\Models\Language;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\ProductVariant;
 
 class TelemetryInsights implements ProvidesTelemetryInsights
 {

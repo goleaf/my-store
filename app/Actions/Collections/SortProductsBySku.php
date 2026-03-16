@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Actions\Collections;
+namespace App\Actions\Collections;
 
 use Illuminate\Support\Collection;
 

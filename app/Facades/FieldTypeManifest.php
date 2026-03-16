@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Store\Facades;
+namespace App\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use App\Store\Base\FieldTypeManifestInterface;
+use App\Base\FieldTypeManifestInterface;
 
 /**
  * @method static void add(string $classname)
  * @method static \Illuminate\Support\Collection getTypes()
  *
- * @see \App\Store\Base\FieldTypeManifest
+ * @see \App\Base\FieldTypeManifest
  */
 class FieldTypeManifest extends Facade
 {

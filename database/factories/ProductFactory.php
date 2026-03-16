@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
-use App\Store\FieldTypes\Text;
-use App\Store\Models\Brand;
-use App\Store\Models\Product;
-use App\Store\Models\ProductType;
+use App\FieldTypes\Text;
+use App\Models\Brand;
+use App\Models\Product;
+use App\Models\ProductType;
 
 class ProductFactory extends BaseFactory
 {

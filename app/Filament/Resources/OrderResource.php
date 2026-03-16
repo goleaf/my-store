@@ -4,8 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\Pages\ManageOrder;
-use App\Store\Models\Contracts\Order as OrderContract;
-use App\Store\Models\Order;
+use App\Models\Contracts\Order as OrderContract;
+use App\Models\Order;
 use App\Support\Actions\Orders\UpdateStatusBulkAction;
 use App\Support\CustomerStatus;
 use App\Support\OrderStatus;

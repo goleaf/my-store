@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Exceptions\Carts;
+namespace App\Exceptions\Carts;
 
 use Illuminate\Contracts\Support\MessageBag;
-use App\Store\Exceptions\StoreException;
+use App\Exceptions\StoreException;
 
 class CartException extends StoreException
 {

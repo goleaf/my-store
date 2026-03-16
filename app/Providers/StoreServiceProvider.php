@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store;
+namespace App\Providers;
 
 use Cartalyst\Converter\Laravel\Facades\Converter;
 use Illuminate\Auth\Events\Login;
@@ -16,91 +16,91 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
-use App\Store\Addons\Manifest;
-use App\Store\Base\AttributeManifest;
-use App\Store\Base\AttributeManifestInterface;
-use App\Store\Base\CartLineModifiers;
-use App\Store\Base\CartModifiers;
-use App\Store\Base\CartSessionInterface;
-use App\Store\Base\DiscountManagerInterface;
-use App\Store\Base\FieldTypeManifest;
-use App\Store\Base\FieldTypeManifestInterface;
-use App\Store\Base\ModelManifest;
-use App\Store\Base\ModelManifestInterface;
-use App\Store\Base\OrderModifiers;
-use App\Store\Base\OrderReferenceGenerator;
-use App\Store\Base\OrderReferenceGeneratorInterface;
-use App\Store\Base\PaymentManagerInterface;
-use App\Store\Base\PricingManagerInterface;
-use App\Store\Base\ProvidesTelemetryInsights;
-use App\Store\Base\ShippingManifest;
-use App\Store\Base\ShippingManifestInterface;
-use App\Store\Base\ShippingModifiers;
-use App\Store\Base\StorefrontSessionInterface;
-use App\Store\Base\TaxManagerInterface;
-use App\Store\Base\TelemetryInsights;
-use App\Store\Base\TelemetryService;
-use App\Store\Base\TelemetryServiceInterface;
+use App\Addons\Manifest;
+use App\Base\AttributeManifest;
+use App\Base\AttributeManifestInterface;
+use App\Base\CartLineModifiers;
+use App\Base\CartModifiers;
+use App\Base\CartSessionInterface;
+use App\Base\DiscountManagerInterface;
+use App\Base\FieldTypeManifest;
+use App\Base\FieldTypeManifestInterface;
+use App\Base\ModelManifest;
+use App\Base\ModelManifestInterface;
+use App\Base\OrderModifiers;
+use App\Base\OrderReferenceGenerator;
+use App\Base\OrderReferenceGeneratorInterface;
+use App\Base\PaymentManagerInterface;
+use App\Base\PricingManagerInterface;
+use App\Base\ProvidesTelemetryInsights;
+use App\Base\ShippingManifest;
+use App\Base\ShippingManifestInterface;
+use App\Base\ShippingModifiers;
+use App\Base\StorefrontSessionInterface;
+use App\Base\TaxManagerInterface;
+use App\Base\TelemetryInsights;
+use App\Base\TelemetryService;
+use App\Base\TelemetryServiceInterface;
 use App\Console\Commands\AddonsDiscover;
-use App\Store\Console\Commands\Import\AddressData;
+use App\Console\Commands\Import\AddressData;
 use App\Console\Commands\MigrateGetCandy;
 use App\Console\Commands\Orders\SyncNewCustomerOrders;
 use App\Console\Commands\PruneCarts;
 use App\Console\Commands\ScoutIndexerCommand;
 use App\Console\Commands\InstallStore;
-use App\Store\Database\State\ConvertBackOrderPurchasability;
-use App\Store\Database\State\ConvertProductTypeAttributesToProducts;
-use App\Store\Database\State\ConvertTaxbreakdown;
-use App\Store\Database\State\EnsureBrandsAreUpgraded;
-use App\Store\Database\State\EnsureDefaultTaxClassExists;
-use App\Store\Database\State\EnsureMediaCollectionsAreRenamed;
-use App\Store\Database\State\MigrateCartOrderRelationship;
-use App\Store\Database\State\PopulateProductOptionLabelWithName;
-use App\Store\Facades\Telemetry;
-use App\Store\Listeners\CartSessionAuthListener;
-use App\Store\Managers\CartSessionManager;
-use App\Store\Managers\DiscountManager;
-use App\Store\Managers\PaymentManager;
-use App\Store\Managers\PricingManager;
-use App\Store\Managers\StorefrontSessionManager;
-use App\Store\Managers\TaxManager;
-use App\Store\Models\Address;
-use App\Store\Models\CartLine;
-use App\Store\Models\Channel;
-use App\Store\Models\Collection;
-use App\Store\Models\Currency;
-use App\Store\Models\Customer;
-use App\Store\Models\CustomerGroup;
-use App\Store\Models\Discount;
-use App\Store\Models\Language;
-use App\Store\Models\Order;
-use App\Store\Models\OrderLine;
-use App\Store\Models\Price;
-use App\Store\Models\Product;
-use App\Store\Models\ProductOption;
-use App\Store\Models\ProductOptionValue;
-use App\Store\Models\ProductVariant;
-use App\Store\Models\Transaction;
-use App\Store\Models\Url;
-use App\Store\Observers\AddressObserver;
-use App\Store\Observers\CartLineObserver;
-use App\Store\Observers\ChannelObserver;
-use App\Store\Observers\CollectionObserver;
-use App\Store\Observers\CurrencyObserver;
-use App\Store\Observers\CustomerGroupObserver;
-use App\Store\Observers\CustomerObserver;
-use App\Store\Observers\DiscountObserver;
-use App\Store\Observers\LanguageObserver;
-use App\Store\Observers\MediaObserver;
-use App\Store\Observers\OrderLineObserver;
-use App\Store\Observers\OrderObserver;
-use App\Store\Observers\PriceObserver;
-use App\Store\Observers\ProductObserver;
-use App\Store\Observers\ProductOptionObserver;
-use App\Store\Observers\ProductOptionValueObserver;
-use App\Store\Observers\ProductVariantObserver;
-use App\Store\Observers\TransactionObserver;
-use App\Store\Observers\UrlObserver;
+use App\Database\State\ConvertBackOrderPurchasability;
+use App\Database\State\ConvertProductTypeAttributesToProducts;
+use App\Database\State\ConvertTaxbreakdown;
+use App\Database\State\EnsureBrandsAreUpgraded;
+use App\Database\State\EnsureDefaultTaxClassExists;
+use App\Database\State\EnsureMediaCollectionsAreRenamed;
+use App\Database\State\MigrateCartOrderRelationship;
+use App\Database\State\PopulateProductOptionLabelWithName;
+use App\Facades\Telemetry;
+use App\Listeners\CartSessionAuthListener;
+use App\Managers\CartSessionManager;
+use App\Managers\DiscountManager;
+use App\Managers\PaymentManager;
+use App\Managers\PricingManager;
+use App\Managers\StorefrontSessionManager;
+use App\Managers\TaxManager;
+use App\Models\Address;
+use App\Models\CartLine;
+use App\Models\Channel;
+use App\Models\Collection;
+use App\Models\Currency;
+use App\Models\Customer;
+use App\Models\CustomerGroup;
+use App\Models\Discount;
+use App\Models\Language;
+use App\Models\Order;
+use App\Models\OrderLine;
+use App\Models\Price;
+use App\Models\Product;
+use App\Models\ProductOption;
+use App\Models\ProductOptionValue;
+use App\Models\ProductVariant;
+use App\Models\Transaction;
+use App\Models\Url;
+use App\Observers\AddressObserver;
+use App\Observers\CartLineObserver;
+use App\Observers\ChannelObserver;
+use App\Observers\CollectionObserver;
+use App\Observers\CurrencyObserver;
+use App\Observers\CustomerGroupObserver;
+use App\Observers\CustomerObserver;
+use App\Observers\DiscountObserver;
+use App\Observers\LanguageObserver;
+use App\Observers\MediaObserver;
+use App\Observers\OrderLineObserver;
+use App\Observers\OrderObserver;
+use App\Observers\PriceObserver;
+use App\Observers\ProductObserver;
+use App\Observers\ProductOptionObserver;
+use App\Observers\ProductOptionValueObserver;
+use App\Observers\ProductVariantObserver;
+use App\Observers\TransactionObserver;
+use App\Observers\UrlObserver;
 
 class StoreServiceProvider extends ServiceProvider
 {
@@ -207,7 +207,7 @@ class StoreServiceProvider extends ServiceProvider
             }
         });
 
-        \App\Store\Facades\ModelManifest::register();
+        \App\Facades\ModelManifest::register();
     }
 
     /**
@@ -224,7 +224,7 @@ class StoreServiceProvider extends ServiceProvider
         $this->registerBlueprintMacros();
         $this->registerStateListeners();
 
-        \App\Store\Facades\ModelManifest::morphMap();
+        \App\Facades\ModelManifest::morphMap();
 
         if ($this->app->runningInConsole()) {
             collect($this->configFiles)->each(function ($config) {
@@ -258,7 +258,7 @@ class StoreServiceProvider extends ServiceProvider
             }
         }
 
-        Arr::macro('permutate', [\App\Store\Utils\Arr::class, 'permutate']);
+        Arr::macro('permutate', [\App\Utils\Arr::class, 'permutate']);
 
         // Handle generator
         Str::macro('handle', function ($string) {

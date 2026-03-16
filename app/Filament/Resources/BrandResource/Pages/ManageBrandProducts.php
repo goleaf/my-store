@@ -4,8 +4,8 @@ namespace App\Filament\Resources\BrandResource\Pages;
 
 use App\Filament\Resources\BrandResource;
 use App\Filament\Resources\ProductResource;
-use App\Store\Models\Contracts\Product as ProductContract;
-use App\Store\Models\Product;
+use App\Models\Contracts\Product as ProductContract;
+use App\Models\Product;
 use App\Support\Pages\BaseManageRelatedRecords;
 use Filament\Forms;
 use Filament\Notifications\Notification;

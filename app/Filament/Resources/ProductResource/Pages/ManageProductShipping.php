@@ -4,7 +4,7 @@ namespace App\Filament\Resources\ProductResource\Pages;
 
 use App\Filament\Resources\ProductResource;
 use App\Filament\Resources\ProductVariantResource\Pages\ManageVariantShipping;
-use App\Store\Models\Contracts\ProductVariant as ProductVariantContract;
+use App\Models\Contracts\ProductVariant as ProductVariantContract;
 use App\Support\Forms\Components\TextInputSelectAffix;
 use App\Support\Pages\BaseEditRecord;
 use Cartalyst\Converter\Laravel\Facades\Converter;

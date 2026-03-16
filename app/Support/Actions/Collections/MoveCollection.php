@@ -2,8 +2,8 @@
 
 namespace App\Support\Actions\Collections;
 
-use App\Store\Facades\DB;
-use App\Store\Models\Collection;
+use App\Facades\DB;
+use App\Models\Collection;
 use Filament\Actions\Action;
 use Illuminate\Database\Eloquent\Model;
 

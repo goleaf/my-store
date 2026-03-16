@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Base\Validation;
+namespace App\Base\Validation;
 
 interface CouponValidatorInterface
 {

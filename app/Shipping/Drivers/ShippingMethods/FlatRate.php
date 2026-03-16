@@ -2,9 +2,9 @@
 
 namespace App\Shipping\Drivers\ShippingMethods;
 
-use App\Store\DataTypes\ShippingOption;
-use App\Store\Facades\Pricing;
-use App\Store\Models\Product;
+use App\DataTypes\ShippingOption;
+use App\Facades\Pricing;
+use App\Models\Product;
 use App\Shipping\DataTransferObjects\ShippingOptionRequest;
 use App\Shipping\Interfaces\ShippingRateInterface;
 use App\Shipping\Models\ShippingRate;

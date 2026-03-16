@@ -6,17 +6,17 @@ use App\Models\User;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Store\Base\OrderReferenceGenerator;
-use App\Store\Base\ValueObjects\Cart\TaxBreakdown;
-use App\Store\Base\ValueObjects\Cart\TaxBreakdownAmount;
-use App\Store\DataTypes\Price;
-use App\Store\Facades\Pricing;
-use App\Store\Models\Channel;
-use App\Store\Models\Country;
-use App\Store\Models\Currency;
-use App\Store\Models\Order;
-use App\Store\Models\OrderAddress;
-use App\Store\Models\ProductVariant;
+use App\Base\OrderReferenceGenerator;
+use App\Base\ValueObjects\Cart\TaxBreakdown;
+use App\Base\ValueObjects\Cart\TaxBreakdownAmount;
+use App\DataTypes\Price;
+use App\Facades\Pricing;
+use App\Models\Channel;
+use App\Models\Country;
+use App\Models\Currency;
+use App\Models\Order;
+use App\Models\OrderAddress;
+use App\Models\ProductVariant;
 
 class OrderSeeder extends Seeder
 {

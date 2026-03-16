@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Observers;
+namespace App\Observers;
 
-use App\Store\Models\Contracts\ProductVariant as ProductVariantContract;
-use App\Store\Models\ProductVariant;
+use App\Models\Contracts\ProductVariant as ProductVariantContract;
+use App\Models\ProductVariant;
 
 class ProductVariantObserver
 {

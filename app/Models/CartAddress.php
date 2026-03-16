@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Store\Base\Addressable;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Traits\CachesProperties;
-use App\Store\Base\Traits\HasMacros;
-use App\Store\Base\Traits\LogsActivity;
-use App\Store\Base\ValueObjects\Cart\TaxBreakdown;
-use App\Store\Database\Factories\CartAddressFactory;
-use App\Store\DataTypes\Price;
-use App\Store\DataTypes\ShippingOption;
+use App\Base\Addressable;
+use App\Base\BaseModel;
+use App\Base\Traits\CachesProperties;
+use App\Base\Traits\HasMacros;
+use App\Base\Traits\LogsActivity;
+use App\Base\ValueObjects\Cart\TaxBreakdown;
+use App\Database\Factories\CartAddressFactory;
+use App\DataTypes\Price;
+use App\DataTypes\ShippingOption;
 
 /**
  * @property int $id

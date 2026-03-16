@@ -2,8 +2,8 @@
 
 namespace App\Support\Actions\Collections;
 
-use App\Store\Models\Attribute;
-use App\Store\Models\Collection;
+use App\Models\Attribute;
+use App\Models\Collection;
 use App\Support\Actions\Traits\CreatesChildCollections;
 use App\Support\Forms\Components\TranslatedText;
 use Filament\Actions\CreateAction;
@@ -31,7 +31,7 @@ class CreateChildCollection extends CreateAction
 
         $formInput = TextInput::class;
 
-        if ($attribute?->type == \App\Store\FieldTypes\TranslatedText::class) {
+        if ($attribute?->type == \App\FieldTypes\TranslatedText::class) {
             $formInput = TranslatedText::class;
         }
 

@@ -3,9 +3,9 @@
 namespace App\Stripe\Actions;
 
 use Illuminate\Support\Collection;
-use App\Store\Models\Contracts\Order as OrderContract;
-use App\Store\Models\Order;
-use App\Store\Models\Transaction;
+use App\Models\Contracts\Order as OrderContract;
+use App\Models\Order;
+use App\Models\Transaction;
 
 class StoreCharges
 {

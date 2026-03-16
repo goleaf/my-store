@@ -12,11 +12,11 @@ use App\Filament\Resources\DiscountResource\RelationManagers\ProductConditionRel
 use App\Filament\Resources\DiscountResource\RelationManagers\ProductLimitationRelationManager;
 use App\Filament\Resources\DiscountResource\RelationManagers\ProductRewardRelationManager;
 use App\Filament\Resources\DiscountResource\RelationManagers\ProductVariantLimitationRelationManager;
-use App\Store\DiscountTypes\AmountOff;
-use App\Store\DiscountTypes\BuyXGetY;
-use App\Store\Facades\Discounts;
-use App\Store\Models\Contracts\Discount as DiscountContract;
-use App\Store\Models\Currency;
+use App\DiscountTypes\AmountOff;
+use App\DiscountTypes\BuyXGetY;
+use App\Facades\Discounts;
+use App\Models\Contracts\Discount as DiscountContract;
+use App\Models\Currency;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
 use Filament\Forms\Components\Component;
@@ -363,10 +363,10 @@ class DiscountResource extends BaseResource
                 ->label(__('admin::discount.table.status.label'))
                 ->badge()
                 ->color(fn (string $state): string => match ($state) {
-                    \App\Store\Models\Discount::ACTIVE => 'success',
-                    \App\Store\Models\Discount::EXPIRED => 'danger',
-                    \App\Store\Models\Discount::PENDING => 'gray',
-                    \App\Store\Models\Discount::SCHEDULED => 'info',
+                    \App\Models\Discount::ACTIVE => 'success',
+                    \App\Models\Discount::EXPIRED => 'danger',
+                    \App\Models\Discount::PENDING => 'gray',
+                    \App\Models\Discount::SCHEDULED => 'info',
                 })
                 ->toggleable(),
             Tables\Columns\TextColumn::make('name')

@@ -8,8 +8,8 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
-use App\Store\Models\Contracts\Product as ProductContract;
-use App\Store\Models\Product;
+use App\Models\Contracts\Product as ProductContract;
+use App\Models\Product;
 use Filament\Actions;
 
 class ShippingExclusionRelationManager extends RelationManager

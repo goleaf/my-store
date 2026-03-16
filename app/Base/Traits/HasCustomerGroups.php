@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Store\Base\Traits;
+namespace App\Base\Traits;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
-use App\Store\Models\Contracts\CustomerGroup as CustomerGroupContract;
-use App\Store\Models\CustomerGroup;
+use App\Models\Contracts\CustomerGroup as CustomerGroupContract;
+use App\Models\CustomerGroup;
 
 trait HasCustomerGroups
 {

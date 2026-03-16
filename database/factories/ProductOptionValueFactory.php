@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
-use App\Store\Models\ProductOptionValue;
+use App\Models\ProductOptionValue;
 
 class ProductOptionValueFactory extends BaseFactory
 {

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Store\Jobs\Orders;
+namespace App\Jobs\Orders;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Store\Facades\DB;
-use App\Store\Models\Order;
-use App\Store\Models\OrderAddress;
+use App\Facades\DB;
+use App\Models\Order;
+use App\Models\OrderAddress;
 
 class MarkAsNewCustomer implements ShouldQueue
 {

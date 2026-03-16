@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\FieldTypes;
+namespace App\FieldTypes;
 
 use Illuminate\Support\Collection;
 use JsonSerializable;
-use App\Store\Base\FieldType;
-use App\Store\Exceptions\FieldTypeException;
+use App\Base\FieldType;
+use App\Exceptions\FieldTypeException;
 
 class TranslatedText implements FieldType, JsonSerializable
 {

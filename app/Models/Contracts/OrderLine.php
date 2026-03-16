@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Models\Contracts;
+namespace App\Models\Contracts;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;

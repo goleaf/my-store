@@ -1,6 +1,6 @@
 <?php
 
-use App\Store\Base\OrderReferenceGenerator;
+use App\Base\OrderReferenceGenerator;
 
 return [
     /*
@@ -109,12 +109,12 @@ return [
     */
     'pipelines' => [
         'creation' => [
-            App\Store\Pipelines\Order\Creation\FillOrderFromCart::class,
-            App\Store\Pipelines\Order\Creation\CreateOrderLines::class,
-            App\Store\Pipelines\Order\Creation\CreateOrderAddresses::class,
-            App\Store\Pipelines\Order\Creation\CreateShippingLine::class,
-            App\Store\Pipelines\Order\Creation\CleanUpOrderLines::class,
-            App\Store\Pipelines\Order\Creation\MapDiscountBreakdown::class,
+            App\Pipelines\Order\Creation\FillOrderFromCart::class,
+            App\Pipelines\Order\Creation\CreateOrderLines::class,
+            App\Pipelines\Order\Creation\CreateOrderAddresses::class,
+            App\Pipelines\Order\Creation\CreateShippingLine::class,
+            App\Pipelines\Order\Creation\CleanUpOrderLines::class,
+            App\Pipelines\Order\Creation\MapDiscountBreakdown::class,
         ],
     ],
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Base\DataTransferObjects;
+namespace App\Base\DataTransferObjects;
 
 use Illuminate\Support\Collection;
-use App\Store\Models\Contracts\Price;
+use App\Models\Contracts\Price;
 
 class PricingResponse
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Observers;
+namespace App\Observers;
 
-use App\Store\Jobs\Currencies\CreateCurrencyPrices;
-use App\Store\Models\Contracts\Currency as CurrencyContract;
-use App\Store\Models\Currency;
+use App\Jobs\Currencies\CreateCurrencyPrices;
+use App\Models\Contracts\Currency as CurrencyContract;
+use App\Models\Currency;
 
 class CurrencyObserver
 {

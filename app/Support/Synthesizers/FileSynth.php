@@ -2,7 +2,7 @@
 
 namespace App\Support\Synthesizers;
 
-use App\Store\FieldTypes\File;
+use App\FieldTypes\File;
 use Illuminate\Support\Arr;
 
 class FileSynth extends AbstractFieldSynth

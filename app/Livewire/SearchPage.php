@@ -6,11 +6,12 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Store\Models\Product;
+use App\Models\Product;
+use App\Traits\CanAddToCart;
 
 class SearchPage extends Component
 {
-    use WithPagination;
+    use WithPagination, CanAddToCart;
 
     /**
      * {@inheritDoc}

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Store\Actions\Taxes;
+namespace App\Actions\Taxes;
 
-use App\Store\Models\TaxZoneState;
+use App\Models\TaxZoneState;
 
 class GetTaxZoneState
 {

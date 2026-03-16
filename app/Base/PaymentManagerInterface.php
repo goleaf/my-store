@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
 interface PaymentManagerInterface
 {

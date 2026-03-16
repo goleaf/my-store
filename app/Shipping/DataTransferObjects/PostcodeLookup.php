@@ -2,7 +2,7 @@
 
 namespace App\Shipping\DataTransferObjects;
 
-use App\Store\Models\Contracts\Country as CountryContract;
+use App\Models\Contracts\Country as CountryContract;
 
 class PostcodeLookup
 {

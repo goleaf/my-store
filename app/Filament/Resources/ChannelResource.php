@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ChannelResource\Pages;
-use App\Store\Models\Contracts\Channel as ChannelContract;
+use App\Models\Contracts\Channel as ChannelContract;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
 use Filament\Forms\Components\Component;

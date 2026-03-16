@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
-use App\Store\Models\Contracts\Currency;
-use App\Store\Models\Contracts\CustomerGroup;
+use App\Models\Contracts\Currency;
+use App\Models\Contracts\CustomerGroup;
 
 interface PricingManagerInterface
 {
@@ -47,7 +47,7 @@ interface PricingManagerInterface
     /**
      * Get the price for a purchasable.
      *
-     * @return \App\Store\Base\DataTransferObjects\PricingResponse
+     * @return \App\Base\DataTransferObjects\PricingResponse
      */
     public function for(Purchasable $purchasable);
 }

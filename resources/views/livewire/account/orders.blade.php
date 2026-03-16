@@ -45,7 +45,7 @@
                                             {{ $order->total->formatted() }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <a href="#" class="text-blue-600 hover:text-blue-900">View</a>
+                                            <a href="{{ route('account.orders.view', $order->id) }}" class="text-blue-600 hover:text-blue-900" wire:navigate>View</a>
                                         </td>
                                     </tr>
                                 @empty

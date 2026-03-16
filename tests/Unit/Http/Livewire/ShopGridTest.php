@@ -2,12 +2,12 @@
 
 use App\Livewire\ShopGrid;
 use App\Models\Product;
-use App\Store\Models\Brand;
-use App\Store\Models\Collection;
-use App\Store\Models\Language;
-use App\Store\Models\Currency;
-use App\Store\Models\Channel;
-use App\Store\Models\CustomerGroup;
+use App\Models\Brand;
+use App\Models\Collection;
+use App\Models\Language;
+use App\Models\Currency;
+use App\Models\Channel;
+use App\Models\CustomerGroup;
 use Livewire\Livewire;
 use Illuminate\Support\Facades\DB;
 
@@ -86,9 +86,9 @@ test('can filter by ratings', function () {
 
 test('can sort by price asc', function () {
     $product1 = Product::factory()->create(['status' => 'published']);
-    $variant1 = \App\Store\Models\ProductVariant::factory()->create(['product_id' => $product1->id]);
+    $variant1 = \App\Models\ProductVariant::factory()->create(['product_id' => $product1->id]);
     $currency = Currency::whereCode('USD')->first();
-    \App\Store\Models\Price::factory()->create([
+    \App\Models\Price::factory()->create([
         'priceable_id' => $variant1->id,
         'priceable_type' => $variant1->getMorphClass(),
         'price' => 1000,
@@ -96,8 +96,8 @@ test('can sort by price asc', function () {
     ]);
 
     $product2 = Product::factory()->create(['status' => 'published']);
-    $variant2 = \App\Store\Models\ProductVariant::factory()->create(['product_id' => $product2->id]);
-    \App\Store\Models\Price::factory()->create([
+    $variant2 = \App\Models\ProductVariant::factory()->create(['product_id' => $product2->id]);
+    \App\Models\Price::factory()->create([
         'priceable_id' => $variant2->id,
         'priceable_type' => $variant2->getMorphClass(),
         'price' => 500,
@@ -113,11 +113,11 @@ test('can sort by price asc', function () {
 
 test('can add to cart', function () {
     $product = Product::factory()->create(['status' => 'published']);
-    $variant = \App\Store\Models\ProductVariant::factory()->create(['product_id' => $product->id]);
+    $variant = \App\Models\ProductVariant::factory()->create(['product_id' => $product->id]);
 
     Livewire::test(ShopGrid::class)
         ->call('addToCart', $variant->id)
         ->assertDispatched('add-to-cart');
 
-    expect(App\Store\Facades\CartSession::manager()->get()->lines)->toHaveCount(1);
+    expect(App\Facades\CartSession::manager()->lines)->toHaveCount(1);
 });

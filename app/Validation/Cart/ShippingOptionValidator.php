@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Store\Validation\Cart;
+namespace App\Validation\Cart;
 
-use App\Store\Validation\BaseValidator;
+use App\Validation\BaseValidator;
 
 class ShippingOptionValidator extends BaseValidator
 {

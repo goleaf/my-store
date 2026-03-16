@@ -2,11 +2,11 @@
 
 use App\Modifiers\ShippingModifier;
 use Illuminate\Support\Facades\Config;
-use App\Store\Facades\ShippingManifest;
-use App\Store\Models\Cart;
-use App\Store\Models\Currency;
-use App\Store\Models\Channel;
-use App\Store\Models\TaxClass;
+use App\Facades\ShippingManifest;
+use App\Models\Cart;
+use App\Models\Currency;
+use App\Models\Channel;
+use App\Models\TaxClass;
 
 test('modifier adds Basic Delivery option when shipping-tables disabled', function () {
     Config::set('shipping-tables.enabled', false);

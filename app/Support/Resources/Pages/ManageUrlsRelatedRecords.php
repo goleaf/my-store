@@ -3,7 +3,7 @@
 namespace App\Support\Resources\Pages;
 
 use App\Events\ModelUrlsUpdated;
-use App\Store\Facades\ModelManifest;
+use App\Facades\ModelManifest;
 use App\Support\Pages\BaseManageRelatedRecords;
 use Filament\Forms;
 use Filament\Support\Facades\FilamentIcon;

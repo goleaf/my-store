@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CustomerGroupResource\Pages;
-use App\Store\Models\Contracts\CustomerGroup as CustomerGroupContract;
+use App\Models\Contracts\CustomerGroup as CustomerGroupContract;
 use App\Support\Forms\Components\Attributes;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;

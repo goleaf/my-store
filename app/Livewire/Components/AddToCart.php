@@ -4,8 +4,8 @@ namespace App\Livewire\Components;
 
 use Illuminate\View\View;
 use Livewire\Component;
-use App\Store\Base\Purchasable;
-use App\Store\Facades\CartSession;
+use App\Base\Purchasable;
+use App\Facades\CartSession;
 
 class AddToCart extends Component
 {

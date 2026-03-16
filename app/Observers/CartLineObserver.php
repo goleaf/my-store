@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\Observers;
+namespace App\Observers;
 
-use App\Store\Base\Purchasable;
-use App\Store\Exceptions\NonPurchasableItemException;
-use App\Store\Models\CartLine;
-use App\Store\Models\Contracts\CartLine as CartLineContract;
+use App\Base\Purchasable;
+use App\Exceptions\NonPurchasableItemException;
+use App\Models\CartLine;
+use App\Models\Contracts\CartLine as CartLineContract;
 
 class CartLineObserver
 {

@@ -2,7 +2,7 @@
 
 namespace App\Support\Synthesizers;
 
-use App\Store\FieldTypes\Toggle;
+use App\FieldTypes\Toggle;
 
 class ToggleSynth extends AbstractFieldSynth
 {

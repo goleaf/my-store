@@ -2,7 +2,7 @@
 
 namespace App\Support\Synthesizers;
 
-use App\Store\Base\FieldType;
+use App\Base\FieldType;
 use Livewire\Mechanisms\HandleComponents\Synthesizers\Synth;
 
 abstract class AbstractFieldSynth extends Synth

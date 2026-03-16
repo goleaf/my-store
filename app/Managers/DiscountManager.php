@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Store\Managers;
+namespace App\Managers;
 
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
-use App\Store\Base\DataTransferObjects\CartDiscount;
-use App\Store\Base\DiscountManagerInterface;
-use App\Store\Base\Validation\CouponValidator;
-use App\Store\DiscountTypes\AmountOff;
-use App\Store\DiscountTypes\BuyXGetY;
-use App\Store\Models\Cart;
-use App\Store\Models\Channel;
-use App\Store\Models\Contracts\Cart as CartContract;
-use App\Store\Models\Contracts\Channel as ChannelContract;
-use App\Store\Models\Contracts\CustomerGroup as CustomerGroupContract;
-use App\Store\Models\CustomerGroup;
-use App\Store\Models\Discount;
+use App\Base\DataTransferObjects\CartDiscount;
+use App\Base\DiscountManagerInterface;
+use App\Base\Validation\CouponValidator;
+use App\DiscountTypes\AmountOff;
+use App\DiscountTypes\BuyXGetY;
+use App\Models\Cart;
+use App\Models\Channel;
+use App\Models\Contracts\Cart as CartContract;
+use App\Models\Contracts\Channel as ChannelContract;
+use App\Models\Contracts\CustomerGroup as CustomerGroupContract;
+use App\Models\CustomerGroup;
+use App\Models\Discount;
 
 class DiscountManager implements DiscountManagerInterface
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Store\Base\Casts;
+namespace App\Base\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Contracts\Database\Eloquent\SerializesCastableAttributes;
-use App\Store\Base\ValueObjects\Cart\ShippingBreakdownItem;
-use App\Store\DataTypes\Price;
-use App\Store\Models\Currency;
+use App\Base\ValueObjects\Cart\ShippingBreakdownItem;
+use App\DataTypes\Price;
+use App\Models\Currency;
 
 class ShippingBreakdown implements CastsAttributes, SerializesCastableAttributes
 {
@@ -17,11 +17,11 @@ class ShippingBreakdown implements CastsAttributes, SerializesCastableAttributes
      * @param  string  $key
      * @param  mixed  $value
      * @param  array  $attributes
-     * @return \App\Store\Base\ValueObjects\Cart\ShippingBreakdown
+     * @return \App\Base\ValueObjects\Cart\ShippingBreakdown
      */
     public function get($model, $key, $value, $attributes)
     {
-        $breakdown = new \App\Store\Base\ValueObjects\Cart\ShippingBreakdown;
+        $breakdown = new \App\Base\ValueObjects\Cart\ShippingBreakdown;
 
         $breakdown->items = collect(
             json_decode($value, false)
@@ -45,14 +45,14 @@ class ShippingBreakdown implements CastsAttributes, SerializesCastableAttributes
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @param  string  $key
-     * @param  \App\Store\Base\ValueObjects\Cart\ShippingBreakdown  $value
+     * @param  \App\Base\ValueObjects\Cart\ShippingBreakdown  $value
      * @param  array  $attributes
      * @return array
      */
     public function set($model, $key, $value, $attributes)
     {
-        if ($value && ! is_a($value, \App\Store\Base\ValueObjects\Cart\ShippingBreakdown::class)) {
-            throw new \Exception('Shipping breakdown must be instance of App\Store\Base\ValueObjects\Cart\ShippingBreakdown');
+        if ($value && ! is_a($value, \App\Base\ValueObjects\Cart\ShippingBreakdown::class)) {
+            throw new \Exception('Shipping breakdown must be instance of App\Base\ValueObjects\Cart\ShippingBreakdown');
         }
 
         if (! $value) {

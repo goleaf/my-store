@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Store\Managers;
+namespace App\Managers;
 
 use Illuminate\Auth\AuthManager;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Collection;
-use App\Store\Base\StorefrontSessionInterface;
-use App\Store\Exceptions\CustomerNotBelongsToUserException;
-use App\Store\Models\Channel;
-use App\Store\Models\Contracts\Channel as ChannelContract;
-use App\Store\Models\Contracts\Currency as CurrencyContract;
-use App\Store\Models\Contracts\Customer as CustomerContract;
-use App\Store\Models\Contracts\CustomerGroup as CustomerGroupContract;
-use App\Store\Models\Currency;
-use App\Store\Models\Customer;
-use App\Store\Models\CustomerGroup;
+use App\Base\StorefrontSessionInterface;
+use App\Exceptions\CustomerNotBelongsToUserException;
+use App\Models\Channel;
+use App\Models\Contracts\Channel as ChannelContract;
+use App\Models\Contracts\Currency as CurrencyContract;
+use App\Models\Contracts\Customer as CustomerContract;
+use App\Models\Contracts\CustomerGroup as CustomerGroupContract;
+use App\Models\Currency;
+use App\Models\Customer;
+use App\Models\CustomerGroup;
 
 class StorefrontSessionManager implements StorefrontSessionInterface
 {
@@ -57,7 +57,7 @@ class StorefrontSessionManager implements StorefrontSessionInterface
     }
 
     /**
-     * @return \Illuminate\Support\Collection<\App\Store\Models\Contracts\CustomerGroup>
+     * @return \Illuminate\Support\Collection<\App\Models\Contracts\CustomerGroup>
      */
     public function getCustomerGroups(): Collection
     {
@@ -65,7 +65,7 @@ class StorefrontSessionManager implements StorefrontSessionInterface
     }
 
     /**
-     * @param  \Illuminate\Support\Collection<\App\Store\Models\Contracts\CustomerGroup>  $customerGroups
+     * @param  \Illuminate\Support\Collection<\App\Models\Contracts\CustomerGroup>  $customerGroups
      */
     public function setCustomerGroups(Collection $customerGroups): static
     {

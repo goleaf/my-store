@@ -5,10 +5,10 @@ namespace App\Support\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \App\Store\Admin\Support\ActivityLog\Manifest addRender(string $subject, string $renderer)
+ * @method static \App\Admin\Support\ActivityLog\Manifest addRender(string $subject, string $renderer)
  * @method static \Illuminate\Support\Collection getItems(string $subject)
  *
- * @see \App\Store\Admin\Support\ActivityLog\Manifest
+ * @see \App\Admin\Support\ActivityLog\Manifest
  */
 class ActivityLog extends Facade
 {

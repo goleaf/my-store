@@ -2,7 +2,7 @@
 
 namespace App\Support\Synthesizers;
 
-use App\Store\FieldTypes\Text;
+use App\FieldTypes\Text;
 
 class TextSynth extends AbstractFieldSynth
 {

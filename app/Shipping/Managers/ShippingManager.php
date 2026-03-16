@@ -3,7 +3,7 @@
 namespace App\Shipping\Managers;
 
 use Illuminate\Support\Manager;
-use App\Store\Models\Contracts\Cart as CartContract;
+use App\Models\Contracts\Cart as CartContract;
 use App\Shipping\Drivers\ShippingMethods\Collection;
 use App\Shipping\Drivers\ShippingMethods\FlatRate;
 use App\Shipping\Drivers\ShippingMethods\FreeShipping;

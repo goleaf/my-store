@@ -6,14 +6,15 @@ use App\Traits\FetchesUrls;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
-use App\Store\Models\Product;
-use App\Store\Models\ProductVariant;
-use App\Store\Models\Price;
+use App\Models\Product;
+use App\Models\ProductVariant;
+use App\Models\Price;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use App\Traits\CanAddToCart;
 
 class ProductPage extends Component
 {
-    use FetchesUrls;
+    use FetchesUrls, CanAddToCart;
 
     /**
      * The selected option values.

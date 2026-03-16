@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Store\Jobs\Collections;
+namespace App\Jobs\Collections;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Store\Facades\DB;
-use App\Store\Models\Collection;
-use App\Store\Models\Contracts\Collection as CollectionContract;
+use App\Facades\DB;
+use App\Models\Collection;
+use App\Models\Contracts\Collection as CollectionContract;
 
 class RebuildCollectionTree implements ShouldQueue
 {

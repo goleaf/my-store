@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\Actions\Carts;
+namespace App\Actions\Carts;
 
-use App\Store\Models\Cart;
-use App\Store\Models\CartLine;
-use App\Store\Models\Contracts\Cart as CartContract;
-use App\Store\Models\Contracts\CartLine as CartLineContract;
+use App\Models\Cart;
+use App\Models\CartLine;
+use App\Models\Contracts\Cart as CartContract;
+use App\Models\Contracts\CartLine as CartLineContract;
 
 class GenerateFingerprint
 {

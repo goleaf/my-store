@@ -3,7 +3,7 @@
 namespace App\Filament\Widgets\Dashboard\Orders;
 
 use App\Filament\Resources\OrderResource;
-use App\Store\Models\Order;
+use App\Models\Order;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget;
 

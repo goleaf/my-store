@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Observers;
+namespace App\Observers;
 
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 

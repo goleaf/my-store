@@ -2,8 +2,8 @@
 
 namespace App\Shipping;
 
-use App\Store\Facades\ShippingManifest;
-use App\Store\Models\Contracts\Cart;
+use App\Facades\ShippingManifest;
+use App\Models\Contracts\Cart;
 use App\Shipping\DataTransferObjects\ShippingOptionLookup;
 use App\Shipping\Facades\Shipping;
 

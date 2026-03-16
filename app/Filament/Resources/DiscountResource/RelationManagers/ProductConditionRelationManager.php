@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources\DiscountResource\RelationManagers;
 
-use App\Store\Models\Contracts\Product as ProductContract;
-use App\Store\Models\Contracts\ProductVariant as ProductVariantContract;
-use App\Store\Models\Product;
-use App\Store\Models\ProductVariant;
+use App\Models\Contracts\Product as ProductContract;
+use App\Models\Contracts\ProductVariant as ProductVariantContract;
+use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Support\RelationManagers\BaseRelationManager;
 use App\Support\Tables\Columns\ThumbnailImageColumn;
 use Filament\Forms;

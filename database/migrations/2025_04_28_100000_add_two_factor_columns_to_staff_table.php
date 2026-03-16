@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends \App\Store\Base\Migration
+return new class extends \App\Base\Migration
 {
     public function up()
     {

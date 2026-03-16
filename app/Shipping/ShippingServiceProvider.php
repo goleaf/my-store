@@ -4,11 +4,11 @@ namespace App\Shipping;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
-use App\Store\Base\ShippingModifiers;
-use App\Store\Facades\ModelManifest;
-use App\Store\Models\CustomerGroup;
-use App\Store\Models\Order;
-use App\Store\Models\Product;
+use App\Base\ShippingModifiers;
+use App\Facades\ModelManifest;
+use App\Models\CustomerGroup;
+use App\Models\Order;
+use App\Models\Product;
 use App\Shipping\Interfaces\ShippingMethodManagerInterface;
 use App\Shipping\Managers\ShippingManager;
 use App\Shipping\Models\ShippingExclusion;

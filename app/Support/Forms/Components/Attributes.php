@@ -2,11 +2,11 @@
 
 namespace App\Support\Forms\Components;
 
-use App\Store\Models\Attribute;
-use App\Store\Models\AttributeGroup;
-use App\Store\Models\Product;
-use App\Store\Models\ProductType;
-use App\Store\Models\ProductVariant;
+use App\Models\Attribute;
+use App\Models\AttributeGroup;
+use App\Models\Product;
+use App\Models\ProductType;
+use App\Models\ProductVariant;
 use App\Support\Facades\AttributeData;
 use Closure;
 use Filament\Forms;
@@ -126,7 +126,7 @@ class Attributes extends SchemaComponents\Group
             }
 
             foreach ($state as $key => $value) {
-                if (! $value instanceof \App\Store\Base\FieldType) {
+                if (! $value instanceof \App\Base\FieldType) {
                     continue;
                 }
 

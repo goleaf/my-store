@@ -7,9 +7,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Store\Facades\Payments;
-use App\Store\Models\Cart;
-use App\Store\Models\Order;
+use App\Facades\Payments;
+use App\Models\Cart;
+use App\Models\Order;
 use App\Stripe\Events\Webhook\CartMissingForIntent;
 use App\Stripe\Models\StripePaymentIntent;
 

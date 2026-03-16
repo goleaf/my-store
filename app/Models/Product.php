@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -13,22 +13,22 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Casts\AsAttributeData;
-use App\Store\Base\Enums\Concerns\ProvidesProductAssociationType;
-use App\Store\Base\HasThumbnailImage;
-use App\Store\Base\Traits\HasChannels;
-use App\Store\Base\Traits\HasCustomerGroups;
-use App\Store\Base\Traits\HasMacros;
-use App\Store\Base\Traits\HasMedia;
-use App\Store\Base\Traits\HasTags;
-use App\Store\Base\Traits\HasTranslations;
-use App\Store\Base\Traits\HasUrls;
-use App\Store\Base\Traits\LogsActivity;
-use App\Store\Base\Traits\Searchable;
-use App\Store\Database\Factories\ProductFactory;
-use App\Store\Jobs\Products\Associations\Associate;
-use App\Store\Jobs\Products\Associations\Dissociate;
+use App\Base\BaseModel;
+use App\Base\Casts\AsAttributeData;
+use App\Base\Enums\Concerns\ProvidesProductAssociationType;
+use App\Base\HasThumbnailImage;
+use App\Base\Traits\HasChannels;
+use App\Base\Traits\HasCustomerGroups;
+use App\Base\Traits\HasMacros;
+use App\Base\Traits\HasMedia;
+use App\Base\Traits\HasTags;
+use App\Base\Traits\HasTranslations;
+use App\Base\Traits\HasUrls;
+use App\Base\Traits\LogsActivity;
+use App\Base\Traits\Searchable;
+use App\Database\Factories\ProductFactory;
+use App\Jobs\Products\Associations\Associate;
+use App\Jobs\Products\Associations\Dissociate;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
@@ -130,7 +130,7 @@ class Product extends BaseModel implements Contracts\Product, HasThumbnailImage,
     public function collections(): BelongsToMany
     {
         return $this->belongsToMany(
-            \App\Store\Models\Collection::modelClass(),
+            \App\Models\Collection::modelClass(),
             config('store.database.table_prefix').'collection_product'
         )->withPivot(['position'])->orderByPivot('position')->withTimestamps();
     }

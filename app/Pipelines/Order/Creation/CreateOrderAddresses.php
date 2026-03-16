@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Store\Pipelines\Order\Creation;
+namespace App\Pipelines\Order\Creation;
 
 use Closure;
 use Illuminate\Support\Facades\App;
-use App\Store\Models\Contracts\Order as OrderContract;
-use App\Store\Models\Contracts\OrderAddress as OrderAddressContract;
-use App\Store\Models\Order;
-use App\Store\Models\OrderAddress;
+use App\Models\Contracts\Order as OrderContract;
+use App\Models\Contracts\OrderAddress as OrderAddressContract;
+use App\Models\Order;
+use App\Models\OrderAddress;
 
 class CreateOrderAddresses
 {

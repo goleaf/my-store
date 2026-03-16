@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\ProductResource\Pages;
 
 use App\Filament\Resources\ProductResource;
-use App\Store\Models\Contracts\Product as ProductContract;
+use App\Models\Contracts\Product as ProductContract;
 use App\Support\Resources\Pages\ManageUrlsRelatedRecords;
 
 class ManageProductUrls extends ManageUrlsRelatedRecords

@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Account;
 
-use App\Store\Models\Order;
+use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;

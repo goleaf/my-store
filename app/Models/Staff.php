@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Admin\Database\Factories\StaffFactory;
-use App\Store\Base\Traits\LogsActivity;
+use App\Base\Traits\LogsActivity;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasName;
 use Filament\Panel;

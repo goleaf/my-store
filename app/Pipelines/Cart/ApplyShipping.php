@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Store\Pipelines\Cart;
+namespace App\Pipelines\Cart;
 
 use Closure;
-use App\Store\Base\ValueObjects\Cart\ShippingBreakdown;
-use App\Store\Base\ValueObjects\Cart\ShippingBreakdownItem;
-use App\Store\DataTypes\Price;
-use App\Store\Facades\ShippingManifest;
-use App\Store\Models\Cart;
-use App\Store\Models\Contracts\Cart as CartContract;
+use App\Base\ValueObjects\Cart\ShippingBreakdown;
+use App\Base\ValueObjects\Cart\ShippingBreakdownItem;
+use App\DataTypes\Price;
+use App\Facades\ShippingManifest;
+use App\Models\Cart;
+use App\Models\Contracts\Cart as CartContract;
 
 final class ApplyShipping
 {

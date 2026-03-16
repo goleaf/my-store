@@ -5,9 +5,9 @@ namespace Database\Seeders;
 use App\Models\User;
 use Faker\Factory;
 use Illuminate\Support\Facades\DB;
-use App\Store\Models\Address;
-use App\Store\Models\Country;
-use App\Store\Models\Customer;
+use App\Models\Address;
+use App\Models\Country;
+use App\Models\Customer;
 
 class CustomerSeeder extends AbstractSeeder
 {

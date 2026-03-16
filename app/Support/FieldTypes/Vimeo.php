@@ -2,7 +2,7 @@
 
 namespace App\Support\FieldTypes;
 
-use App\Store\Models\Attribute;
+use App\Models\Attribute;
 use App\Support\Forms\Components\Vimeo as VimeoInput;
 use App\Support\Synthesizers\VimeoSynth;
 use Filament\Forms\Components\Component;

@@ -2,9 +2,9 @@
 
 namespace App\Support\Resources;
 
-use App\Store\Base\Traits\Searchable;
-use App\Store\FieldTypes\TranslatedText;
-use App\Store\Models\Attribute;
+use App\Base\Traits\Searchable;
+use App\FieldTypes\TranslatedText;
+use App\Models\Attribute;
 use App\Support\Concerns\CallsHooks;
 use Filament\Facades\Filament;
 use Filament\Resources\Resource;

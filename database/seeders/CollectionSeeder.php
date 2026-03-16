@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Support\Facades\DB;
-use App\Store\FieldTypes\Text;
-use App\Store\FieldTypes\TranslatedText;
-use App\Store\Models\Collection;
-use App\Store\Models\CollectionGroup;
+use App\FieldTypes\Text;
+use App\FieldTypes\TranslatedText;
+use App\Models\Collection;
+use App\Models\CollectionGroup;
 
 class CollectionSeeder extends AbstractSeeder
 {

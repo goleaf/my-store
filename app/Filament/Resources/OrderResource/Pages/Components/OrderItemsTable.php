@@ -4,9 +4,9 @@ namespace App\Filament\Resources\OrderResource\Pages\Components;
 
 use App\Filament\Resources\ProductResource\Pages\EditProduct;
 use App\Livewire\Components\TableComponent;
-use App\Store\Models\OrderLine;
-use App\Store\Models\ProductVariant;
-use App\Store\Models\Transaction;
+use App\Models\OrderLine;
+use App\Models\ProductVariant;
+use App\Models\Transaction;
 use App\Support\Concerns\CallsHooks;
 use App\Support\Tables\Components\KeyValue;
 use Closure;

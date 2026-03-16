@@ -4,7 +4,7 @@ namespace App\Filament\Resources\ProductResource\Pages;
 
 use App\Events\ProductCollectionsUpdated;
 use App\Filament\Resources\ProductResource;
-use App\Store\Models\Contracts\Collection as CollectionContract;
+use App\Models\Contracts\Collection as CollectionContract;
 use App\Support\Pages\BaseManageRelatedRecords;
 use App\Support\Tables\Columns\TranslatedTextColumn;
 use Filament\Forms;

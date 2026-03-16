@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Store\Base\Traits;
+namespace App\Base\Traits;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Store\Models\Cart;
-use App\Store\Models\Customer;
-use App\Store\Models\Order;
+use App\Models\Cart;
+use App\Models\Customer;
+use App\Models\Order;
 
 trait StoreUser
 {

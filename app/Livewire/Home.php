@@ -4,16 +4,18 @@ namespace App\Livewire;
 
 use Illuminate\View\View;
 use Livewire\Component;
-use App\Store\Models\Collection;
-use App\Store\Models\Url;
+use App\Models\Collection;
+use App\Models\Url;
 
-use App\Store\Models\HomeHero;
-use App\Store\Models\FeaturedCategory;
-use App\Store\Models\HomeSection;
-use App\Store\Models\HomeBanner;
+use App\Models\HomeHero;
+use App\Models\FeaturedCategory;
+use App\Models\HomeSection;
+use App\Models\HomeBanner;
+use App\Traits\CanAddToCart;
 
 class Home extends Component
 {
+    use CanAddToCart;
     /**
      * Get active home heroes.
      */

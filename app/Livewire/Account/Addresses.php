@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Account;
 
-use App\Store\Models\Address;
-use App\Store\Models\Country;
+use App\Models\Address;
+use App\Models\Country;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;

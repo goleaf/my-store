@@ -6,11 +6,12 @@ use App\Traits\FetchesUrls;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
-use App\Store\Models\Collection as CollectionModel;
+use App\Models\Collection as CollectionModel;
+use App\Traits\CanAddToCart;
 
 class CollectionPage extends Component
 {
-    use FetchesUrls;
+    use FetchesUrls, CanAddToCart;
 
     public function mount(string $slug): void
     {

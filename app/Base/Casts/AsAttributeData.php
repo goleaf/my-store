@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Store\Base\Casts;
+namespace App\Base\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\Castable;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Support\Collection;
-use App\Store\Base\FieldType;
-use App\Store\Exceptions\FieldTypeException;
+use App\Base\FieldType;
+use App\Exceptions\FieldTypeException;
 
 class AsAttributeData implements Castable
 {

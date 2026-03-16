@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Actions\Collections;
+namespace App\Actions\Collections;
 
-use App\Store\Models\Collection;
-use App\Store\Models\Contracts\Collection as CollectionContract;
-use App\Store\Models\Currency;
+use App\Models\Collection;
+use App\Models\Contracts\Collection as CollectionContract;
+use App\Models\Currency;
 
 class SortProducts
 {

@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CurrencyResource\Pages;
-use App\Store\Models\Contracts\Currency as CurrencyContract;
+use App\Models\Contracts\Currency as CurrencyContract;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
 use Filament\Forms\Components\Component;

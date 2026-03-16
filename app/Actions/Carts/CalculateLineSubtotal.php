@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Store\Actions\Carts;
+namespace App\Actions\Carts;
 
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
-use App\Store\Base\CartLineModifiers;
-use App\Store\DataTypes\Price;
-use App\Store\Facades\Pricing;
-use App\Store\Models\CartLine;
-use App\Store\Models\Contracts\CartLine as CartLineContract;
+use App\Base\CartLineModifiers;
+use App\DataTypes\Price;
+use App\Facades\Pricing;
+use App\Models\CartLine;
+use App\Models\Contracts\CartLine as CartLineContract;
 
 class CalculateLineSubtotal
 {
@@ -16,7 +16,7 @@ class CalculateLineSubtotal
      * Execute the action.
      *
      * @param  \Illuminate\Database\Eloquent\Collection  $customerGroups
-     * @return \App\Store\Models\CartLine
+     * @return \App\Models\CartLine
      */
     public function execute(
         CartLineContract $cartLine,

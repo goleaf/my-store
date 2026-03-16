@@ -2,7 +2,7 @@
 
 namespace App\Support\FieldTypes;
 
-use App\Store\Models\Attribute;
+use App\Models\Attribute;
 use App\Support\Forms\Components\TranslatedText as TranslatedTextComponent;
 use App\Support\Synthesizers\TranslatedTextSynth;
 use Filament\Forms\Components\Component;

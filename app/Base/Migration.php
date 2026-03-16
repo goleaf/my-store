@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
 use Illuminate\Database\Migrations\Migration as BaseMigration;
 

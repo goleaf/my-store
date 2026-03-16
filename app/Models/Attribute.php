@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Traits\HasMacros;
-use App\Store\Base\Traits\HasTranslations;
-use App\Store\Database\Factories\AttributeFactory;
-use App\Store\Facades\DB;
+use App\Base\BaseModel;
+use App\Base\Traits\HasMacros;
+use App\Base\Traits\HasTranslations;
+use App\Database\Factories\AttributeFactory;
+use App\Facades\DB;
 
 /**
  * @property int $id

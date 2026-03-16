@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Observers;
+namespace App\Observers;
 
-use App\Store\Facades\DB;
-use App\Store\Models\Contracts\Language as LanguageContract;
-use App\Store\Models\Language;
+use App\Facades\DB;
+use App\Models\Contracts\Language as LanguageContract;
+use App\Models\Language;
 
 class LanguageObserver
 {

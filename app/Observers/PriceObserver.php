@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Observers;
+namespace App\Observers;
 
 use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
-use App\Store\Jobs\Currencies\SyncPriceCurrencies;
-use App\Store\Models\Contracts\Price;
+use App\Jobs\Currencies\SyncPriceCurrencies;
+use App\Models\Contracts\Price;
 
 class PriceObserver implements ShouldHandleEventsAfterCommit
 {

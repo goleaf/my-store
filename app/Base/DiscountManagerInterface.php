@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
 use Illuminate\Support\Collection;
-use App\Store\Base\DataTransferObjects\CartDiscount;
-use App\Store\Models\Contracts\Cart;
+use App\Base\DataTransferObjects\CartDiscount;
+use App\Models\Contracts\Cart;
 
 interface DiscountManagerInterface
 {

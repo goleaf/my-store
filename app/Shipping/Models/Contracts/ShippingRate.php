@@ -3,8 +3,8 @@
 namespace App\Shipping\Models\Contracts;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Store\DataTypes\ShippingOption;
-use App\Store\Models\Contracts\Cart as CartContract;
+use App\DataTypes\ShippingOption;
+use App\Models\Contracts\Cart as CartContract;
 
 interface ShippingRate
 {

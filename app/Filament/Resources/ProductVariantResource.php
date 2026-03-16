@@ -3,8 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductVariantResource\Pages;
-use App\Store\Models\Contracts\ProductVariant as ProductVariantContract;
-use App\Store\Models\TaxClass;
+use App\Models\Contracts\ProductVariant as ProductVariantContract;
+use App\Models\TaxClass;
 use App\Support\Forms\Components\Attributes;
 use App\Support\Forms\Components\TextInputSelectAffix;
 use App\Support\Resources\BaseResource;

@@ -2,10 +2,10 @@
 
 namespace App\Support\ActivityLog;
 
-use App\Store\Base\BaseModel;
-use App\Store\Models\Order;
-use App\Store\Models\Product;
-use App\Store\Models\ProductVariant;
+use App\Base\BaseModel;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Support\ActivityLog\Orders\Address;
 use App\Support\ActivityLog\Orders\Capture;
 use App\Support\ActivityLog\Orders\EmailNotification;

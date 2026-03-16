@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Store\Observers;
+namespace App\Observers;
 
-use App\Store\Models\Contracts\Discount as DiscountContract;
+use App\Models\Contracts\Discount as DiscountContract;
 
 class DiscountObserver
 {

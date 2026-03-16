@@ -2,8 +2,8 @@
 
 namespace App\Support\Synthesizers;
 
-use App\Store\DataTypes\Price;
-use App\Store\Models\Currency;
+use App\DataTypes\Price;
+use App\Models\Currency;
 use Livewire\Mechanisms\HandleComponents\Synthesizers\Synth;
 
 final class PriceSynth extends Synth

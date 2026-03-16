@@ -2,7 +2,7 @@
 
 namespace App\Support\Actions\Collections;
 
-use App\Store\Models\Collection;
+use App\Models\Collection;
 use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
 

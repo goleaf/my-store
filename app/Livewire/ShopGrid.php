@@ -2,11 +2,12 @@
 
 namespace App\Livewire;
 
-use App\Store\Models\Brand;
-use App\Store\Models\Collection as CollectionModel;
-use App\Store\Models\Product;
-use App\Store\Models\ProductVariant;
-use App\Store\Facades\CartSession;
+use App\Models\Brand;
+use App\Models\Collection as CollectionModel;
+use App\Models\Product;
+use App\Models\ProductVariant;
+use App\Facades\CartSession;
+use App\Traits\CanAddToCart;
 use Filament\Notifications\Notification;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -17,7 +18,7 @@ use Livewire\WithPagination;
 
 class ShopGrid extends Component
 {
-    use WithPagination;
+    use WithPagination, CanAddToCart;
 
     #[Url]
     public array $categories = [];
@@ -86,14 +87,14 @@ class ShopGrid extends Component
             case 'price_asc':
                 $query->join('store_product_variants', 'store_products.id', '=', 'store_product_variants.product_id')
                     ->join('store_prices', 'store_product_variants.id', '=', 'store_prices.priceable_id')
-                    ->where('store_prices.priceable_type', (new \App\Store\Models\ProductVariant)->getMorphClass())
+                    ->where('store_prices.priceable_type', (new \App\Models\ProductVariant)->getMorphClass())
                     ->orderBy('store_prices.price', 'asc')
                     ->select('store_products.*');
                 break;
             case 'price_desc':
                 $query->join('store_product_variants', 'store_products.id', '=', 'store_product_variants.product_id')
                     ->join('store_prices', 'store_product_variants.id', '=', 'store_prices.priceable_id')
-                    ->where('store_prices.priceable_type', (new \App\Store\Models\ProductVariant)->getMorphClass())
+                    ->where('store_prices.priceable_type', (new \App\Models\ProductVariant)->getMorphClass())
                     ->orderBy('store_prices.price', 'desc')
                     ->select('store_products.*');
                 break;
@@ -134,23 +135,6 @@ class ShopGrid extends Component
         $this->reset(['categories', 'brands', 'minPrice', 'maxPrice', 'ratings', 'sort', 'perPage']);
     }
 
-    public function addToCart(int $variantId): void
-    {
-        $variant = ProductVariant::find($variantId);
-
-        if (! $variant) {
-            return;
-        }
-
-        CartSession::manager()->add($variant, 1);
-
-        $this->dispatch('add-to-cart');
-
-        Notification::make()
-            ->title('Product added to cart')
-            ->success()
-            ->send();
-    }
 
     public function render()
     {

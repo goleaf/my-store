@@ -2,9 +2,9 @@
 
 namespace App\Support\Synthesizers;
 
-use App\Store\FieldTypes\Text;
-use App\Store\FieldTypes\TranslatedText;
-use App\Store\Models\Language;
+use App\FieldTypes\Text;
+use App\FieldTypes\TranslatedText;
+use App\Models\Language;
 
 class TranslatedTextSynth extends AbstractFieldSynth
 {

@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CollectionGroupResource\Pages;
-use App\Store\Models\Contracts\CollectionGroup as CollectionGroupContract;
+use App\Models\Contracts\CollectionGroup as CollectionGroupContract;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
 use Filament\Forms\Components\Component;

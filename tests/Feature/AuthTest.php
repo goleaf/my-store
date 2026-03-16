@@ -56,7 +56,7 @@ test('a user can register', function () {
         'name' => 'Test User',
     ]);
 
-    $this->assertDatabaseHas(\App\Store\Models\Customer::class, [
+    $this->assertDatabaseHas(\App\Models\Customer::class, [
         'first_name' => 'Test',
         'last_name' => 'User',
     ]);

@@ -2,8 +2,8 @@
 
 namespace App\Support\Forms\Components;
 
-use App\Store\Facades\DB;
-use App\Store\Models\Tag;
+use App\Facades\DB;
+use App\Models\Tag;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TagsInput;
 use Illuminate\Database\Eloquent\Model;

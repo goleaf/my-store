@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Base\DataTransferObjects;
+namespace App\Base\DataTransferObjects;
 
 class PaymentAuthorize
 {

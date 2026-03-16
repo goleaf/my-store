@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Store\Base\Addressable;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Traits\HasMacros;
-use App\Store\Database\Factories\AddressFactory;
+use App\Base\Addressable;
+use App\Base\BaseModel;
+use App\Base\Traits\HasMacros;
+use App\Database\Factories\AddressFactory;
 
 /**
  * @property int $id

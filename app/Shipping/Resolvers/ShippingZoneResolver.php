@@ -3,10 +3,10 @@
 namespace App\Shipping\Resolvers;
 
 use Illuminate\Support\Collection;
-use App\Store\Models\Contracts\Country as CountryContract;
-use App\Store\Models\Contracts\State as StateContract;
-use App\Store\Models\Country;
-use App\Store\Models\State;
+use App\Models\Contracts\Country as CountryContract;
+use App\Models\Contracts\State as StateContract;
+use App\Models\Country;
+use App\Models\State;
 use App\Shipping\DataTransferObjects\PostcodeLookup;
 use App\Shipping\Models\ShippingZone;
 

@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Store\Facades;
+namespace App\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use App\Store\Base\ShippingManifestInterface;
+use App\Base\ShippingManifestInterface;
 
 /**
- * @method static void addOption(\App\Store\DataTypes\ShippingOption $option)
+ * @method static void addOption(\App\DataTypes\ShippingOption $option)
  * @method static void addOptions(\Illuminate\Support\Collection $options)
  * @method static void clearOptions()
- * @method static \App\Store\Base\ShippingManifest getOptionUsing(\Closure $closure)
- * @method static \Illuminate\Support\Collection getOptions(\App\Store\Models\Contracts\Cart $cart)
- * @method static \App\Store\DataTypes\ShippingOption|null getOption(\App\Store\Models\Contracts\Cart $cart, string $identifier)
- * @method static \App\Store\DataTypes\ShippingOption|null getShippingOption(\App\Store\Models\Contracts\Cart $cart)
+ * @method static \App\Base\ShippingManifest getOptionUsing(\Closure $closure)
+ * @method static \Illuminate\Support\Collection getOptions(\App\Models\Contracts\Cart $cart)
+ * @method static \App\DataTypes\ShippingOption|null getOption(\App\Models\Contracts\Cart $cart, string $identifier)
+ * @method static \App\DataTypes\ShippingOption|null getShippingOption(\App\Models\Contracts\Cart $cart)
  *
- * @see \App\Store\Base\ShippingManifest
+ * @see \App\Base\ShippingManifest
  */
 class ShippingManifest extends Facade
 {

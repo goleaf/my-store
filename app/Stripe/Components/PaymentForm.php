@@ -3,7 +3,7 @@
 namespace App\Stripe\Components;
 
 use Livewire\Component;
-use App\Store\Models\Contracts\Cart as CartContract;
+use App\Models\Contracts\Cart as CartContract;
 use App\Stripe\Facades\Stripe;
 use Stripe\Stripe as StripeClient;
 

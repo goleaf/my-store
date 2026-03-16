@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\BrandResource\Pages;
 
 use App\Filament\Resources\BrandResource;
-use App\Store\Models\Collection;
-use App\Store\Models\Contracts\Collection as CollectionContract;
+use App\Models\Collection;
+use App\Models\Contracts\Collection as CollectionContract;
 use App\Support\Pages\BaseManageRelatedRecords;
 use App\Support\Tables\Columns\TranslatedTextColumn;
 use Filament\Forms;

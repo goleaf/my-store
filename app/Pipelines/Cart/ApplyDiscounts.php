@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\Pipelines\Cart;
+namespace App\Pipelines\Cart;
 
 use Closure;
-use App\Store\Facades\Discounts;
-use App\Store\Models\Cart;
-use App\Store\Models\Contracts\Cart as CartContract;
+use App\Facades\Discounts;
+use App\Models\Cart;
+use App\Models\Contracts\Cart as CartContract;
 
 final class ApplyDiscounts
 {

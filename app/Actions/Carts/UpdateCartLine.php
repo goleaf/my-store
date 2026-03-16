@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Actions\Carts;
+namespace App\Actions\Carts;
 
-use App\Store\Actions\AbstractAction;
-use App\Store\Facades\DB;
-use App\Store\Models\CartLine;
+use App\Actions\AbstractAction;
+use App\Facades\DB;
+use App\Models\CartLine;
 
 class UpdateCartLine extends AbstractAction
 {

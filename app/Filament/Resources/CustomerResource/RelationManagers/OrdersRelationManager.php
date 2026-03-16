@@ -4,7 +4,7 @@ namespace App\Filament\Resources\CustomerResource\RelationManagers;
 
 use App\Filament\Resources\OrderResource;
 use App\Filament\Resources\OrderResource\Pages\ManageOrder;
-use App\Store\Models\Contracts\Order as OrderContract;
+use App\Models\Contracts\Order as OrderContract;
 use App\Support\RelationManagers\BaseRelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;

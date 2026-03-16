@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Observers;
+namespace App\Observers;
 
-use App\Store\Jobs\Collections\UpdateProductPositions;
-use App\Store\Models\Collection;
-use App\Store\Models\Contracts\Collection as CollectionContract;
+use App\Jobs\Collections\UpdateProductPositions;
+use App\Models\Collection;
+use App\Models\Contracts\Collection as CollectionContract;
 
 class CollectionObserver
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Validation\Cart;
+namespace App\Validation\Cart;
 
 use Illuminate\Support\Facades\Validator;
-use App\Store\Validation\BaseValidator;
+use App\Validation\BaseValidator;
 
 class ValidateCartForOrderCreation extends BaseValidator
 {

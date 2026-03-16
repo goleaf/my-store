@@ -2,7 +2,7 @@
 
 namespace App\Support\Actions\Traits;
 
-use App\Store\Models\Order;
+use App\Models\Order;
 use Filament\Forms;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Mail;

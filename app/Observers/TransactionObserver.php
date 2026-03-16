@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Observers;
+namespace App\Observers;
 
-use App\Store\Models\Contracts\Transaction as TransactionContract;
-use App\Store\Models\Transaction;
+use App\Models\Contracts\Transaction as TransactionContract;
+use App\Models\Transaction;
 
 class TransactionObserver
 {

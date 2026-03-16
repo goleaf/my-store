@@ -2,12 +2,12 @@
 
 use App\Livewire\CollectionPage;
 use Livewire\Livewire;
-use App\Store\Models\Collection;
-use App\Store\Models\Currency;
-use App\Store\Models\Language;
-use App\Store\Models\Price;
-use App\Store\Models\Product;
-use App\Store\Models\ProductVariant;
+use App\Models\Collection;
+use App\Models\Currency;
+use App\Models\Language;
+use App\Models\Price;
+use App\Models\Product;
+use App\Models\ProductVariant;
 
 test('component can mount', function () {
     Language::factory()->create([

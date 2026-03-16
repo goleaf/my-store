@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources\OrderResource\Concerns;
 
-use App\Store\Models\Contracts\OrderAddress as OrderAddressContract;
-use App\Store\Models\Country;
-use App\Store\Models\OrderAddress;
-use App\Store\Models\State;
+use App\Models\Contracts\OrderAddress as OrderAddressContract;
+use App\Models\Country;
+use App\Models\OrderAddress;
+use App\Models\State;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Infolists;

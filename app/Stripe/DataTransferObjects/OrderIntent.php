@@ -2,7 +2,7 @@
 
 namespace App\Stripe\DataTransferObjects;
 
-use App\Store\Models\Contracts\Order as OrderContract;
+use App\Models\Contracts\Order as OrderContract;
 use Stripe\PaymentIntent;
 
 class OrderIntent

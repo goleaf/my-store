@@ -3,10 +3,10 @@
 namespace App\Support\RelationManagers;
 
 use App\Events\ModelPricesUpdated;
-use App\Store\Facades\DB;
-use App\Store\Models\Currency;
-use App\Store\Models\CustomerGroup;
-use App\Store\Models\Price;
+use App\Facades\DB;
+use App\Models\Currency;
+use App\Models\CustomerGroup;
+use App\Models\Price;
 use Closure;
 use Filament\Forms;
 use Filament\Schemas\Schema;

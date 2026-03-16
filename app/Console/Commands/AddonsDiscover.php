@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Store\Addons\Manifest;
+use App\Addons\Manifest;
 
 class AddonsDiscover extends Command
 {

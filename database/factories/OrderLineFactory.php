@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
 use Illuminate\Support\Str;
-use App\Store\Base\ValueObjects\Cart\TaxBreakdown;
-use App\Store\Models\Order;
-use App\Store\Models\OrderLine;
-use App\Store\Models\ProductVariant;
+use App\Base\ValueObjects\Cart\TaxBreakdown;
+use App\Models\Order;
+use App\Models\OrderLine;
+use App\Models\ProductVariant;
 
 class OrderLineFactory extends BaseFactory
 {

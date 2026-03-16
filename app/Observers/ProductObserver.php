@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Store\Observers;
+namespace App\Observers;
 
-use App\Store\Models\Contracts\Product as ProductContract;
+use App\Models\Contracts\Product as ProductContract;
 
 class ProductObserver
 {

@@ -2,10 +2,10 @@
 
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Builder;
-use App\Store\Base\Traits\Searchable;
-use App\Store\DataTypes\Price;
-use App\Store\FieldTypes\TranslatedText;
-use App\Store\Models\Attribute;
+use App\Base\Traits\Searchable;
+use App\DataTypes\Price;
+use App\FieldTypes\TranslatedText;
+use App\Models\Attribute;
 
 use function Filament\Support\generate_search_column_expression;
 use function Filament\Support\generate_search_term_expression;
@@ -32,11 +32,11 @@ if (! function_exists('sync_with_search')) {
             return;
         }
 
-        if ($model instanceof \App\Store\Models\ProductVariant) {
+        if ($model instanceof \App\Models\ProductVariant) {
             $model->product()->first()->searchable();
         }
 
-        if ($model instanceof \App\Store\Models\Address) {
+        if ($model instanceof \App\Models\Address) {
             $model->customer()->first()->searchable();
         }
 

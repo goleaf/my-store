@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Facades;
+namespace App\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use App\Store\Base\TelemetryServiceInterface;
+use App\Base\TelemetryServiceInterface;
 
 /**
  * @method static void optOut()
@@ -12,7 +12,7 @@ use App\Store\Base\TelemetryServiceInterface;
  * @method static bool shouldRun()
  * @method static void run()
  *
- * @see \App\Store\Base\TelemetryService
+ * @see \App\Base\TelemetryService
  */
 class Telemetry extends Facade
 {

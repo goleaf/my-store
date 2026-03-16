@@ -4,8 +4,8 @@ namespace App\Livewire\Components;
 
 use Illuminate\View\View;
 use Livewire\Component;
-use App\Store\Models\Collection;
-use App\Store\Models\Brand;
+use App\Models\Collection;
+use App\Models\Brand;
 
 class Navigation extends Component
 {

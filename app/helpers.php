@@ -1,7 +1,7 @@
 <?php
 
-use App\Store\Base\Traits\StoreUser;
-use App\Store\Facades\DB;
+use App\Base\Traits\StoreUser;
+use App\Facades\DB;
 
 if (! function_exists('is_store_user')) {
     function is_store_user($user)

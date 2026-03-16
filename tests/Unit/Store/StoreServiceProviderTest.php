@@ -10,6 +10,6 @@ test('store config is merged', function () {
 });
 
 test('store facades are resolvable', function () {
-    expect(app(\App\Store\Facades\CartSession::class))->toBeObject();
-    expect(app(\App\Store\Facades\Payments::class))->toBeObject();
+    expect(app(\App\Facades\CartSession::class))->toBeObject();
+    expect(app(\App\Facades\Payments::class))->toBeObject();
 });

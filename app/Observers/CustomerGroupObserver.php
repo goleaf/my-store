@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Observers;
+namespace App\Observers;
 
-use App\Store\Models\Contracts\CustomerGroup as CustomerGroupContract;
-use App\Store\Models\CustomerGroup;
+use App\Models\Contracts\CustomerGroup as CustomerGroupContract;
+use App\Models\CustomerGroup;
 
 class CustomerGroupObserver
 {

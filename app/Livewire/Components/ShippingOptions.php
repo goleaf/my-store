@@ -5,8 +5,8 @@ namespace App\Livewire\Components;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
-use App\Store\Facades\CartSession;
-use App\Store\Facades\ShippingManifest;
+use App\Facades\CartSession;
+use App\Facades\ShippingManifest;
 
 class ShippingOptions extends Component
 {

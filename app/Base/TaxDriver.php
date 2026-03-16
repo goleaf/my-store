@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
-use App\Store\Base\ValueObjects\Cart\TaxBreakdown;
-use App\Store\Models\Contracts\CartLine;
-use App\Store\Models\Contracts\Currency;
+use App\Base\ValueObjects\Cart\TaxBreakdown;
+use App\Models\Contracts\CartLine;
+use App\Models\Contracts\Currency;
 
 interface TaxDriver
 {

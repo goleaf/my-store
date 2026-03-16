@@ -87,16 +87,16 @@ return [
         ],
         'status' => [
             'label' => 'Trạng thái',
-            \App\Store\Models\Discount::ACTIVE => [
+            \App\Models\Discount::ACTIVE => [
                 'label' => 'Đang hoạt động',
             ],
-            \App\Store\Models\Discount::PENDING => [
+            \App\Models\Discount::PENDING => [
                 'label' => 'Đang chờ',
             ],
-            \App\Store\Models\Discount::EXPIRED => [
+            \App\Models\Discount::EXPIRED => [
                 'label' => 'Đã hết hạn',
             ],
-            \App\Store\Models\Discount::SCHEDULED => [
+            \App\Models\Discount::SCHEDULED => [
                 'label' => 'Đã lên lịch',
             ],
         ],

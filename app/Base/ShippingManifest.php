@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
 use Closure;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
-use App\Store\DataTypes\ShippingOption;
-use App\Store\Models\Contracts\Cart;
+use App\DataTypes\ShippingOption;
+use App\Models\Contracts\Cart;
 
 class ShippingManifest implements ShippingManifestInterface
 {

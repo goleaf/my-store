@@ -4,9 +4,9 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 use Illuminate\View\View;
-use App\Store\Facades\Pricing;
-use App\Store\Models\Price;
-use App\Store\Models\ProductVariant;
+use App\Facades\Pricing;
+use App\Models\Price;
+use App\Models\ProductVariant;
 
 class ProductPrice extends Component
 {

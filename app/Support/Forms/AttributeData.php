@@ -2,16 +2,16 @@
 
 namespace App\Support\Forms;
 
-use App\Store\FieldTypes\Dropdown as DrodownFieldType;
-use App\Store\FieldTypes\File as FileFieldType;
-use App\Store\FieldTypes\ListField as ListFieldFieldType;
-use App\Store\FieldTypes\Number as NumberFieldType;
-use App\Store\FieldTypes\Text as TextFieldType;
-use App\Store\FieldTypes\Toggle as ToggleFieldType;
-use App\Store\FieldTypes\TranslatedText as TranslatedTextFieldType;
-use App\Store\FieldTypes\Vimeo as VimeoFieldType;
-use App\Store\FieldTypes\YouTube as YouTubeFieldType;
-use App\Store\Models\Attribute;
+use App\FieldTypes\Dropdown as DrodownFieldType;
+use App\FieldTypes\File as FileFieldType;
+use App\FieldTypes\ListField as ListFieldFieldType;
+use App\FieldTypes\Number as NumberFieldType;
+use App\FieldTypes\Text as TextFieldType;
+use App\FieldTypes\Toggle as ToggleFieldType;
+use App\FieldTypes\TranslatedText as TranslatedTextFieldType;
+use App\FieldTypes\Vimeo as VimeoFieldType;
+use App\FieldTypes\YouTube as YouTubeFieldType;
+use App\Models\Attribute;
 use App\Support\FieldTypes\Dropdown;
 use App\Support\FieldTypes\File;
 use App\Support\FieldTypes\ListField;
@@ -62,7 +62,7 @@ class AttributeData
                 return $state;
             })
             ->mutateStateForValidationUsing(function ($state) {
-                if ($state instanceof \App\Store\Base\FieldType) {
+                if ($state instanceof \App\Base\FieldType) {
                     return $state->getValue();
                 }
 

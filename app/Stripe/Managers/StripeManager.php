@@ -3,8 +3,8 @@
 namespace App\Stripe\Managers;
 
 use Illuminate\Support\Collection;
-use App\Store\Models\Cart;
-use App\Store\Models\Contracts\Cart as CartContract;
+use App\Models\Cart;
+use App\Models\Contracts\Cart as CartContract;
 use App\Stripe\Enums\CancellationReason;
 use Stripe\Charge;
 use Stripe\Exception\ApiErrorException;

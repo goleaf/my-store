@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Store\Pipelines\Order\Creation;
+namespace App\Pipelines\Order\Creation;
 
 use Closure;
 use Illuminate\Support\Facades\App;
-use App\Store\Actions\Orders\GenerateOrderReference;
-use App\Store\Models\Contracts\Currency as CurrencyContract;
-use App\Store\Models\Contracts\Order as OrderContract;
-use App\Store\Models\Order;
+use App\Actions\Orders\GenerateOrderReference;
+use App\Models\Contracts\Currency as CurrencyContract;
+use App\Models\Contracts\Order as OrderContract;
+use App\Models\Order;
 
 class FillOrderFromCart
 {

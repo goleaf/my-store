@@ -3,12 +3,12 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use App\Store\Models\Address;
-use App\Store\Models\Country;
-use App\Store\Models\Customer;
-use App\Store\Models\Order;
-use App\Store\Models\Channel;
-use App\Store\Models\Currency;
+use App\Models\Address;
+use App\Models\Country;
+use App\Models\Customer;
+use App\Models\Order;
+use App\Models\Channel;
+use App\Models\Currency;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Spatie\LaravelBlink\BlinkFacade as Blink;
@@ -101,7 +101,7 @@ test('a user can update their password', function () {
         ->set('new_password_confirmation', 'new-password-123')
         ->call('updatePassword')
         ->assertHasNoErrors()
-        ->assertSessionHas('status', 'Password updated successfully.');
+        ->assertSee('Password updated successfully.');
 
     $user->refresh();
     expect(Hash::check('new-password-123', $user->password))->toBeTrue();
@@ -125,9 +125,9 @@ test('a user can manage addresses', function () {
         ->set('address.country_id', $country->id)
         ->call('saveAddress')
         ->assertHasNoErrors()
-        ->assertSessionHas('status', 'Address created successfully.');
+        ->assertSee('Address created successfully.');
 
-    $this->assertDatabaseHas(\App\Store\Models\Address::class, [
+    $this->assertDatabaseHas(\App\Models\Address::class, [
         'customer_id' => $customer->id,
         'first_name' => 'John',
         'line_one' => '123 Main St',
@@ -143,7 +143,7 @@ test('a user can manage addresses', function () {
         ->set('address.first_name', 'Jane')
         ->call('saveAddress')
         ->assertHasNoErrors()
-        ->assertSessionHas('status', 'Address updated successfully.');
+        ->assertSee('Address updated successfully.');
 
     expect($address->refresh()->first_name)->toBe('Jane');
 
@@ -151,9 +151,9 @@ test('a user can manage addresses', function () {
     Livewire::actingAs($user)
         ->test(\App\Livewire\Account\Addresses::class)
         ->call('deleteAddress', $address->id)
-        ->assertSessionHas('status', 'Address deleted successfully.');
+        ->assertSee('Address deleted successfully.');
 
-    $this->assertDatabaseMissing(\App\Store\Models\Address::class, ['id' => $address->id]);
+    $this->assertDatabaseMissing(\App\Models\Address::class, ['id' => $address->id]);
 });
 
 test('a user can manage payment methods', function () {
@@ -169,7 +169,7 @@ test('a user can manage payment methods', function () {
         ->set('newCard.cvv', '123')
         ->call('addCard')
         ->assertHasNoErrors()
-        ->assertSessionHas('status', 'Payment method added successfully.');
+        ->assertSee('Payment method added successfully.');
 
     $customer->refresh();
     $paymentMethods = $customer->meta['payment_methods'];
@@ -182,7 +182,7 @@ test('a user can manage payment methods', function () {
     Livewire::actingAs($user)
         ->test(\App\Livewire\Account\PaymentMethods::class)
         ->call('deleteCard', $cardId)
-        ->assertSessionHas('status', 'Payment method deleted successfully.');
+        ->assertSee('Payment method deleted successfully.');
 
     $customer->refresh();
     expect($customer->meta['payment_methods'] ?? [])->toHaveCount(0);
@@ -198,7 +198,7 @@ test('a user can update notification preferences', function () {
         ->set('preferences.promotions', true)
         ->call('updatePreferences')
         ->assertHasNoErrors()
-        ->assertSessionHas('status', 'Notification preferences updated successfully.');
+        ->assertSee('Notification preferences updated successfully.');
 
     $customer->refresh();
     expect($customer->meta['notification_preferences']['promotions'])->toBeTrue();
@@ -207,9 +207,29 @@ test('a user can update notification preferences', function () {
 test('a user can see their orders', function () {
     $user = User::factory()->create();
     $orders = Order::factory()->count(3)->create(['user_id' => $user->id]);
-
     actingAs($user)
         ->get(route('account.orders'))
         ->assertOk()
         ->assertSeeLivewire('account.orders');
+});
+
+test('a user can see order details', function () {
+    $user = User::factory()->create();
+    $order = Order::factory()->create(['user_id' => $user->id]);
+
+    actingAs($user)
+        ->get(route('account.orders.view', $order->id))
+        ->assertOk()
+        ->assertSeeLivewire('account.order-details')
+        ->assertSee($order->reference);
+});
+
+test('a user cannot see someone elses order details', function () {
+    $user = User::factory()->create();
+    $otherUser = User::factory()->create();
+    $order = Order::factory()->create(['user_id' => $otherUser->id]);
+
+    actingAs($user)
+        ->get(route('account.orders.view', $order->id))
+        ->assertForbidden();
 });

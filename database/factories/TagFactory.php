@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
 use Illuminate\Support\Str;
-use App\Store\Models\Tag;
+use App\Models\Tag;
 
 class TagFactory extends BaseFactory
 {

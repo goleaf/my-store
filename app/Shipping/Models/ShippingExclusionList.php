@@ -5,8 +5,8 @@ namespace App\Shipping\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Traits\LogsActivity;
+use App\Base\BaseModel;
+use App\Base\Traits\LogsActivity;
 use App\Shipping\Factories\ShippingExclusionListFactory;
 
 class ShippingExclusionList extends BaseModel implements Contracts\ShippingExclusionList

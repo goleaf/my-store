@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Store\Search;
+namespace App\Search;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use App\Store\Facades\AttributeManifest;
-use App\Store\FieldTypes\TranslatedText;
-use App\Store\Search\Interfaces\ScoutIndexerInterface;
+use App\Facades\AttributeManifest;
+use App\FieldTypes\TranslatedText;
+use App\Search\Interfaces\ScoutIndexerInterface;
 
 class ScoutIndexer implements ScoutIndexerInterface
 {

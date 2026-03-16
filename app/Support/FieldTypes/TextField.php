@@ -2,7 +2,7 @@
 
 namespace App\Support\FieldTypes;
 
-use App\Store\Models\Attribute;
+use App\Models\Attribute;
 use App\Support\Synthesizers\TextSynth;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\RichEditor;

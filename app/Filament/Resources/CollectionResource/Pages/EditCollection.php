@@ -4,9 +4,9 @@ namespace App\Filament\Resources\CollectionResource\Pages;
 
 use App\Filament\Resources\CollectionGroupResource;
 use App\Filament\Resources\CollectionResource;
-use App\Store\Facades\DB;
-use App\Store\Models\Collection;
-use App\Store\Models\Contracts\Collection as CollectionContract;
+use App\Facades\DB;
+use App\Models\Collection;
+use App\Models\Contracts\Collection as CollectionContract;
 use App\Support\Pages\BaseEditRecord;
 use Filament\Actions\DeleteAction;
 use Filament\Forms;

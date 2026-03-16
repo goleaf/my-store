@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
-use App\Store\Models\ProductType;
+use App\Models\ProductType;
 
 class ProductTypeFactory extends BaseFactory
 {

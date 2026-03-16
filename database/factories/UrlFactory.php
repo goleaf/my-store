@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
-use App\Store\Models\Language;
-use App\Store\Models\Product;
-use App\Store\Models\Url;
+use App\Models\Language;
+use App\Models\Product;
+use App\Models\Url;
 
 class UrlFactory extends BaseFactory
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
 use Illuminate\Support\Collection;
-use App\Store\Models\Contracts\Channel;
-use App\Store\Models\Contracts\Currency;
-use App\Store\Models\Contracts\Customer;
-use App\Store\Models\Contracts\CustomerGroup;
+use App\Models\Contracts\Channel;
+use App\Models\Contracts\Currency;
+use App\Models\Contracts\Customer;
+use App\Models\Contracts\CustomerGroup;
 
 interface StorefrontSessionInterface
 {

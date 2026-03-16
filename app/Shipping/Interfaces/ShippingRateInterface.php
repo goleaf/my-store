@@ -2,7 +2,7 @@
 
 namespace App\Shipping\Interfaces;
 
-use App\Store\DataTypes\ShippingOption;
+use App\DataTypes\ShippingOption;
 use App\Shipping\DataTransferObjects\ShippingOptionRequest;
 use App\Shipping\Models\ShippingRate;
 

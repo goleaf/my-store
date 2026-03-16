@@ -3,7 +3,7 @@
 namespace App\Stripe\Actions;
 
 use Illuminate\Support\Facades\DB;
-use App\Store\Models\Contracts\Order as OrderContract;
+use App\Models\Contracts\Order as OrderContract;
 use App\Stripe\Facades\Stripe;
 use Stripe\PaymentIntent;
 

@@ -2,9 +2,9 @@
 
 namespace App\Traits;
 
-use App\Store\Models\Currency;
-use App\Store\Models\Price;
-use App\Store\Models\ProductVariant;
+use App\Models\Currency;
+use App\Models\Price;
+use App\Models\ProductVariant;
 
 trait HasVariantFormSkuAndPrice
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Store\DiscountTypes;
+namespace App\DiscountTypes;
 
-use App\Store\Base\ValueObjects\Cart\DiscountBreakdown;
-use App\Store\Base\ValueObjects\Cart\DiscountBreakdownLine;
-use App\Store\DataTypes\Price;
-use App\Store\Models\Cart;
-use App\Store\Models\Collection;
-use App\Store\Models\Contracts\Cart as CartContract;
+use App\Base\ValueObjects\Cart\DiscountBreakdown;
+use App\Base\ValueObjects\Cart\DiscountBreakdownLine;
+use App\DataTypes\Price;
+use App\Models\Cart;
+use App\Models\Collection;
+use App\Models\Contracts\Cart as CartContract;
 
 class AmountOff extends AbstractDiscountType
 {

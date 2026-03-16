@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Observers;
+namespace App\Observers;
 
-use App\Store\Models\Address;
-use App\Store\Models\Contracts\Address as AddressContract;
+use App\Models\Address;
+use App\Models\Contracts\Address as AddressContract;
 
 class AddressObserver
 {

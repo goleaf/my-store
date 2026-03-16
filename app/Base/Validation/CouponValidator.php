@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Base\Validation;
+namespace App\Base\Validation;
 
-use App\Store\DiscountTypes\AmountOff;
-use App\Store\DiscountTypes\BuyXGetY;
-use App\Store\Models\Discount;
+use App\DiscountTypes\AmountOff;
+use App\DiscountTypes\BuyXGetY;
+use App\Models\Discount;
 
 class CouponValidator implements CouponValidatorInterface
 {

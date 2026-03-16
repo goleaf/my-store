@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\FieldTypes;
+namespace App\FieldTypes;
 
 use JsonSerializable;
-use App\Store\Base\FieldType;
+use App\Base\FieldType;
 
 class File implements FieldType, JsonSerializable
 {

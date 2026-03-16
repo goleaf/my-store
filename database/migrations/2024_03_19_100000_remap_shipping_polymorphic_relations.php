@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
-use App\Store\Base\Migration;
+use App\Base\Migration;
 
 return new class extends Migration
 {
@@ -14,7 +14,7 @@ return new class extends Migration
             ]);
 
         DB::table($this->prefix.'shipping_exclusions')
-            ->where('purchasable_type', '=', \App\Store\Models\Product::class)
+            ->where('purchasable_type', '=', \App\Models\Product::class)
             ->update([
                 'purchasable_type' => 'product',
             ]);
@@ -31,7 +31,7 @@ return new class extends Migration
         DB::table($this->prefix.'shipping_exclusions')
             ->where('purchasable_type', '=', 'product')
             ->update([
-                'purchasable_type' => \App\Store\Models\Product::class,
+                'purchasable_type' => \App\Models\Product::class,
             ]);
     }
 };

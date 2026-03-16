@@ -1,6 +1,6 @@
 <?php
 
-use App\Store\Models\Collection;
+use App\Models\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);

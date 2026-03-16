@@ -3,8 +3,8 @@
 namespace App\Shipping\Resolvers;
 
 use Illuminate\Support\Collection;
-use App\Store\Models\Cart;
-use App\Store\Models\Contracts\Cart as CartContract;
+use App\Models\Cart;
+use App\Models\Contracts\Cart as CartContract;
 use App\Shipping\DataTransferObjects\ShippingOptionLookup;
 use App\Shipping\Events\ShippingOptionResolvedEvent;
 

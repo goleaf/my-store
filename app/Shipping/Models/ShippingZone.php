@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Traits\LogsActivity;
-use App\Store\Models\Country;
-use App\Store\Models\Order;
-use App\Store\Models\State;
+use App\Base\BaseModel;
+use App\Base\Traits\LogsActivity;
+use App\Models\Country;
+use App\Models\Order;
+use App\Models\State;
 use App\Shipping\Database\Factories\ShippingZoneFactory;
 
 class ShippingZone extends BaseModel implements Contracts\ShippingZone

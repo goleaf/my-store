@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Pricing;
+namespace App\Pricing;
 
 interface PriceFormatterInterface
 {

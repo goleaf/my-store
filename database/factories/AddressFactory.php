@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
-use App\Store\Models\Address;
-use App\Store\Models\Country;
+use App\Models\Address;
+use App\Models\Country;
 
 class AddressFactory extends BaseFactory
 {

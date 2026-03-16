@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Store\Actions\Carts;
+namespace App\Actions\Carts;
 
-use App\Store\Actions\AbstractAction;
-use App\Store\Exceptions\CartLineIdMismatchException;
-use App\Store\Facades\DB;
-use App\Store\Models\Cart;
-use App\Store\Models\CartLine;
-use App\Store\Models\Contracts\Cart as CartContract;
+use App\Actions\AbstractAction;
+use App\Exceptions\CartLineIdMismatchException;
+use App\Facades\DB;
+use App\Models\Cart;
+use App\Models\CartLine;
+use App\Models\Contracts\Cart as CartContract;
 
 class RemovePurchasable extends AbstractAction
 {

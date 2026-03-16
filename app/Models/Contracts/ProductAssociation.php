@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Models\Contracts;
+namespace App\Models\Contracts;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Store\Base\Enums\Concerns\ProvidesProductAssociationType;
+use App\Base\Enums\Concerns\ProvidesProductAssociationType;
 
 interface ProductAssociation
 {

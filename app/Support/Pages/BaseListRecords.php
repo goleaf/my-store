@@ -2,7 +2,7 @@
 
 namespace App\Support\Pages;
 
-use App\Store\Base\Traits\Searchable;
+use App\Base\Traits\Searchable;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 

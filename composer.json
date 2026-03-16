@@ -58,17 +58,15 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "App\\Store\\Database\\Factories\\": "database/factories/",
-            "App\\Store\\Database\\Seeders\\": "database/seeders/",
-            "App\\Store\\Database\\State\\": "database/state/",
+            "App\\Database\\State\\": "database/state/",
             "App\\Admin\\Database\\Factories\\": "database/factories/",
             "App\\Admin\\Database\\State\\": "database/state/",
             "App\\Shipping\\Database\\Factories\\": "database/factories/",
             "App\\Shipping\\Factories\\": "database/factories/"
         },
         "files": [
-            "app/Store/helpers.php",
-          "app/Filament/helpers.php"
+            "app/helpers.php",
+            "app/Filament/helpers.php"
         ]
     },
     "autoload-dev": {

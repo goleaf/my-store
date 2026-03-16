@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Actions\Currencies;
+namespace App\Actions\Currencies;
 
 use Illuminate\Support\Facades\DB;
-use App\Store\Models\Contracts\Currency;
+use App\Models\Contracts\Currency;
 
 class CreateCurrencyPrices
 {

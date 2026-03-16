@@ -3,9 +3,9 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductTypeResource\Pages;
-use App\Store\Models\Contracts\ProductType as ProductTypeContract;
-use App\Store\Models\Product;
-use App\Store\Models\ProductVariant;
+use App\Models\Contracts\ProductType as ProductTypeContract;
+use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Support\Forms\Components\AttributeSelector;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;

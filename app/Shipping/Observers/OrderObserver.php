@@ -2,8 +2,8 @@
 
 namespace App\Shipping\Observers;
 
-use App\Store\Models\Contracts\Order as OrderContract;
-use App\Store\Models\Order;
+use App\Models\Contracts\Order as OrderContract;
+use App\Models\Order;
 use App\Shipping\DataTransferObjects\PostcodeLookup;
 use App\Shipping\Facades\Shipping;
 

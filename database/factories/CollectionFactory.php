@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
-use App\Store\FieldTypes\Text;
-use App\Store\Models\Collection;
-use App\Store\Models\CollectionGroup;
+use App\FieldTypes\Text;
+use App\Models\Collection;
+use App\Models\CollectionGroup;
 
 class CollectionFactory extends BaseFactory
 {

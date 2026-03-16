@@ -2,7 +2,7 @@
 
 namespace App\Support\Synthesizers;
 
-use App\Store\FieldTypes\ListField;
+use App\FieldTypes\ListField;
 
 class ListSynth extends AbstractFieldSynth
 {

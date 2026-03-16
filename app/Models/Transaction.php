@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Casts\Price;
-use App\Store\Base\Traits\HasMacros;
-use App\Store\Base\Traits\LogsActivity;
-use App\Store\Database\Factories\TransactionFactory;
-use App\Store\Facades\Payments;
+use App\Base\BaseModel;
+use App\Base\Casts\Price;
+use App\Base\Traits\HasMacros;
+use App\Base\Traits\LogsActivity;
+use App\Database\Factories\TransactionFactory;
+use App\Facades\Payments;
 
 /**
  * @property int $id

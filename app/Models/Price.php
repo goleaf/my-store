@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Casts\Price as CastsPrice;
-use App\Store\Base\Traits\HasMacros;
-use App\Store\Database\Factories\PriceFactory;
+use App\Base\BaseModel;
+use App\Base\Casts\Price as CastsPrice;
+use App\Base\Traits\HasMacros;
+use App\Database\Factories\PriceFactory;
 use Spatie\LaravelBlink\BlinkFacade as Blink;
 
 /**
@@ -17,7 +17,7 @@ use Spatie\LaravelBlink\BlinkFacade as Blink;
  * @property ?int $currency_id
  * @property string $priceable_type
  * @property int $priceable_id
- * @property \App\Store\DataTypes\Price $price
+ * @property \App\DataTypes\Price $price
  * @property ?int $compare_price
  * @property int $min_quantity
  * @property ?\Illuminate\Support\Carbon $created_at
@@ -76,7 +76,7 @@ class Price extends BaseModel implements Contracts\Price
     /**
      * Return the price exclusive of tax.
      */
-    public function priceExTax(): \App\Store\DataTypes\Price
+    public function priceExTax(): \App\DataTypes\Price
     {
         if (! prices_inc_tax()) {
             return $this->price;
@@ -92,7 +92,7 @@ class Price extends BaseModel implements Contracts\Price
     /**
      * Return the price inclusive of tax.
      */
-    public function priceIncTax(): int|\App\Store\DataTypes\Price
+    public function priceIncTax(): int|\App\DataTypes\Price
     {
         if (prices_inc_tax()) {
             return $this->price;
@@ -107,7 +107,7 @@ class Price extends BaseModel implements Contracts\Price
     /**
      * Return the compare price inclusive of tax.
      */
-    public function comparePriceIncTax(): int|\App\Store\DataTypes\Price
+    public function comparePriceIncTax(): int|\App\DataTypes\Price
     {
         if (prices_inc_tax()) {
             return $this->compare_price;
@@ -124,7 +124,11 @@ class Price extends BaseModel implements Contracts\Price
      */
     protected function getPriceableTaxRate(): int|float
     {
-        return Blink::once('price_tax_rate_'.$this->priceable->getTaxClass()->id, function () {
+        if (!$this->priceable) {
+            return 0;
+        }
+
+        return Blink::once('price_tax_rate_'.$this->priceable->getTaxClass()?->id, function () {
             $taxZone = TaxZone::where('default', '=', 1)->first();
 
             if ($taxZone && ! is_null($taxClass = $this->priceable->getTaxClass())) {

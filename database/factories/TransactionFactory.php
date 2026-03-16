@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
-use App\Store\Models\Order;
-use App\Store\Models\Transaction;
+use App\Models\Order;
+use App\Models\Transaction;
 
 class TransactionFactory extends BaseFactory
 {

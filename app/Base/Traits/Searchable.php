@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\Base\Traits;
+namespace App\Base\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Laravel\Scout\EngineManager;
 use Laravel\Scout\Searchable as ScoutSearchable;
-use App\Store\Search\ScoutIndexer;
+use App\Search\ScoutIndexer;
 
 trait Searchable
 {

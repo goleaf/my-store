@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Actions\Taxes;
+namespace App\Actions\Taxes;
 
 use Illuminate\Database\Eloquent\Builder;
-use App\Store\Models\TaxZonePostcode;
+use App\Models\TaxZonePostcode;
 
 class GetTaxZonePostcode
 {
@@ -11,7 +11,7 @@ class GetTaxZonePostcode
      * Execute the action.
      *
      * @param  string  $postcode
-     * @return null|\App\Store\Models\TaxZonePostcode
+     * @return null|\App\Models\TaxZonePostcode
      */
     public function execute($postcode)
     {
@@ -44,7 +44,7 @@ class GetTaxZonePostcode
      * Return the zone or zones which match this postcode.
      *
      * @param  string  $postcode
-     * @return \App\Store\Models\TaxZonePostcode|\Illuminate\Support\Collection
+     * @return \App\Models\TaxZonePostcode|\Illuminate\Support\Collection
      */
     protected function getZoneMatches($postcode)
     {

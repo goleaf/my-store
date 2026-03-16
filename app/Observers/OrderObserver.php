@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Observers;
+namespace App\Observers;
 
-use App\Store\Models\Contracts\Order as OrderContract;
-use App\Store\Models\Order;
+use App\Models\Contracts\Order as OrderContract;
+use App\Models\Order;
 
 class OrderObserver
 {

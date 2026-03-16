@@ -2,9 +2,9 @@
 
 use App\Livewire\Components\Cart;
 use Livewire\Livewire;
-use App\Store\Facades\CartSession;
-use App\Store\Models\Cart as StoreCart;
-use App\Store\Models\Language;
+use App\Facades\CartSession;
+use App\Models\Cart as StoreCart;
+use App\Models\Language;
 
 test('component can mount', function () {
     Language::factory()->create(['default' => true]);

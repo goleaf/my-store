@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Store\Actions\Orders;
+namespace App\Actions\Orders;
 
-use App\Store\Models\Contracts\Order as OrderContract;
+use App\Models\Contracts\Order as OrderContract;
 
 class GenerateOrderReference
 {

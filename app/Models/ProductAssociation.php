@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Enums\Concerns\ProvidesProductAssociationType;
-use App\Store\Base\Enums\ProductAssociation as ProductAssociationEnum;
-use App\Store\Base\Traits\HasMacros;
-use App\Store\Database\Factories\ProductAssociationFactory;
+use App\Base\BaseModel;
+use App\Base\Enums\Concerns\ProvidesProductAssociationType;
+use App\Base\Enums\ProductAssociation as ProductAssociationEnum;
+use App\Base\Traits\HasMacros;
+use App\Database\Factories\ProductAssociationFactory;
 
 /**
  * @property int $id
@@ -28,7 +28,7 @@ class ProductAssociation extends BaseModel implements Contracts\ProductAssociati
      * Define the cross-sell type.
      *
      * @deprecated 1.2.0
-     * @see \App\Store\Base\Enums\ProductAssociation
+     * @see \App\Base\Enums\ProductAssociation
      */
     const CROSS_SELL = 'cross-sell';
 
@@ -36,7 +36,7 @@ class ProductAssociation extends BaseModel implements Contracts\ProductAssociati
      * Define the upsell type.
      *
      * @deprecated 1.2.0
-     * @see \App\Store\Base\Enums\ProductAssociation
+     * @see \App\Base\Enums\ProductAssociation
      */
     const UP_SELL = 'up-sell';
 
@@ -44,7 +44,7 @@ class ProductAssociation extends BaseModel implements Contracts\ProductAssociati
      * Define the alternate type.
      *
      * @deprecated 1.2.0
-     * @see \App\Store\Base\Enums\ProductAssociation
+     * @see \App\Base\Enums\ProductAssociation
      */
     const ALTERNATE = 'alternate';
 
@@ -121,7 +121,7 @@ class ProductAssociation extends BaseModel implements Contracts\ProductAssociati
 
     public static function getTypes(): array
     {
-        $enum = config('store.products.association_types_enum', \App\Store\Base\Enums\ProductAssociation::class);
+        $enum = config('store.products.association_types_enum', \App\Base\Enums\ProductAssociation::class);
 
         return collect($enum::cases())->mapWithKeys(function ($item) {
             return [

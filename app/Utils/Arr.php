@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Utils;
+namespace App\Utils;
 
 use TreeWalker;
 

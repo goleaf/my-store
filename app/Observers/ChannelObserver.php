@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Observers;
+namespace App\Observers;
 
-use App\Store\Models\Channel;
-use App\Store\Models\Contracts\Channel as ChannelContract;
+use App\Models\Channel;
+use App\Models\Contracts\Channel as ChannelContract;
 
 class ChannelObserver
 {

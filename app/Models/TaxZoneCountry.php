@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Traits\HasMacros;
-use App\Store\Database\Factories\TaxZoneCountryFactory;
+use App\Base\BaseModel;
+use App\Base\Traits\HasMacros;
+use App\Database\Factories\TaxZoneCountryFactory;
 
 /**
  * @property int $id

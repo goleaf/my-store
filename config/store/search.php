@@ -16,12 +16,12 @@ return [
         /*
          * These models are required by the system, do not change them.
          */
-        App\Store\Models\Brand::class,
-        App\Store\Models\Collection::class,
-        App\Store\Models\Customer::class,
-        App\Store\Models\Order::class,
-        App\Store\Models\Product::class,
-        App\Store\Models\ProductOption::class,
+        App\Models\Brand::class,
+        App\Models\Collection::class,
+        App\Models\Customer::class,
+        App\Models\Order::class,
+        App\Models\Product::class,
+        App\Models\ProductOption::class,
 
         /*
          * Below you can add your own models for indexing...
@@ -39,18 +39,18 @@ return [
     |
     */
     'engine_map' => [
-        // App\Store\Models\Product::class => 'algolia',
-        // App\Store\Models\Order::class => 'meilisearch',
-        // App\Store\Models\Collection::class => 'meilisearch',
+        // App\Models\Product::class => 'algolia',
+        // App\Models\Order::class => 'meilisearch',
+        // App\Models\Collection::class => 'meilisearch',
     ],
 
     'indexers' => [
-        App\Store\Models\Brand::class => App\Store\Search\BrandIndexer::class,
-        App\Store\Models\Collection::class => App\Store\Search\CollectionIndexer::class,
-        App\Store\Models\Customer::class => App\Store\Search\CustomerIndexer::class,
-        App\Store\Models\Order::class => App\Store\Search\OrderIndexer::class,
-        App\Store\Models\Product::class => App\Store\Search\ProductIndexer::class,
-        App\Store\Models\ProductOption::class => App\Store\Search\ProductOptionIndexer::class,
+        App\Models\Brand::class => App\Search\BrandIndexer::class,
+        App\Models\Collection::class => App\Search\CollectionIndexer::class,
+        App\Models\Customer::class => App\Search\CustomerIndexer::class,
+        App\Models\Order::class => App\Search\OrderIndexer::class,
+        App\Models\Product::class => App\Search\ProductIndexer::class,
+        App\Models\ProductOption::class => App\Search\ProductOptionIndexer::class,
     ],
 
 ];

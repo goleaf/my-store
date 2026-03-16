@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Store\Base\Casts;
+namespace App\Base\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Contracts\Database\Eloquent\SerializesCastableAttributes;
-use App\Store\Base\ValueObjects\Cart\TaxBreakdownAmount;
-use App\Store\DataTypes\Price;
-use App\Store\Models\Currency;
+use App\Base\ValueObjects\Cart\TaxBreakdownAmount;
+use App\DataTypes\Price;
+use App\Models\Currency;
 use Spatie\LaravelBlink\BlinkFacade;
 
 class TaxBreakdown implements CastsAttributes, SerializesCastableAttributes
@@ -18,11 +18,11 @@ class TaxBreakdown implements CastsAttributes, SerializesCastableAttributes
      * @param  string  $key
      * @param  mixed  $value
      * @param  array  $attributes
-     * @return \App\Store\Base\ValueObjects\Cart\TaxBreakdown
+     * @return \App\Base\ValueObjects\Cart\TaxBreakdown
      */
     public function get($model, $key, $value, $attributes)
     {
-        $breakdown = new \App\Store\Base\ValueObjects\Cart\TaxBreakdown;
+        $breakdown = new \App\Base\ValueObjects\Cart\TaxBreakdown;
 
         $breakdown->amounts = collect(
             json_decode($value, false)
@@ -57,8 +57,8 @@ class TaxBreakdown implements CastsAttributes, SerializesCastableAttributes
      */
     public function set($model, $key, $value, $attributes)
     {
-        if ($value && ! is_a($value, \App\Store\Base\ValueObjects\Cart\TaxBreakdown::class)) {
-            throw new \Exception('Tax breakdown must be instance of App\Store\Base\ValueObjects\Cart\TaxBreakdown');
+        if ($value && ! is_a($value, \App\Base\ValueObjects\Cart\TaxBreakdown::class)) {
+            throw new \Exception('Tax breakdown must be instance of App\Base\ValueObjects\Cart\TaxBreakdown');
         }
 
         if (! $value) {

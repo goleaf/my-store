@@ -87,16 +87,16 @@ return [
         ],
         'status' => [
             'label' => 'Durum',
-            \App\Store\Models\Discount::ACTIVE => [
+            \App\Models\Discount::ACTIVE => [
                 'label' => 'Aktif',
             ],
-            \App\Store\Models\Discount::PENDING => [
+            \App\Models\Discount::PENDING => [
                 'label' => 'Beklemede',
             ],
-            \App\Store\Models\Discount::EXPIRED => [
+            \App\Models\Discount::EXPIRED => [
                 'label' => 'Süresi Dolmuş',
             ],
-            \App\Store\Models\Discount::SCHEDULED => [
+            \App\Models\Discount::SCHEDULED => [
                 'label' => 'Planlanmış',
             ],
         ],

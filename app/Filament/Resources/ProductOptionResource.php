@@ -4,8 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductOptionResource\Pages;
 use App\Filament\Resources\ProductOptionResource\RelationManagers;
-use App\Store\Models\Contracts\ProductOption as ProductOptionContract;
-use App\Store\Models\Language;
+use App\Models\Contracts\ProductOption as ProductOptionContract;
+use App\Models\Language;
 use App\Support\Forms\Components\TranslatedText;
 use App\Support\Resources\BaseResource;
 use App\Support\Tables\Columns\TranslatedTextColumn;

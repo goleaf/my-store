@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Store\DiscountTypes;
+namespace App\DiscountTypes;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
-use App\Store\Base\DiscountTypeInterface;
-use App\Store\Base\ValueObjects\Cart\DiscountBreakdown;
-use App\Store\Models\Cart;
-use App\Store\Models\Contracts\Cart as CartContract;
-use App\Store\Models\Contracts\Discount as DiscountContract;
-use App\Store\Models\Discount;
+use App\Base\DiscountTypeInterface;
+use App\Base\ValueObjects\Cart\DiscountBreakdown;
+use App\Models\Cart;
+use App\Models\Contracts\Cart as CartContract;
+use App\Models\Contracts\Discount as DiscountContract;
+use App\Models\Discount;
 
 abstract class AbstractDiscountType implements DiscountTypeInterface
 {

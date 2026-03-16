@@ -1,7 +1,7 @@
 <?php
 namespace App\Livewire;
-use App\Store\Models\Collection;
-use App\Store\Models\Brand;
+use App\Models\Collection;
+use App\Models\Brand;
 use Livewire\Component;
 class Footer extends Component
 {

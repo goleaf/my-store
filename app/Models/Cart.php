@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
@@ -13,37 +13,37 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\ValidationException;
-use App\Store\Actions\Carts\AddAddress;
-use App\Store\Actions\Carts\AddOrUpdatePurchasable;
-use App\Store\Actions\Carts\AssociateUser;
-use App\Store\Actions\Carts\CreateOrder;
-use App\Store\Actions\Carts\GenerateFingerprint;
-use App\Store\Actions\Carts\RemovePurchasable;
-use App\Store\Actions\Carts\SetShippingOption;
-use App\Store\Actions\Carts\UpdateCartLine;
-use App\Store\Base\Addressable;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Casts\CouponString;
-use App\Store\Base\StoreUser;
-use App\Store\Base\Purchasable;
-use App\Store\Base\Traits\CachesProperties;
-use App\Store\Base\Traits\HasMacros;
-use App\Store\Base\Traits\LogsActivity;
-use App\Store\Base\ValueObjects\Cart\DiscountBreakdown;
-use App\Store\Base\ValueObjects\Cart\FreeItem;
-use App\Store\Base\ValueObjects\Cart\Promotion;
-use App\Store\Base\ValueObjects\Cart\ShippingBreakdown;
-use App\Store\Base\ValueObjects\Cart\TaxBreakdown;
-use App\Store\Database\Factories\CartFactory;
-use App\Store\DataTypes\Price;
-use App\Store\DataTypes\ShippingOption;
-use App\Store\Exceptions\Carts\CartException;
-use App\Store\Exceptions\FingerprintMismatchException;
-use App\Store\Facades\DB;
-use App\Store\Facades\ShippingManifest;
-use App\Store\Pipelines\Cart\Calculate;
-use App\Store\Validation\Cart\ValidateCartForOrderCreation;
-use App\Store\Validation\CartLine\CartLineStock;
+use App\Actions\Carts\AddAddress;
+use App\Actions\Carts\AddOrUpdatePurchasable;
+use App\Actions\Carts\AssociateUser;
+use App\Actions\Carts\CreateOrder;
+use App\Actions\Carts\GenerateFingerprint;
+use App\Actions\Carts\RemovePurchasable;
+use App\Actions\Carts\SetShippingOption;
+use App\Actions\Carts\UpdateCartLine;
+use App\Base\Addressable;
+use App\Base\BaseModel;
+use App\Base\Casts\CouponString;
+use App\Base\StoreUser;
+use App\Base\Purchasable;
+use App\Base\Traits\CachesProperties;
+use App\Base\Traits\HasMacros;
+use App\Base\Traits\LogsActivity;
+use App\Base\ValueObjects\Cart\DiscountBreakdown;
+use App\Base\ValueObjects\Cart\FreeItem;
+use App\Base\ValueObjects\Cart\Promotion;
+use App\Base\ValueObjects\Cart\ShippingBreakdown;
+use App\Base\ValueObjects\Cart\TaxBreakdown;
+use App\Database\Factories\CartFactory;
+use App\DataTypes\Price;
+use App\DataTypes\ShippingOption;
+use App\Exceptions\Carts\CartException;
+use App\Exceptions\FingerprintMismatchException;
+use App\Facades\DB;
+use App\Facades\ShippingManifest;
+use App\Pipelines\Cart\Calculate;
+use App\Validation\Cart\ValidateCartForOrderCreation;
+use App\Validation\CartLine\CartLineStock;
 
 /**
  * @property int $id

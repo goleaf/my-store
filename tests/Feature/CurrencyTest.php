@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Store\Models\Currency;
+use App\Models\Currency;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\LaravelBlink\BlinkFacade as Blink;
 

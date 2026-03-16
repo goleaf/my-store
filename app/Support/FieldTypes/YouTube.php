@@ -2,7 +2,7 @@
 
 namespace App\Support\FieldTypes;
 
-use App\Store\Models\Attribute;
+use App\Models\Attribute;
 use App\Support\Forms\Components\YouTube as YouTubeInput;
 use App\Support\Synthesizers\YouTubeSynth;
 use Filament\Forms\Components\Component;

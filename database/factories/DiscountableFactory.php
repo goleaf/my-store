@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
-use App\Store\Models\Discountable;
-use App\Store\Models\ProductVariant;
+use App\Models\Discountable;
+use App\Models\ProductVariant;
 
 class DiscountableFactory extends BaseFactory
 {

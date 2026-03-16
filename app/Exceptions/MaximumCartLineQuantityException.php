@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Exceptions;
+namespace App\Exceptions;
 
 class MaximumCartLineQuantityException extends StoreException
 {

@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Casts\DiscountBreakdown;
-use App\Store\Base\Casts\Price;
-use App\Store\Base\Casts\ShippingBreakdown;
-use App\Store\Base\Casts\TaxBreakdown;
-use App\Store\Base\Traits\HasMacros;
-use App\Store\Base\Traits\HasTags;
-use App\Store\Base\Traits\LogsActivity;
-use App\Store\Base\Traits\Searchable;
-use App\Store\Database\Factories\OrderFactory;
+use App\Base\BaseModel;
+use App\Base\Casts\DiscountBreakdown;
+use App\Base\Casts\Price;
+use App\Base\Casts\ShippingBreakdown;
+use App\Base\Casts\TaxBreakdown;
+use App\Base\Traits\HasMacros;
+use App\Base\Traits\HasTags;
+use App\Base\Traits\LogsActivity;
+use App\Base\Traits\Searchable;
+use App\Database\Factories\OrderFactory;
 
 /**
  * @property int $id

@@ -6,7 +6,7 @@ use App\Filament\Extensions\ProductVariantsHeaderWidgetsExtension;
 use App\Filament\Resources\ProductResource\Pages\ManageProductVariants;
 use App\Modifiers\ShippingModifier;
 use App\Shipping\ShippingPlugin;
-use App\Store\Base\ShippingModifiers;
+use App\Base\ShippingModifiers;
 use App\Support\Facades\AdminPanel;
 use Illuminate\Support\ServiceProvider;
 
@@ -39,8 +39,8 @@ class AppServiceProvider extends ServiceProvider
             ShippingModifier::class
         );
 
-        \App\Store\Facades\ModelManifest::replace(
-            \App\Store\Models\Contracts\Product::class,
+        \App\Facades\ModelManifest::replace(
+            \App\Models\Contracts\Product::class,
             \App\Models\Product::class,
             // \App\Models\CustomProduct::class,
         );

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\Base\Traits;
+namespace App\Base\Traits;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use App\Store\Facades\Pricing;
-use App\Store\Managers\PricingManager;
-use App\Store\Models\Price;
+use App\Facades\Pricing;
+use App\Managers\PricingManager;
+use App\Models\Price;
 
 trait HasPrices
 {

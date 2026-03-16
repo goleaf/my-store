@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Base\Traits;
+namespace App\Base\Traits;
 
 use Illuminate\Support\Arr;
 use Spatie\Activitylog\LogOptions;

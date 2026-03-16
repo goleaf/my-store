@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Actions\Carts;
+namespace App\Actions\Carts;
 
-use App\Store\Facades\DB;
-use App\Store\Models\Cart;
-use App\Store\Models\Contracts\Cart as CartContract;
+use App\Facades\DB;
+use App\Models\Cart;
+use App\Models\Contracts\Cart as CartContract;
 
 class MergeCart
 {

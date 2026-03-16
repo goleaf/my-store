@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\CollectionResource\Pages;
 
 use App\Filament\Resources\CollectionResource;
-use App\Store\Models\Contracts\Collection as CollectionContract;
+use App\Models\Contracts\Collection as CollectionContract;
 use App\Support\Resources\Pages\ManageUrlsRelatedRecords;
 
 class ManageCollectionUrls extends ManageUrlsRelatedRecords

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
-use App\Store\Models\Currency;
-use App\Store\Models\Price;
+use App\Models\Currency;
+use App\Models\Price;
 
 class PriceFactory extends BaseFactory
 {

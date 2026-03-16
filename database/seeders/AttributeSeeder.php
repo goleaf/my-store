@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Support\Facades\DB;
-use App\Store\Models\Attribute;
-use App\Store\Models\AttributeGroup;
+use App\Models\Attribute;
+use App\Models\AttributeGroup;
 
 class AttributeSeeder extends AbstractSeeder
 {

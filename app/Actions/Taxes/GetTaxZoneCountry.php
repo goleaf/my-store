@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Actions\Taxes;
+namespace App\Actions\Taxes;
 
 use Illuminate\Database\Eloquent\Builder;
-use App\Store\Models\TaxZoneCountry;
+use App\Models\TaxZoneCountry;
 
 class GetTaxZoneCountry
 {

@@ -2,7 +2,7 @@
 
 namespace App\Support\Synthesizers;
 
-use App\Store\FieldTypes\Dropdown;
+use App\FieldTypes\Dropdown;
 
 class DropdownSynth extends AbstractFieldSynth
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Store\Observers;
+namespace App\Observers;
 
-use App\Store\Models\Contracts\Customer as CustomerContract;
+use App\Models\Contracts\Customer as CustomerContract;
 
 class CustomerObserver
 {

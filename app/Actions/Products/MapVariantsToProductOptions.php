@@ -2,7 +2,7 @@
 
 namespace App\Actions\Products;
 
-use App\Store\Utils\Arr;
+use App\Utils\Arr;
 use Illuminate\Support\Str;
 
 class MapVariantsToProductOptions

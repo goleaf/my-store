@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
-use App\Store\Exceptions\FieldTypes\FieldTypeMissingException;
-use App\Store\Exceptions\FieldTypes\InvalidFieldTypeException;
-use App\Store\FieldTypes\Dropdown;
-use App\Store\FieldTypes\File;
-use App\Store\FieldTypes\ListField;
-use App\Store\FieldTypes\Number;
-use App\Store\FieldTypes\Text;
-use App\Store\FieldTypes\Toggle;
-use App\Store\FieldTypes\TranslatedText;
-use App\Store\FieldTypes\YouTube;
+use App\Exceptions\FieldTypes\FieldTypeMissingException;
+use App\Exceptions\FieldTypes\InvalidFieldTypeException;
+use App\FieldTypes\Dropdown;
+use App\FieldTypes\File;
+use App\FieldTypes\ListField;
+use App\FieldTypes\Number;
+use App\FieldTypes\Text;
+use App\FieldTypes\Toggle;
+use App\FieldTypes\TranslatedText;
+use App\FieldTypes\YouTube;
 
 class FieldTypeManifest
 {

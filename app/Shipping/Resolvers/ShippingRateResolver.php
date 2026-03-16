@@ -3,12 +3,12 @@
 namespace App\Shipping\Resolvers;
 
 use Illuminate\Support\Collection;
-use App\Store\Models\Cart;
-use App\Store\Models\Contracts\Cart as CartContract;
-use App\Store\Models\Contracts\Country as CountryContract;
-use App\Store\Models\Country;
-use App\Store\Models\CustomerGroup;
-use App\Store\Models\State;
+use App\Models\Cart;
+use App\Models\Contracts\Cart as CartContract;
+use App\Models\Contracts\Country as CountryContract;
+use App\Models\Country;
+use App\Models\CustomerGroup;
+use App\Models\State;
 use App\Shipping\DataTransferObjects\PostcodeLookup;
 use App\Shipping\Facades\Shipping;
 

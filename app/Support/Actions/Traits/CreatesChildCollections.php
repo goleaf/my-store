@@ -2,10 +2,10 @@
 
 namespace App\Support\Actions\Traits;
 
-use App\Store\Facades\DB;
-use App\Store\Models\Attribute;
-use App\Store\Models\Collection;
-use App\Store\Models\Contracts\Collection as CollectionContract;
+use App\Facades\DB;
+use App\Models\Attribute;
+use App\Models\Collection;
+use App\Models\Contracts\Collection as CollectionContract;
 
 trait CreatesChildCollections
 {

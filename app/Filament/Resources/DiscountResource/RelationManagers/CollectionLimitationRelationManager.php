@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\DiscountResource\RelationManagers;
 
-use App\Store\Models\Collection;
+use App\Models\Collection;
 use App\Support\RelationManagers\BaseRelationManager;
 use Filament\Forms\Components\Select;
 use Filament\Tables;

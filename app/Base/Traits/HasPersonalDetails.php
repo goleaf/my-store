@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Base\Traits;
+namespace App\Base\Traits;
 
 trait HasPersonalDetails
 {

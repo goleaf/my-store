@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
-use App\Store\Models\Country;
-use App\Store\Models\TaxZone;
-use App\Store\Models\TaxZonePostcode;
+use App\Models\Country;
+use App\Models\TaxZone;
+use App\Models\TaxZonePostcode;
 
 class TaxZonePostcodeFactory extends BaseFactory
 {

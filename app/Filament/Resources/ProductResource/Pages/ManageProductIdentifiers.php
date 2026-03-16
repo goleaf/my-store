@@ -4,7 +4,7 @@ namespace App\Filament\Resources\ProductResource\Pages;
 
 use App\Filament\Resources\ProductResource;
 use App\Filament\Resources\ProductVariantResource;
-use App\Store\Models\Contracts\ProductVariant as ProductVariantContract;
+use App\Models\Contracts\ProductVariant as ProductVariantContract;
 use App\Support\Pages\BaseEditRecord;
 use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;

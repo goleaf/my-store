@@ -3,7 +3,7 @@ namespace App\Livewire;
 use App\Traits\FetchesUrls;
 use Illuminate\View\View;
 use Livewire\Component;
-use App\Store\Models\Brand;
+use App\Models\Brand;
 class BrandPage extends Component
 {
     use FetchesUrls;

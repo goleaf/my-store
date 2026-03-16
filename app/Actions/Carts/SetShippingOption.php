@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\Actions\Carts;
+namespace App\Actions\Carts;
 
-use App\Store\Actions\AbstractAction;
-use App\Store\DataTypes\ShippingOption;
-use App\Store\Models\Cart;
-use App\Store\Models\Contracts\Cart as CartContract;
+use App\Actions\AbstractAction;
+use App\DataTypes\ShippingOption;
+use App\Models\Cart;
+use App\Models\Contracts\Cart as CartContract;
 
 class SetShippingOption extends AbstractAction
 {

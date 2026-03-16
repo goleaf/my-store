@@ -2,7 +2,7 @@
 
 namespace App\Modifiers;
 
-use App\Store\Models\Cart;
+use App\Models\Cart;
 
 class ShippingModifier
 {
@@ -16,13 +16,13 @@ class ShippingModifier
          */
 
         if(config('shipping-tables.enabled') == false){
-            \App\Store\Facades\ShippingManifest::addOption(
-                new \App\Store\DataTypes\ShippingOption(
+            \App\Facades\ShippingManifest::addOption(
+                new \App\DataTypes\ShippingOption(
                     name: 'Basic Delivery',
                     description: 'Basic Delivery',
                     identifier: 'BASDEL',
-                    price: new \App\Store\DataTypes\Price(500, $cart->currency, 1),
-                    taxClass: \App\Store\Models\TaxClass::getDefault()
+                    price: new \App\DataTypes\Price(500, $cart->currency, 1),
+                    taxClass: \App\Models\TaxClass::getDefault()
                 )
             );
         }

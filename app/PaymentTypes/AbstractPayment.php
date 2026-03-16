@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Store\PaymentTypes;
+namespace App\PaymentTypes;
 
-use App\Store\Base\DataTransferObjects\PaymentChecks;
-use App\Store\Base\PaymentTypeInterface;
-use App\Store\Models\Cart;
-use App\Store\Models\Contracts\Cart as CartContract;
-use App\Store\Models\Contracts\Order as OrderContract;
-use App\Store\Models\Contracts\Transaction as TransactionContract;
-use App\Store\Models\Order;
+use App\Base\DataTransferObjects\PaymentChecks;
+use App\Base\PaymentTypeInterface;
+use App\Models\Cart;
+use App\Models\Contracts\Cart as CartContract;
+use App\Models\Contracts\Order as OrderContract;
+use App\Models\Contracts\Transaction as TransactionContract;
+use App\Models\Order;
 
 abstract class AbstractPayment implements PaymentTypeInterface
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Base\Traits;
+namespace App\Base\Traits;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Store\Models\Attribute;
+use App\Models\Attribute;
 
 trait HasAttributes
 {

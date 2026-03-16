@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Store\Base\BaseModel;
-use App\Store\Database\Factories\DiscountableFactory;
+use App\Base\BaseModel;
+use App\Database\Factories\DiscountableFactory;
 
 class DiscountCollection extends BaseModel implements Contracts\DiscountCollection
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Managers;
+namespace App\Managers;
 
 use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
-use App\Store\PaymentTypes\OfflinePayment;
+use App\PaymentTypes\OfflinePayment;
 
 class PaymentManager extends Manager
 {

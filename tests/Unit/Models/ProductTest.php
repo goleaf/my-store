@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Product;
-use App\Store\Models\Product as StoreProduct;
+use App\Models\Product as StoreProduct;
 
 test('product extends store product', function () {
     expect(Product::class)->toExtend(StoreProduct::class);

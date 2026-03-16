@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Exceptions\Carts;
+namespace App\Exceptions\Carts;
 
 class BillingAddressMissingException extends CartException
 {

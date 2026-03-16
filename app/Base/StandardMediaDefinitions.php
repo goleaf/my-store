@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
 use Spatie\Image\Enums\BorderType;
 use Spatie\Image\Enums\Fit;

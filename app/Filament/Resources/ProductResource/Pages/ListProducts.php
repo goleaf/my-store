@@ -3,11 +3,11 @@
 namespace App\Filament\Resources\ProductResource\Pages;
 
 use App\Filament\Resources\ProductResource;
-use App\Store\Facades\DB;
-use App\Store\Models\Attribute;
-use App\Store\Models\Currency;
-use App\Store\Models\Product;
-use App\Store\Models\TaxClass;
+use App\Facades\DB;
+use App\Models\Attribute;
+use App\Models\Currency;
+use App\Models\Product;
+use App\Models\TaxClass;
 use App\Support\Pages\BaseListRecords;
 use Filament\Actions;
 use Filament\Resources\Components\Tab;

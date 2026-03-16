@@ -5,7 +5,7 @@ namespace App\Shipping\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use App\Store\Base\BaseModel;
+use App\Base\BaseModel;
 use App\Shipping\Factories\ShippingExclusionFactory;
 
 class ShippingExclusion extends BaseModel implements Contracts\ShippingExclusion

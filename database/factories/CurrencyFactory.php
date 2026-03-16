@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
-use App\Store\Models\Currency;
+use App\Models\Currency;
 
 class CurrencyFactory extends BaseFactory
 {

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\AttributeGroupResource\RelationManagers;
 
-use App\Store\Models\Language;
+use App\Models\Language;
 use App\Support\Facades\AttributeData;
 use App\Support\Forms\Components\TranslatedText;
 use App\Support\RelationManagers\BaseRelationManager;

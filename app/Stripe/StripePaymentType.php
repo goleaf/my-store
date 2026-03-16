@@ -2,17 +2,17 @@
 
 namespace App\Stripe;
 
-use App\Store\Base\DataTransferObjects\PaymentAuthorize;
-use App\Store\Base\DataTransferObjects\PaymentCapture;
-use App\Store\Base\DataTransferObjects\PaymentCheck;
-use App\Store\Base\DataTransferObjects\PaymentChecks;
-use App\Store\Base\DataTransferObjects\PaymentRefund;
-use App\Store\Events\PaymentAttemptEvent;
-use App\Store\Exceptions\Carts\CartException;
-use App\Store\Exceptions\DisallowMultipleCartOrdersException;
-use App\Store\Models\Contracts\Transaction as TransactionContract;
-use App\Store\Models\Transaction;
-use App\Store\PaymentTypes\AbstractPayment;
+use App\Base\DataTransferObjects\PaymentAuthorize;
+use App\Base\DataTransferObjects\PaymentCapture;
+use App\Base\DataTransferObjects\PaymentCheck;
+use App\Base\DataTransferObjects\PaymentChecks;
+use App\Base\DataTransferObjects\PaymentRefund;
+use App\Events\PaymentAttemptEvent;
+use App\Exceptions\Carts\CartException;
+use App\Exceptions\DisallowMultipleCartOrdersException;
+use App\Models\Contracts\Transaction as TransactionContract;
+use App\Models\Transaction;
+use App\PaymentTypes\AbstractPayment;
 use App\Stripe\Actions\UpdateOrderFromIntent;
 use App\Stripe\Facades\Stripe;
 use App\Stripe\Models\StripePaymentIntent;

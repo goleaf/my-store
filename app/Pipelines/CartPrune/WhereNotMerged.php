@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Pipelines\CartPrune;
+namespace App\Pipelines\CartPrune;
 
 use Closure;
 use Illuminate\Database\Eloquent\Builder;

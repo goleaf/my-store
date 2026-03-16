@@ -5,7 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\TaxRateResource\Pages;
 use App\Filament\Clusters\Taxes;
 use App\Filament\Resources\TaxRateResource\RelationManagers\TaxRateAmountRelationManager;
-use App\Store\Models\Contracts\TaxRate as TaxRateContract;
+use App\Models\Contracts\TaxRate as TaxRateContract;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
 use Filament\Forms\Components\Component;

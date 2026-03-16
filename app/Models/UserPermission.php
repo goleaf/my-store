@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Traits\HasMacros;
+use App\Base\BaseModel;
+use App\Base\Traits\HasMacros;
 
 class UserPermission extends BaseModel implements Contracts\UserPermission
 {

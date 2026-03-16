@@ -1,6 +1,6 @@
 <?php
 
-use App\Store\Base\StandardMediaDefinitions;
+use App\Base\StandardMediaDefinitions;
 
 return [
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Store\PaymentTypes;
+namespace App\PaymentTypes;
 
-use App\Store\Base\DataTransferObjects\PaymentAuthorize;
-use App\Store\Base\DataTransferObjects\PaymentCapture;
-use App\Store\Base\DataTransferObjects\PaymentRefund;
-use App\Store\Events\PaymentAttemptEvent;
-use App\Store\Models\Contracts\Transaction as TransactionContract;
+use App\Base\DataTransferObjects\PaymentAuthorize;
+use App\Base\DataTransferObjects\PaymentCapture;
+use App\Base\DataTransferObjects\PaymentRefund;
+use App\Events\PaymentAttemptEvent;
+use App\Models\Contracts\Transaction as TransactionContract;
 
 class OfflinePayment extends AbstractPayment
 {

@@ -87,16 +87,16 @@ return [
         ],
         'status' => [
             'label' => 'Status',
-            \App\Store\Models\Discount::ACTIVE => [
+            \App\Models\Discount::ACTIVE => [
                 'label' => 'Ativo',
             ],
-            \App\Store\Models\Discount::PENDING => [
+            \App\Models\Discount::PENDING => [
                 'label' => 'Pendente',
             ],
-            \App\Store\Models\Discount::EXPIRED => [
+            \App\Models\Discount::EXPIRED => [
                 'label' => 'Expirado',
             ],
-            \App\Store\Models\Discount::SCHEDULED => [
+            \App\Models\Discount::SCHEDULED => [
                 'label' => 'Agendado',
             ],
         ],

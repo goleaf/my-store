@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\Models\Contracts;
+namespace App\Models\Contracts;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Store\Models\ProductOptionValue;
+use App\Models\ProductOptionValue;
 
 interface ProductOption
 {

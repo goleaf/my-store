@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
-use App\Store\Base\ValueObjects\Cart\TaxBreakdown;
-use App\Store\Models\Channel;
-use App\Store\Models\Order;
+use App\Base\ValueObjects\Cart\TaxBreakdown;
+use App\Models\Channel;
+use App\Models\Order;
 
 class OrderFactory extends BaseFactory
 {

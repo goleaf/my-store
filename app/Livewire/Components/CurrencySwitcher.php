@@ -3,8 +3,8 @@ namespace App\Livewire\Components;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
-use App\Store\Facades\CartSession;
-use App\Store\Models\Currency;
+use App\Facades\CartSession;
+use App\Models\Currency;
 class CurrencySwitcher extends Component
 {
     public function getCurrenciesProperty(): Collection

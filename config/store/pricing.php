@@ -1,6 +1,6 @@
 <?php
 
-use App\Store\Pricing\DefaultPriceFormatter;
+use App\Pricing\DefaultPriceFormatter;
 
 return [
 

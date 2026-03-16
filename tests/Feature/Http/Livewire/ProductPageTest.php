@@ -1,12 +1,12 @@
 <?php
 
-use App\Store\FieldTypes\Text;
-use App\Store\Models\Currency;
-use App\Store\Models\Language;
-use App\Store\Models\Price;
-use App\Store\Models\Product;
-use App\Store\Models\ProductVariant;
-use App\Store\Models\Url;
+use App\FieldTypes\Text;
+use App\Models\Currency;
+use App\Models\Language;
+use App\Models\Price;
+use App\Models\Product;
+use App\Models\ProductVariant;
+use App\Models\Url;
 
 test('product page shows the product name', function () {
     Language::factory()->create([

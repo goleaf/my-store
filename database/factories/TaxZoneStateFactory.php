@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
-use App\Store\Models\State;
-use App\Store\Models\TaxZone;
-use App\Store\Models\TaxZoneState;
+use App\Models\State;
+use App\Models\TaxZone;
+use App\Models\TaxZoneState;
 
 class TaxZoneStateFactory extends BaseFactory
 {

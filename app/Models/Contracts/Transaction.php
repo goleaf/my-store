@@ -1,5 +1,5 @@
 <?php
 
-namespace App\Store\Models\Contracts;
+namespace App\Models\Contracts;
 
 interface Transaction {}

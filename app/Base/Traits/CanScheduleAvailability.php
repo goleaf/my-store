@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\Base\Traits;
+namespace App\Base\Traits;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
-use App\Store\Exceptions\SchedulingException;
+use App\Exceptions\SchedulingException;
 
 trait CanScheduleAvailability
 {

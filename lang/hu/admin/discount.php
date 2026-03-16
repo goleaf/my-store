@@ -87,16 +87,16 @@ return [
         ],
         'status' => [
             'label' => 'Státusz',
-            \App\Store\Models\Discount::ACTIVE => [
+            \App\Models\Discount::ACTIVE => [
                 'label' => 'Aktív',
             ],
-            \App\Store\Models\Discount::PENDING => [
+            \App\Models\Discount::PENDING => [
                 'label' => 'Függőben',
             ],
-            \App\Store\Models\Discount::EXPIRED => [
+            \App\Models\Discount::EXPIRED => [
                 'label' => 'Lejárt',
             ],
-            \App\Store\Models\Discount::SCHEDULED => [
+            \App\Models\Discount::SCHEDULED => [
                 'label' => 'Ütemezett',
             ],
         ],

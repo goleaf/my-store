@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Store\Base\ValueObjects\Cart;
+namespace App\Base\ValueObjects\Cart;
 
-use App\Store\DataTypes\Price;
+use App\DataTypes\Price;
 
 class ShippingBreakdownItem
 {

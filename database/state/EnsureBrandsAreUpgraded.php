@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Store\Database\State;
+namespace App\Database\State;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
-use App\Store\Models\Brand;
-use App\Store\Models\Language;
-use App\Store\Models\Product;
+use App\Models\Brand;
+use App\Models\Language;
+use App\Models\Product;
 
 class EnsureBrandsAreUpgraded
 {

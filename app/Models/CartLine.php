@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Traits\CachesProperties;
-use App\Store\Base\Traits\HasMacros;
-use App\Store\Base\Traits\LogsActivity;
-use App\Store\Base\ValueObjects\Cart\TaxBreakdown;
-use App\Store\Database\Factories\CartLineFactory;
-use App\Store\DataTypes\Price;
+use App\Base\BaseModel;
+use App\Base\Traits\CachesProperties;
+use App\Base\Traits\HasMacros;
+use App\Base\Traits\LogsActivity;
+use App\Base\ValueObjects\Cart\TaxBreakdown;
+use App\Database\Factories\CartLineFactory;
+use App\DataTypes\Price;
 
 /**
  * @property int $id

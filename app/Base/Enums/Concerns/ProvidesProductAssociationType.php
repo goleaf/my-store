@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Store\Base\Enums\Concerns;
+namespace App\Base\Enums\Concerns;
 
-use App\Store\Base\Enums\ProductAssociation;
+use App\Base\Enums\ProductAssociation;
 
 /**
  * @mixin ProductAssociation

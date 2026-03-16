@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Traits\HasMacros;
-use App\Store\Base\Traits\LogsActivity;
-use App\Store\Database\Factories\TaxRateFactory;
-use App\Store\Facades\DB;
+use App\Base\BaseModel;
+use App\Base\Traits\HasMacros;
+use App\Base\Traits\LogsActivity;
+use App\Database\Factories\TaxRateFactory;
+use App\Facades\DB;
 
 /**
  * @property int $id

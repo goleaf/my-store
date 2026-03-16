@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
 use Illuminate\Support\Str;
-use App\Store\Models\Product;
-use App\Store\Models\ProductVariant;
-use App\Store\Models\TaxClass;
-use App\Store\Models\TaxRateAmount;
+use App\Models\Product;
+use App\Models\ProductVariant;
+use App\Models\TaxClass;
+use App\Models\TaxRateAmount;
 
 class ProductVariantFactory extends BaseFactory
 {

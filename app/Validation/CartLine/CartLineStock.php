@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Store\Validation\CartLine;
+namespace App\Validation\CartLine;
 
-use App\Store\Validation\BaseValidator;
+use App\Validation\BaseValidator;
 
 class CartLineStock extends BaseValidator
 {

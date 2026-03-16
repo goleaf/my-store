@@ -5,8 +5,8 @@ namespace App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Components\Shout;
 use App\Filament\Resources\CustomerResource;
 use App\Filament\Resources\OrderResource;
-use App\Store\Models\Tag;
-use App\Store\Models\Transaction;
+use App\Models\Tag;
+use App\Models\Transaction;
 use App\Support\Actions\Orders\UpdateStatusAction;
 use App\Support\Actions\PdfDownload;
 use App\Support\ActivityLog\Concerns\CanDispatchActivityUpdated;
@@ -29,7 +29,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Livewire\Attributes\Computed;
 
 /**
- * @property \App\Store\Models\Order $record
+ * @property \App\Models\Order $record
  * @property \Illuminate\Support\Collection $transactions
  * @property string $paymentStatus
  * @property bool $requiresCapture

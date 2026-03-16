@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
-use App\Store\Models\TaxRate;
-use App\Store\Models\TaxZone;
+use App\Models\TaxRate;
+use App\Models\TaxZone;
 
 class TaxRateFactory extends BaseFactory
 {

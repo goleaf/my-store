@@ -2,7 +2,7 @@
 
 namespace App\Support\Forms\Components;
 
-use App\Store\Models\Language;
+use App\Models\Language;
 use Closure;
 use Filament\Forms\ComponentContainer;
 use Filament\Forms\Components\Component;

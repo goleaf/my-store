@@ -4,8 +4,8 @@ namespace App\Filament\Resources\DiscountResource\Pages;
 
 use App\Base\AdminPanelDiscountInterface;
 use App\Filament\Resources\DiscountResource;
-use App\Store\DiscountTypes\BuyXGetY;
-use App\Store\Models\Currency;
+use App\DiscountTypes\BuyXGetY;
+use App\Models\Currency;
 use App\Support\Pages\BaseEditRecord;
 use Filament\Actions;
 use Filament\Resources\RelationManagers\RelationGroup;

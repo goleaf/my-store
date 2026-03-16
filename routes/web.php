@@ -4,6 +4,7 @@ use App\Livewire\BrandPage;
 use App\Livewire\Account\Addresses;
 use App\Livewire\Account\Notifications;
 use App\Livewire\Account\Orders;
+use App\Livewire\Account\OrderDetails;
 use App\Livewire\Account\PaymentMethods;
 use App\Livewire\Account\Settings;
 use App\Livewire\Auth\ForgotPassword;
@@ -54,6 +55,7 @@ Route::post('logout', function () {
 Route::middleware('auth')->group(function () {
     Route::get('account/settings', Settings::class)->name('account.settings');
     Route::get('account/orders', Orders::class)->name('account.orders');
+    Route::get('account/orders/{order}', OrderDetails::class)->name('account.orders.view');
     Route::get('account/addresses', Addresses::class)->name('account.addresses');
     Route::get('account/payment-methods', PaymentMethods::class)->name('account.payment-methods');
     Route::get('account/notifications', Notifications::class)->name('account.notifications');

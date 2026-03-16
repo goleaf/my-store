@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\CustomerResource\RelationManagers;
 
 use App\Events\CustomerAddressEdited;
-use App\Store\Models\Contracts\Address as AddressContract;
-use App\Store\Models\State;
+use App\Models\Contracts\Address as AddressContract;
+use App\Models\State;
 use App\Support\RelationManagers\BaseRelationManager;
 use Filament\Forms;
 use Filament\Tables;

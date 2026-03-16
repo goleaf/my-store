@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
 use Illuminate\Support\Str;
-use App\Store\Models\AttributeGroup;
+use App\Models\AttributeGroup;
 
 class AttributeGroupFactory extends BaseFactory
 {

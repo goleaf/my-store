@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Store\Base\ValueObjects\Cart;
+namespace App\Base\ValueObjects\Cart;
 
-use App\Store\Models\Contracts\CartLine;
+use App\Models\Contracts\CartLine;
 
 class DiscountBreakdownLine
 {

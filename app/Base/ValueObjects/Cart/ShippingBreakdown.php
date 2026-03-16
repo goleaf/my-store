@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Base\ValueObjects\Cart;
+namespace App\Base\ValueObjects\Cart;
 
 use Illuminate\Support\Collection;
 

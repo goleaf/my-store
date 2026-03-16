@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use App\Store\Models\Attribute;
-use App\Store\Models\Brand;
-use App\Store\Models\Collection as ModelsCollection;
-use App\Store\Models\Customer;
-use App\Store\Models\CustomerGroup;
-use App\Store\Models\Product;
-use App\Store\Models\ProductVariant;
+use App\Models\Attribute;
+use App\Models\Brand;
+use App\Models\Collection as ModelsCollection;
+use App\Models\Customer;
+use App\Models\CustomerGroup;
+use App\Models\Product;
+use App\Models\ProductVariant;
 
 class AttributeManifest
 {

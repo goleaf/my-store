@@ -1,6 +1,6 @@
 <?php
 
-use App\Store\Base\Validation\CouponValidator;
+use App\Base\Validation\CouponValidator;
 
 return [
 

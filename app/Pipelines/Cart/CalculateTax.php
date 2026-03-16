@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Store\Pipelines\Cart;
+namespace App\Pipelines\Cart;
 
 use Closure;
-use App\Store\Base\ValueObjects\Cart\TaxBreakdown;
-use App\Store\Base\ValueObjects\Cart\TaxBreakdownAmount;
-use App\Store\DataTypes\Price;
-use App\Store\Facades\ShippingManifest;
-use App\Store\Facades\Taxes;
-use App\Store\Models\Cart;
-use App\Store\Models\Contracts\Cart as CartContract;
+use App\Base\ValueObjects\Cart\TaxBreakdown;
+use App\Base\ValueObjects\Cart\TaxBreakdownAmount;
+use App\DataTypes\Price;
+use App\Facades\ShippingManifest;
+use App\Facades\Taxes;
+use App\Models\Cart;
+use App\Models\Contracts\Cart as CartContract;
 
 class CalculateTax
 {

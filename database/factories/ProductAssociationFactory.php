@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
-use App\Store\Models\Product;
-use App\Store\Models\ProductAssociation;
+use App\Models\Product;
+use App\Models\ProductAssociation;
 
 class ProductAssociationFactory extends BaseFactory
 {

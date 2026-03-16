@@ -4,8 +4,8 @@ namespace App\Stripe\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Store\Base\BaseModel;
-use App\Store\Models\Cart;
+use App\Base\BaseModel;
+use App\Models\Cart;
 use Stripe\PaymentIntent;
 
 class StripePaymentIntent extends BaseModel

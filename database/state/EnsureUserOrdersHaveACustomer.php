@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Database\State;
+namespace App\Database\State;
 
 use Illuminate\Support\Facades\Schema;
-use App\Store\Facades\DB;
-use App\Store\Models\Order;
+use App\Facades\DB;
+use App\Models\Order;
 
 class EnsureUserOrdersHaveACustomer
 {

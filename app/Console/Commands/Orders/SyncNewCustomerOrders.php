@@ -3,8 +3,8 @@
 namespace App\Console\Commands\Orders;
 
 use Illuminate\Console\Command;
-use App\Store\Jobs\Orders\MarkAsNewCustomer;
-use App\Store\Models\Order;
+use App\Jobs\Orders\MarkAsNewCustomer;
+use App\Models\Order;
 
 class SyncNewCustomerOrders extends Command
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\FieldTypes;
+namespace App\FieldTypes;
 
 use JsonSerializable;
-use App\Store\Base\FieldType;
-use App\Store\Exceptions\FieldTypeException;
+use App\Base\FieldType;
+use App\Exceptions\FieldTypeException;
 
 class Vimeo implements FieldType, JsonSerializable
 {

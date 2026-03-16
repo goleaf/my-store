@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Actions\Taxes;
+namespace App\Actions\Taxes;
 
-use App\Store\Base\Addressable;
-use App\Store\Models\TaxZone;
+use App\Base\Addressable;
+use App\Models\TaxZone;
 
 class GetTaxZone
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Database\State;
+namespace App\Database\State;
 
 use Illuminate\Support\Facades\Schema;
-use App\Store\Models\TaxClass;
+use App\Models\TaxClass;
 
 class EnsureDefaultTaxClassExists
 {

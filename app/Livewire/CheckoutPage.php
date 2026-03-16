@@ -5,12 +5,12 @@ namespace App\Livewire;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
-use App\Store\Facades\CartSession;
-use App\Store\Facades\Payments;
-use App\Store\Facades\ShippingManifest;
-use App\Store\Models\Cart;
-use App\Store\Models\CartAddress;
-use App\Store\Models\Country;
+use App\Facades\CartSession;
+use App\Facades\Payments;
+use App\Facades\ShippingManifest;
+use App\Models\Cart;
+use App\Models\CartAddress;
+use App\Models\Country;
 
 class CheckoutPage extends Component
 {

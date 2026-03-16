@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Store\Base\Traits\HasModelExtending;
+use App\Base\Traits\HasModelExtending;
 
 abstract class BaseModel extends Model
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Store\Models\Contracts\Customer;
+use App\Models\Contracts\Customer;
 
 interface StoreUser
 {

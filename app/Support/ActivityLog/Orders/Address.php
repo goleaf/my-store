@@ -2,7 +2,7 @@
 
 namespace App\Support\ActivityLog\Orders;
 
-use App\Store\Models\Country;
+use App\Models\Country;
 use App\Support\ActivityLog\AbstractRender;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\LaravelBlink\BlinkFacade;

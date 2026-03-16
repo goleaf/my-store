@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Facades;
+namespace App\Facades;
 
 use Illuminate\Support\Facades\DB as DBFacade;
 
@@ -118,7 +118,7 @@ class DB extends DBFacade
     /**
      * Get the registered DatabaseManger class.
      *
-     * @return \App\Store\Managers\DatabaseManager
+     * @return \App\Managers\DatabaseManager
      */
     public static function connection()
     {

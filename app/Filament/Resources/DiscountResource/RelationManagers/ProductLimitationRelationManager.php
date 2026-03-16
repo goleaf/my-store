@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\DiscountResource\RelationManagers;
 
-use App\Store\Models\Contracts\Product as ProductContract;
-use App\Store\Models\Product;
+use App\Models\Contracts\Product as ProductContract;
+use App\Models\Product;
 use App\Support\RelationManagers\BaseRelationManager;
 use Filament\Forms;
 use Filament\Tables;

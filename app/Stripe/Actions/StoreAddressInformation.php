@@ -2,10 +2,10 @@
 
 namespace App\Stripe\Actions;
 
-use App\Store\Models\Contracts\Order as OrderContract;
-use App\Store\Models\Country;
-use App\Store\Models\Order;
-use App\Store\Models\OrderAddress;
+use App\Models\Contracts\Order as OrderContract;
+use App\Models\Country;
+use App\Models\Order;
+use App\Models\OrderAddress;
 use App\Stripe\Facades\Stripe;
 use Stripe\PaymentIntent;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Managers;
+namespace App\Managers;
 
 use Illuminate\Support\Manager;
-use App\Store\Drivers\SystemTaxDriver;
+use App\Drivers\SystemTaxDriver;
 
 class TaxManager extends Manager
 {

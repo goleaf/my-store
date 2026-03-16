@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Base\Traits;
+namespace App\Base\Traits;
 
 use Illuminate\Support\Arr;
-use App\Store\Base\FieldType;
+use App\Base\FieldType;
 
 trait HasTranslations
 {

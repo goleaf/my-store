@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Base\DataTransferObjects;
+namespace App\Base\DataTransferObjects;
 
-use App\Store\Models\Contracts\Cart;
-use App\Store\Models\Contracts\CartLine;
-use App\Store\Models\Contracts\Discount;
+use App\Models\Contracts\Cart;
+use App\Models\Contracts\CartLine;
+use App\Models\Contracts\Discount;
 
 class CartDiscount
 {

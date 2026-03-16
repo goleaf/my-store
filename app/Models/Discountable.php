@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use App\Store\Base\BaseModel;
-use App\Store\Database\Factories\DiscountableFactory;
+use App\Base\BaseModel;
+use App\Database\Factories\DiscountableFactory;
 
 /**
  * @property int $id

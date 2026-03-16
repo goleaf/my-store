@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->app->register(App\Store\StoreServiceProvider::class);
+    $this->app->register(App\Providers\StoreServiceProvider::class);
     $this->app->register(AdminPanelProvider::class);
 });
 

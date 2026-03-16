@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\Console\Commands\Import;
+namespace App\Console\Commands\Import;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Laravel\Prompts\Progress;
-use App\Store\Models\Country;
+use App\Models\Country;
 
 use function Laravel\Prompts\progress;
 

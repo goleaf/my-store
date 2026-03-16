@@ -3,8 +3,8 @@
 namespace App\Support\Concerns\Products;
 
 use App\Filament\Resources\ProductVariantResource;
-use App\Store\Models\Currency;
-use App\Store\Models\Price;
+use App\Models\Currency;
+use App\Models\Price;
 use Filament\Forms;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Contracts\Support\Htmlable;

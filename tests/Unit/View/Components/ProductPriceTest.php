@@ -1,11 +1,11 @@
 <?php
 
 use App\View\Components\ProductPrice;
-use App\Store\Models\Product;
-use App\Store\Models\ProductVariant;
-use App\Store\Models\Currency;
-use App\Store\Models\Price;
-use App\Store\Models\Language;
+use App\Models\Product;
+use App\Models\ProductVariant;
+use App\Models\Currency;
+use App\Models\Price;
+use App\Models\Language;
 
 test('component renders with null product and variant', function () {
     $component = new ProductPrice(null, null, false);

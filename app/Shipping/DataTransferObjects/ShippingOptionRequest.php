@@ -2,7 +2,7 @@
 
 namespace App\Shipping\DataTransferObjects;
 
-use App\Store\Models\Contracts\Cart as CartContract;
+use App\Models\Contracts\Cart as CartContract;
 use App\Shipping\Models\ShippingRate;
 
 class ShippingOptionRequest

@@ -2,9 +2,9 @@
 
 namespace App\Filament\Widgets\Dashboard\Orders;
 
-use App\Store\Facades\DB;
-use App\Store\Models\Currency;
-use App\Store\Models\Order;
+use App\Facades\DB;
+use App\Models\Currency;
+use App\Models\Order;
 use Carbon\CarbonInterface;
 use Filament\Widgets\ChartWidget;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;

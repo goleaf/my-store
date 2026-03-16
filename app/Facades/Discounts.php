@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Store\Facades;
+namespace App\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use App\Store\Base\DiscountManagerInterface;
+use App\Base\DiscountManagerInterface;
 
 /**
- * @method static \App\Store\Managers\DiscountManager channel(\App\Store\Models\Contracts\Channel|\Traversable|array $channel)
- * @method static \App\Store\Managers\DiscountManager customerGroup(\App\Store\Models\Contracts\CustomerGroup|\Traversable|array $customerGroups)
+ * @method static \App\Managers\DiscountManager channel(\App\Models\Contracts\Channel|\Traversable|array $channel)
+ * @method static \App\Managers\DiscountManager customerGroup(\App\Models\Contracts\CustomerGroup|\Traversable|array $customerGroups)
  * @method static \Illuminate\Support\Collection getChannels()
- * @method static \Illuminate\Support\Collection getDiscounts(\App\Store\Models\Cart|null $cart = null)
+ * @method static \Illuminate\Support\Collection getDiscounts(\App\Models\Cart|null $cart = null)
  * @method static \Illuminate\Support\Collection getCustomerGroups()
- * @method static \App\Store\Managers\DiscountManager addType(string $classname)
+ * @method static \App\Managers\DiscountManager addType(string $classname)
  * @method static \Illuminate\Support\Collection getTypes()
- * @method static \App\Store\Managers\DiscountManager addApplied(\App\Store\Base\DataTransferObjects\CartDiscount $cartDiscount)
+ * @method static \App\Managers\DiscountManager addApplied(\App\Base\DataTransferObjects\CartDiscount $cartDiscount)
  * @method static \Illuminate\Support\Collection getApplied()
- * @method static \App\Store\Models\Contracts\Cart apply(\App\Store\Models\Contracts\Cart $cart)
- * @method static \App\Store\Managers\DiscountManager resetDiscounts()
+ * @method static \App\Models\Contracts\Cart apply(\App\Models\Contracts\Cart $cart)
+ * @method static \App\Managers\DiscountManager resetDiscounts()
  * @method static bool validateCoupon(string $coupon)
  *
- * @see \App\Store\Managers\DiscountManager
+ * @see \App\Managers\DiscountManager
  */
 class Discounts extends Facade
 {

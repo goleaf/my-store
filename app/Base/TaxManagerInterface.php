@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
-use App\Store\Drivers\SystemTaxDriver;
+use App\Drivers\SystemTaxDriver;
 
 interface TaxManagerInterface
 {

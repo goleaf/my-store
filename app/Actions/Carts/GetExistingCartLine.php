@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Store\Actions\Carts;
+namespace App\Actions\Carts;
 
-use App\Store\Actions\AbstractAction;
-use App\Store\Base\Purchasable;
-use App\Store\Models\Cart;
-use App\Store\Models\Contracts\Cart as CartContract;
-use App\Store\Models\Contracts\CartLine as CartLineContract;
-use App\Store\Utils\Arr;
+use App\Actions\AbstractAction;
+use App\Base\Purchasable;
+use App\Models\Cart;
+use App\Models\Contracts\Cart as CartContract;
+use App\Models\Contracts\CartLine as CartLineContract;
+use App\Utils\Arr;
 
 class GetExistingCartLine extends AbstractAction
 {

@@ -4,7 +4,7 @@ namespace App\Shipping\Filament\Resources\ShippingMethodResource\Pages;
 
 use App\Shipping\Filament\Resources\ShippingMethodResource;
 use App\Shipping\Models\ShippingMethod;
-use App\Store\Models\CustomerGroup;
+use App\Models\CustomerGroup;
 use App\Support\Pages\BaseListRecords;
 use Filament\Actions;
 use Filament\Schemas\Components as SchemaComponents;

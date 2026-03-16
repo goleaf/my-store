@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Store\Models\HomeHero;
+use App\Models\HomeHero;
 use App\Support\Resources\BaseResource;
 use App\Filament\Resources\HomeHeroResource\Pages;
 use Filament\Forms;

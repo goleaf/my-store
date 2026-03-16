@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Schema;
-use App\Store\Base\Migration;
-use App\Store\Facades\DB;
+use App\Base\Migration;
+use App\Facades\DB;
 
 return new class extends Migration
 {

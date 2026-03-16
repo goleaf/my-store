@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
-use App\Store\Models\TaxClass;
-use App\Store\Models\TaxRate;
-use App\Store\Models\TaxRateAmount;
+use App\Models\TaxClass;
+use App\Models\TaxRate;
+use App\Models\TaxRateAmount;
 
 class TaxRateAmountFactory extends BaseFactory
 {

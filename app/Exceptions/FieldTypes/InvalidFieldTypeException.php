@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Store\Exceptions\FieldTypes;
+namespace App\Exceptions\FieldTypes;
 
-use App\Store\Exceptions\StoreException;
+use App\Exceptions\StoreException;
 
 class InvalidFieldTypeException extends StoreException
 {

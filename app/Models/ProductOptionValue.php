@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Traits\HasMacros;
-use App\Store\Base\Traits\HasMedia;
-use App\Store\Base\Traits\HasTranslations;
-use App\Store\Database\Factories\ProductOptionValueFactory;
+use App\Base\BaseModel;
+use App\Base\Traits\HasMacros;
+use App\Base\Traits\HasMedia;
+use App\Base\Traits\HasTranslations;
+use App\Database\Factories\ProductOptionValueFactory;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**

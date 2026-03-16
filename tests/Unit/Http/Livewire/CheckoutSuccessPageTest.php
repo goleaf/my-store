@@ -2,9 +2,9 @@
 
 use App\Livewire\CheckoutSuccessPage;
 use Livewire\Livewire;
-use App\Store\Facades\CartSession;
-use App\Store\Models\Cart;
-use App\Store\Models\Order;
+use App\Facades\CartSession;
+use App\Models\Cart;
+use App\Models\Order;
 
 test('component redirects when no cart', function () {
     CartSession::shouldReceive('current')->andReturn(null);

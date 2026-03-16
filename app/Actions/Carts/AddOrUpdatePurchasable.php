@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Store\Actions\Carts;
+namespace App\Actions\Carts;
 
-use App\Store\Actions\AbstractAction;
-use App\Store\Base\Purchasable;
-use App\Store\Exceptions\InvalidCartLineQuantityException;
-use App\Store\Models\Cart;
-use App\Store\Models\Contracts\Cart as CartContract;
+use App\Actions\AbstractAction;
+use App\Base\Purchasable;
+use App\Exceptions\InvalidCartLineQuantityException;
+use App\Models\Cart;
+use App\Models\Contracts\Cart as CartContract;
 
 class AddOrUpdatePurchasable extends AbstractAction
 {

@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Store\DiscountTypes;
+namespace App\DiscountTypes;
 
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
-use App\Store\Base\ValueObjects\Cart\DiscountBreakdown;
-use App\Store\Base\ValueObjects\Cart\DiscountBreakdownLine;
-use App\Store\DataTypes\Price;
-use App\Store\Models\Cart;
-use App\Store\Models\CartLine;
-use App\Store\Models\Collection as StoreCollection;
-use App\Store\Models\Contracts\Cart as CartContract;
-use App\Store\Models\Product;
-use App\Store\Models\ProductVariant;
+use App\Base\ValueObjects\Cart\DiscountBreakdown;
+use App\Base\ValueObjects\Cart\DiscountBreakdownLine;
+use App\DataTypes\Price;
+use App\Models\Cart;
+use App\Models\CartLine;
+use App\Models\Collection as StoreCollection;
+use App\Models\Contracts\Cart as CartContract;
+use App\Models\Product;
+use App\Models\ProductVariant;
 
 class BuyXGetY extends AbstractDiscountType
 {

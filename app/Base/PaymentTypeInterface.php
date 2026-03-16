@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
-use App\Store\Base\DataTransferObjects\PaymentAuthorize;
-use App\Store\Base\DataTransferObjects\PaymentCapture;
-use App\Store\Base\DataTransferObjects\PaymentRefund;
-use App\Store\Models\Contracts\Cart;
-use App\Store\Models\Contracts\Order;
-use App\Store\Models\Contracts\Transaction;
+use App\Base\DataTransferObjects\PaymentAuthorize;
+use App\Base\DataTransferObjects\PaymentCapture;
+use App\Base\DataTransferObjects\PaymentRefund;
+use App\Models\Contracts\Cart;
+use App\Models\Contracts\Order;
+use App\Models\Contracts\Transaction;
 
 interface PaymentTypeInterface
 {
     /**
      * Set the cart.
      *
-     * @param  \App\Store\Models\Cart  $order
+     * @param  \App\Models\Cart  $order
      */
     public function cart(Cart $cart): self;
 

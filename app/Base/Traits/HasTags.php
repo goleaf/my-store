@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\Base\Traits;
+namespace App\Base\Traits;
 
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Collection;
-use App\Store\Jobs\SyncTags;
-use App\Store\Models\Tag;
+use App\Jobs\SyncTags;
+use App\Models\Tag;
 
 trait HasTags
 {

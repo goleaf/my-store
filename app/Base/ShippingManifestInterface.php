@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
 use Closure;
 use Illuminate\Support\Collection;
-use App\Store\DataTypes\ShippingOption;
-use App\Store\Models\Contracts\Cart;
+use App\DataTypes\ShippingOption;
+use App\Models\Contracts\Cart;
 
 interface ShippingManifestInterface
 {
@@ -19,7 +19,7 @@ interface ShippingManifestInterface
     /**
      * Add a collection of shipping options to the manifest.
      *
-     * @param  \App\Store\DataTypes\ShippingOption  $shippingOption
+     * @param  \App\DataTypes\ShippingOption  $shippingOption
      * @return self
      */
     public function addOptions(Collection $shippingOptions);

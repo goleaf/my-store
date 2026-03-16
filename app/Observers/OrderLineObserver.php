@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Store\Observers;
+namespace App\Observers;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
-use App\Store\Base\Purchasable;
-use App\Store\Exceptions\NonPurchasableItemException;
-use App\Store\Models\Contracts\OrderLine as OrderLineContract;
-use App\Store\Models\OrderLine as OrderLine;
+use App\Base\Purchasable;
+use App\Exceptions\NonPurchasableItemException;
+use App\Models\Contracts\OrderLine as OrderLineContract;
+use App\Models\OrderLine as OrderLine;
 
 class OrderLineObserver
 {

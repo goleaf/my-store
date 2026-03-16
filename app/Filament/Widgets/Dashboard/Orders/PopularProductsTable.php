@@ -2,8 +2,8 @@
 
 namespace App\Filament\Widgets\Dashboard\Orders;
 
-use App\Store\Facades\DB;
-use App\Store\Models\OrderLine;
+use App\Facades\DB;
+use App\Models\OrderLine;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget;

@@ -2,7 +2,7 @@
 
 namespace App\Support\Synthesizers;
 
-use App\Store\FieldTypes\YouTube;
+use App\FieldTypes\YouTube;
 
 class YouTubeSynth extends AbstractFieldSynth
 {

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\TaxRateResource\RelationManagers;
 
-use App\Store\Models\TaxRateAmount;
+use App\Models\TaxRateAmount;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;

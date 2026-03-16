@@ -4,10 +4,10 @@ namespace App\Filament\Resources\ProductResource\Pages;
 
 use App\Events\ProductAssociationsUpdated;
 use App\Filament\Resources\ProductResource;
-use App\Store\Models\Contracts\Product as ProductContract;
-use App\Store\Models\Contracts\ProductAssociation as ProductAssociationContract;
-use App\Store\Models\Product;
-use App\Store\Models\ProductAssociation;
+use App\Models\Contracts\Product as ProductContract;
+use App\Models\Contracts\ProductAssociation as ProductAssociationContract;
+use App\Models\Product;
+use App\Models\ProductAssociation;
 use App\Support\Pages\BaseManageRelatedRecords;
 use Filament\Forms;
 use Filament\Schemas\Schema;
@@ -80,7 +80,7 @@ class ManageProductAssociations extends BaseManageRelatedRecords
                 Tables\Columns\TextColumn::make('target.variants.sku')
                     ->label('SKU'),
                 Tables\Columns\TextColumn::make('type')->formatStateUsing(function ($state) {
-                    $enum = config('store.products.association_types_enum', \App\Store\Base\Enums\ProductAssociation::class);
+                    $enum = config('store.products.association_types_enum', \App\Base\Enums\ProductAssociation::class);
 
                     return $enum::tryFrom($state)?->label() ?: $state;
                 }),

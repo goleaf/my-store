@@ -4,9 +4,9 @@ namespace App\Livewire;
 
 use Illuminate\View\View;
 use Livewire\Component;
-use App\Store\Facades\CartSession;
-use App\Store\Models\Cart;
-use App\Store\Models\Order;
+use App\Facades\CartSession;
+use App\Models\Cart;
+use App\Models\Order;
 
 class CheckoutSuccessPage extends Component
 {

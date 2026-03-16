@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Store\Models\HomeSection;
+use App\Models\HomeSection;
 use App\Support\Resources\BaseResource;
 use App\Filament\Resources\HomeSectionResource\Pages;
 use Filament\Forms;

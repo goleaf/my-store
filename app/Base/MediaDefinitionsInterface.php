@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;

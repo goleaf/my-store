@@ -1,6 +1,6 @@
 <?php
 
-use App\Store\Actions\Carts\GenerateFingerprint;
+use App\Actions\Carts\GenerateFingerprint;
 
 return [
     /*
@@ -42,18 +42,18 @@ return [
          * Run these pipelines when the cart is calculating.
         */
         'cart' => [
-            App\Store\Pipelines\Cart\CalculateLines::class,
-            App\Store\Pipelines\Cart\ApplyShipping::class,
-            App\Store\Pipelines\Cart\ApplyDiscounts::class,
-            App\Store\Pipelines\Cart\CalculateTax::class,
-            App\Store\Pipelines\Cart\Calculate::class,
+            App\Pipelines\Cart\CalculateLines::class,
+            App\Pipelines\Cart\ApplyShipping::class,
+            App\Pipelines\Cart\ApplyDiscounts::class,
+            App\Pipelines\Cart\CalculateTax::class,
+            App\Pipelines\Cart\Calculate::class,
         ],
 
         /*
          * Run these pipelines when the cart lines are being calculated.
         */
         'cart_lines' => [
-            App\Store\Pipelines\CartLine\GetUnitPrice::class,
+            App\Pipelines\CartLine\GetUnitPrice::class,
         ],
     ],
 
@@ -67,13 +67,13 @@ return [
     |
     */
     'actions' => [
-        'add_to_cart' => App\Store\Actions\Carts\AddOrUpdatePurchasable::class,
-        'get_existing_cart_line' => App\Store\Actions\Carts\GetExistingCartLine::class,
-        'update_cart_line' => App\Store\Actions\Carts\UpdateCartLine::class,
-        'remove_from_cart' => App\Store\Actions\Carts\RemovePurchasable::class,
-        'add_address' => App\Store\Actions\Carts\AddAddress::class,
-        'set_shipping_option' => App\Store\Actions\Carts\SetShippingOption::class,
-        'order_create' => App\Store\Actions\Carts\CreateOrder::class,
+        'add_to_cart' => App\Actions\Carts\AddOrUpdatePurchasable::class,
+        'get_existing_cart_line' => App\Actions\Carts\GetExistingCartLine::class,
+        'update_cart_line' => App\Actions\Carts\UpdateCartLine::class,
+        'remove_from_cart' => App\Actions\Carts\RemovePurchasable::class,
+        'add_address' => App\Actions\Carts\AddAddress::class,
+        'set_shipping_option' => App\Actions\Carts\SetShippingOption::class,
+        'order_create' => App\Actions\Carts\CreateOrder::class,
     ],
 
     /*
@@ -88,23 +88,23 @@ return [
     'validators' => [
 
         'add_to_cart' => [
-            App\Store\Validation\CartLine\CartLineQuantity::class,
-            App\Store\Validation\CartLine\CartLineStock::class,
+            App\Validation\CartLine\CartLineQuantity::class,
+            App\Validation\CartLine\CartLineStock::class,
         ],
 
         'update_cart_line' => [
-            App\Store\Validation\CartLine\CartLineQuantity::class,
-            App\Store\Validation\CartLine\CartLineStock::class,
+            App\Validation\CartLine\CartLineQuantity::class,
+            App\Validation\CartLine\CartLineStock::class,
         ],
 
         'remove_from_cart' => [],
 
         'set_shipping_option' => [
-            App\Store\Validation\Cart\ShippingOptionValidator::class,
+            App\Validation\Cart\ShippingOptionValidator::class,
         ],
 
         'order_create' => [
-            App\Store\Validation\Cart\ValidateCartForOrderCreation::class,
+            App\Validation\Cart\ValidateCartForOrderCreation::class,
         ],
 
     ],
@@ -144,9 +144,9 @@ return [
         'enabled' => false,
 
         'pipelines' => [
-            App\Store\Pipelines\CartPrune\PruneAfter::class,
-            App\Store\Pipelines\CartPrune\WithoutOrders::class,
-            App\Store\Pipelines\CartPrune\WhereNotMerged::class,
+            App\Pipelines\CartPrune\PruneAfter::class,
+            App\Pipelines\CartPrune\WithoutOrders::class,
+            App\Pipelines\CartPrune\WhereNotMerged::class,
         ],
 
         'prune_interval' => 90, // days

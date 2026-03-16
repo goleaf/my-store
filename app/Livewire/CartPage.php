@@ -3,7 +3,7 @@ namespace App\Livewire;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
-use App\Store\Facades\CartSession;
+use App\Facades\CartSession;
 class CartPage extends Component
 {
     /**

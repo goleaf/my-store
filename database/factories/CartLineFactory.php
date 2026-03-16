@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
-use App\Store\Models\Cart;
-use App\Store\Models\CartLine;
-use App\Store\Models\ProductVariant;
+use App\Models\Cart;
+use App\Models\CartLine;
+use App\Models\ProductVariant;
 
 class CartLineFactory extends BaseFactory
 {

@@ -1,6 +1,6 @@
 <?php
 
-use App\Store\Generators\UrlGenerator;
+use App\Generators\UrlGenerator;
 
 return [
 

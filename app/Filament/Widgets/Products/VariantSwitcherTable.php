@@ -3,8 +3,8 @@
 namespace App\Filament\Widgets\Products;
 
 use App\Filament\Resources\ProductVariantResource;
-use App\Store\Models\ProductOptionValue;
-use App\Store\Models\ProductVariant;
+use App\Models\ProductOptionValue;
+use App\Models\ProductVariant;
 use Closure;
 use Filament\Tables;
 use Filament\Widgets\TableWidget;

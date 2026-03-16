@@ -3,7 +3,7 @@
 namespace App\Shipping\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Store\Models\Product;
+use App\Models\Product;
 use App\Shipping\Models\ShippingExclusion;
 
 class ShippingExclusionFactory extends Factory

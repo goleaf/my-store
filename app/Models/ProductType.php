@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Traits\HasAttributes;
-use App\Store\Base\Traits\HasMacros;
-use App\Store\Base\Traits\LogsActivity;
-use App\Store\Database\Factories\ProductTypeFactory;
+use App\Base\BaseModel;
+use App\Base\Traits\HasAttributes;
+use App\Base\Traits\HasMacros;
+use App\Base\Traits\LogsActivity;
+use App\Database\Factories\ProductTypeFactory;
 
 /**
  * @property int $id

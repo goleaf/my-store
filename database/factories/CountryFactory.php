@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
-use App\Store\Models\Country;
+use App\Models\Country;
 
 class CountryFactory extends BaseFactory
 {

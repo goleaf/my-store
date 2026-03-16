@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Store\Drivers;
+namespace App\Drivers;
 
-use App\Store\Actions\Taxes\GetTaxZone;
-use App\Store\Base\Addressable;
-use App\Store\Base\Purchasable;
-use App\Store\Base\TaxDriver;
-use App\Store\Base\ValueObjects\Cart\TaxBreakdown;
-use App\Store\Base\ValueObjects\Cart\TaxBreakdownAmount;
-use App\Store\DataTypes\Price;
-use App\Store\Models\Contracts\CartLine;
-use App\Store\Models\Contracts\Currency;
-use App\Store\Models\TaxZone;
+use App\Actions\Taxes\GetTaxZone;
+use App\Base\Addressable;
+use App\Base\Purchasable;
+use App\Base\TaxDriver;
+use App\Base\ValueObjects\Cart\TaxBreakdown;
+use App\Base\ValueObjects\Cart\TaxBreakdownAmount;
+use App\DataTypes\Price;
+use App\Models\Contracts\CartLine;
+use App\Models\Contracts\Currency;
+use App\Models\TaxZone;
 use Spatie\LaravelBlink\BlinkFacade as Blink;
 
 class SystemTaxDriver implements TaxDriver

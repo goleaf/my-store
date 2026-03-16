@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Traits\HasDefaultRecord;
-use App\Store\Base\Traits\HasMacros;
-use App\Store\Base\Traits\LogsActivity;
-use App\Store\Database\Factories\ChannelFactory;
+use App\Base\BaseModel;
+use App\Base\Traits\HasDefaultRecord;
+use App\Base\Traits\HasMacros;
+use App\Base\Traits\LogsActivity;
+use App\Database\Factories\ChannelFactory;
 
 /**
  * @property int $id

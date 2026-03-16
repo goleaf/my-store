@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Store\Database\State;
+namespace App\Database\State;
 
 use Illuminate\Support\Facades\Schema;
-use App\Store\Facades\DB;
-use App\Store\Models\Brand;
-use App\Store\Models\Collection;
-use App\Store\Models\Product;
+use App\Facades\DB;
+use App\Models\Brand;
+use App\Models\Collection;
+use App\Models\Product;
 
 class EnsureMediaCollectionsAreRenamed
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Store\Base\Enums;
+namespace App\Base\Enums;
 
-use App\Store\Base\Enums\Concerns\ProvidesProductAssociationType;
+use App\Base\Enums\Concerns\ProvidesProductAssociationType;
 
 enum ProductAssociation: string implements ProvidesProductAssociationType
 {

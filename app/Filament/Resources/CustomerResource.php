@@ -8,7 +8,7 @@ use App\Filament\Resources\CustomerResource\RelationManagers\AddressRelationMana
 use App\Filament\Resources\CustomerResource\RelationManagers\OrdersRelationManager;
 use App\Filament\Resources\CustomerResource\RelationManagers\UserRelationManager;
 use App\Filament\Resources\CustomerResource\Widgets\CustomerStatsOverviewWidget;
-use App\Store\Models\Contracts\Customer as CustomerContract;
+use App\Models\Contracts\Customer as CustomerContract;
 use App\Support\Resources\BaseResource;
 use Filament\Forms;
 use Filament\Forms\Components\Component;

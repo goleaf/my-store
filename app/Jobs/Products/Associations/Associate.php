@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Jobs\Products\Associations;
+namespace App\Jobs\Products\Associations;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -8,10 +8,10 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
-use App\Store\Base\Enums\Concerns\ProvidesProductAssociationType;
-use App\Store\Facades\DB;
-use App\Store\Models\Contracts\Product as ProductContract;
-use App\Store\Models\Product;
+use App\Base\Enums\Concerns\ProvidesProductAssociationType;
+use App\Facades\DB;
+use App\Models\Contracts\Product as ProductContract;
+use App\Models\Product;
 
 class Associate implements ShouldQueue
 {

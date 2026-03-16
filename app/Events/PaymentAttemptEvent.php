@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\Events;
+namespace App\Events;
 
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Store\Base\DataTransferObjects\PaymentAuthorize;
+use App\Base\DataTransferObjects\PaymentAuthorize;
 
 class PaymentAttemptEvent
 {

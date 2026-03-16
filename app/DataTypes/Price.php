@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\DataTypes;
+namespace App\DataTypes;
 
-use App\Store\Exceptions\InvalidDataTypeValueException;
-use App\Store\Models\Contracts\Currency;
-use App\Store\Pricing\DefaultPriceFormatter;
+use App\Exceptions\InvalidDataTypeValueException;
+use App\Models\Contracts\Currency;
+use App\Pricing\DefaultPriceFormatter;
 
 class Price
 {

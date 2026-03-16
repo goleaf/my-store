@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Casts\AsAttributeData;
-use App\Store\Base\Traits\HasAttributes;
-use App\Store\Base\Traits\HasMacros;
-use App\Store\Base\Traits\HasMedia;
-use App\Store\Base\Traits\HasTranslations;
-use App\Store\Base\Traits\HasUrls;
-use App\Store\Base\Traits\LogsActivity;
-use App\Store\Base\Traits\Searchable;
-use App\Store\Database\Factories\BrandFactory;
-use App\Store\Facades\DB;
+use App\Base\BaseModel;
+use App\Base\Casts\AsAttributeData;
+use App\Base\Traits\HasAttributes;
+use App\Base\Traits\HasMacros;
+use App\Base\Traits\HasMedia;
+use App\Base\Traits\HasTranslations;
+use App\Base\Traits\HasUrls;
+use App\Base\Traits\LogsActivity;
+use App\Base\Traits\Searchable;
+use App\Database\Factories\BrandFactory;
+use App\Facades\DB;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Rules;
+namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use App\Store\Base\Validation\CouponValidator;
+use App\Base\Validation\CouponValidator;
 
 class ValidCoupon implements Rule
 {

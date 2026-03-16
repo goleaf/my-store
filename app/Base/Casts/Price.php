@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\Base\Casts;
+namespace App\Base\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Support\Facades\Validator;
-use App\Store\DataTypes\Price as PriceDataType;
-use App\Store\Models\Currency;
+use App\DataTypes\Price as PriceDataType;
+use App\Models\Currency;
 
 class Price implements CastsAttributes
 {
@@ -16,7 +16,7 @@ class Price implements CastsAttributes
      * @param  string  $key
      * @param  mixed  $value
      * @param  array  $attributes
-     * @return \App\Store\DataTypes\Price
+     * @return \App\DataTypes\Price
      */
     public function get($model, $key, $value, $attributes)
     {
@@ -47,7 +47,7 @@ class Price implements CastsAttributes
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @param  string  $key
-     * @param  \App\Store\DataTypes\Price  $value
+     * @param  \App\DataTypes\Price  $value
      * @param  array  $attributes
      * @return array
      */

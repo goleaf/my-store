@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,17 +8,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Kalnoy\Nestedset\NodeTrait;
 use Kalnoy\Nestedset\QueryBuilder;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Casts\AsAttributeData;
-use App\Store\Base\HasThumbnailImage;
-use App\Store\Base\Traits\HasChannels;
-use App\Store\Base\Traits\HasCustomerGroups;
-use App\Store\Base\Traits\HasMacros;
-use App\Store\Base\Traits\HasMedia;
-use App\Store\Base\Traits\HasTranslations;
-use App\Store\Base\Traits\HasUrls;
-use App\Store\Base\Traits\Searchable;
-use App\Store\Database\Factories\CollectionFactory;
+use App\Base\BaseModel;
+use App\Base\Casts\AsAttributeData;
+use App\Base\HasThumbnailImage;
+use App\Base\Traits\HasChannels;
+use App\Base\Traits\HasCustomerGroups;
+use App\Base\Traits\HasMacros;
+use App\Base\Traits\HasMedia;
+use App\Base\Traits\HasTranslations;
+use App\Base\Traits\HasUrls;
+use App\Base\Traits\Searchable;
+use App\Database\Factories\CollectionFactory;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**

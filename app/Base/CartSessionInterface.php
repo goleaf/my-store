@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
 use Illuminate\Contracts\Auth\Authenticatable;
-use App\Store\Models\Contracts\Cart;
-use App\Store\Models\Contracts\Channel;
-use App\Store\Models\Contracts\Currency;
+use App\Models\Contracts\Cart;
+use App\Models\Contracts\Channel;
+use App\Models\Contracts\Currency;
 
 interface CartSessionInterface
 {
     /**
      * Return the current cart.
      *
-     * @return \App\Store\Models\Cart|null
+     * @return \App\Models\Cart|null
      */
     public function current();
 

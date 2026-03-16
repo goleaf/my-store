@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
 use Closure;
-use App\Store\Models\Contracts\Cart;
-use App\Store\Models\Contracts\Order;
+use App\Models\Contracts\Cart;
+use App\Models\Contracts\Order;
 
 abstract class OrderModifier
 {

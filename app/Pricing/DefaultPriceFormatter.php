@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Pricing;
+namespace App\Pricing;
 
 use Illuminate\Support\Facades\App;
-use App\Store\Models\Contracts\Currency as CurrencyContract;
-use App\Store\Models\Currency;
+use App\Models\Contracts\Currency as CurrencyContract;
+use App\Models\Currency;
 use NumberFormatter;
 
 class DefaultPriceFormatter implements PriceFormatterInterface

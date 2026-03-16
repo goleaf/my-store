@@ -2,11 +2,11 @@
 
 namespace App\Support\Forms\Components;
 
-use App\Store\Facades\ModelManifest;
-use App\Store\Models\Attribute;
-use App\Store\Models\AttributeGroup;
-use App\Store\Models\Product;
-use App\Store\Models\ProductType;
+use App\Facades\ModelManifest;
+use App\Models\Attribute;
+use App\Models\AttributeGroup;
+use App\Models\Product;
+use App\Models\ProductType;
 use Filament\Forms\Components\CheckboxList;
 
 class AttributeSelector extends CheckboxList

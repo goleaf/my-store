@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Observers;
+namespace App\Observers;
 
-use App\Store\Models\Contracts\ProductOption as ProductOptionContract;
-use App\Store\Models\Contracts\ProductOptionValue as ProductOptionValueContract;
-use App\Store\Models\ProductOption;
+use App\Models\Contracts\ProductOption as ProductOptionContract;
+use App\Models\Contracts\ProductOptionValue as ProductOptionValueContract;
+use App\Models\ProductOption;
 
 class ProductOptionObserver
 {

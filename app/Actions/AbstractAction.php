@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Store\Actions;
+namespace App\Actions;
 
 use Closure;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Traits\HasMedia as TraitsHasMedia;
+use App\Base\BaseModel;
+use App\Base\Traits\HasMedia as TraitsHasMedia;
 use Spatie\MediaLibrary\HasMedia;
 
 /**

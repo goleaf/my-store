@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use App\Store\Models\Url;
+use App\Models\Url;
 
 trait FetchesUrls
 {

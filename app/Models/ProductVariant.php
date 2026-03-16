@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Store\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
-use App\Store\Base\BaseModel;
-use App\Store\Base\Casts\AsAttributeData;
-use App\Store\Base\HasThumbnailImage;
-use App\Store\Base\Purchasable;
-use App\Store\Base\Traits\HasAttributes;
-use App\Store\Base\Traits\HasDimensions;
-use App\Store\Base\Traits\HasMacros;
-use App\Store\Base\Traits\HasPrices;
-use App\Store\Base\Traits\HasTranslations;
-use App\Store\Base\Traits\LogsActivity;
-use App\Store\Database\Factories\ProductVariantFactory;
+use App\Base\BaseModel;
+use App\Base\Casts\AsAttributeData;
+use App\Base\HasThumbnailImage;
+use App\Base\Purchasable;
+use App\Base\Traits\HasAttributes;
+use App\Base\Traits\HasDimensions;
+use App\Base\Traits\HasMacros;
+use App\Base\Traits\HasPrices;
+use App\Base\Traits\HasTranslations;
+use App\Base\Traits\LogsActivity;
+use App\Database\Factories\ProductVariantFactory;
 use Spatie\LaravelBlink\BlinkFacade as Blink;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 

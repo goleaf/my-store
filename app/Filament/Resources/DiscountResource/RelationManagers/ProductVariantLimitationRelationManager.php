@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources\DiscountResource\RelationManagers;
 
-use App\Store\Models\Contracts\ProductVariant as ProductVariantContract;
-use App\Store\Models\Product;
-use App\Store\Models\ProductVariant;
+use App\Models\Contracts\ProductVariant as ProductVariantContract;
+use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Support\RelationManagers\BaseRelationManager;
 use Filament\Forms;
 use Filament\Tables;

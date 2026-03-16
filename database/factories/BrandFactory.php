@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
-use App\Store\Models\Brand;
+use App\Models\Brand;
 
 class BrandFactory extends BaseFactory
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Store\Base;
+namespace App\Base;
 
-use App\Store\Models\Contracts\Order as OrderContract;
+use App\Models\Contracts\Order as OrderContract;
 
 class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
 {

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Store\Base\Migration;
+use App\Base\Migration;
 
 return new class extends Migration
 {
@@ -12,7 +12,7 @@ return new class extends Migration
             $table->boolean('shared')->after('handle')->default(false)->index();
         });
 
-        \App\Store\Facades\DB::table($this->prefix.'product_options')->update([
+        \App\Facades\DB::table($this->prefix.'product_options')->update([
             'shared' => true,
         ]);
     }

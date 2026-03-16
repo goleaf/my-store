@@ -2,7 +2,7 @@
 
 namespace App\Support\Synthesizers;
 
-use App\Store\FieldTypes\Number;
+use App\FieldTypes\Number;
 
 class NumberSynth extends AbstractFieldSynth
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Store\Database\Factories;
+namespace App\Database\Factories;
 
 use Illuminate\Support\Str;
-use App\Store\DiscountTypes\AmountOff;
-use App\Store\Models\Discount;
+use App\DiscountTypes\AmountOff;
+use App\Models\Discount;
 
 class DiscountFactory extends BaseFactory
 {

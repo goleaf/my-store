@@ -2,7 +2,7 @@
 
 namespace App\Support\Actions\Orders;
 
-use App\Store\Models\Order;
+use App\Models\Order;
 use App\Support\Actions\Traits\UpdatesOrderStatus;
 use Filament\Actions\Action;
 use Filament\Support\Enums\Width;

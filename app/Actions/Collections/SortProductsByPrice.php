@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Store\Actions\Collections;
+namespace App\Actions\Collections;
 
 use Illuminate\Support\Collection;
-use App\Store\Models\Contracts\Currency as CurrencyContract;
-use App\Store\Models\Contracts\Product as ProductContract;
-use App\Store\Models\Currency;
-use App\Store\Models\Product;
+use App\Models\Contracts\Currency as CurrencyContract;
+use App\Models\Contracts\Product as ProductContract;
+use App\Models\Currency;
+use App\Models\Product;
 
 class SortProductsByPrice
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Store\Listeners;
+namespace App\Listeners;
 
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
-use App\Store\Facades\CartSession;
-use App\Store\Models\Cart;
+use App\Facades\CartSession;
+use App\Models\Cart;
 
 class CartSessionAuthListener
 {

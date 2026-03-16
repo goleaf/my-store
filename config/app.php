@@ -159,7 +159,7 @@ return [
         /*
          * Package Service Providers...
          */
-        \App\Store\StoreServiceProvider::class,
+        App\Providers\StoreServiceProvider::class,
         \App\Filament\AdminPanelProvider::class,
         \App\Stripe\StripePaymentsServiceProvider::class,
         \App\Shipping\ShippingServiceProvider::class,

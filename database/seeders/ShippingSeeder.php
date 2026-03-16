@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Store\Models\Country;
-use App\Store\Models\Currency;
-use App\Store\Models\Price;
+use App\Models\Country;
+use App\Models\Currency;
+use App\Models\Price;
 use App\Shipping\Models\ShippingMethod;
 use App\Shipping\Models\ShippingRate;
 use App\Shipping\Models\ShippingZone;

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Store\Observers;
+namespace App\Observers;
 
-use App\Store\Models\Contracts\Url as UrlContract;
-use App\Store\Models\Url;
+use App\Models\Contracts\Url as UrlContract;
+use App\Models\Url;
 
 class UrlObserver
 {
