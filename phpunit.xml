@@ -9,6 +9,7 @@
     </testsuite>
   </testsuites>
   <php>
+    <ini name="memory_limit" value="512M"/>
     <env name="APP_ENV" value="testing"/>
     <env name="APP_DEBUG" value="false"/>
     <env name="BCRYPT_ROUNDS" value="4"/>
@@ -19,6 +20,7 @@
     <env name="MAIL_MAILER" value="array"/>
     <env name="PULSE_ENABLED" value="false"/>
     <env name="QUEUE_CONNECTION" value="sync"/>
+    <env name="MEDIA_LIBRARY_OPTIMIZE_IMAGES" value="false"/>
     <env name="SESSION_DRIVER" value="array"/>
     <env name="SCOUT_DRIVER" value="null"/>
     <env name="TELESCOPE_ENABLED" value="false"/>

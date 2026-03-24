@@ -2,9 +2,9 @@
 
 test('project php files keep validation rules inside request classes', function () {
     $root = app_path();
-    $allowedValidatorMakeFiles = [
+    $allowedValidatorMakeFiles = array_map(static fn (string $path): string => str_replace('\\', '/', $path), [
         app_path('Http/Requests/BaseRequest.php'),
-    ];
+    ]);
     $requestBackedResourceFiles = [
         'app/Filament/Resources/CurrencyResource.php',
         'app/Filament/Resources/CustomerResource.php',
@@ -23,15 +23,17 @@ test('project php files keep validation rules inside request classes', function 
         }
 
         $path = $file->getPathname();
-        $relativePath = str_replace(base_path() . DIRECTORY_SEPARATOR, '', $path);
+        $normalizedPath = str_replace('\\', '/', $path);
+        $relativePath = str_replace(base_path().DIRECTORY_SEPARATOR, '', $path);
+        $normalizedRelativePath = str_replace('\\', '/', $relativePath);
         $content = file_get_contents($path);
 
-        if (! str_starts_with($relativePath, 'app/Http/Requests/')) {
+        if (! str_starts_with($normalizedRelativePath, 'app/Http/Requests/')) {
             collect([
                 '/\\$this->validate\\s*\\(\\s*\\[/',
                 '/->rules\\s*\\(\\s*\\[/',
                 '/->rule\\s*\\(/',
-            ])->each(function (string $pattern) use (&$violations, $content, $relativePath): void {
+            ])->each(function (string $pattern) use (&$violations, $content, $normalizedRelativePath): void {
                 if (! preg_match_all($pattern, $content, $matches, PREG_OFFSET_CAPTURE)) {
                     return;
                 }
@@ -41,7 +43,7 @@ test('project php files keep validation rules inside request classes', function 
 
                     $violations[] = sprintf(
                         '%s:%d %s',
-                        $relativePath,
+                        $normalizedRelativePath,
                         $line,
                         trim($statement),
                     );
@@ -50,8 +52,8 @@ test('project php files keep validation rules inside request classes', function 
         }
 
         if (
-            str_starts_with($relativePath, 'app/Filament/Resources/')
-            && str_contains($relativePath, '/Schemas/')
+            str_starts_with($normalizedRelativePath, 'app/Filament/Resources/')
+            && str_contains($normalizedRelativePath, '/Schemas/')
         ) {
             collect([
                 '/->required\\s*\\(\\s*\\)/',
@@ -64,7 +66,7 @@ test('project php files keep validation rules inside request classes', function 
                 '/->tel\\s*\\(/',
                 '/->minValue\\s*\\(/',
                 '/->maxValue\\s*\\(/',
-            ])->each(function (string $pattern) use (&$violations, $content, $relativePath): void {
+            ])->each(function (string $pattern) use (&$violations, $content, $normalizedRelativePath): void {
                 if (! preg_match_all($pattern, $content, $matches, PREG_OFFSET_CAPTURE)) {
                     return;
                 }
@@ -74,7 +76,7 @@ test('project php files keep validation rules inside request classes', function 
 
                     $violations[] = sprintf(
                         '%s:%d %s',
-                        $relativePath,
+                        $normalizedRelativePath,
                         $line,
                         trim($statement),
                     );
@@ -82,7 +84,7 @@ test('project php files keep validation rules inside request classes', function 
             });
         }
 
-        if (in_array($relativePath, $requestBackedResourceFiles, true)) {
+        if (in_array($normalizedRelativePath, $requestBackedResourceFiles, true)) {
             collect([
                 '/->required\\s*\\(\\s*\\)/',
                 '/->nullable\\s*\\(/',
@@ -98,7 +100,7 @@ test('project php files keep validation rules inside request classes', function 
                 '/->length\\s*\\(/',
                 '/->minValue\\s*\\(/',
                 '/->maxValue\\s*\\(/',
-            ])->each(function (string $pattern) use (&$violations, $content, $relativePath): void {
+            ])->each(function (string $pattern) use (&$violations, $content, $normalizedRelativePath): void {
                 if (! preg_match_all($pattern, $content, $matches, PREG_OFFSET_CAPTURE)) {
                     return;
                 }
@@ -108,7 +110,7 @@ test('project php files keep validation rules inside request classes', function 
 
                     $violations[] = sprintf(
                         '%s:%d %s',
-                        $relativePath,
+                        $normalizedRelativePath,
                         $line,
                         trim($statement),
                     );
@@ -116,7 +118,7 @@ test('project php files keep validation rules inside request classes', function 
             });
         }
 
-        if (in_array($path, $allowedValidatorMakeFiles, true)) {
+        if (in_array($normalizedPath, $allowedValidatorMakeFiles, true)) {
             continue;
         }
 
@@ -129,7 +131,7 @@ test('project php files keep validation rules inside request classes', function 
 
             $violations[] = sprintf(
                 '%s:%d %s',
-                $relativePath,
+                $normalizedRelativePath,
                 $line,
                 trim($statement),
             );
