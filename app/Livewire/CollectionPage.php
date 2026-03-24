@@ -2,18 +2,18 @@
 
 namespace App\Livewire;
 
+use App\Models\Collection;
+use App\Traits\CanAddToCart;
+use App\Traits\CanManageWishlist;
 use App\Traits\FetchesUrls;
 use Illuminate\View\View;
 use Livewire\Component;
-use App\Traits\CanAddToCart;
-use App\Traits\CanManageWishlist;
-use App\Models\Collection;
 
 class CollectionPage extends Component
 {
-    use FetchesUrls;
     use CanAddToCart;
     use CanManageWishlist;
+    use FetchesUrls;
 
     public function mount(string $slug): void
     {
@@ -26,6 +26,7 @@ class CollectionPage extends Component
                 'element.products.defaultUrl',
                 'element.products.brand',
                 'element.products.tags',
+                'element.products.thumbnail',
                 'element.children.defaultUrl',
                 'element.group',
             ]

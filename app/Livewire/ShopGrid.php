@@ -3,28 +3,25 @@
 namespace App\Livewire;
 
 use App\Base\Enums\ProductStatus;
+use App\Models;
 use App\Models\Brand;
 use App\Models\Price;
 use App\Models\Product;
 use App\Models\ProductVariant;
-use App\Facades\CartSession;
 use App\Traits\CanAddToCart;
 use App\Traits\CanManageWishlist;
-use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models;
 
 class ShopGrid extends Component
 {
-    use WithPagination;
     use CanAddToCart;
     use CanManageWishlist;
+    use WithPagination;
 
     private const DEFAULT_PER_PAGE = 10;
 
@@ -83,6 +80,7 @@ class ShopGrid extends Component
                 'tags',
                 'collections',
                 'images',
+                'thumbnail',
             ])
             ->whereStatus(ProductStatus::Published);
 
@@ -150,7 +148,8 @@ class ShopGrid extends Component
 
     public function getMaxPriceValueProperty(): float
     {
-        $max = DB::table('store_prices')->max('price');
+        $max = Price::query()->max('price');
+
         return $max ? ceil($max / 100) : 1000;
     }
 
@@ -194,7 +193,6 @@ class ShopGrid extends Component
             $this->sort = self::DEFAULT_SORT;
         }
     }
-
 
     public function render()
     {

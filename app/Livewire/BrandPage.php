@@ -1,12 +1,13 @@
 <?php
+
 namespace App\Livewire;
 
-use App\Traits\FetchesUrls;
+use App\Models\Brand;
 use App\Traits\CanAddToCart;
 use App\Traits\CanManageWishlist;
+use App\Traits\FetchesUrls;
 use Illuminate\View\View;
 use Livewire\Component;
-use App\Models\Brand;
 
 class BrandPage extends Component
 {
@@ -19,8 +20,14 @@ class BrandPage extends Component
         $this->url = $this->fetchUrl(
             $slug,
             (new Brand)->getMorphClass(),
-            ['element.products.defaultUrl', 'element.products.variants.basePrices.currency', 'element.products.brand']
+            [
+                'element.products.defaultUrl',
+                'element.products.variants.basePrices.currency',
+                'element.products.brand',
+                'element.products.thumbnail',
+            ]
         );
+
         if (! $this->url) {
             abort(404);
         }

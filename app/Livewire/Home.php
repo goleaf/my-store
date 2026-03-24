@@ -102,6 +102,7 @@ class Home extends Component
                 'collection.products.defaultUrl',
                 'collection.products.brand',
                 'collection.products.thumbnail',
+                'collection.products.tags',
             ])
             ->where('is_active', true)
             ->orderBy('sort_order')
@@ -153,7 +154,7 @@ class Home extends Component
     /**
      * Return the sale collection (with defaultUrl and description for Filament-backed fields).
      */
-    public function getSaleCollectionProperty(): Collection | null
+    public function getSaleCollectionProperty(): ?Collection
     {
         $collection = Url::whereElementType((new Collection)->getMorphClass())
             ->whereSlug('sale')
@@ -161,6 +162,7 @@ class Home extends Component
         if ($collection) {
             $collection->load(['defaultUrl']);
         }
+
         return $collection;
     }
 
@@ -203,6 +205,7 @@ class Home extends Component
                 'products.tags',
             ]);
         }
+
         return $collection;
     }
 

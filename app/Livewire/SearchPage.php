@@ -2,19 +2,19 @@
 
 namespace App\Livewire;
 
+use App\Models\Product;
+use App\Traits\CanAddToCart;
+use App\Traits\CanManageWishlist;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Product;
-use App\Traits\CanAddToCart;
-use App\Traits\CanManageWishlist;
 
 class SearchPage extends Component
 {
-    use WithPagination;
     use CanAddToCart;
     use CanManageWishlist;
+    use WithPagination;
 
     /**
      * {@inheritDoc}
@@ -39,6 +39,7 @@ class SearchPage extends Component
                 'variants.basePrices.currency',
                 'brand',
                 'tags',
+                'thumbnail',
             ]))
             ->paginate(50);
     }
