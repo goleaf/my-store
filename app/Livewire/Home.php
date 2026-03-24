@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use App\Base\Enums\HomeBannerType;
-use App\Models\Collection;
+use App\Models;
 use App\Models\FeaturedCategory;
 use App\Models\HomeBanner;
 use App\Models\HomeHero;
@@ -12,7 +12,7 @@ use App\Models\Url;
 use App\Traits\CanAddToCart;
 use App\Traits\CanManageWishlist;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -24,7 +24,7 @@ class Home extends Component
     /**
      * Get active home heroes.
      */
-    public function getHeroesProperty(): EloquentCollection
+    public function getHeroesProperty(): Collection
     {
         return HomeHero::query()
             ->select([
@@ -46,7 +46,7 @@ class Home extends Component
     /**
      * Get active featured categories.
      */
-    public function getFeaturedCategoriesProperty(): EloquentCollection
+    public function getFeaturedCategoriesProperty(): Collection
     {
         return FeaturedCategory::query()
             ->select([
@@ -83,7 +83,7 @@ class Home extends Component
     /**
      * Get active home sections with their collections and products.
      */
-    public function getSectionsProperty(): EloquentCollection
+    public function getSectionsProperty(): Collection
     {
         return HomeSection::query()
             ->select([
@@ -112,7 +112,7 @@ class Home extends Component
     /**
      * Get active home banners.
      */
-    public function getBannersProperty(): EloquentCollection
+    public function getBannersProperty(): Collection
     {
         return HomeBanner::query()
             ->select([
@@ -130,21 +130,21 @@ class Home extends Component
             ->get();
     }
 
-    public function getTopBannersProperty(): EloquentCollection
+    public function getTopBannersProperty(): Collection
     {
         return $this->banners
             ->filter(fn (HomeBanner $banner): bool => $banner->type === HomeBannerType::Top)
             ->values();
     }
 
-    public function getMiddleBannersProperty(): EloquentCollection
+    public function getMiddleBannersProperty(): Collection
     {
         return $this->banners
             ->filter(fn (HomeBanner $banner): bool => $banner->type === HomeBannerType::Middle)
             ->values();
     }
 
-    public function getBottomBannersProperty(): EloquentCollection
+    public function getBottomBannersProperty(): Collection
     {
         return $this->banners
             ->filter(fn (HomeBanner $banner): bool => $banner->type === HomeBannerType::Bottom)
@@ -154,9 +154,9 @@ class Home extends Component
     /**
      * Return the sale collection (with defaultUrl and description for Filament-backed fields).
      */
-    public function getSaleCollectionProperty(): ?Collection
+    public function getSaleCollectionProperty(): ?Models\Collection
     {
-        $collection = Url::whereElementType((new Collection)->getMorphClass())
+        $collection = Url::whereElementType((new Models\Collection)->getMorphClass())
             ->whereSlug('sale')
             ->first()?->element ?? null;
         if ($collection) {
@@ -188,9 +188,9 @@ class Home extends Component
     /**
      * Return a random collection (with products loaded for cards – all Filament-backed fields).
      */
-    public function getRandomCollectionProperty(): ?Collection
+    public function getRandomCollectionProperty(): ?Models\Collection
     {
-        $collections = Url::whereElementType((new Collection)->getMorphClass());
+        $collections = Url::whereElementType((new Models\Collection)->getMorphClass());
 
         if ($this->getSaleCollectionProperty()) {
             $collections = $collections->where('element_id', '!=', $this->getSaleCollectionProperty()?->id);
@@ -214,7 +214,7 @@ class Home extends Component
      */
     public function getCollectionsProperty()
     {
-        return Collection::with(['defaultUrl', 'thumbnail'])->whereHas('defaultUrl')->get();
+        return Models\Collection::with(['defaultUrl', 'thumbnail'])->whereHas('defaultUrl')->get();
     }
 
     public function render(): View

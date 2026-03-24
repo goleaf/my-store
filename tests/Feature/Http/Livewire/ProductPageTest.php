@@ -46,3 +46,27 @@ test('product page shows the product name', function () {
         ->assertSuccessful()
         ->assertSee('Test Product');
 });
+
+test('product page returns not found when product has no variants', function () {
+    Language::factory()->create([
+        'code' => 'en',
+        'default' => true,
+    ]);
+
+    $product = Product::factory()->create([
+        'attribute_data' => collect([
+            'name' => new Text('Variantless Product'),
+            'description' => new Text('No variants attached'),
+        ]),
+    ]);
+
+    $url = Url::factory()->create([
+        'element_type' => $product->getMorphClass(),
+        'element_id' => $product->id,
+        'slug' => 'variantless-product',
+        'default' => true,
+    ]);
+
+    $this->get(route('product.view', ['slug' => $url->slug]))
+        ->assertNotFound();
+});

@@ -2,22 +2,22 @@
 
 namespace App\Livewire;
 
+use App\Models\Price;
+use App\Models\Product;
+use App\Models\ProductVariant;
+use App\Traits\CanAddToCart;
+use App\Traits\CanManageWishlist;
 use App\Traits\FetchesUrls;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
-use App\Models\Product;
-use App\Models\ProductVariant;
-use App\Models\Price;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use App\Traits\CanAddToCart;
-use App\Traits\CanManageWishlist;
 
 class ProductPage extends Component
 {
-    use FetchesUrls;
     use CanAddToCart;
     use CanManageWishlist;
+    use FetchesUrls;
 
     /**
      * The selected option values.
@@ -50,8 +50,13 @@ class ProductPage extends Component
             abort(404);
         }
 
+        if ($this->product->variants->isEmpty()) {
+            abort(404);
+        }
+
         $this->selectedOptionValues = $this->productOptions->mapWithKeys(function ($data) {
             $first = $data['values']->first();
+
             return [$data['option']->id => $first ? $first->id : null];
         })->filter()->toArray();
     }
@@ -68,7 +73,17 @@ class ProductPage extends Component
                 )->count();
         });
 
-        return $variant ?? $this->product->variants->first();
+        if ($variant instanceof ProductVariant) {
+            return $variant;
+        }
+
+        $fallbackVariant = $this->product->variants->first();
+
+        if ($fallbackVariant instanceof ProductVariant) {
+            return $fallbackVariant;
+        }
+
+        abort(404);
     }
 
     /**
@@ -148,6 +163,7 @@ class ProductPage extends Component
         if (! $base || ! $base->compare_price) {
             return null;
         }
+
         return $base->compare_price;
     }
 
@@ -155,6 +171,7 @@ class ProductPage extends Component
     public function getVariantIdentifiersProperty(): array
     {
         $v = $this->variant;
+
         return array_filter([
             'sku' => $v->sku,
             'gtin' => $v->gtin ?? null,
@@ -168,12 +185,13 @@ class ProductPage extends Component
     public function getVariantDimensionsProperty(): array
     {
         $v = $this->variant;
+
         return array_filter([
-            'length' => $v->length_value ? ($v->length_value . ' ' . ($v->length_unit ?? '')) : null,
-            'width' => $v->width_value ? ($v->width_value . ' ' . ($v->width_unit ?? '')) : null,
-            'height' => $v->height_value ? ($v->height_value . ' ' . ($v->height_unit ?? '')) : null,
-            'weight' => $v->weight_value ? ($v->weight_value . ' ' . ($v->weight_unit ?? '')) : null,
-            'volume' => $v->volume_value ? ($v->volume_value . ' ' . ($v->volume_unit ?? '')) : null,
+            'length' => $v->length_value ? ($v->length_value.' '.($v->length_unit ?? '')) : null,
+            'width' => $v->width_value ? ($v->width_value.' '.($v->width_unit ?? '')) : null,
+            'height' => $v->height_value ? ($v->height_value.' '.($v->height_unit ?? '')) : null,
+            'weight' => $v->weight_value ? ($v->weight_value.' '.($v->weight_unit ?? '')) : null,
+            'volume' => $v->volume_value ? ($v->volume_value.' '.($v->volume_unit ?? '')) : null,
         ]);
     }
 
@@ -191,6 +209,7 @@ class ProductPage extends Component
                 $out[$key] = $value;
             }
         }
+
         return $out;
     }
 
@@ -208,6 +227,7 @@ class ProductPage extends Component
                 $out[$key] = $value;
             }
         }
+
         return $out;
     }
 

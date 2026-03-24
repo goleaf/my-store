@@ -11,6 +11,7 @@ use Livewire\Component;
 class GlobalSearch extends Component
 {
     public string $term = '';
+
     public bool $showDropdown = false;
 
     public function updatedTerm(): void
@@ -41,14 +42,25 @@ class GlobalSearch extends Component
             return collect();
         }
 
-        // Search logic - using basic Eloquent for now, can be upgraded to Scout
+        $scoutDriver = config('scout.driver');
+
+        if (filled($scoutDriver) && $scoutDriver !== 'null') {
+            return Product::search($this->term)
+                ->query(fn ($builder) => $builder
+                    ->whereStatus(ProductStatus::Published)
+                    ->with(['defaultUrl', 'variants.prices', 'thumbnail'])
+                    ->limit(8)
+                )
+                ->get();
+        }
+
         return Product::query()
             ->whereStatus(ProductStatus::Published)
             ->where(function ($query) {
-                $query->where('attribute_data->name->value', 'like', '%' . $this->term . '%')
-                    ->orWhere('attribute_data->description->value', 'like', '%' . $this->term . '%')
+                $query->where('attribute_data->name->value', 'like', '%'.$this->term.'%')
+                    ->orWhere('attribute_data->description->value', 'like', '%'.$this->term.'%')
                     ->orWhereHas('variants', function ($q) {
-                        $q->where('sku', 'like', '%' . $this->term . '%');
+                        $q->where('sku', 'like', '%'.$this->term.'%');
                     });
             })
             ->with(['defaultUrl', 'variants.prices', 'thumbnail'])

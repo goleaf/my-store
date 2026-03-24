@@ -82,14 +82,16 @@ class Cart extends Component
     public function mapLines(): void
     {
         $this->lines = $this->cartLines->map(function ($line) {
+            $purchasable = $line->purchasable;
+
             return [
                 'id' => $line->id,
-                'identifier' => $line->purchasable->getIdentifier(),
+                'identifier' => $purchasable?->getIdentifier() ?? 'Unavailable product',
                 'quantity' => $line->quantity,
-                'description' => $line->purchasable->getDescription(),
-                'thumbnail' => $line->purchasable->getThumbnail()?->getUrl(),
-                'option' => $line->purchasable->getOption(),
-                'options' => $line->purchasable->getOptions()->implode(' / '),
+                'description' => $purchasable?->getDescription() ?? 'This product is no longer available.',
+                'thumbnail' => $purchasable?->getThumbnail()?->getUrl(),
+                'option' => $purchasable?->getOption(),
+                'options' => $purchasable ? $purchasable->getOptions()->implode(' / ') : null,
                 'sub_total' => $line->subTotal->formatted(),
                 'unit_price' => $line->unitPrice->formatted(),
             ];

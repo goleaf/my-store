@@ -19,6 +19,7 @@ use App\Base\Traits\Searchable;
 use App\Database\Factories\ProductFactory;
 use App\Jobs\Products\Associations\Associate;
 use App\Jobs\Products\Associations\Dissociate;
+use App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
@@ -30,7 +31,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models;
+use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary;
 
 /**
@@ -39,9 +40,9 @@ use Spatie\MediaLibrary;
  * @property int $product_type_id
  * @property string $status
  * @property ?\Illuminate\Support\Collection $attribute_data
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
- * @property ?\Illuminate\Support\Carbon $deleted_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
+ * @property ?Carbon $deleted_at
  */
 class Product extends BaseModel implements Contracts\Product, HasThumbnailImage, MediaLibrary\HasMedia
 {
@@ -130,7 +131,7 @@ class Product extends BaseModel implements Contracts\Product, HasThumbnailImage,
 
     public function mappedAttributes(): Collection
     {
-        return $this->productType->mappedAttributes;
+        return $this->productType?->mappedAttributes ?? new Collection;
     }
 
     public function productType(): BelongsTo
