@@ -4,12 +4,14 @@ namespace App\Livewire;
 
 use App\Base\Enums\ProductStatus;
 use App\Models\Brand;
+use App\Models\Price;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Facades\CartSession;
 use App\Traits\CanAddToCart;
 use App\Traits\CanManageWishlist;
 use Filament\Notifications\Notification;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -23,6 +25,14 @@ class ShopGrid extends Component
     use WithPagination;
     use CanAddToCart;
     use CanManageWishlist;
+
+    private const DEFAULT_PER_PAGE = 10;
+
+    private const PER_PAGE_OPTIONS = [10, 20, 30];
+
+    private const DEFAULT_SORT = 'featured';
+
+    private const SORT_OPTIONS = ['featured', 'price_asc', 'price_desc', 'date', 'rating'];
 
     #[Url]
     public array $categories = [];
@@ -44,6 +54,24 @@ class ShopGrid extends Component
 
     #[Url]
     public int $perPage = 10;
+
+    public function mount(): void
+    {
+        $this->sanitizePerPage();
+        $this->sanitizeSort();
+    }
+
+    public function updatedPerPage(): void
+    {
+        $this->sanitizePerPage();
+        $this->resetPage();
+    }
+
+    public function updatedSort(): void
+    {
+        $this->sanitizeSort();
+        $this->resetPage();
+    }
 
     public function getProductsProperty(): LengthAwarePaginator
     {
@@ -89,18 +117,10 @@ class ShopGrid extends Component
 
         switch ($this->sort) {
             case 'price_asc':
-                $query->join('store_product_variants', 'store_products.id', '=', 'store_product_variants.product_id')
-                    ->join('store_prices', 'store_product_variants.id', '=', 'store_prices.priceable_id')
-                    ->where('store_prices.priceable_type', (new ProductVariant)->getMorphClass())
-                    ->orderBy('store_prices.price', 'asc')
-                    ->select('store_products.*');
+                $this->applyPriceSorting($query, 'asc');
                 break;
             case 'price_desc':
-                $query->join('store_product_variants', 'store_products.id', '=', 'store_product_variants.product_id')
-                    ->join('store_prices', 'store_product_variants.id', '=', 'store_prices.priceable_id')
-                    ->where('store_prices.priceable_type', (new ProductVariant)->getMorphClass())
-                    ->orderBy('store_prices.price', 'desc')
-                    ->select('store_products.*');
+                $this->applyPriceSorting($query, 'desc');
                 break;
             case 'date':
                 $query->orderBy('created_at', 'desc');
@@ -137,6 +157,42 @@ class ShopGrid extends Component
     public function resetFilters(): void
     {
         $this->reset(['categories', 'brands', 'minPrice', 'maxPrice', 'ratings', 'sort', 'perPage']);
+        $this->resetPage();
+    }
+
+    protected function applyPriceSorting(Builder $query, string $direction): void
+    {
+        $priceAggregation = Price::query()
+            ->join('store_product_variants', 'store_product_variants.id', '=', 'store_prices.priceable_id')
+            ->where('store_prices.priceable_type', (new ProductVariant)->getMorphClass())
+            ->selectRaw('store_product_variants.product_id as product_id')
+            ->selectRaw(
+                $direction === 'asc'
+                    ? 'MIN(store_prices.price) as sort_price'
+                    : 'MAX(store_prices.price) as sort_price'
+            )
+            ->groupBy('store_product_variants.product_id');
+
+        $query->leftJoinSub($priceAggregation, 'product_price_sort', function ($join) {
+            $join->on('store_products.id', '=', 'product_price_sort.product_id');
+        })->orderByRaw('product_price_sort.sort_price IS NULL')
+            ->orderBy('product_price_sort.sort_price', $direction)
+            ->orderBy('store_products.id', 'desc')
+            ->select('store_products.*');
+    }
+
+    protected function sanitizePerPage(): void
+    {
+        if (! in_array($this->perPage, self::PER_PAGE_OPTIONS, true)) {
+            $this->perPage = self::DEFAULT_PER_PAGE;
+        }
+    }
+
+    protected function sanitizeSort(): void
+    {
+        if (! in_array($this->sort, self::SORT_OPTIONS, true)) {
+            $this->sort = self::DEFAULT_SORT;
+        }
     }
 
 

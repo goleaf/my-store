@@ -39,7 +39,7 @@ test('delivery slot request moves conditional requirements into the request', fu
 });
 
 test('record aware filament requests ignore the current record for unique fields', function (string $requestClass, string $modelClass, string $field) {
-    $record = makeExistingModel($modelClass, 42);
+    $record = makeExistingModelFromClass($modelClass, 42);
     $request = (new $requestClass)->forRecord($record);
     $rules = collect($request->fieldRules($field));
     $uniqueRule = $rules->first(fn (mixed $rule): bool => $rule instanceof Unique);
@@ -69,7 +69,7 @@ test('product review request keeps score fields numeric and bounded', function (
     ]);
 });
 
-function makeExistingModel(string $modelClass, int $id): Model
+function makeExistingModelFromClass(string $modelClass, int $id): Model
 {
     /** @var Model $model */
     $model = new $modelClass;

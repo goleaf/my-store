@@ -125,3 +125,54 @@ test('can add to cart', function () {
 
     expect(App\Facades\CartSession::manager()->lines)->toHaveCount(1);
 });
+
+test('price sorting keeps each product only once when multiple variants have prices', function () {
+    $currency = Currency::whereCode('USD')->firstOrFail();
+
+    $productWithTwoVariants = Product::factory()->create(['status' => ProductStatus::Published->value]);
+    $firstVariant = ProductVariant::factory()->create(['product_id' => $productWithTwoVariants->id]);
+    $secondVariant = ProductVariant::factory()->create(['product_id' => $productWithTwoVariants->id]);
+
+    Price::factory()->create([
+        'priceable_id' => $firstVariant->id,
+        'priceable_type' => $firstVariant->getMorphClass(),
+        'price' => 300,
+        'currency_id' => $currency->id,
+    ]);
+
+    Price::factory()->create([
+        'priceable_id' => $secondVariant->id,
+        'priceable_type' => $secondVariant->getMorphClass(),
+        'price' => 700,
+        'currency_id' => $currency->id,
+    ]);
+
+    $otherProduct = Product::factory()->create(['status' => ProductStatus::Published->value]);
+    $otherVariant = ProductVariant::factory()->create(['product_id' => $otherProduct->id]);
+    Price::factory()->create([
+        'priceable_id' => $otherVariant->id,
+        'priceable_type' => $otherVariant->getMorphClass(),
+        'price' => 500,
+        'currency_id' => $currency->id,
+    ]);
+
+    Livewire::test(ShopGrid::class)
+        ->set('sort', 'price_asc')
+        ->assertViewHas('products', function ($products) use ($productWithTwoVariants, $otherProduct) {
+            $ids = $products->getCollection()->pluck('id')->all();
+            $counts = array_count_values($ids);
+
+            return ($counts[$productWithTwoVariants->id] ?? 0) === 1
+                && $ids[0] === $productWithTwoVariants->id
+                && $ids[1] === $otherProduct->id;
+        });
+});
+
+test('per page is clamped to allowed values', function () {
+    Product::factory()->count(35)->create(['status' => ProductStatus::Published->value]);
+
+    Livewire::test(ShopGrid::class)
+        ->set('perPage', 999)
+        ->assertSet('perPage', 10)
+        ->assertViewHas('products', fn ($products) => $products->perPage() === 10);
+});
